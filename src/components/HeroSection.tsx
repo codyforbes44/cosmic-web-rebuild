@@ -20,13 +20,13 @@ const HeroSection = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 0.6,
+          opacity: 0.7,
         }}
       />
       
       {/* Gradient overlay */}
       <div 
-        className="absolute inset-0 z-0 bg-gradient-to-b from-space-dark-blue/80 to-space-deep-blue/90"
+        className="absolute inset-0 z-0 bg-gradient-to-b from-space-dark-blue/60 to-space-deep-blue/70"
       />
 
       <div className={`container mx-auto px-4 py-20 z-10 text-center transition-all duration-1000 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
