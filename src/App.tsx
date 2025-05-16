@@ -14,9 +14,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
-// Import framer-motion for animations
-<lov-add-dependency>framer-motion@latest</lov-add-dependency>
-
 const queryClient = new QueryClient();
 
 const App = () => (

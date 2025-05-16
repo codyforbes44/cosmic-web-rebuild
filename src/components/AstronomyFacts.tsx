@@ -20,7 +20,7 @@ const facts: Record<string, Fact[]> = {
     {
       category: 'planets',
       title: 'Jupiter has the shortest day of all the planets',
-      content: 'Despite being the largest planet in our solar system, Jupiter's day is only about 9 hours and 55 minutes long, the shortest day of all the planets.',
+      content: 'Despite being the largest planet in our solar system, Jupiter\'s day is only about 9 hours and 55 minutes long, the shortest day of all the planets.',
       image: 'https://images.unsplash.com/photo-1630839437035-dac17da580d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
     },
   ],
@@ -28,7 +28,7 @@ const facts: Record<string, Fact[]> = {
     {
       category: 'stars',
       title: 'There are more stars in the universe than grains of sand on Earth',
-      content: 'Astronomers estimate there are about 10,000,000,000,000,000,000,000 stars in the observable universe. That's 10 sextillion, which is more than all the grains of sand on all of Earth's beaches.',
+      content: 'Astronomers estimate there are about 10,000,000,000,000,000,000,000 stars in the observable universe. That\'s 10 sextillion, which is more than all the grains of sand on all of Earth\'s beaches.',
       image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
     {
@@ -42,7 +42,7 @@ const facts: Record<string, Fact[]> = {
     {
       category: 'galaxies',
       title: 'There are over 100 billion galaxies in the observable universe',
-      content: 'Using data from NASA's Hubble Space Telescope, astronomers have estimated that there are at least 100 billion galaxies in the observable universe, though the total number could be even higher.',
+      content: 'Using data from NASA\'s Hubble Space Telescope, astronomers have estimated that there are at least 100 billion galaxies in the observable universe, though the total number could be even higher.',
       image: 'https://images.unsplash.com/photo-1462332420958-a05d1e002413?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
     {
