@@ -3,97 +3,17 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
-import { Button } from "@/components/ui/button";
-import { Search, BookOpen, FileText, Newspaper } from "lucide-react";
 import SEO from "@/components/SEO";
-
-interface BusinessArticle {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  image: string;
-  date: string;
-  author: string;
-  category: string;
-}
-
-const businessArticles: BusinessArticle[] = [
-  {
-    id: '1',
-    title: 'How Digital Transformation Is Reshaping Financial Services',
-    excerpt: 'Explore how financial institutions are leveraging technology to enhance customer experiences and streamline operations.',
-    content: 'Digital transformation in the financial services sector has accelerated dramatically in recent years, with institutions investing heavily in technology to meet changing customer expectations and stay competitive.\n\nAccording to our recent client studies, banks that have undergone comprehensive digital transformations have seen customer satisfaction scores increase by an average of 32% while reducing operational costs by up to 25%. These transformations typically involve modernizing legacy systems, implementing cloud solutions, and developing intuitive customer-facing applications.\n\n"The most successful financial institutions are those that view digital transformation not as a one-time project but as an ongoing journey," explains Sarah Chen, ƷBI\'s Director of Financial Technology Solutions. "We\'ve helped numerous clients build scalable technology ecosystems that can adapt to changing market conditions and customer needs."\n\nKey areas where financial services companies are focusing their digital transformation efforts include:\n\n1. **Customer Experience Enhancement**: Developing seamless omnichannel experiences across mobile, web, and in-person touchpoints.\n\n2. **Data Analytics and AI**: Leveraging customer data to provide personalized recommendations, detect fraud, and optimize operations.\n\n3. **Process Automation**: Implementing robotic process automation (RPA) and intelligent workflows to reduce manual tasks and improve accuracy.\n\n4. **API-First Architecture**: Building flexible systems that can easily integrate with fintech partners and third-party services.\n\nThe shift toward digital-first banking has been further accelerated by changing customer demographics and the COVID-19 pandemic, which forced many institutions to rapidly expand their digital capabilities.\n\n"Organizations that were already on their digital transformation journey when the pandemic hit were able to adapt much more quickly than those that were still relying heavily on legacy systems and processes," Chen notes. "This gap is likely to widen in the coming years as customer expectations continue to evolve."',
-    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
-    date: '2025-05-15',
-    author: 'Sarah Chen',
-    category: 'digital-transformation'
-  },
-  {
-    id: '2',
-    title: 'The Business Value of Custom Software Development',
-    excerpt: 'Why off-the-shelf solutions aren\'t always the answer, and how custom development can provide a competitive edge.',
-    content: 'While pre-packaged software solutions offer convenience and quick implementation, they often fall short when it comes to addressing the unique needs of businesses with specialized processes or innovative business models.\n\nOur research indicates that organizations using custom-developed software report 47% higher satisfaction with their technology solutions compared to those relying solely on off-the-shelf products. This satisfaction stems from having systems precisely tailored to their workflows, integration needs, and growth trajectories.\n\n"Every business has its own DNA—unique processes and challenges that generic software simply can\'t address effectively," says Michael Rodriguez, ƷBI\'s VP of Custom Solutions. "When we develop custom software for clients, we\'re not just building a tool; we\'re creating a strategic asset that can drive competitive advantage."\n\nThe benefits of custom software development include:\n\n**Perfect Alignment with Business Processes**: Rather than forcing your processes to conform to a pre-built solution, custom software adapts to how your business already works—or how you want it to work.\n\n**Seamless Integration**: Custom software can be designed to integrate flawlessly with your existing technology ecosystem, eliminating the data silos that often result from using multiple disparate systems.\n\n**Scalability**: As your business grows and evolves, custom software can be enhanced and expanded to accommodate changing needs without the constraints often imposed by commercial products.\n\n**Ownership and Independence**: With custom software, you own the code and aren\'t subject to licensing fees, unexpected price increases, or the risk of a vendor discontinuing a product your business depends on.\n\nDespite these advantages, custom development isn\'t always the right choice for every situation. "We take a pragmatic approach," Rodriguez explains. "Sometimes we recommend a hybrid solution—implementing off-the-shelf products for standard functions while building custom components for areas where the client has unique requirements or competitive differentiators."\n\nThe key to success with custom software is having a development partner who truly understands your business objectives. "Technology should never be an end in itself," Rodriguez emphasizes. "Every line of code we write is designed to solve a specific business problem or create a specific opportunity for our clients."',
-    image: 'https://images.unsplash.com/photo-1573495612937-f02b76716e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    date: '2025-05-12',
-    author: 'Michael Rodriguez',
-    category: 'custom-software'
-  },
-  {
-    id: '3',
-    title: 'AI Implementation Success Stories from Our Client Portfolio',
-    excerpt: 'Real-world examples of how businesses are gaining competitive advantages through strategic AI implementation.',
-    content: 'Artificial intelligence is no longer just a futuristic concept—it\'s delivering tangible benefits for businesses across industries. At ƷBI, we\'ve helped numerous clients implement AI solutions that drive efficiency, enhance decision-making, and create new value propositions.\n\nOne notable success story comes from a mid-sized manufacturing client that was struggling with quality control issues. By implementing a computer vision system powered by deep learning algorithms, they were able to identify defects with 99.8% accuracy—far surpassing human inspection rates of around 86%. The result was a 73% reduction in customer returns and an estimated annual savings of $2.4 million.\n\n"What makes this implementation particularly impressive is that it didn\'t require a massive overhaul of existing processes," explains Dr. Jennifer Lopez, ƷBI\'s Director of AI Solutions. "We designed a system that integrated with their current production line while dramatically improving outcomes."\n\nIn the retail sector, another client leveraged natural language processing and machine learning to analyze customer feedback across multiple channels, including social media, customer service interactions, and online reviews. This provided unprecedented insights into customer sentiment and preferences, allowing for more targeted product development and marketing strategies.\n\n"The solution identified several product issues that weren\'t showing up in traditional feedback channels," Lopez notes. "Addressing these concerns led to a measurable increase in customer satisfaction and repeat purchase rates."\n\nA financial services client used our predictive analytics platform to enhance their loan approval process, resulting in a 28% reduction in default rates while actually increasing approval rates for qualified borrowers who might have been rejected by traditional scoring models.\n\nWhat these success stories have in common is a strategic approach to AI implementation. "The technology itself is just one component," Lopez emphasizes. "The real value comes from deeply understanding the business problem, carefully preparing and managing data, and integrating AI solutions into existing workflows in ways that amplify human capabilities rather than trying to replace them."\n\nFor businesses considering AI implementation, Lopez offers this advice: "Start with a clearly defined business problem where AI can deliver measurable value. Focus on building a solid data foundation first, and be mindful of change management—even the most sophisticated AI solution won\'t deliver results if people don\'t understand or trust it."',
-    image: 'https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    date: '2025-05-08',
-    author: 'Dr. Jennifer Lopez',
-    category: 'ai-ml'
-  },
-  {
-    id: '4',
-    title: 'Designing Digital Experiences That Drive User Engagement',
-    excerpt: 'How user-centered design principles can transform your digital presence and boost key business metrics.',
-    content: 'In today\'s digital-first world, the quality of your user experience can make or break your business. Our experience working with clients across industries has consistently shown that investments in thoughtful UX design deliver measurable returns in user engagement, conversion rates, and customer loyalty.\n\nA recent redesign project for an e-commerce client perfectly illustrates this point. By applying user-centered design principles and conducting extensive usability testing, we transformed their customer journey from product discovery to checkout. The results were remarkable: a 41% increase in conversion rate, 27% higher average order value, and a significant reduction in cart abandonment.\n\n"What many businesses don\'t realize is that seemingly small friction points in the user journey can have a massive cumulative impact on bottom-line results," says Alex Patel, Head of User Experience at ƷBI. "When we mapped the client\'s customer journey, we identified several micro-frustrations that were causing users to abandon transactions."\n\nThe key to successful digital experience design goes beyond aesthetics. It requires a deep understanding of user needs, behaviors, and motivations. For a healthcare client, we conducted extensive research with patients and providers to redesign a patient portal that not only looked better but fundamentally improved how users accomplished their most important tasks.\n\n"The portal had all the features users needed, but they were organized based on the organization\'s internal structure rather than user workflows," Patel explains. "By reorganizing the interface around common user tasks and simplifying navigation, we saw engagement metrics increase across all user segments."\n\nMobile experiences present their own unique challenges and opportunities. When redesigning a banking app for a regional financial institution, we focused on streamlining the most frequent transactions for mobile users while ensuring that more complex tasks remained accessible.\n\n"The data showed that over 80% of mobile sessions involved just five core transactions," says Patel. "By optimizing the experience around these key activities while maintaining access to less common features, we increased daily active users by 34% and saw a significant shift in transaction volume from branches to digital channels—exactly the outcome the client was hoping for."\n\nPatel emphasizes that effective design is an ongoing process, not a one-time project. "The most successful digital experiences are those that evolve based on user feedback and behavior data. We help clients implement continuous improvement frameworks that allow them to make incremental enhancements based on real-world usage patterns."',
-    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    date: '2025-05-05',
-    author: 'Alex Patel',
-    category: 'web-mobile'
-  },
-  {
-    id: '5',
-    title: 'Data Analytics Strategies That Drive Business Decision-Making',
-    excerpt: 'How leading organizations are using data analytics to gain actionable insights and improve performance.',
-    content: 'In a business landscape increasingly driven by data, the ability to extract meaningful insights from vast information repositories has become a critical competitive differentiator. Our work with clients across various sectors has revealed consistent patterns in how the most successful organizations approach data analytics.\n\n"The companies getting the most value from their data aren\'t necessarily those with the most sophisticated technology," observes Ibrahim Nasser, ƷBI\'s Chief Data Strategist. "They\'re the ones that have clearly aligned their analytics initiatives with specific business objectives and decision-making processes."\n\nA retail client provides a compelling example. Facing intense competition and changing consumer behaviors, they needed to optimize their merchandising strategy. By integrating data from point-of-sale systems, online transactions, inventory management, and even weather patterns, we created a unified analytics platform that transformed their approach to purchasing and store layout.\n\n"The solution enabled them to identify nuanced patterns that weren\'t visible when looking at data in silos," Nasser explains. "For instance, they discovered that certain product combinations had strong correlations that weren\'t obvious and used these insights to revamp their store layouts, resulting in a 14% increase in average transaction value."\n\nIn the healthcare sector, a regional hospital network used advanced analytics to address patient readmission rates—a key quality metric with significant financial implications. By analyzing historical patient data, treatment protocols, and post-discharge factors, they identified previously unknown risk factors that helped them develop targeted interventions for high-risk patients.\n\n"The model didn\'t just predict readmission risk; it provided actionable insights into why specific patients were at higher risk," says Nasser. "This allowed for personalized care plans that reduced readmissions by 23% within the first six months."\n\nFor organizations looking to enhance their data capabilities, Nasser recommends a staged approach:\n\n1. **Focus on business outcomes first**: Identify specific decisions or processes that could be improved with better data insights.\n\n2. **Assess your data foundation**: Before investing in advanced analytics tools, ensure you have quality data that\'s accessible and properly governed.\n\n3. **Build cross-functional teams**: The most effective analytics initiatives combine technical expertise with deep domain knowledge.\n\n4. **Develop a data-driven culture**: Technology alone won\'t transform decision-making; organizations need to build processes that incorporate data insights into everyday decisions.\n\n"Data analytics isn\'t just about technology—it\'s about creating a framework where insights can flow to the people making decisions at the moment they need them," Nasser emphasizes. "When done right, it becomes an invaluable asset that drives continuous improvement across the organization."',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    date: '2025-05-01',
-    author: 'Ibrahim Nasser',
-    category: 'analytics'
-  },
-  {
-    id: '6',
-    title: 'Strategic Technology Planning for Sustainable Growth',
-    excerpt: 'How forward-thinking businesses are aligning their technology investments with long-term strategic objectives.',
-    content: 'In a business environment characterized by rapid technological change and disruptive innovation, strategic technology planning has become essential for sustainable growth. Our experience guiding clients through this process has shown that the most successful organizations approach technology planning as a core component of their overall business strategy rather than a separate IT function.\n\n"Technology decisions can no longer be made in isolation from business strategy," says Jane Wilson, ƷBI\'s Chief Strategy Officer. "Every significant technology investment should directly support specific business objectives and create possibilities for future innovation."\n\nA manufacturing client illustrates this principle well. Facing intensifying global competition and margin pressure, they needed a technology strategy that would support their business transformation from a traditional manufacturer to a provider of integrated products and services. Rather than simply upgrading existing systems, we developed a comprehensive technology roadmap that enabled new business models while progressively modernizing their core operations.\n\n"The easy path would have been to replace their aging ERP system with a newer version," Wilson explains. "Instead, we took a more strategic approach, implementing a digital platform that not only improved operational efficiency but also enabled them to offer new services based on product usage data. This created an entirely new revenue stream that now accounts for 22% of their total business."\n\nFor a financial services client undergoing a merger, technology planning was central to realizing the projected synergies. Rather than simply consolidating systems, we helped them develop a target architecture that would support their combined growth strategy while reducing operational costs.\n\n"The technology integration became a catalyst for business process improvement across the organization," notes Wilson. "By focusing on capabilities rather than systems, we were able to identify opportunities to enhance customer experience while eliminating redundant processes and technologies."\n\nWilson recommends organizations consider these key principles when developing their technology strategy:\n\n**Business-Driven Prioritization**: Technology investments should be evaluated based on their contribution to specific business objectives and capabilities.\n\n**Architectural Thinking**: Individual technology decisions should fit within a coherent overall architecture designed to support current needs while enabling future flexibility.\n\n**Balanced Portfolio Management**: Maintain a balanced portfolio of technology initiatives that includes operational improvements, business growth enablers, and transformational opportunities.\n\n**Continuous Adaptation**: Technology strategy should be treated as a living document that evolves based on changing business conditions and emerging technologies.\n\n"The most effective technology strategies create clear linkages between technology investments and business outcomes," Wilson concludes. "This ensures that limited resources are directed to the areas that will create the greatest value and that technology decisions are made with a clear understanding of their business implications."',
-    image: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    date: '2025-04-25',
-    author: 'Jane Wilson',
-    category: 'strategy'
-  }
-];
+import { businessArticles, categories } from "@/data/newsData";
+import ArticleList from "@/components/news/ArticleList";
+import ArticleModal from "@/components/news/ArticleModal";
+import SearchFilter from "@/components/news/SearchFilter";
+import { BusinessArticle } from "@/types/news";
 
 const News = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedArticle, setSelectedArticle] = useState<BusinessArticle | null>(null);
-
-  const categories = [
-    { value: 'strategy', label: 'Strategic Consulting' },
-    { value: 'digital-transformation', label: 'Digital Transformation' },
-    { value: 'custom-software', label: 'Custom Software' },
-    { value: 'web-mobile', label: 'Web & Mobile Apps' },
-    { value: 'analytics', label: 'Data Analytics' },
-    { value: 'ai-ml', label: 'AI & Machine Learning' },
-  ];
 
   const filteredArticles = businessArticles.filter(article => {
     // Filter by category if one is selected
@@ -129,155 +49,29 @@ const News = () => {
           </div>
 
           {/* Search and Filter */}
-          <div className="mb-12">
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div className="relative flex-grow">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <Search className="w-5 h-5 text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full py-3 pl-10 pr-4 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent text-white"
-                />
-              </div>
-              <Button
-                onClick={() => setSearchQuery("")}
-                variant="outline"
-                className="border-gray-700 hover:bg-gray-700 text-white"
-                disabled={!searchQuery}
-              >
-                Clear
-              </Button>
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-3">
-              <button
-                className={`px-3 py-1 rounded-full transition-colors text-sm ${
-                  activeCategory === null
-                    ? 'bg-accent text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-                onClick={() => setActiveCategory(null)}
-              >
-                All Topics
-              </button>
-              {categories.map((category) => (
-                <button
-                  key={category.value}
-                  className={`px-3 py-1 rounded-full transition-colors text-sm ${
-                    activeCategory === category.value
-                      ? 'bg-accent text-white'
-                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                  }`}
-                  onClick={() => setActiveCategory(category.value)}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-          </div>
+          <SearchFilter 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+            categories={categories}
+          />
 
           {/* News Articles */}
-          {filteredArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredArticles.map((article) => (
-                <div
-                  key={article.id}
-                  className="space-card overflow-hidden rounded-xl cursor-pointer hover:shadow-lg transition-all duration-300"
-                  onClick={() => setSelectedArticle(article)}
-                >
-                  <div className="aspect-video overflow-hidden">
-                    <img 
-                      src={article.image} 
-                      alt={article.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center mb-3">
-                      <span className="text-xs text-accent bg-accent/10 px-3 py-1 rounded-full">
-                        {categories.find(c => c.value === article.category)?.label || article.category}
-                      </span>
-                      <span className="text-xs text-gray-400 ml-auto">
-                        {new Date(article.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric'
-                        })}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold mb-2 text-white">{article.title}</h3>
-                    <p className="text-gray-400 mb-4 line-clamp-3">{article.excerpt}</p>
-                    <div className="flex items-center text-accent text-sm">
-                      <BookOpen className="mr-1 h-4 w-4" />
-                      Read full article
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <h3 className="text-xl text-white mb-2">No articles found</h3>
-              <p className="text-gray-400">Try adjusting your search or filter criteria</p>
-            </div>
-          )}
+          <ArticleList 
+            articles={filteredArticles} 
+            categories={categories}
+            onSelectArticle={setSelectedArticle}
+          />
         </div>
 
         {/* Modal for Selected Article */}
         {selectedArticle && (
-          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
-            <div className="bg-space-deep-blue border border-gray-700 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-auto">
-              <div className="relative">
-                <img 
-                  src={selectedArticle.image} 
-                  alt={selectedArticle.title} 
-                  className="w-full h-auto max-h-[40vh] object-cover"
-                />
-                <button
-                  className="absolute top-4 right-4 bg-black bg-opacity-50 rounded-full p-2"
-                  onClick={() => setSelectedArticle(null)}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                    <path d="M18 6L6 18M6 6l12 12"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs text-accent bg-accent/10 px-3 py-1 rounded-full">
-                    {categories.find(c => c.value === selectedArticle.category)?.label || selectedArticle.category}
-                  </span>
-                  <span className="text-xs text-gray-400">
-                    {new Date(selectedArticle.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric'
-                    })}
-                  </span>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white">{selectedArticle.title}</h2>
-                <p className="text-gray-400 mb-6">By {selectedArticle.author}</p>
-                <div className="prose prose-invert max-w-none">
-                  {selectedArticle.content.split('\n\n').map((paragraph, idx) => (
-                    <p key={idx} className="mb-4 text-gray-300">{paragraph}</p>
-                  ))}
-                </div>
-                <div className="mt-8 pt-6 border-t border-gray-700">
-                  <Button 
-                    onClick={() => setSelectedArticle(null)} 
-                    className="bg-accent hover:bg-accent/80 text-white"
-                  >
-                    Back to articles
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ArticleModal 
+            article={selectedArticle}
+            categories={categories}
+            onClose={() => setSelectedArticle(null)}
+          />
         )}
       </main>
       <Footer />
