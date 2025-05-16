@@ -71,14 +71,17 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-2 z-20">
-          <motion.span 
-            className="text-xl md:text-2xl font-space-grotesk font-bold text-white"
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <span className="text-accent">Ʒ</span>BI
-          </motion.span>
+            <img 
+              src="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png" 
+              alt="ƷBI Logo" 
+              className="h-9 w-auto"
+            />
+          </motion.div>
         </Link>
 
         {/* Desktop Navigation */}
