@@ -13,16 +13,16 @@ const Footer = () => {
               Providing innovative technology solutions and expert consulting services to help businesses thrive in the digital age.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
+              <a href="#" className="footer-link" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
+              <a href="#" className="footer-link" aria-label="Twitter">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
+              <a href="#" className="footer-link" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="YouTube">
+              <a href="#" className="footer-link" aria-label="YouTube">
                 <Youtube size={20} />
               </a>
             </div>
@@ -31,20 +31,20 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Services</h3>
             <ul className="space-y-2">
-              <li><Link to="/planets" className="text-gray-400 hover:text-white transition-colors">Technology Solutions</Link></li>
-              <li><Link to="/gallery" className="text-gray-400 hover:text-white transition-colors">Portfolio</Link></li>
-              <li><Link to="/news" className="text-gray-400 hover:text-white transition-colors">Industry News</Link></li>
-              <li><Link to="/events" className="text-gray-400 hover:text-white transition-colors">Events</Link></li>
+              <li><Link to="/planets" className="footer-link">Technology Solutions</Link></li>
+              <li><Link to="/gallery" className="footer-link">Portfolio</Link></li>
+              <li><Link to="/news" className="footer-link">Industry News</Link></li>
+              <li><Link to="/events" className="footer-link">Events</Link></li>
             </ul>
           </div>
           
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Company</h3>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors">Our Mission</Link></li>
-              <li><Link to="/team" className="text-gray-400 hover:text-white transition-colors">Our Team</Link></li>
-              <li><Link to="/partners" className="text-gray-400 hover:text-white transition-colors">Partners</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+              <li><Link to="/about" className="footer-link">Our Mission</Link></li>
+              <li><Link to="/team" className="footer-link">Our Team</Link></li>
+              <li><Link to="/partners" className="footer-link">Partners</Link></li>
+              <li><Link to="/contact" className="footer-link">Contact</Link></li>
             </ul>
           </div>
           
@@ -71,9 +71,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ƷBI. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy" className="text-gray-500 hover:text-white transition-colors text-sm">Privacy Policy</Link>
-              <Link to="/terms" className="text-gray-500 hover:text-white transition-colors text-sm">Terms of Service</Link>
-              <Link to="/accessibility" className="text-gray-500 hover:text-white transition-colors text-sm">Accessibility</Link>
+              <Link to="/privacy" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Privacy Policy</Link>
+              <Link to="/terms" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Terms of Service</Link>
+              <Link to="/accessibility" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Accessibility</Link>
             </div>
           </div>
         </div>
