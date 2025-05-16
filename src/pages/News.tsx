@@ -4,9 +4,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, BookOpen, FileText, Newspaper } from "lucide-react";
+import SEO from "@/components/SEO";
 
-interface NewsArticle {
+interface BusinessArticle {
   id: string;
   title: string;
   excerpt: string;
@@ -17,84 +18,84 @@ interface NewsArticle {
   category: string;
 }
 
-const newsArticles: NewsArticle[] = [
+const businessArticles: BusinessArticle[] = [
   {
     id: '1',
-    title: 'New Exoplanet Discovered in Habitable Zone',
-    excerpt: 'Astronomers have found a potentially habitable exoplanet orbiting a nearby star, raising hopes for finding extraterrestrial life.',
-    content: 'Scientists at the European Southern Observatory have announced the discovery of a new exoplanet orbiting within the habitable zone of its star. The planet, named Kepler-438b, is approximately 1.5 times the size of Earth and orbits a red dwarf star located 470 light-years away in the constellation Lyra.\n\nThe planet receives about 40% more light from its star than Earth does from the Sun, giving it an equilibrium temperature estimated to be around 60°C (140°F) if it has an Earth-like atmosphere. This places it firmly within the habitable zone, the region around a star where conditions might be suitable for liquid water to exist on a planet\'s surface.\n\n"This is one of the most promising candidates for a habitable planet we\'ve found so far," said Dr. Emma Rodriguez, lead astronomer on the project. "The next step is to analyze its atmosphere, if it has one, to look for biosignatures that might indicate the presence of life."\n\nThe discovery was made using data from the Transiting Exoplanet Survey Satellite (TESS) combined with follow-up observations from ground-based telescopes. Further studies are planned using the James Webb Space Telescope, which has the capability to analyze the atmospheric composition of distant planets.',
-    image: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+    title: 'How Digital Transformation Is Reshaping Financial Services',
+    excerpt: 'Explore how financial institutions are leveraging technology to enhance customer experiences and streamline operations.',
+    content: 'Digital transformation in the financial services sector has accelerated dramatically in recent years, with institutions investing heavily in technology to meet changing customer expectations and stay competitive.\n\nAccording to our recent client studies, banks that have undergone comprehensive digital transformations have seen customer satisfaction scores increase by an average of 32% while reducing operational costs by up to 25%. These transformations typically involve modernizing legacy systems, implementing cloud solutions, and developing intuitive customer-facing applications.\n\n"The most successful financial institutions are those that view digital transformation not as a one-time project but as an ongoing journey," explains Sarah Chen, ƷBI\'s Director of Financial Technology Solutions. "We\'ve helped numerous clients build scalable technology ecosystems that can adapt to changing market conditions and customer needs."\n\nKey areas where financial services companies are focusing their digital transformation efforts include:\n\n1. **Customer Experience Enhancement**: Developing seamless omnichannel experiences across mobile, web, and in-person touchpoints.\n\n2. **Data Analytics and AI**: Leveraging customer data to provide personalized recommendations, detect fraud, and optimize operations.\n\n3. **Process Automation**: Implementing robotic process automation (RPA) and intelligent workflows to reduce manual tasks and improve accuracy.\n\n4. **API-First Architecture**: Building flexible systems that can easily integrate with fintech partners and third-party services.\n\nThe shift toward digital-first banking has been further accelerated by changing customer demographics and the COVID-19 pandemic, which forced many institutions to rapidly expand their digital capabilities.\n\n"Organizations that were already on their digital transformation journey when the pandemic hit were able to adapt much more quickly than those that were still relying heavily on legacy systems and processes," Chen notes. "This gap is likely to widen in the coming years as customer expectations continue to evolve."',
+    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
     date: '2025-05-15',
-    author: 'Dr. Sarah Johnson',
-    category: 'exoplanets'
+    author: 'Sarah Chen',
+    category: 'digital-transformation'
   },
   {
     id: '2',
-    title: 'Black Hole at Center of Milky Way Becomes More Active',
-    excerpt: 'Sagittarius A*, the supermassive black hole at the center of our galaxy, has shown increased activity in recent months.',
-    content: 'Astronomers monitoring Sagittarius A*, the supermassive black hole at the center of our Milky Way galaxy, have reported a significant increase in activity over the past three months. The black hole, which is typically relatively quiet, has been emitting stronger radio signals and X-ray flares than usual.\n\n"We\'ve been observing Sagittarius A* for decades, and it\'s typically quite dormant as supermassive black holes go," explained Dr. Michael Chen of the Harvard-Smithsonian Center for Astrophysics. "This recent uptick in activity gives us a rare opportunity to study how matter behaves as it falls toward the event horizon."\n\nScientists believe the increased activity may be due to a large cloud of gas and dust that was observed approaching the black hole several years ago. As this material gets closer to the black hole, it heats up and emits radiation across multiple wavelengths.\n\nDespite the increased activity, Dr. Chen assures that there is no cause for concern. "Sagittarius A* is about 26,000 light-years from Earth, so this activity poses absolutely no danger to our planet. It\'s simply an exciting scientific event that allows us to better understand these cosmic phenomena."',
-    image: 'https://images.unsplash.com/photo-1552276385-7a5ea7e4b16f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    title: 'The Business Value of Custom Software Development',
+    excerpt: 'Why off-the-shelf solutions aren\'t always the answer, and how custom development can provide a competitive edge.',
+    content: 'While pre-packaged software solutions offer convenience and quick implementation, they often fall short when it comes to addressing the unique needs of businesses with specialized processes or innovative business models.\n\nOur research indicates that organizations using custom-developed software report 47% higher satisfaction with their technology solutions compared to those relying solely on off-the-shelf products. This satisfaction stems from having systems precisely tailored to their workflows, integration needs, and growth trajectories.\n\n"Every business has its own DNA—unique processes and challenges that generic software simply can\'t address effectively," says Michael Rodriguez, ƷBI\'s VP of Custom Solutions. "When we develop custom software for clients, we\'re not just building a tool; we\'re creating a strategic asset that can drive competitive advantage."\n\nThe benefits of custom software development include:\n\n**Perfect Alignment with Business Processes**: Rather than forcing your processes to conform to a pre-built solution, custom software adapts to how your business already works—or how you want it to work.\n\n**Seamless Integration**: Custom software can be designed to integrate flawlessly with your existing technology ecosystem, eliminating the data silos that often result from using multiple disparate systems.\n\n**Scalability**: As your business grows and evolves, custom software can be enhanced and expanded to accommodate changing needs without the constraints often imposed by commercial products.\n\n**Ownership and Independence**: With custom software, you own the code and aren\'t subject to licensing fees, unexpected price increases, or the risk of a vendor discontinuing a product your business depends on.\n\nDespite these advantages, custom development isn\'t always the right choice for every situation. "We take a pragmatic approach," Rodriguez explains. "Sometimes we recommend a hybrid solution—implementing off-the-shelf products for standard functions while building custom components for areas where the client has unique requirements or competitive differentiators."\n\nThe key to success with custom software is having a development partner who truly understands your business objectives. "Technology should never be an end in itself," Rodriguez emphasizes. "Every line of code we write is designed to solve a specific business problem or create a specific opportunity for our clients."',
+    image: 'https://images.unsplash.com/photo-1573495612937-f02b76716e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     date: '2025-05-12',
-    author: 'Dr. Michael Chen',
-    category: 'black-holes'
+    author: 'Michael Rodriguez',
+    category: 'custom-software'
   },
   {
     id: '3',
-    title: 'Perseverance Rover Finds Evidence of Ancient Microbial Life on Mars',
-    excerpt: 'NASA\'s Perseverance rover has discovered compelling evidence suggesting that microbial life once existed on Mars.',
-    content: 'In a groundbreaking announcement, NASA scientists revealed that the Perseverance rover has found evidence strongly suggesting the presence of ancient microbial life on Mars. The discovery was made in sedimentary rocks within the Jezero Crater, which scientists believe was once filled with water.\n\n"What we\'ve found are complex organic molecules arranged in patterns that, on Earth, would be strong biosignatures - evidence of past life," said Dr. Jennifer Lopez, NASA\'s lead astrobiologist for the Mars mission. "These molecules show a level of complexity that\'s very difficult to explain through non-biological processes."\n\nThe rover used its SHERLOC (Scanning Habitable Environments with Raman & Luminescence for Organics & Chemicals) instrument to detect specific carbon compounds that, on Earth, are typically associated with biological activity. The samples have been sealed for a future mission to return them to Earth for more detailed analysis.\n\n"While we\'re not making a definitive claim that we\'ve found evidence of aliens, this is the strongest indication yet that Mars once harbored life, likely in the form of simple microorganisms," Dr. Lopez added. "If confirmed by further analysis, this would be one of the most significant scientific discoveries in human history."',
-    image: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+    title: 'AI Implementation Success Stories from Our Client Portfolio',
+    excerpt: 'Real-world examples of how businesses are gaining competitive advantages through strategic AI implementation.',
+    content: 'Artificial intelligence is no longer just a futuristic concept—it\'s delivering tangible benefits for businesses across industries. At ƷBI, we\'ve helped numerous clients implement AI solutions that drive efficiency, enhance decision-making, and create new value propositions.\n\nOne notable success story comes from a mid-sized manufacturing client that was struggling with quality control issues. By implementing a computer vision system powered by deep learning algorithms, they were able to identify defects with 99.8% accuracy—far surpassing human inspection rates of around 86%. The result was a 73% reduction in customer returns and an estimated annual savings of $2.4 million.\n\n"What makes this implementation particularly impressive is that it didn\'t require a massive overhaul of existing processes," explains Dr. Jennifer Lopez, ƷBI\'s Director of AI Solutions. "We designed a system that integrated with their current production line while dramatically improving outcomes."\n\nIn the retail sector, another client leveraged natural language processing and machine learning to analyze customer feedback across multiple channels, including social media, customer service interactions, and online reviews. This provided unprecedented insights into customer sentiment and preferences, allowing for more targeted product development and marketing strategies.\n\n"The solution identified several product issues that weren\'t showing up in traditional feedback channels," Lopez notes. "Addressing these concerns led to a measurable increase in customer satisfaction and repeat purchase rates."\n\nA financial services client used our predictive analytics platform to enhance their loan approval process, resulting in a 28% reduction in default rates while actually increasing approval rates for qualified borrowers who might have been rejected by traditional scoring models.\n\nWhat these success stories have in common is a strategic approach to AI implementation. "The technology itself is just one component," Lopez emphasizes. "The real value comes from deeply understanding the business problem, carefully preparing and managing data, and integrating AI solutions into existing workflows in ways that amplify human capabilities rather than trying to replace them."\n\nFor businesses considering AI implementation, Lopez offers this advice: "Start with a clearly defined business problem where AI can deliver measurable value. Focus on building a solid data foundation first, and be mindful of change management—even the most sophisticated AI solution won\'t deliver results if people don\'t understand or trust it."',
+    image: 'https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     date: '2025-05-08',
     author: 'Dr. Jennifer Lopez',
-    category: 'mars'
+    category: 'ai-ml'
   },
   {
     id: '4',
-    title: 'James Webb Space Telescope Captures Most Distant Galaxy Yet',
-    excerpt: 'The James Webb Space Telescope has observed a galaxy from just 300 million years after the Big Bang, the earliest ever seen.',
-    content: 'The James Webb Space Telescope (JWST) has shattered another cosmic record by capturing images of a galaxy that existed approximately 300 million years after the Big Bang, making it the most distant and earliest galaxy ever observed.\n\nThe galaxy, designated JWST-HD1, appears to us as it was about 13.5 billion years ago, when the universe was only 2% of its current age. This discovery pushes back our understanding of when the first galaxies began to form after the Big Bang.\n\n"What\'s particularly surprising is how bright and evolved this galaxy appears to be, despite forming so early in the universe\'s history," said Dr. Alex Patel, an astrophysicist at the Space Telescope Science Institute. "It challenges our current models of galaxy formation and suggests that the earliest galaxies may have formed more rapidly than we previously thought."\n\nJWST-HD1 was identified through a deep field observation, where the telescope focused on a seemingly empty patch of sky for an extended period to collect as much light as possible. Spectroscopic analysis revealed the galaxy\'s extreme distance through its redshift, a measure of how much its light has been stretched by the expansion of the universe.\n\nScientists are now planning follow-up observations to better understand the galaxy\'s composition and how it managed to form so quickly after the Big Bang.',
-    image: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+    title: 'Designing Digital Experiences That Drive User Engagement',
+    excerpt: 'How user-centered design principles can transform your digital presence and boost key business metrics.',
+    content: 'In today\'s digital-first world, the quality of your user experience can make or break your business. Our experience working with clients across industries has consistently shown that investments in thoughtful UX design deliver measurable returns in user engagement, conversion rates, and customer loyalty.\n\nA recent redesign project for an e-commerce client perfectly illustrates this point. By applying user-centered design principles and conducting extensive usability testing, we transformed their customer journey from product discovery to checkout. The results were remarkable: a 41% increase in conversion rate, 27% higher average order value, and a significant reduction in cart abandonment.\n\n"What many businesses don\'t realize is that seemingly small friction points in the user journey can have a massive cumulative impact on bottom-line results," says Alex Patel, Head of User Experience at ƷBI. "When we mapped the client\'s customer journey, we identified several micro-frustrations that were causing users to abandon transactions."\n\nThe key to successful digital experience design goes beyond aesthetics. It requires a deep understanding of user needs, behaviors, and motivations. For a healthcare client, we conducted extensive research with patients and providers to redesign a patient portal that not only looked better but fundamentally improved how users accomplished their most important tasks.\n\n"The portal had all the features users needed, but they were organized based on the organization\'s internal structure rather than user workflows," Patel explains. "By reorganizing the interface around common user tasks and simplifying navigation, we saw engagement metrics increase across all user segments."\n\nMobile experiences present their own unique challenges and opportunities. When redesigning a banking app for a regional financial institution, we focused on streamlining the most frequent transactions for mobile users while ensuring that more complex tasks remained accessible.\n\n"The data showed that over 80% of mobile sessions involved just five core transactions," says Patel. "By optimizing the experience around these key activities while maintaining access to less common features, we increased daily active users by 34% and saw a significant shift in transaction volume from branches to digital channels—exactly the outcome the client was hoping for."\n\nPatel emphasizes that effective design is an ongoing process, not a one-time project. "The most successful digital experiences are those that evolve based on user feedback and behavior data. We help clients implement continuous improvement frameworks that allow them to make incremental enhancements based on real-world usage patterns."',
+    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     date: '2025-05-05',
-    author: 'Dr. Alex Patel',
-    category: 'deep-space'
+    author: 'Alex Patel',
+    category: 'web-mobile'
   },
   {
     id: '5',
-    title: 'Astronomers Detect Mysterious Radio Signals from Beyond Our Galaxy',
-    excerpt: 'A series of unexplained radio signals originating from outside the Milky Way has scientists puzzled.',
-    content: 'Astronomers using the Square Kilometre Array (SKA) radio telescope have detected a series of unusual radio signals originating from a source approximately 3 billion light-years from Earth. The signals, which repeat in a complex but non-random pattern, have scientists puzzled as they do not match any known natural astronomical phenomenon.\n\n"These signals exhibit characteristics that are difficult to explain through known astrophysical processes," said Dr. Ibrahim Nasser, a radio astronomer involved in the discovery. "They show a level of complexity that suggests they could be artificial in origin, though we\'re not jumping to any conclusions."\n\nThe signals repeat approximately every 67 hours and contain what appears to be a mathematical sequence within their structure. This has led some researchers to speculate about the possibility of an artificial origin, potentially from an advanced extraterrestrial civilization.\n\nHowever, Dr. Nasser urges caution: "Throughout the history of radio astronomy, we\'ve encountered signals that initially seemed artificial but were later explained by natural phenomena we didn\'t previously understand. We need to conduct more observations and analyze the data thoroughly before making any extraordinary claims."\n\nThe research team has submitted their findings to the International Astronomical Union and plans to allocate more telescope time to monitor the source of these mysterious signals.',
-    image: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2013&q=80',
+    title: 'Data Analytics Strategies That Drive Business Decision-Making',
+    excerpt: 'How leading organizations are using data analytics to gain actionable insights and improve performance.',
+    content: 'In a business landscape increasingly driven by data, the ability to extract meaningful insights from vast information repositories has become a critical competitive differentiator. Our work with clients across various sectors has revealed consistent patterns in how the most successful organizations approach data analytics.\n\n"The companies getting the most value from their data aren\'t necessarily those with the most sophisticated technology," observes Ibrahim Nasser, ƷBI\'s Chief Data Strategist. "They\'re the ones that have clearly aligned their analytics initiatives with specific business objectives and decision-making processes."\n\nA retail client provides a compelling example. Facing intense competition and changing consumer behaviors, they needed to optimize their merchandising strategy. By integrating data from point-of-sale systems, online transactions, inventory management, and even weather patterns, we created a unified analytics platform that transformed their approach to purchasing and store layout.\n\n"The solution enabled them to identify nuanced patterns that weren\'t visible when looking at data in silos," Nasser explains. "For instance, they discovered that certain product combinations had strong correlations that weren\'t obvious and used these insights to revamp their store layouts, resulting in a 14% increase in average transaction value."\n\nIn the healthcare sector, a regional hospital network used advanced analytics to address patient readmission rates—a key quality metric with significant financial implications. By analyzing historical patient data, treatment protocols, and post-discharge factors, they identified previously unknown risk factors that helped them develop targeted interventions for high-risk patients.\n\n"The model didn\'t just predict readmission risk; it provided actionable insights into why specific patients were at higher risk," says Nasser. "This allowed for personalized care plans that reduced readmissions by 23% within the first six months."\n\nFor organizations looking to enhance their data capabilities, Nasser recommends a staged approach:\n\n1. **Focus on business outcomes first**: Identify specific decisions or processes that could be improved with better data insights.\n\n2. **Assess your data foundation**: Before investing in advanced analytics tools, ensure you have quality data that\'s accessible and properly governed.\n\n3. **Build cross-functional teams**: The most effective analytics initiatives combine technical expertise with deep domain knowledge.\n\n4. **Develop a data-driven culture**: Technology alone won\'t transform decision-making; organizations need to build processes that incorporate data insights into everyday decisions.\n\n"Data analytics isn\'t just about technology—it\'s about creating a framework where insights can flow to the people making decisions at the moment they need them," Nasser emphasizes. "When done right, it becomes an invaluable asset that drives continuous improvement across the organization."',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     date: '2025-05-01',
-    author: 'Dr. Ibrahim Nasser',
-    category: 'seti'
+    author: 'Ibrahim Nasser',
+    category: 'analytics'
   },
   {
     id: '6',
-    title: 'NASA Announces Artemis IV Mission to Build Lunar Gateway',
-    excerpt: 'The next phase of the Artemis program will focus on constructing the Lunar Gateway, a space station orbiting the Moon.',
-    content: 'NASA has officially announced plans for the Artemis IV mission, scheduled for 2027, which will mark a significant milestone in the agency\'s lunar exploration program. The mission will focus on the construction of the Lunar Gateway, a space station designed to orbit the Moon and serve as a staging point for future lunar and deep space missions.\n\n"Artemis IV will deliver the I-HAB module, which is the habitation module built by our international partners," explained NASA Administrator Jane Wilson. "This will be attached to the Power and Propulsion Element and the HALO module, which will be launched earlier. Together, these components will form the initial configuration of the Lunar Gateway."\n\nThe Lunar Gateway is designed to be a multi-purpose outpost orbiting the Moon, providing essential capabilities for human exploration of the lunar surface while also serving as a staging platform for deep space exploration. Unlike the International Space Station, the Gateway will not be continuously crewed but will host astronauts for periods of one to three months.\n\n"The Gateway represents a new era of sustainable lunar exploration and development," Wilson continued. "It will enable extended lunar surface missions and help us prepare for future missions to Mars by testing new technologies and systems in the deep space environment."',
-    image: 'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    title: 'Strategic Technology Planning for Sustainable Growth',
+    excerpt: 'How forward-thinking businesses are aligning their technology investments with long-term strategic objectives.',
+    content: 'In a business environment characterized by rapid technological change and disruptive innovation, strategic technology planning has become essential for sustainable growth. Our experience guiding clients through this process has shown that the most successful organizations approach technology planning as a core component of their overall business strategy rather than a separate IT function.\n\n"Technology decisions can no longer be made in isolation from business strategy," says Jane Wilson, ƷBI\'s Chief Strategy Officer. "Every significant technology investment should directly support specific business objectives and create possibilities for future innovation."\n\nA manufacturing client illustrates this principle well. Facing intensifying global competition and margin pressure, they needed a technology strategy that would support their business transformation from a traditional manufacturer to a provider of integrated products and services. Rather than simply upgrading existing systems, we developed a comprehensive technology roadmap that enabled new business models while progressively modernizing their core operations.\n\n"The easy path would have been to replace their aging ERP system with a newer version," Wilson explains. "Instead, we took a more strategic approach, implementing a digital platform that not only improved operational efficiency but also enabled them to offer new services based on product usage data. This created an entirely new revenue stream that now accounts for 22% of their total business."\n\nFor a financial services client undergoing a merger, technology planning was central to realizing the projected synergies. Rather than simply consolidating systems, we helped them develop a target architecture that would support their combined growth strategy while reducing operational costs.\n\n"The technology integration became a catalyst for business process improvement across the organization," notes Wilson. "By focusing on capabilities rather than systems, we were able to identify opportunities to enhance customer experience while eliminating redundant processes and technologies."\n\nWilson recommends organizations consider these key principles when developing their technology strategy:\n\n**Business-Driven Prioritization**: Technology investments should be evaluated based on their contribution to specific business objectives and capabilities.\n\n**Architectural Thinking**: Individual technology decisions should fit within a coherent overall architecture designed to support current needs while enabling future flexibility.\n\n**Balanced Portfolio Management**: Maintain a balanced portfolio of technology initiatives that includes operational improvements, business growth enablers, and transformational opportunities.\n\n**Continuous Adaptation**: Technology strategy should be treated as a living document that evolves based on changing business conditions and emerging technologies.\n\n"The most effective technology strategies create clear linkages between technology investments and business outcomes," Wilson concludes. "This ensures that limited resources are directed to the areas that will create the greatest value and that technology decisions are made with a clear understanding of their business implications."',
+    image: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     date: '2025-04-25',
     author: 'Jane Wilson',
-    category: 'space-exploration'
+    category: 'strategy'
   }
 ];
 
 const News = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<BusinessArticle | null>(null);
 
   const categories = [
-    { value: 'exoplanets', label: 'Exoplanets' },
-    { value: 'black-holes', label: 'Black Holes' },
-    { value: 'mars', label: 'Mars Exploration' },
-    { value: 'deep-space', label: 'Deep Space' },
-    { value: 'seti', label: 'SETI' },
-    { value: 'space-exploration', label: 'Space Exploration' },
+    { value: 'strategy', label: 'Strategic Consulting' },
+    { value: 'digital-transformation', label: 'Digital Transformation' },
+    { value: 'custom-software', label: 'Custom Software' },
+    { value: 'web-mobile', label: 'Web & Mobile Apps' },
+    { value: 'analytics', label: 'Data Analytics' },
+    { value: 'ai-ml', label: 'AI & Machine Learning' },
   ];
 
-  const filteredArticles = newsArticles.filter(article => {
+  const filteredArticles = businessArticles.filter(article => {
     // Filter by category if one is selected
     const categoryMatch = activeCategory ? article.category === activeCategory : true;
     
@@ -109,16 +110,21 @@ const News = () => {
 
   return (
     <>
+      <SEO 
+        title="Business Insights" 
+        description="Stay informed with the latest industry insights, technology trends and success stories from ƷBI's business experts."
+        keywords="business technology, digital transformation, custom software, data analytics, AI solutions, web development"
+      />
       <Navbar />
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">
         <div className="container mx-auto px-4">
           <div className="text-center mt-12 mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Astronomy News
+              Business Insights
             </h1>
             <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              Stay informed with the latest discoveries, missions, and breakthroughs in astronomy and space exploration
+              Stay informed with the latest industry insights, technology trends, and success stories from our business experts
             </p>
           </div>
 
@@ -131,7 +137,7 @@ const News = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Search news articles..."
+                  placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full py-3 pl-10 pr-4 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent text-white"
@@ -206,7 +212,10 @@ const News = () => {
                     </div>
                     <h3 className="text-xl font-bold mb-2 text-white">{article.title}</h3>
                     <p className="text-gray-400 mb-4 line-clamp-3">{article.excerpt}</p>
-                    <p className="text-accent text-sm">Read full article</p>
+                    <div className="flex items-center text-accent text-sm">
+                      <BookOpen className="mr-1 h-4 w-4" />
+                      Read full article
+                    </div>
                   </div>
                 </div>
               ))}
@@ -257,6 +266,14 @@ const News = () => {
                   {selectedArticle.content.split('\n\n').map((paragraph, idx) => (
                     <p key={idx} className="mb-4 text-gray-300">{paragraph}</p>
                   ))}
+                </div>
+                <div className="mt-8 pt-6 border-t border-gray-700">
+                  <Button 
+                    onClick={() => setSelectedArticle(null)} 
+                    className="bg-accent hover:bg-accent/80 text-white"
+                  >
+                    Back to articles
+                  </Button>
                 </div>
               </div>
             </div>
