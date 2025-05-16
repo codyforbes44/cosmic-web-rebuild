@@ -15,7 +15,7 @@ const Contact = () => {
       <SEO 
         title="Contact Us" 
         description="Get in touch with ƷBI's team of experts. We'd love to hear about your business challenges and how we can help."
-        image="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+        image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
         type="website"
       />
       <Navbar />

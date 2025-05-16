@@ -20,6 +20,11 @@ const SEO = ({
 }: SEOProps) => {
   const siteTitle = `${title} | ƷBI`;
   
+  // Convert relative image paths to absolute URLs
+  const absoluteImageUrl = image.startsWith('http') 
+    ? image 
+    : `${window.location.origin}${image}`;
+  
   return (
     <Helmet>
       {/* Basic metadata */}
@@ -32,14 +37,14 @@ const SEO = ({
       <meta property="og:url" content={url} />
       <meta property="og:title" content={siteTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={absoluteImageUrl} />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={url} />
       <meta property="twitter:title" content={siteTitle} />
       <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
+      <meta property="twitter:image" content={absoluteImageUrl} />
       
       {/* Canonical URL */}
       <link rel="canonical" href={url} />
