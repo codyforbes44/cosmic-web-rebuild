@@ -6,6 +6,7 @@ import { z } from 'zod';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { toast } from '@/components/ui/sonner';
 import {
@@ -61,6 +62,12 @@ const Contact = () => {
 
   return (
     <>
+      <SEO 
+        title="Contact Us" 
+        description="Get in touch with ƷBI's team of experts. We'd love to hear about your business challenges and how we can help."
+        image="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+        type="website"
+      />
       <Navbar />
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">
