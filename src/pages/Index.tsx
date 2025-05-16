@@ -3,7 +3,6 @@ import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import FeaturedPlanets from "@/components/FeaturedPlanets";
 import AstronomyFacts from "@/components/AstronomyFacts";
 import BusinessCaseStudy from "@/components/BusinessCaseStudy";
 import Newsletter from "@/components/Newsletter";
@@ -15,7 +14,6 @@ const Index = () => {
       <main className="overflow-x-hidden">
         <StarBackground />
         <HeroSection />
-        <FeaturedPlanets />
         <AstronomyFacts />
         <BusinessCaseStudy />
         <Newsletter />

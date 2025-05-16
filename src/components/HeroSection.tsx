@@ -2,70 +2,16 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-interface Planet {
-  size: number;
-  top: string;
-  left: string;
-  color: string;
-  delay: number;
-}
+
 const HeroSection = () => {
   const [visible, setVisible] = useState(false);
+  
   useEffect(() => {
     setVisible(true);
   }, []);
-  const planets: Planet[] = [{
-    size: 100,
-    top: "10%",
-    left: "5%",
-    color: "#F59E0B",
-    delay: 0.2
-  },
-  // Orange
-  {
-    size: 60,
-    top: "25%",
-    left: "85%",
-    color: "#06B6D4",
-    delay: 0.3
-  },
-  // Teal
-  {
-    size: 40,
-    top: "70%",
-    left: "80%",
-    color: "#8B5CF6",
-    delay: 0.4
-  },
-  // Purple
-  {
-    size: 25,
-    top: "60%",
-    left: "15%",
-    color: "#10B981",
-    delay: 0.5
-  } // Green
-  ];
-  return <section className="relative min-h-screen overflow-hidden flex items-center justify-center pt-16">
-      {/* Background planets */}
-      {planets.map((planet, index) => (
-        <div
-          key={index}
-          className="absolute rounded-full opacity-20 blur-sm"
-          style={{
-            width: `${planet.size}px`,
-            height: `${planet.size}px`,
-            top: planet.top,
-            left: planet.left,
-            backgroundColor: planet.color,
-            transition: `all 0.8s ease-out`,
-            transitionDelay: `${planet.delay}s`,
-            transform: visible ? 'scale(1)' : 'scale(0.5)',
-            opacity: visible ? 0.2 : 0,
-          }}
-        />
-      ))}
-
+  
+  return (
+    <section className="relative min-h-screen overflow-hidden flex items-center justify-center pt-16">
       <div className={`container mx-auto px-4 py-20 z-10 text-center transition-all duration-1000 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <span className="text-accent mb-4 block text-lg tracking-wider font-medium">INNOVATIVE SOLUTIONS</span>
         
@@ -99,6 +45,8 @@ const HeroSection = () => {
           <div className="w-2 h-2 bg-white rounded-full animate-bounce mt-2"></div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
