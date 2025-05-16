@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -47,7 +48,23 @@ const HeroSection = () => {
   ];
   return <section className="relative min-h-screen overflow-hidden flex items-center justify-center pt-16">
       {/* Background planets */}
-      {planets.map((planet, index) => {})}
+      {planets.map((planet, index) => (
+        <div
+          key={index}
+          className="absolute rounded-full opacity-20 blur-sm"
+          style={{
+            width: `${planet.size}px`,
+            height: `${planet.size}px`,
+            top: planet.top,
+            left: planet.left,
+            backgroundColor: planet.color,
+            transition: `all 0.8s ease-out`,
+            transitionDelay: `${planet.delay}s`,
+            transform: visible ? 'scale(1)' : 'scale(0.5)',
+            opacity: visible ? 0.2 : 0,
+          }}
+        />
+      ))}
 
       <div className={`container mx-auto px-4 py-20 z-10 text-center transition-all duration-1000 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <span className="text-accent mb-4 block text-lg tracking-wider font-medium">INNOVATIVE SOLUTIONS</span>
