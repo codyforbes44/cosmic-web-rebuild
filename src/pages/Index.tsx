@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import FeaturedPlanets from "@/components/FeaturedPlanets";
 import AstronomyFacts from "@/components/AstronomyFacts";
-import AstronomyImageOfDay from "@/components/AstronomyImageOfDay";
+import BusinessCaseStudy from "@/components/BusinessCaseStudy";
 import Newsletter from "@/components/Newsletter";
 
 const Index = () => {
@@ -17,7 +17,7 @@ const Index = () => {
         <HeroSection />
         <FeaturedPlanets />
         <AstronomyFacts />
-        <AstronomyImageOfDay />
+        <BusinessCaseStudy />
         <Newsletter />
       </main>
       <Footer />
