@@ -1,40 +1,60 @@
 
 import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import { Button } from "@/components/ui/button";
 import { toast } from '@/components/ui/sonner';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+// Define form schema with validation
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  subject: z.string().min(1, { message: "Please select a subject." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+});
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Initialize form with react-hook-form and zod validation
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     
     // Simulate API call
     setTimeout(() => {
       toast.success("Thank you for your message! We'll get back to you soon.");
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
+      form.reset();
       setIsSubmitting(false);
     }, 1500);
   };
@@ -51,7 +71,7 @@ const Contact = () => {
                 Contact Us
               </h1>
               <p className="text-gray-300 text-lg">
-                Have questions, suggestions, or just want to discuss the cosmos? We'd love to hear from you!
+                Have questions about our business services or want to discuss a project? We'd love to hear from you!
               </p>
             </div>
             
@@ -59,81 +79,109 @@ const Contact = () => {
               {/* Contact Form */}
               <div className="space-card p-8 rounded-xl">
                 <h2 className="text-2xl font-bold mb-6 text-white">Send us a message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-white mb-2">Name</label>
-                    <input
-                      type="text"
-                      id="name"
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                      control={form.control}
                       name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent text-white"
-                      required
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              className="bg-gray-800 border border-gray-700 text-white focus:border-accent"
+                              placeholder="Your name"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-white mb-2">Email</label>
-                    <input
-                      type="email"
-                      id="email"
+                    
+                    <FormField
+                      control={form.control}
                       name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent text-white"
-                      required
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              type="email"
+                              className="bg-gray-800 border border-gray-700 text-white focus:border-accent"
+                              placeholder="your.email@example.com"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="subject" className="block text-white mb-2">Subject</label>
-                    <select
-                      id="subject"
+                    
+                    <FormField
+                      control={form.control}
                       name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent text-white"
-                      required
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="general">General Inquiry</option>
-                      <option value="feedback">Website Feedback</option>
-                      <option value="collaboration">Collaboration</option>
-                      <option value="education">Educational Programs</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="message" className="block text-white mb-2">Message</label>
-                    <textarea
-                      id="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Subject</FormLabel>
+                          <Select 
+                            onValueChange={field.onChange} 
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="bg-gray-800 border border-gray-700 text-white focus:border-accent">
+                                <SelectValue placeholder="Select a subject" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="general">General Inquiry</SelectItem>
+                              <SelectItem value="feedback">Website Feedback</SelectItem>
+                              <SelectItem value="collaboration">Collaboration</SelectItem>
+                              <SelectItem value="services">Business Services</SelectItem>
+                              <SelectItem value="other">Other</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
                       name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={5}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent text-white"
-                      required
-                    ></textarea>
-                  </div>
-                  
-                  <Button
-                    type="submit"
-                    className="w-full bg-accent hover:bg-accent/80 text-white py-3"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Sending...
-                      </span>
-                    ) : 'Send Message'}
-                  </Button>
-                </form>
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Message</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              {...field}
+                              rows={5}
+                              className="bg-gray-800 border border-gray-700 text-white focus:border-accent"
+                              placeholder="How can we help you?"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <Button
+                      type="submit"
+                      className="w-full bg-accent hover:bg-accent/80 text-white py-3"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center">
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </span>
+                      ) : 'Send Message'}
+                    </Button>
+                  </form>
+                </Form>
               </div>
               
               {/* Contact Information */}
@@ -150,8 +198,9 @@ const Contact = () => {
                       </div>
                       <div>
                         <h3 className="text-white font-bold">Email</h3>
-                        <p className="text-gray-300">info@astrovision.com</p>
-                        <p className="text-gray-300">support@astrovision.com</p>
+                        <a href="mailto:info@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">info@zbi-consulting.com</a>
+                        <br />
+                        <a href="mailto:support@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">support@zbi-consulting.com</a>
                       </div>
                     </div>
                     
@@ -163,7 +212,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <h3 className="text-white font-bold">Phone</h3>
-                        <p className="text-gray-300">+1 (555) 123-4567</p>
+                        <a href="tel:+15551234567" className="text-gray-300 hover:text-accent transition-colors">+1 (555) 123-4567</a>
                       </div>
                     </div>
                     
@@ -176,40 +225,34 @@ const Contact = () => {
                       </div>
                       <div>
                         <h3 className="text-white font-bold">Location</h3>
-                        <p className="text-gray-300">123 Cosmic Way</p>
-                        <p className="text-gray-300">Starview, SV 12345</p>
+                        <p className="text-gray-300">123 Business Way</p>
+                        <p className="text-gray-300">Innovation Center, IC 12345</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
                 <div className="space-card p-8 rounded-xl">
-                  <h2 className="text-2xl font-bold mb-6 text-white">Follow Us</h2>
+                  <h2 className="text-2xl font-bold mb-6 text-white">Connect With Us</h2>
                   <p className="text-gray-300 mb-6">
-                    Stay connected with us on social media for the latest updates, stunning images, and cosmic discoveries.
+                    Follow us on social media for the latest industry insights, company news, and technology updates.
                   </p>
                   <div className="flex space-x-4">
-                    <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition-colors">
+                    <a href="#" aria-label="Facebook" className="bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                       </svg>
                     </a>
-                    <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition-colors">
+                    <a href="#" aria-label="Twitter" className="bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                         <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                       </svg>
                     </a>
-                    <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition-colors">
+                    <a href="#" aria-label="LinkedIn" className="bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                      </svg>
-                    </a>
-                    <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
                       </svg>
                     </a>
                   </div>
@@ -222,27 +265,27 @@ const Contact = () => {
                 <h2 className="text-2xl font-bold mb-6 text-center text-white">Frequently Asked Questions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-white font-bold mb-2">How can I contribute content?</h3>
+                    <h3 className="text-white font-bold mb-2">What services do you offer?</h3>
                     <p className="text-gray-300">
-                      We welcome contributions from passionate astronomers and writers. Please contact us through the form above with samples of your work.
+                      We offer a comprehensive range of business technology solutions including digital transformation, AI integration, data analytics, and custom software development.
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-white font-bold mb-2">Do you offer educational programs?</h3>
+                    <h3 className="text-white font-bold mb-2">How do your consulting packages work?</h3>
                     <p className="text-gray-300">
-                      Yes, we offer virtual workshops, webinars, and educational resources for schools and astronomy clubs. Contact us for more information.
+                      We offer flexible consulting packages tailored to your business needs, from one-time assessments to ongoing strategic partnerships. Contact us for a customized solution.
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-white font-bold mb-2">Can I use your images for my project?</h3>
+                    <h3 className="text-white font-bold mb-2">Do you serve small businesses?</h3>
                     <p className="text-gray-300">
-                      Many of our images are available under Creative Commons licenses. Please check the specific image rights or contact us for permission.
+                      Yes, we work with businesses of all sizes. We have specialized solutions designed specifically for small and medium enterprises looking to leverage technology.
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-white font-bold mb-2">How can I support AstroVision?</h3>
+                    <h3 className="text-white font-bold mb-2">How can we get started?</h3>
                     <p className="text-gray-300">
-                      You can support us by subscribing to our newsletter, following us on social media, and sharing our content with others who love astronomy.
+                      Simply fill out our contact form or give us a call. We'll schedule an initial consultation to understand your needs and propose the right solution for your business.
                     </p>
                   </div>
                 </div>

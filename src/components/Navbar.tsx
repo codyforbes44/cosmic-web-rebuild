@@ -3,26 +3,52 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const location = useLocation();
 
+  // Close mobile nav when route changes
   useEffect(() => {
+    setIsMobileNavOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    // Handle scroll events for navbar appearance
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    // Handle escape key for mobile nav
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMobileNavOpen(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
+    document.addEventListener('keydown', handleEscape);
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('keydown', handleEscape);
     };
   }, []);
+
+  // Prevent body scroll when mobile nav is open
+  useEffect(() => {
+    if (isMobileNavOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileNavOpen]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -44,53 +70,107 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="text-xl md:text-2xl font-space-grotesk font-bold text-white">
+        <Link to="/" className="flex items-center space-x-2 z-20">
+          <motion.span 
+            className="text-xl md:text-2xl font-space-grotesk font-bold text-white"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <span className="text-accent">Ʒ</span>BI
-          </span>
+          </motion.span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
-              to={link.path} 
-              className={`nav-link ${isActive(link.path)}`}
+          {navLinks.map((link, index) => (
+            <motion.div
+              key={link.name}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              {link.name}
-            </Link>
+              <Link 
+                to={link.path} 
+                className={`nav-link ${isActive(link.path)}`}
+                aria-current={isActive(link.path) ? 'page' : undefined}
+              >
+                {link.name}
+                {isActive(link.path) && (
+                  <motion.div 
+                    className="h-0.5 bg-accent mt-1" 
+                    layoutId="navbar-indicator"
+                  />
+                )}
+              </Link>
+            </motion.div>
           ))}
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.6 }}
+          >
+            <Link to="/contact">
+              <Button className="bg-accent hover:bg-accent/80 text-white">Get a Quote</Button>
+            </Link>
+          </motion.div>
         </nav>
 
         {/* Mobile Navigation Toggle */}
         <button 
-          className="md:hidden text-white p-1" 
+          className="md:hidden text-white p-1 z-20" 
           onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-          aria-label="Toggle menu"
+          aria-label={isMobileNavOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMobileNavOpen}
+          aria-controls="mobile-menu"
         >
           {isMobileNavOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Navigation Menu */}
-      {isMobileNavOpen && (
-        <div className="md:hidden bg-space-deep-blue/95 backdrop-blur-lg absolute top-full left-0 w-full py-4 shadow-lg">
-          <nav className="container mx-auto px-4 flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                to={link.path} 
-                className={`nav-link text-lg ${isActive(link.path)}`}
-                onClick={() => setIsMobileNavOpen(false)}
+      <AnimatePresence>
+        {isMobileNavOpen && (
+          <motion.div 
+            id="mobile-menu"
+            className="md:hidden bg-space-deep-blue/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full pt-20 z-10"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            <nav className="container mx-auto px-4 flex flex-col space-y-6">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <Link 
+                    to={link.path} 
+                    className={`nav-link text-xl ${isActive(link.path)}`}
+                    onClick={() => setIsMobileNavOpen(false)}
+                    aria-current={isActive(link.path) ? 'page' : undefined}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.6 }}
               >
-                {link.name}
-              </Link>
-            ))}
-            <Button className="btn-primary mt-4">Get a Quote</Button>
-          </nav>
-        </div>
-      )}
+                <Link to="/contact" onClick={() => setIsMobileNavOpen(false)}>
+                  <Button className="btn-primary mt-4 w-full">Get a Quote</Button>
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
