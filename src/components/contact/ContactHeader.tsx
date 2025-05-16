@@ -6,7 +6,7 @@ const ContactHeader = () => {
     <div className="max-w-3xl mx-auto text-center mb-16">
       <div className="flex justify-center mb-6">
         <img 
-          src="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png" 
+          src="/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" 
           alt="ƷBI Logo" 
           className="h-16 w-auto"
         />
