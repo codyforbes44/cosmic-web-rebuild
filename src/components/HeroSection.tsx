@@ -12,6 +12,23 @@ const HeroSection = () => {
   
   return (
     <section className="relative min-h-screen overflow-hidden flex items-center justify-center pt-16">
+      {/* Circuit board background */}
+      <div 
+        className="absolute inset-0 z-0" 
+        style={{
+          backgroundImage: "url('/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          opacity: 0.6,
+        }}
+      />
+      
+      {/* Gradient overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-gradient-to-b from-space-dark-blue/80 to-space-deep-blue/90"
+      />
+
       <div className={`container mx-auto px-4 py-20 z-10 text-center transition-all duration-1000 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <span className="text-accent mb-4 block text-lg tracking-wider font-medium">INNOVATIVE SOLUTIONS</span>
         
