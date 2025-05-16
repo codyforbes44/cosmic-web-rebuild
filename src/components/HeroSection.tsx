@@ -49,32 +49,31 @@ const HeroSection = () => {
           visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}
       >
-        <span className="text-accent mb-4 block text-lg tracking-wider font-medium">EXPLORE THE COSMOS</span>
+        <span className="text-accent mb-4 block text-lg tracking-wider font-medium">INNOVATIVE SOLUTIONS</span>
         
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
-          Journey Through The <br />
+          Welcome to <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-            Infinite Universe
+            ƷBI
           </span>
         </h1>
         
         <p className="text-gray-300 max-w-2xl mx-auto mb-8 text-lg">
-          Discover the mysteries of space, explore planets, stars, and galaxies
-          through stunning visuals and cutting-edge astronomical insights.
+          Elevating businesses through cutting-edge technology solutions and expert consulting services
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
             className="bg-accent hover:bg-accent/80 text-white px-8 py-6 rounded-md"
           >
-            Start Exploring
+            Explore Services
           </Button>
-          <Link to="/gallery">
+          <Link to="/contact">
             <Button
               variant="outline"
               className="border-gray-500 hover:bg-gray-800 text-white px-8 py-6"
             >
-              View Gallery
+              Contact Us
             </Button>
           </Link>
         </div>

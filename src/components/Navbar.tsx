@@ -26,8 +26,8 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Planets', path: '/planets' },
-    { name: 'Gallery', path: '/gallery' },
+    { name: 'Services', path: '/planets' },
+    { name: 'Portfolio', path: '/gallery' },
     { name: 'News', path: '/news' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
@@ -46,7 +46,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-2">
           <span className="text-xl md:text-2xl font-space-grotesk font-bold text-white">
-            Astro<span className="text-accent">Vision</span>
+            <span className="text-accent">Ʒ</span>BI
           </span>
         </Link>
 
@@ -87,7 +87,7 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Button className="btn-primary mt-4">Explore Now</Button>
+            <Button className="btn-primary mt-4">Get a Quote</Button>
           </nav>
         </div>
       )}

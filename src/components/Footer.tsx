@@ -8,9 +8,9 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white">AstroVision</h3>
+            <h3 className="text-xl font-bold mb-4 text-white"><span className="text-accent">Ʒ</span>BI</h3>
             <p className="text-gray-400 mb-4">
-              Exploring the wonders of our universe through stunning visuals and educational content about astronomy.
+              Providing innovative technology solutions and expert consulting services to help businesses thrive in the digital age.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
@@ -29,17 +29,17 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-4 text-white">Explore</h3>
+            <h3 className="text-lg font-medium mb-4 text-white">Services</h3>
             <ul className="space-y-2">
-              <li><Link to="/planets" className="text-gray-400 hover:text-white transition-colors">Planets</Link></li>
-              <li><Link to="/gallery" className="text-gray-400 hover:text-white transition-colors">Gallery</Link></li>
-              <li><Link to="/news" className="text-gray-400 hover:text-white transition-colors">News</Link></li>
+              <li><Link to="/planets" className="text-gray-400 hover:text-white transition-colors">Technology Solutions</Link></li>
+              <li><Link to="/gallery" className="text-gray-400 hover:text-white transition-colors">Portfolio</Link></li>
+              <li><Link to="/news" className="text-gray-400 hover:text-white transition-colors">Industry News</Link></li>
               <li><Link to="/events" className="text-gray-400 hover:text-white transition-colors">Events</Link></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-4 text-white">About Us</h3>
+            <h3 className="text-lg font-medium mb-4 text-white">Company</h3>
             <ul className="space-y-2">
               <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors">Our Mission</Link></li>
               <li><Link to="/team" className="text-gray-400 hover:text-white transition-colors">Our Team</Link></li>
@@ -49,8 +49,8 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-4 text-white">Subscribe</h3>
-            <p className="text-gray-400 mb-4">Stay updated with our latest news and discoveries.</p>
+            <h3 className="text-lg font-medium mb-4 text-white">Stay Updated</h3>
+            <p className="text-gray-400 mb-4">Subscribe to our newsletter for the latest industry trends and company updates.</p>
             <form className="flex flex-col space-y-2">
               <input 
                 type="email" 
@@ -69,7 +69,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm">© {new Date().getFullYear()} AstroVision. All rights reserved.</p>
+            <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ƷBI. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link to="/privacy" className="text-gray-500 hover:text-white transition-colors text-sm">Privacy Policy</Link>
               <Link to="/terms" className="text-gray-500 hover:text-white transition-colors text-sm">Terms of Service</Link>

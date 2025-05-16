@@ -2,103 +2,103 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-interface Fact {
+interface Service {
   category: string;
   title: string;
   content: string;
   image: string;
 }
 
-const facts: Record<string, Fact[]> = {
-  planets: [
+const services: Record<string, Service[]> = {
+  consulting: [
     {
-      category: 'planets',
-      title: 'One day on Venus is longer than one year',
-      content: 'Venus has a slow rotation on its axis, taking 243 Earth days to complete one rotation. However, it takes only 225 Earth days to completely orbit the Sun, making a day on Venus longer than its year.',
-      image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+      category: 'consulting',
+      title: 'Strategic Technology Consulting',
+      content: 'Our expert consultants work with your team to develop comprehensive technology strategies aligned with your business objectives, ensuring optimal ROI and competitive advantage.',
+      image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
     },
     {
-      category: 'planets',
-      title: 'Jupiter has the shortest day of all the planets',
-      content: 'Despite being the largest planet in our solar system, Jupiter\'s day is only about 9 hours and 55 minutes long, the shortest day of all the planets.',
-      image: 'https://images.unsplash.com/photo-1630839437035-dac17da580d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
-    },
-  ],
-  stars: [
-    {
-      category: 'stars',
-      title: 'There are more stars in the universe than grains of sand on Earth',
-      content: 'Astronomers estimate there are about 10,000,000,000,000,000,000,000 stars in the observable universe. That\'s 10 sextillion, which is more than all the grains of sand on all of Earth\'s beaches.',
-      image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    },
-    {
-      category: 'stars',
-      title: 'The biggest star is VY Canis Majoris',
-      content: 'VY Canis Majoris is a red hypergiant star in the constellation Canis Major. It is one of the largest known stars and one of the most luminous of its type, with a radius about 1,420 times that of the Sun.',
-      image: 'https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+      category: 'consulting',
+      title: 'Digital Transformation',
+      content: 'We guide businesses through their digital transformation journey, helping modernize legacy systems, implement new technologies, and create seamless digital experiences for customers.',
+      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
     },
   ],
-  galaxies: [
+  development: [
     {
-      category: 'galaxies',
-      title: 'There are over 100 billion galaxies in the observable universe',
-      content: 'Using data from NASA\'s Hubble Space Telescope, astronomers have estimated that there are at least 100 billion galaxies in the observable universe, though the total number could be even higher.',
-      image: 'https://images.unsplash.com/photo-1462332420958-a05d1e002413?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+      category: 'development',
+      title: 'Custom Software Development',
+      content: 'Our team designs and builds tailored software solutions that address your specific business challenges, from enterprise applications to specialized industry tools.',
+      image: 'https://images.unsplash.com/photo-1573495612937-f02b76716e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
     {
-      category: 'galaxies',
-      title: 'The Milky Way and Andromeda galaxies will collide',
-      content: 'In about 4.5 billion years, our Milky Way galaxy will collide with the Andromeda galaxy. The two galaxies are currently moving toward each other at a rate of about 110 kilometers per second.',
-      image: 'https://images.unsplash.com/photo-1504333638930-c8787321eee0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+      category: 'development',
+      title: 'Web & Mobile Applications',
+      content: 'We create responsive, user-friendly web and mobile applications that deliver exceptional user experiences across all devices, helping your business reach customers wherever they are.',
+      image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    },
+  ],
+  analytics: [
+    {
+      category: 'analytics',
+      title: 'Business Intelligence & Analytics',
+      content: 'Transform your data into actionable insights with our advanced analytics solutions, helping you make data-driven decisions that improve operations and drive business growth.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    },
+    {
+      category: 'analytics',
+      title: 'Predictive Analytics & AI',
+      content: 'Leverage the power of artificial intelligence and machine learning to forecast trends, optimize processes, and gain competitive advantages in your market.',
+      image: 'https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
   ],
 };
 
 const AstronomyFacts = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('planets');
+  const [activeCategory, setActiveCategory] = useState<string>('consulting');
 
   return (
     <section className="py-24 bg-gradient-to-b from-space-dark-blue to-space-deep-blue">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="section-heading">Fascinating Astronomy Facts</h2>
+          <h2 className="section-heading">Our Services & Solutions</h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-            Discover incredible facts about our universe that will expand your cosmic knowledge
+            Discover how ƷBI can help transform your business with our comprehensive range of technology services
           </p>
         </div>
 
-        <Tabs defaultValue="planets" value={activeCategory} onValueChange={setActiveCategory} className="w-full">
+        <Tabs defaultValue="consulting" value={activeCategory} onValueChange={setActiveCategory} className="w-full">
           <div className="flex justify-center mb-8">
             <TabsList className="bg-gray-800 p-1">
-              <TabsTrigger value="planets" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Planets
+              <TabsTrigger value="consulting" className="data-[state=active]:bg-accent data-[state=active]:text-white">
+                Consulting
               </TabsTrigger>
-              <TabsTrigger value="stars" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Stars
+              <TabsTrigger value="development" className="data-[state=active]:bg-accent data-[state=active]:text-white">
+                Development
               </TabsTrigger>
-              <TabsTrigger value="galaxies" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Galaxies
+              <TabsTrigger value="analytics" className="data-[state=active]:bg-accent data-[state=active]:text-white">
+                Analytics
               </TabsTrigger>
             </TabsList>
           </div>
 
-          {Object.entries(facts).map(([category, categoryFacts]) => (
+          {Object.entries(services).map(([category, categoryServices]) => (
             <TabsContent key={category} value={category} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {categoryFacts.map((fact, index) => (
+                {categoryServices.map((service, index) => (
                   <div
                     key={index}
                     className="space-card p-6 overflow-hidden hover:scale-[1.02] transition-all duration-300 h-full"
                   >
                     <div className="mb-4 overflow-hidden rounded-lg">
                       <img
-                        src={fact.image}
-                        alt={fact.title}
+                        src={service.image}
+                        alt={service.title}
                         className="w-full h-48 object-cover"
                       />
                     </div>
-                    <h3 className="text-xl font-bold mb-2 text-white">{fact.title}</h3>
-                    <p className="text-gray-300">{fact.content}</p>
+                    <h3 className="text-xl font-bold mb-2 text-white">{service.title}</h3>
+                    <p className="text-gray-300">{service.content}</p>
                   </div>
                 ))}
               </div>

@@ -15,10 +15,10 @@ const About = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                About AstroVision
+                About <span className="text-accent">Ʒ</span>BI
               </h1>
               <p className="text-gray-300 text-lg">
-                Exploring the wonders of our universe through stunning visuals and educational content about astronomy
+                Pioneering innovative technology solutions to empower businesses in the digital era
               </p>
             </div>
             
@@ -26,19 +26,19 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold mb-6 text-white">Our Mission</h2>
                 <p className="text-gray-300 mb-6">
-                  At AstroVision, we're passionate about making the wonders of astronomy accessible to everyone. Our mission is to inspire curiosity about the cosmos and foster a deeper understanding of our place in the universe.
+                  At ƷBI, our mission is to accelerate business growth through innovative technology solutions and strategic consulting. We believe that the right technology, implemented correctly, can transform businesses and drive exceptional results.
                 </p>
                 <p className="text-gray-300 mb-6">
-                  Through captivating imagery, accessible explanations, and up-to-date discoveries, we aim to bridge the gap between complex astronomical concepts and public understanding, creating a community of space enthusiasts and lifelong learners.
+                  Through our comprehensive range of services, we help organizations of all sizes navigate the complex digital landscape, optimize their operations, and achieve their strategic objectives.
                 </p>
                 <p className="text-gray-300">
-                  We believe that by sharing the beauty and mystery of the universe, we can inspire the next generation of astronomers, astrophysicists, and space explorers who will push the boundaries of human knowledge even further.
+                  Our team of technology experts and business consultants brings decades of combined experience across various industries, allowing us to deliver tailored solutions that address the unique challenges and opportunities facing each of our clients.
                 </p>
               </div>
               <div className="space-card p-6 rounded-xl overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1501862700950-18382cd41497?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1019&q=80" 
-                  alt="Telescopes at night"
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1019&q=80" 
+                  alt="ƷBI team collaboration"
                   className="w-full h-auto rounded-lg"
                 />
               </div>
@@ -48,88 +48,86 @@ const About = () => {
               <div className="space-card p-8 rounded-xl text-center">
                 <div className="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    <path d="m22 2-7 20-4-9-9-4Z"></path>
+                    <path d="M22 2 11 13"></path>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-white">Education</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">Innovation</h3>
                 <p className="text-gray-300">
-                  We provide accessible, accurate information about astronomy and space science to foster learning and discovery for all ages.
+                  We stay at the forefront of technology trends and continuously explore new ways to solve complex business problems.
                 </p>
               </div>
               
               <div className="space-card p-8 rounded-xl text-center">
                 <div className="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"></path>
+                    <path d="M2 20h20"></path>
+                    <path d="M14 12v.01"></path>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-white">Research</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">Expertise</h3>
                 <p className="text-gray-300">
-                  We stay updated with the latest astronomical research and discoveries, translating complex findings into engaging content.
+                  Our team brings deep domain knowledge and technical expertise to deliver solutions that drive measurable business value.
                 </p>
               </div>
               
               <div className="space-card p-8 rounded-xl text-center">
                 <div className="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
-                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
-                    <path d="M9 18h6"></path>
-                    <path d="M10 22h4"></path>
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-white">Inspiration</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">Client Focus</h3>
                 <p className="text-gray-300">
-                  Through stunning imagery and compelling storytelling, we aim to inspire wonder and curiosity about the cosmos.
+                  We build lasting partnerships with our clients, understanding their needs and delivering solutions that exceed expectations.
                 </p>
               </div>
             </div>
 
             <div className="max-w-3xl mx-auto mb-20">
-              <h2 className="text-3xl font-bold mb-6 text-center text-white">Our Team</h2>
+              <h2 className="text-3xl font-bold mb-6 text-center text-white">Our Leadership Team</h2>
               <p className="text-gray-300 text-center mb-12">
-                AstroVision is brought to you by a dedicated team of astronomers, educators, writers, and space enthusiasts who share a passion for the cosmos and a commitment to sharing its wonders with the world.
+                ƷBI is led by a team of technology visionaries and business experts with extensive experience in delivering transformative digital solutions.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex flex-col items-center">
                   <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
                     <img 
-                      src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=922&q=80" 
-                      alt="Dr. Elena Rodriguez"
+                      src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=922&q=80" 
+                      alt="Alexander Mitchell"
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h3 className="text-xl font-bold text-white">Dr. Elena Rodriguez</h3>
-                  <p className="text-accent mb-2">Founder & Astrophysicist</p>
+                  <h3 className="text-xl font-bold text-white">Alexander Mitchell</h3>
+                  <p className="text-accent mb-2">CEO & Founder</p>
                   <p className="text-gray-400 text-center">
-                    PhD in Astrophysics with over 15 years of research experience, specializing in exoplanetology.
+                    With over 20 years in technology leadership, Alex brings strategic vision and industry expertise to guide ƷBI's growth.
                   </p>
                 </div>
                 
                 <div className="flex flex-col items-center">
                   <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
                     <img 
-                      src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=934&q=80" 
-                      alt="Marcus Johnson"
+                      src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=934&q=80" 
+                      alt="Sarah Johnson"
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h3 className="text-xl font-bold text-white">Marcus Johnson</h3>
-                  <p className="text-accent mb-2">Science Communicator</p>
+                  <h3 className="text-xl font-bold text-white">Sarah Johnson</h3>
+                  <p className="text-accent mb-2">CTO</p>
                   <p className="text-gray-400 text-center">
-                    Former NASA educator with a talent for explaining complex astronomical concepts in accessible ways.
+                    Sarah leads our technical operations, bringing innovation and excellence to every solution we deliver.
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="bg-space-deep-blue rounded-xl p-8 md:p-12 text-center">
-              <h2 className="text-3xl font-bold mb-6 text-white">Join Our Cosmic Journey</h2>
+              <h2 className="text-3xl font-bold mb-6 text-white">Ready to Transform Your Business?</h2>
               <p className="text-gray-300 max-w-2xl mx-auto mb-8">
-                Whether you're a seasoned astronomer or just beginning to explore the wonders of the cosmos, we invite you to join our community and embark on this incredible journey of discovery.
+                Partner with ƷBI to leverage the power of technology and strategic innovation to achieve your business goals and stay ahead in today's competitive landscape.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/contact">
@@ -137,9 +135,9 @@ const About = () => {
                     Contact Us
                   </Button>
                 </Link>
-                <Link to="/newsletter">
+                <Link to="/planets">
                   <Button variant="outline" className="border-gray-600 hover:bg-gray-800 text-white px-8 py-3">
-                    Subscribe to Updates
+                    Our Services
                   </Button>
                 </Link>
               </div>
