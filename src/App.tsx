@@ -14,6 +14,7 @@ import Portfolio from "./pages/Portfolio";
 import News from "./pages/News";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import GetQuote from "./pages/GetQuote";
 import NotFound from "./pages/NotFound";
 
 // Create a query client with better defaults
@@ -43,6 +44,7 @@ const App: React.FC = () => {
                 <Route path="/news" element={<News />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/get-quote" element={<GetQuote />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

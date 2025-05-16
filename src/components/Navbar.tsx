@@ -114,7 +114,7 @@ const Navbar = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.6 }}
           >
-            <Link to="/contact">
+            <Link to="/get-quote">
               <Button className="bg-accent hover:bg-accent/80 text-white">Get a Quote</Button>
             </Link>
           </motion.div>
@@ -166,7 +166,7 @@ const Navbar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.6 }}
               >
-                <Link to="/contact" onClick={() => setIsMobileNavOpen(false)}>
+                <Link to="/get-quote" onClick={() => setIsMobileNavOpen(false)}>
                   <Button className="btn-primary mt-4 w-full">Get a Quote</Button>
                 </Link>
               </motion.div>
