@@ -31,10 +31,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Services</h3>
             <ul className="space-y-2">
-              <li><Link to="/planets" className="footer-link">Technology Solutions</Link></li>
-              <li><Link to="/gallery" className="footer-link">Portfolio</Link></li>
+              <li><Link to="/services" className="footer-link">Technology Solutions</Link></li>
+              <li><Link to="/portfolio" className="footer-link">Portfolio</Link></li>
               <li><Link to="/news" className="footer-link">Industry News</Link></li>
-              <li><Link to="/events" className="footer-link">Events</Link></li>
+              <li><Link to="/partners" className="footer-link">Our Partners</Link></li>
             </ul>
           </div>
           
