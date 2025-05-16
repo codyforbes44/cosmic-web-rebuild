@@ -35,8 +35,8 @@ const formSchema = z.object({
   serviceType: z.string().min(1, { message: "Please select a service type." }),
   projectDescription: z.string().min(20, { message: "Please provide at least 20 characters describing your needs." }),
   timeline: z.string().optional(),
-  termsAccepted: z.literal(true, {
-    errorMap: () => ({ message: "You must accept the terms and conditions." }),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: "You must accept the terms and conditions.",
   }),
 });
 
