@@ -70,6 +70,12 @@ export default {
 					'teal': '#06B6D4',
 					'orange': '#F59E0B',
 					'star': '#FFFFFF'
+				},
+				brand: {
+					'blue': '#1EAEDB',
+					'gold': '#F2C94C',
+					'black': '#000000',
+					'white': '#FFFFFF'
 				}
 			},
 			borderRadius: {

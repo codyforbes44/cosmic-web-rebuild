@@ -17,7 +17,7 @@
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 199 76% 49%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -26,7 +26,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 250 95% 60%;
+    --accent: 47 89% 62%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -80,11 +80,11 @@
   }
 
   .nav-link.active {
-    @apply text-accent font-medium;
+    @apply text-brand-blue font-medium;
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-primary/80 text-white font-medium py-2 px-6 rounded-md transition-colors;
+    @apply bg-brand-blue hover:bg-brand-blue/80 text-white font-medium py-2 px-6 rounded-md transition-colors;
   }
 
   .section-heading {
@@ -93,6 +93,6 @@
 
   .section-heading::after {
     content: "";
-    @apply block w-full h-1 bg-accent mt-2;
+    @apply block w-full h-1 bg-brand-gold mt-2;
   }
 }
