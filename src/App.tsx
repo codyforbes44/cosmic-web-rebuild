@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
+import { useExternalLinks } from "./hooks/use-external-links";
 
 // Import pages
 import Index from "./pages/Index";
@@ -37,6 +38,32 @@ const queryClient = new QueryClient({
   },
 });
 
+// AppContent component to use hooks inside Routes
+const AppContent = () => {
+  // Apply the external links hook
+  useExternalLinks();
+  
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/news" element={<News />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/get-quote" element={<GetQuote />} />
+      <Route path="/partners" element={<Partners />} />
+      <Route path="/packages" element={<Packages />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
+      <Route path="/accessibility" element={<Accessibility />} />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <React.StrictMode>
@@ -46,23 +73,7 @@ const App: React.FC = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/news" element={<News />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/get-quote" element={<GetQuote />} />
-                <Route path="/partners" element={<Partners />} />
-                <Route path="/packages" element={<Packages />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/terms" element={<TermsOfService />} />
-                <Route path="/accessibility" element={<Accessibility />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <AppContent />
             </BrowserRouter>
           </TooltipProvider>
         </QueryClientProvider>
