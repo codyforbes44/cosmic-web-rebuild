@@ -7,17 +7,18 @@ import ChatHeader from './ChatHeader';
 import MessageList from './MessageList';
 import ChatInput from './ChatInput';
 import { AUTO_RESPONSES, DEFAULT_RESPONSE, INITIAL_MESSAGE } from './constants';
-import { Message, UserInfo } from './types';
+import { Message } from './types';
 
 export default function LiveChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [lastSeenId, setLastSeenId] = useState('1');
+  const [lastSeenId, setLastSeenId] = useState('');
   const [sessionId, setSessionId] = useState('');
   const [showWelcomeAnimation, setShowWelcomeAnimation] = useState(false);
+  const [initialMessageSent, setInitialMessageSent] = useState(false);
 
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<HTMLInputElement>(null);
@@ -27,6 +28,21 @@ export default function LiveChat() {
   useEffect(() => {
     setSessionId(uuidv4());
   }, []);
+
+  // Send initial welcome message with typing effect when chat opens
+  useEffect(() => {
+    if (isOpen && !initialMessageSent) {
+      setIsTyping(true);
+      
+      // Delay the welcome message for a more natural feel
+      setTimeout(() => {
+        setMessages([INITIAL_MESSAGE]);
+        setIsTyping(false);
+        setInitialMessageSent(true);
+        setLastSeenId(INITIAL_MESSAGE.id);
+      }, 1200);
+    }
+  }, [isOpen, initialMessageSent]);
 
   // Scroll on new messages
   useEffect(() => {
@@ -38,7 +54,9 @@ export default function LiveChat() {
   // Focus input when opened
   useEffect(() => {
     if (isOpen && chatInputRef.current) {
-      chatInputRef.current.focus();
+      setTimeout(() => {
+        if (chatInputRef.current) chatInputRef.current.focus();
+      }, 500);
     }
   }, [isOpen]);
 
@@ -65,7 +83,11 @@ export default function LiveChat() {
 
   const toggleChat = useCallback(() => {
     setIsOpen(open => {
-      if (!open) setLastSeenId(messages[messages.length - 1].id);
+      if (!open) {
+        if (messages.length > 0) {
+          setLastSeenId(messages[messages.length - 1].id);
+        }
+      }
       return !open;
     });
     setIsMinimized(false);
@@ -111,6 +133,9 @@ export default function LiveChat() {
     });
     const respText = match ? match.response : DEFAULT_RESPONSE;
 
+    // Simulate a more natural typing delay based on response length
+    const typingDelay = Math.min(1500, 500 + respText.length * 10);
+    
     responseTimeout.current = setTimeout(() => {
       const agentMsg: Message = { 
         id: uuidv4(), 
@@ -123,7 +148,7 @@ export default function LiveChat() {
       
       // Store the interaction in Supabase
       storeChatInteraction(text, respText);
-    }, 1500);
+    }, typingDelay);
   }, [newMessage, sessionId]);
 
   return (
@@ -149,3 +174,4 @@ export default function LiveChat() {
     </div>
   );
 }
+
