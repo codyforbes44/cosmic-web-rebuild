@@ -14,15 +14,13 @@ interface DesktopNavigationProps {
 const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProps) => {
   return (
     <nav className="hidden md:flex items-center space-x-8">
-      {/* Home and other links */}
-      {navLinks.slice(0, 1).map((link, index) => (
-        <DesktopNavLink 
-          key={link.name}
-          link={link} 
-          isActive={isActive(link.path) === 'active'} 
-          index={index}
-        />
-      ))}
+      {/* Home link */}
+      <DesktopNavLink 
+        key={navLinks[0].name}
+        link={navLinks[0]} 
+        isActive={isActive(navLinks[0].path) === 'active'} 
+        index={0}
+      />
 
       {/* Services Dropdown */}
       <ServiceDropdown isActive={isServicesActive} />
@@ -33,7 +31,7 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
           key={link.name}
           link={link} 
           isActive={isActive(link.path) === 'active'} 
-          index={index + 2}
+          index={index + 1}
         />
       ))}
       

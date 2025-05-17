@@ -36,15 +36,13 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
             <div>
               <nav className="space-y-6">
                 {/* Home Link */}
-                {navLinks.slice(0, 1).map((link, index) => (
-                  <MobileNavLink 
-                    key={link.name}
-                    link={link} 
-                    isActive={isActive(link.path) === 'active'} 
-                    index={index}
-                    onClose={onClose}
-                  />
-                ))}
+                <MobileNavLink 
+                  key={navLinks[0].name}
+                  link={navLinks[0]} 
+                  isActive={isActive(navLinks[0].path) === 'active'} 
+                  index={0}
+                  onClose={onClose}
+                />
                 
                 {/* Services Link/Submenu */}
                 <motion.div
@@ -71,7 +69,7 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                     key={link.name}
                     link={link} 
                     isActive={isActive(link.path) === 'active'} 
-                    index={index + 2}
+                    index={index + 1}
                     onClose={onClose}
                   />
                 ))}
