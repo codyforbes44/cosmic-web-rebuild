@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Ban } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -20,7 +21,7 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
       transition={{ duration: 0.3, delay: index * 0.1 }}
     >
       {link.disabled ? (
-        <TooltipProvider>
+        <TooltipProvider delayDuration={300}>
           <Tooltip>
             <TooltipTrigger asChild>
               <span className="nav-link text-gray-500 cursor-not-allowed flex items-center font-medium">
