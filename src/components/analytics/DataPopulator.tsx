@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Database, RefreshCw } from 'lucide-react';
+import { Trash2, RefreshCw } from 'lucide-react';
 import { useDataPopulator } from '@/hooks/useDataPopulator';
 import DataPopulatorStatus from './DataPopulatorStatus';
 import { DataPopulatorProps } from '@/types/generatedData';
@@ -14,8 +14,8 @@ const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
     <Card className={`bg-gray-800/50 border-gray-700 text-white mb-6 ${className}`}>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2">
-          <Database className="h-5 w-5" />
-          Analytics Data Management
+          <Trash2 className="h-5 w-5" />
+          Reset Analytics Data
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -36,17 +36,17 @@ const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
             {isProcessing ? (
               <>
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                Generating Sample Data...
+                Resetting Analytics Data...
               </>
             ) : (
               <>
-                <Database className="h-4 w-4 mr-2" />
-                Reset & Populate Analytics Data
+                <Trash2 className="h-4 w-4 mr-2" />
+                Reset All Analytics Data
               </>
             )}
           </Button>
           <p className="text-xs text-gray-500 text-center">
-            Warning: This will clear existing analytics data and replace it with sample data
+            Warning: This will permanently delete all existing analytics data
           </p>
         </div>
       </CardContent>
