@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Card, 
   CardContent, 
@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { MessageCircle, Headset, Bot, BrainCircuit, MessageSquare } from 'lucide-react';
+import { SiteSetting } from '@/types/settings';
 
 // Define the available icon options
 const iconOptions = [
@@ -39,12 +40,12 @@ const ChatbotIconSelector: React.FC<ChatbotIconSelectorProps> = ({ refetchAnalyt
   const { toast } = useToast();
 
   // Fetch current icon setting when component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchCurrentIcon = async () => {
       try {
         const { data, error } = await supabase
           .from('site_settings')
-          .select('value')
+          .select('*')
           .eq('key', 'chatbot_icon')
           .single();
         

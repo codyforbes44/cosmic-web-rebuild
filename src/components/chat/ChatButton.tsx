@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { X, MessageCircle, Headset, Bot, BrainCircuit, MessageSquare } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { SiteSetting } from '@/types/settings';
 
 interface ChatButtonProps {
   isOpen: boolean;
@@ -18,7 +19,7 @@ export default function ChatButton({ isOpen, unreadCount, toggle }: ChatButtonPr
       try {
         const { data, error } = await supabase
           .from('site_settings')
-          .select('value')
+          .select('*')
           .eq('key', 'chatbot_icon')
           .single();
         
