@@ -104,3 +104,18 @@
     @apply text-gray-400 hover:text-brand-gold transition-colors duration-300;
   }
 }
+
+/* Hide Lovable badge */
+[class*="lovable-badge"],
+[id*="lovable-badge"],
+[class*="lovable-branding"],
+[id*="lovable-branding"],
+[class*="lovable-edit"],
+[id*="lovable-edit"],
+[data-lovable],
+.lovable-badge-container {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

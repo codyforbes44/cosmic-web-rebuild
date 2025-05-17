@@ -30,6 +30,22 @@
     
     <!-- Required Lovable script tag for new features -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <style>
+      /* Hide Lovable branding elements */
+      [class*="lovable-badge"],
+      [id*="lovable-badge"],
+      [class*="lovable-branding"],
+      [id*="lovable-branding"],
+      [class*="lovable-edit"],
+      [id*="lovable-edit"],
+      [data-lovable],
+      .lovable-badge-container {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style>
   </head>
 
   <body>
