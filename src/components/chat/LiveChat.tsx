@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { nanoid } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import ChatButton from './ChatButton';
 import ChatHeader from './ChatHeader';
 import UserInfoForm from './UserInfoForm';
@@ -66,7 +66,7 @@ export default function LiveChat() {
     e.preventDefault();
     setUserInfo(info => ({ ...info, submitted: true }));
     const welcome: Message = { 
-      id: nanoid(), 
+      id: uuidv4(), 
       sender: 'agent', 
       text: `Hi ${userInfo.name}! Thanks for providing your information. How can I assist you with your project today?`, 
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
@@ -80,7 +80,7 @@ export default function LiveChat() {
     if (!text) return;
 
     const userMsg: Message = { 
-      id: nanoid(), 
+      id: uuidv4(), 
       sender: 'user', 
       text, 
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
@@ -98,7 +98,7 @@ export default function LiveChat() {
 
     responseTimeout.current = setTimeout(() => {
       const agentMsg: Message = { 
-        id: nanoid(), 
+        id: uuidv4(), 
         sender: 'agent', 
         text: respText, 
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 

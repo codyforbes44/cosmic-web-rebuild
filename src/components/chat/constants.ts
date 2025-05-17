@@ -1,4 +1,6 @@
 
+import { Message } from './types';
+
 export const AUTO_RESPONSES = [
   {
     keywords: ['pricing', 'cost', 'price', 'package', 'subscription'],
@@ -69,7 +71,7 @@ export const AUTO_RESPONSES = [
 
 export const DEFAULT_RESPONSE = "Thank you for your message. I unfortunately do not have knowledge on that. Is there anything else you'd like to know?";
 
-export const INITIAL_MESSAGE = {
+export const INITIAL_MESSAGE: Message = {
   id: '1', 
   sender: 'agent', 
   text: 'Hello! Welcome to Ʒʙɪ. How can I help you today?', 
