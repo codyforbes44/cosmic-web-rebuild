@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { getLocationData } from '@/utils/ipGeolocation';
+import { getLocationDataFromIp } from '@/utils/ipGeolocation';
 import { useToast } from '@/components/ui/use-toast';
 
 export const useLocationUpdater = () => {
@@ -51,7 +51,7 @@ export const useLocationUpdater = () => {
         }
         
         try {
-          const locationData = await getLocationData(visitor.ip_address);
+          const locationData = await getLocationDataFromIp(visitor.ip_address);
           
           if (locationData) {
             const { error: updateError } = await supabase
@@ -59,7 +59,7 @@ export const useLocationUpdater = () => {
               .update({
                 country_code: locationData.country_code,
                 city: locationData.city,
-                state: locationData.region
+                state: locationData.state
               })
               .eq('id', visitor.id);
               
