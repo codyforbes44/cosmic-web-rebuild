@@ -13,7 +13,7 @@ interface AnalyticsTabsProps {
 
 const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData }) => {
   return (
-    <Tabs defaultValue="visitors" className="mb-8">
+    <Tabs defaultValue="metadata" className="mb-8">
       <TabsList className="bg-gray-800/50 border-gray-700">
         <TabsTrigger value="visitors">Visitors</TabsTrigger>
         <TabsTrigger value="forms">Form Submissions</TabsTrigger>
