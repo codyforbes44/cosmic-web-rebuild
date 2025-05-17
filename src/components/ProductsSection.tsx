@@ -1,9 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Package } from 'lucide-react';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import ProductPackagesDialog from '@/components/packages/ProductPackagesDialog';
 
 const productData = [
   {
@@ -30,6 +32,16 @@ const productData = [
 ].sort((a, b) => a.title.localeCompare(b.title)); // Sort alphabetically by title
 
 const ProductsSection: React.FC = () => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [selectedProductName, setSelectedProductName] = useState<string | null>(null);
+
+  const handleViewPricing = (productId: string, productName: string) => {
+    setSelectedProduct(productId);
+    setSelectedProductName(productName);
+    setDialogOpen(true);
+  };
+
   return (
     <section className="py-24 relative">
       {/* Background gradient */}
@@ -120,7 +132,7 @@ const ProductsSection: React.FC = () => {
                     {product.description}
                   </p>
                   
-                  <div className="mt-auto">
+                  <div className="mt-auto flex flex-col gap-2">
                     <Link to={`/products#${product.id}`}>
                       <Button
                         variant="outline"
@@ -129,6 +141,14 @@ const ProductsSection: React.FC = () => {
                         Learn More
                       </Button>
                     </Link>
+                    
+                    <Button
+                      variant="ghost" 
+                      className="w-full text-accent hover:bg-gray-800/60"
+                      onClick={() => handleViewPricing(product.id, product.title)}
+                    >
+                      View Pricing
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -137,16 +157,24 @@ const ProductsSection: React.FC = () => {
         </div>
         
         <div className="mt-12 text-center">
-          <Link to="/packages">
-            <Button
-              className="bg-accent hover:bg-accent/90 text-white px-8 py-6"
-              size="lg"
-            >
-              View All Subscription Plans
-            </Button>
-          </Link>
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                className="bg-accent hover:bg-accent/90 text-white px-8 py-6"
+                size="lg"
+              >
+                View All Subscription Plans
+              </Button>
+            </DialogTrigger>
+            <ProductPackagesDialog productId={selectedProduct} productName={selectedProductName} />
+          </Dialog>
         </div>
       </div>
+      
+      {/* Global dialog for product pricing */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <ProductPackagesDialog productId={selectedProduct} productName={selectedProductName} />
+      </Dialog>
     </section>
   );
 };

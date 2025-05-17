@@ -1,11 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import ProductCard from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ScheduleButton from '@/components/calendly/ScheduleButton';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import ProductPackagesDialog from '@/components/packages/ProductPackagesDialog';
 
 interface ProductType {
   title: string;
@@ -70,6 +72,8 @@ interface ProductsViewProps {
 }
 
 const ProductsView: React.FC<ProductsViewProps> = ({ selectedProduct }) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  
   // Find the product details based on the selected product
   const productDetail = productDetails.find(
     product => product.id === selectedProduct.href.split('#')[1]
@@ -132,11 +136,14 @@ const ProductsView: React.FC<ProductsViewProps> = ({ selectedProduct }) => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to={`/packages?product=${productDetail.id}`}>
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
-                  View Pricing
-                </Button>
-              </Link>
+              <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                    View Pricing
+                  </Button>
+                </DialogTrigger>
+                <ProductPackagesDialog productId={productDetail.id} productName={productDetail.title} />
+              </Dialog>
               <ScheduleButton variant="outline" size="lg" className="border-gray-700 hover:bg-gray-800">
                 Request Demo
                 <ArrowRight className="ml-2 h-4 w-4" />

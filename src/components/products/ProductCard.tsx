@@ -1,8 +1,11 @@
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import ProductPackagesDialog from '@/components/packages/ProductPackagesDialog';
+import { Link } from 'react-router-dom';
 
 interface ProductFeature {
   id: string;
@@ -20,6 +23,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const isEven = index % 2 === 0;
   
   return (
@@ -59,12 +63,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/packages">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
-                View Pricing
-              </Button>
-            </Link>
-            <Link to="/contact">
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                  View Pricing
+                </Button>
+              </DialogTrigger>
+              <ProductPackagesDialog productId={product.id} productName={product.title} />
+            </Dialog>
+            <Link to="/contact#top">
               <Button variant="outline" size="lg" className="border-gray-700 hover:bg-gray-800">
                 Request Demo
                 <ArrowRight className="ml-2 h-4 w-4" />

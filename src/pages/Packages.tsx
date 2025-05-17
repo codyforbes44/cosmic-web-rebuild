@@ -13,7 +13,7 @@ const Packages: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Subscription Packages | ƷBI Technology Solutions</title>
+        <title>All Subscription Plans | ƷBI Technology Solutions</title>
         <meta name="description" content="Choose the perfect subscription package for your business needs. From startups to enterprise, we offer flexible solutions to help you succeed." />
       </Helmet>
 
