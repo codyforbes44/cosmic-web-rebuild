@@ -16,7 +16,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import GetQuote from "./pages/GetQuote";
 import Partners from "./pages/Partners";
-import CaseStudy from "./pages/CaseStudy";
 import FAQ from "./pages/FAQ";
 import Packages from "./pages/Packages";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -51,7 +50,6 @@ const App: React.FC = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/case-study/:id" element={<CaseStudy />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />

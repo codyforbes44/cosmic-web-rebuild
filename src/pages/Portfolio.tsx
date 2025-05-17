@@ -1,10 +1,9 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const projects = [
   {
@@ -81,7 +80,6 @@ const categories = [
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
-  const navigate = useNavigate();
 
   const filteredProjects = activeCategory === "all" 
     ? projects 
@@ -93,10 +91,6 @@ const Portfolio = () => {
 
   const handleCloseDetails = () => {
     setSelectedProject(null);
-  };
-  
-  const handleViewFullCaseStudy = (projectId) => {
-    navigate(`/case-study/${projectId}`);
   };
 
   return (
@@ -167,7 +161,7 @@ const Portfolio = () => {
             ))}
           </div>
 
-          {/* Project details modal */}
+          {/* Project details modal - showing project details but removing case study navigation */}
           {selectedProject && (
             <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
               <div className="bg-space-deep-blue max-w-4xl w-full rounded-xl overflow-hidden">
@@ -207,15 +201,6 @@ const Portfolio = () => {
                   </div>
                   
                   <div className="flex flex-wrap gap-4">
-                    <Button 
-                      className="bg-accent hover:bg-accent/80 text-white"
-                      onClick={() => {
-                        handleCloseDetails();
-                        handleViewFullCaseStudy(selectedProject.id);
-                      }}
-                    >
-                      Read Full Case Study
-                    </Button>
                     <Button variant="outline" onClick={handleCloseDetails}>
                       Close
                     </Button>

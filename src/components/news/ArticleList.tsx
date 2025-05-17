@@ -1,5 +1,4 @@
 
-import { Link } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { BusinessArticle } from "@/types/news";
 import { Card, CardContent } from "@/components/ui/card";
