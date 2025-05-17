@@ -4,6 +4,7 @@ import ProductCard from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface ProductType {
   title: string;
