@@ -45,22 +45,23 @@ const ProductsHeader: React.FC<ProductsHeaderProps> = ({ products, selectedProdu
           </div>
         </motion.div>
 
-        {/* Tabs Navigation */}
-        <div className="mt-10 mb-4">
+        {/* Tabs Navigation - Centered with improved styling */}
+        <div className="mt-10 mb-4 flex justify-center">
           <Tabs 
             value={selectedProduct.href.split('#')[1]} 
             onValueChange={onTabChange}
-            className="justify-center"
+            className="w-full max-w-2xl mx-auto"
           >
-            <TabsList className="bg-gray-800/60 inline-flex flex-wrap gap-2 h-auto p-2 rounded-xl">
+            <TabsList className="bg-gray-800/60 w-full flex justify-center gap-2 h-auto p-2 rounded-xl">
               {products.map((product) => (
                 <TabsTrigger 
                   key={product.href} 
                   value={product.href.split('#')[1]}
-                  className="data-[state=active]:text-white text-sm px-4 py-2 rounded-md transition-colors duration-200"
+                  className="flex-1 data-[state=active]:text-white text-sm px-4 py-3 rounded-md transition-all duration-300"
                   style={{ 
                     borderBottom: selectedProduct.href === product.href ? `2px solid ${product.color}` : 'none',
-                    color: selectedProduct.href === product.href ? product.color : 'inherit'
+                    color: selectedProduct.href === product.href ? product.color : 'inherit',
+                    backgroundColor: selectedProduct.href === product.href ? 'rgba(0, 0, 0, 0.2)' : 'transparent'
                   }}
                 >
                   {product.title}
