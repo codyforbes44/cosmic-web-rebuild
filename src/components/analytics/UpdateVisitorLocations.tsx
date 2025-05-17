@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { RefreshCw, MapPin, AlertCircle } from 'lucide-react';
+import { RefreshCw, MapPin, AlertCircle, Globe } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { VisitorData } from "@/types/tracking";
+import { Badge } from "@/components/ui/badge";
 
 const UpdateVisitorLocations: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -21,6 +22,7 @@ const UpdateVisitorLocations: React.FC = () => {
     if (!ipAddress) return {};
     
     try {
+      // Use a reliable IP geolocation service
       const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
       const data = await response.json();
       
@@ -143,19 +145,24 @@ const UpdateVisitorLocations: React.FC = () => {
   };
 
   return (
-    <Card className="bg-gray-800/50 border-gray-700 text-white">
+    <Card className="bg-gradient-to-br from-purple-900/70 to-indigo-900/70 border-purple-500/40 text-white">
       <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2">
-          <MapPin className="h-5 w-5" />
-          Update Visitor Locations
-        </CardTitle>
-        <CardDescription className="text-gray-400">
-          Process existing visitor records to add geographic location data based on IP addresses
+        <div className="flex justify-between items-center">
+          <CardTitle className="flex items-center gap-2">
+            <Globe className="h-5 w-5 text-yellow-400" />
+            Enhance Your Analytics With Real Data
+          </CardTitle>
+          <Badge variant="outline" className="bg-purple-600/50 text-yellow-200 border-yellow-400/30">
+            Real Data
+          </Badge>
+        </div>
+        <CardDescription className="text-purple-200">
+          Enrich your analytics with accurate geographic location data based on visitor IP addresses
         </CardDescription>
       </CardHeader>
       <CardContent>
         {error && (
-          <div className="flex items-center gap-2 text-red-400 mb-4 p-2 bg-red-900/20 rounded-md">
+          <div className="flex items-center gap-2 text-red-300 mb-4 p-2 bg-red-900/30 rounded-md border border-red-500/30">
             <AlertCircle className="h-4 w-4" />
             <p className="text-sm">{error}</p>
           </div>
@@ -164,32 +171,34 @@ const UpdateVisitorLocations: React.FC = () => {
         <div className="space-y-4">
           {isProcessing && (
             <div className="space-y-2">
-              <Progress value={progress} className="h-2" />
-              <p className="text-sm text-gray-400">
+              <Progress value={progress} className="h-2 bg-purple-800" indicatorClassName="bg-gradient-to-r from-yellow-400 to-amber-500" />
+              <p className="text-sm text-purple-200">
                 Processing {processedCount} of {totalToProcess} records ({progress}% complete)
               </p>
             </div>
           )}
-          
-          <Button 
-            onClick={updateVisitorLocations} 
-            disabled={isProcessing}
-            className="w-full"
-          >
-            {isProcessing ? (
-              <>
-                <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                Processing...
-              </>
-            ) : (
-              <>
-                <MapPin className="h-4 w-4 mr-2" />
-                Update Visitor Locations
-              </>
-            )}
-          </Button>
         </div>
       </CardContent>
+      <CardFooter>
+        <Button 
+          onClick={updateVisitorLocations} 
+          disabled={isProcessing}
+          className="w-full bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-purple-900 font-medium"
+          size="lg"
+        >
+          {isProcessing ? (
+            <>
+              <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+              Processing Real Location Data...
+            </>
+          ) : (
+            <>
+              <MapPin className="h-4 w-4 mr-2" />
+              Analyze & Populate Real Location Data
+            </>
+          )}
+        </Button>
+      </CardFooter>
     </Card>
   );
 };

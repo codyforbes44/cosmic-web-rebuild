@@ -1,54 +1,70 @@
 
 import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VisitorData, FormSubmissionData } from '@/types/tracking';
 import VisitorCharts from './VisitorCharts';
-import FormSubmissionCharts from './FormSubmissionCharts';
 import VisitorMetadataTable from './VisitorMetadataTable';
-import UpdateVisitorLocations from './UpdateVisitorLocations';
+import FormSubmissionCharts from './FormSubmissionCharts';
 import ChatInteractionsAnalytics from './ChatInteractionsAnalytics';
-import ChatbotIconSelector from './ChatbotIconSelector';
+import DataPopulator from './DataPopulator';
+import UpdateVisitorLocations from './UpdateVisitorLocations';
 
 interface AnalyticsTabsProps {
   visitorData: VisitorData[];
   formData: FormSubmissionData[];
-  chatData: any[]; // Chat interaction data
+  chatData: any[];
   refetch: () => Promise<void>;
+  realDataPercentage?: number;
 }
 
-const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData, chatData, refetch }) => {
+const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ 
+  visitorData, 
+  formData, 
+  chatData, 
+  refetch,
+  realDataPercentage = 0
+}) => {
   return (
-    <Tabs defaultValue="visitors" className="mb-8">
-      <TabsList className="bg-gray-800/50 border-gray-700">
-        <TabsTrigger value="visitors">Visitors</TabsTrigger>
-        <TabsTrigger value="forms">Form Submissions</TabsTrigger>
-        <TabsTrigger value="chat">Chat Interactions</TabsTrigger>
-        <TabsTrigger value="metadata">Visitor Metadata</TabsTrigger>
-        <TabsTrigger value="settings">Chat Settings</TabsTrigger>
-      </TabsList>
+    <Tabs defaultValue="charts" className="space-y-4">
+      <div className="flex justify-between items-center border-b border-gray-700">
+        <TabsList className="bg-gray-800/50 border border-gray-700">
+          <TabsTrigger value="charts">Charts & Visualizations</TabsTrigger>
+          <TabsTrigger value="visitors">Raw Visitor Data</TabsTrigger>
+          <TabsTrigger value="forms">Form Submissions</TabsTrigger>
+          <TabsTrigger value="chat">Chat Analytics</TabsTrigger>
+          <TabsTrigger value="tools">Data Tools</TabsTrigger>
+        </TabsList>
+      </div>
       
-      <TabsContent value="visitors" className="mt-6">
-        <VisitorCharts visitorData={visitorData} />
-      </TabsContent>
-      
-      <TabsContent value="forms" className="mt-6">
-        <FormSubmissionCharts formData={formData} />
-      </TabsContent>
-      
-      <TabsContent value="chat" className="mt-6">
-        <ChatInteractionsAnalytics chatData={chatData} />
-      </TabsContent>
-      
-      <TabsContent value="metadata" className="mt-6">
-        <div className="space-y-6">
-          <UpdateVisitorLocations />
-          <VisitorMetadataTable visitorData={visitorData} />
+      <TabsContent value="charts" className="mt-0 space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <VisitorCharts visitorData={visitorData} />
+          </div>
+          <div className="lg:col-span-1">
+            <UpdateVisitorLocations />
+          </div>
         </div>
       </TabsContent>
       
-      <TabsContent value="settings" className="mt-6">
-        <div className="space-y-6">
-          <ChatbotIconSelector refetchAnalytics={refetch} />
+      <TabsContent value="visitors" className="mt-0">
+        <VisitorMetadataTable data={visitorData} />
+      </TabsContent>
+      
+      <TabsContent value="forms" className="mt-0">
+        <FormSubmissionCharts data={formData} />
+      </TabsContent>
+      
+      <TabsContent value="chat" className="mt-0">
+        <ChatInteractionsAnalytics data={chatData} />
+      </TabsContent>
+      
+      <TabsContent value="tools" className="mt-0">
+        <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <DataPopulator />
+            <UpdateVisitorLocations />
+          </div>
         </div>
       </TabsContent>
     </Tabs>

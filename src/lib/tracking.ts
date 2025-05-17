@@ -65,8 +65,9 @@ const getLocationData = async (ipAddress: string | null): Promise<{ country_code
   if (!ipAddress) return {};
   
   try {
-    // Changed to use a more reliable IP geolocation service
+    // Use a more reliable IP geolocation service with better error handling
     const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
+    
     if (!response.ok) {
       throw new Error(`Failed to fetch location: ${response.status}`);
     }
