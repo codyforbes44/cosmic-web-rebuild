@@ -6,6 +6,7 @@ import { ChevronRight, FileText, Shield, Accessibility as AccessibilityIcon } fr
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StarBackground from "@/components/StarBackground";
 
 const Accessibility = () => {
   return (
@@ -14,9 +15,10 @@ const Accessibility = () => {
         title="Accessibility Statement" 
         description="Our commitment to digital accessibility and providing an inclusive experience for all users."
       />
+      <StarBackground />
       <Navbar />
       
-      <div className="bg-space-deep-blue min-h-screen">
+      <div className="relative min-h-screen z-10">
         <div className="container mx-auto px-4 py-12">
           <div className="mb-8">
             <div className="flex items-center text-gray-400 text-sm mb-4">
