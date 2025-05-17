@@ -64,9 +64,17 @@ const QuoteForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Prepare data for Supabase
+      // Prepare data for Supabase - Explicitly define all required properties
       const submissionData: QuoteFormData = {
-        ...data,
+        fullName: data.fullName,
+        companyName: data.companyName,
+        email: data.email,
+        phone: data.phone,
+        budget: data.budget,
+        serviceType: data.serviceType,
+        projectDescription: data.projectDescription,
+        timeline: data.timeline,
+        termsAccepted: data.termsAccepted,
         createdAt: new Date().toISOString(),
       };
       

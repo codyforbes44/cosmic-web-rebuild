@@ -50,9 +50,12 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Prepare data for Supabase
+      // Prepare data for Supabase - Explicitly define all required properties
       const submissionData: ContactFormData = {
-        ...data,
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
         createdAt: new Date().toISOString(),
       };
       
