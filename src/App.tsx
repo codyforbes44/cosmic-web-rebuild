@@ -17,6 +17,7 @@ import Contact from "./pages/Contact";
 import GetQuote from "./pages/GetQuote";
 import Partners from "./pages/Partners";
 import CaseStudy from "./pages/CaseStudy";
+import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 
 // Create a query client with better defaults
@@ -49,6 +50,7 @@ const App: React.FC = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/get-quote" element={<GetQuote />} />
                 <Route path="/partners" element={<Partners />} />
+                <Route path="/faq" element={<FAQ />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
