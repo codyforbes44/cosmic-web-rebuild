@@ -23,7 +23,7 @@ const MobileServiceToggle = ({ onClose }: MobileServiceToggleProps) => {
       transition={{ duration: 0.3, delay: 0.2 }}
     >
       <button 
-        className={`nav-link ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full text-xl font-medium py-2`}
+        className={`nav-link ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full text-lg font-medium py-2`}
         onClick={toggleServices}
         aria-expanded={showServices}
       >

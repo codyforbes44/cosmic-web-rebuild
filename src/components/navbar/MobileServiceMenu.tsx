@@ -19,7 +19,7 @@ const MobileServiceMenu = ({ onClose }: MobileServiceMenuProps) => {
           <Link 
             key={service.href}
             to={service.href} 
-            className="block text-gray-300 hover:text-white py-1 text-lg"
+            className="block text-gray-300 hover:text-white py-1 text-base"
             onClick={onClose}
             style={{ color: service.color }}
           >
