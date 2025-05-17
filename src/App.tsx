@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -13,6 +12,8 @@ import LiveChat from "./components/chat/LiveChat";
 import { AuthProvider } from "./hooks/useAuth";
 import AuthRequired from "./components/AuthRequired";
 import { CalendlyProvider } from "./components/calendly/CalendlyProvider";
+import SubdomainRouter from "./components/subdomain/SubdomainRouter";
+import { getSubdomain } from "./lib/subdomain";
 
 // Import pages
 import Index from "./pages/Index";
@@ -36,16 +37,40 @@ import Auth from "./pages/Auth";
 // Initialize Supabase client in supabase.ts
 import "./lib/supabase";
 
+// Create QueryClient outside of the component to avoid recreation on renders
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 // AppContent component to use hooks inside Routes
 const AppContent = () => {
   // Apply the external links hook
   useExternalLinks();
+  
+  // Check if we're on a subdomain
+  const subdomain = getSubdomain();
   
   // Initialize tracking when the app loads
   React.useEffect(() => {
     initializeTracking();
   }, []);
   
+  // If we're on a subdomain, render the subdomain app
+  if (subdomain) {
+    return (
+      <PageTransition>
+        <SubdomainRouter />
+      </PageTransition>
+    );
+  }
+  
+  // Otherwise render the main app routes
   return (
     <PageTransition>
       <Routes>
@@ -77,17 +102,6 @@ const AppContent = () => {
     </PageTransition>
   );
 };
-
-// Create QueryClient outside of the component to avoid recreation on renders
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
 
 // App component
 const App: React.FC = () => {

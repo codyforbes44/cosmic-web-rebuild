@@ -8,8 +8,17 @@ import PackagesHeader from "@/components/packages/PackagesHeader";
 import PackagesGrid from "@/components/packages/PackagesGrid";
 import FAQSection from "@/components/packages/FAQSection";
 import HelpSection from "@/components/packages/HelpSection";
+import { getSubdomain } from "@/lib/subdomain";
 
 const Packages: React.FC = () => {
+  const subdomain = getSubdomain();
+  
+  // If we're on a subdomain, don't render the main app's Packages page
+  // This should be handled by the subdomain-specific app
+  if (subdomain) {
+    return null;
+  }
+  
   return (
     <>
       <Helmet>
