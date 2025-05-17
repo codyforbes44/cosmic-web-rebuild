@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { useExternalLinks } from "./hooks/use-external-links";
+import { initializeTracking } from "./lib/tracking";
 
 // Import pages
 import Index from "./pages/Index";
@@ -41,6 +42,11 @@ const queryClient = new QueryClient({
 const AppContent = () => {
   // Apply the external links hook
   useExternalLinks();
+  
+  // Initialize tracking when the app loads
+  React.useEffect(() => {
+    initializeTracking();
+  }, []);
   
   return (
     <Routes>
