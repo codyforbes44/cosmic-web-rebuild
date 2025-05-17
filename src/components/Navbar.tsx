@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Ban } from 'lucide-react';
@@ -52,6 +53,13 @@ const serviceCategories = [
   }
 ];
 
+// Define the interface for our navigation links
+interface NavLink {
+  name: string;
+  path: string;
+  disabled?: boolean; // Add optional disabled property
+}
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -97,7 +105,8 @@ const Navbar = () => {
     };
   }, [isMobileNavOpen]);
 
-  const navLinks = [
+  // Define navLinks with the correct type
+  const navLinks: NavLink[] = [
     { name: 'Home', path: '/' },
     { name: 'Packages', path: '/packages' },
     { name: 'Business Insights', path: '/news' },
