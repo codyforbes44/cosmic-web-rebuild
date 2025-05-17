@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '@/integrations/supabase/client';
@@ -158,7 +157,7 @@ export default function LiveChat() {
       {isOpen && (
         <div 
           className={`bg-space-dark-blue rounded-lg shadow-2xl overflow-hidden absolute bottom-20 right-0 w-80 md:w-96 transition-all duration-300 
-            ${isMinimized ? 'h-14' : 'h-[80vh] max-h-[600px]'}
+            ${isMinimized ? 'h-12' : 'h-[80vh] max-h-[600px]'}
             ${showWelcomeAnimation ? 'animate-scale-in' : ''}`}
         >          
           <ChatHeader isTyping={isTyping} minimize={minimize} restore={restore} isMinimized={isMinimized} />
@@ -174,4 +173,3 @@ export default function LiveChat() {
     </div>
   );
 }
-
