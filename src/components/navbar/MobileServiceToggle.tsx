@@ -8,7 +8,7 @@ interface MobileServiceToggleProps {
   onClose: () => void;
 }
 
-const MobileServiceToggle = ({ onClose }: MobileServiceToggleProps) => {
+const MobileServiceToggle: React.FC<MobileServiceToggleProps> = ({ onClose }) => {
   const location = useLocation();
   const [showServices, setShowServices] = useState(false);
   

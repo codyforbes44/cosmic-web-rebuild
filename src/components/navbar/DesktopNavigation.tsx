@@ -20,7 +20,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServi
     <nav className="hidden md:flex items-center space-x-2">
       <ServiceDropdown isActive={isServicesActive} />
       
-      {navLinks.map((link) => {
+      {navLinks.map((link, index) => {
         // Skip admin-only links if user is not logged in
         if (link.adminOnly && !user) return null;
         
@@ -29,7 +29,8 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServi
             key={link.path}
             path={link.path}
             name={link.name}
-            isActive={isActive(link.path)}
+            isActive={isActive(link.path) === 'active'}
+            index={index}
           />
         );
       })}

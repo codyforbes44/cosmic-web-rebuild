@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Ban } from 'lucide-react';
@@ -11,7 +12,7 @@ interface MobileNavItemProps {
   onClose: () => void;
 }
 
-const MobileNavItem = ({ link, isActive, index, onClose }: MobileNavItemProps) => {
+const MobileNavItem: React.FC<MobileNavItemProps> = ({ link, isActive, index, onClose }) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}

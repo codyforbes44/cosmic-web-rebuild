@@ -36,19 +36,18 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
     >
       <X className="absolute top-4 right-4 text-gray-400" size={24} />
       <div className="py-4 px-4 flex flex-col space-y-3">
-        <MobileServiceToggle />
+        <MobileServiceToggle onClose={onClose} />
         
-        {navLinks.map((link) => {
+        {navLinks.map((link, index) => {
           // Skip admin-only links if user is not logged in
           if (link.adminOnly && !user) return null;
           
           return (
             <MobileNavItem
               key={link.path}
-              path={link.path}
-              name={link.name}
-              isActive={isActive(link.path)}
-              icon={link.icon}
+              link={link}
+              isActive={isActive(link.path) === 'active'}
+              index={index}
               onClose={onClose}
             />
           );
