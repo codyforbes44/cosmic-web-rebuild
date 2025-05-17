@@ -16,7 +16,7 @@ export default function ChatHeader({ isTyping, minimize, restore, isMinimized }:
           <span className="text-accent font-bold text-base">Ʒ</span>
         </div>
         <div>
-          <h3 className="font-bold text-white text-sm">Ask Ʒʙɪ</h3>
+          <h3 className="font-bold text-white text-sm">Ʒʙɪ Support</h3>
           <div className="text-xs text-white/80" aria-live="polite">
             {isTyping ? 
               <span className="flex items-center">
