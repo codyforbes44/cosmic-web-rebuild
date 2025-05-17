@@ -13,7 +13,7 @@ const ContactInfo = () => {
             </div>
             <div>
               <h3 className="text-white font-bold">Email</h3>
-              <a href="mailto:info@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">info@3bi.io</a>
+              <a href="mailto:info@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">support@3bi.io</a>
               <br />
               
             </div>
@@ -27,7 +27,7 @@ const ContactInfo = () => {
             </div>
             <div>
               <h3 className="text-white font-bold">Phone</h3>
-              <a href="tel:+15551234567" className="text-gray-300 hover:text-accent transition-colors">+1 (555) 123-4567</a>
+              <a href="tel:+15551234567" className="text-gray-300 hover:text-accent transition-colors">+1 (817) 757-2828</a>
             </div>
           </div>
           
