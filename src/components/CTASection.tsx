@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle, BarChart3, Package, TrendingUp } from 'lucide-react';
+import ScheduleButton from '@/components/calendly/ScheduleButton';
 
 const CTASection: React.FC = () => {
   return (
@@ -113,11 +113,9 @@ const CTASection: React.FC = () => {
                     Learn More
                   </Button>
                 </Link>
-                <Link to="/get-quote" className="w-full sm:w-auto">
-                  <Button className="bg-[#F97316] hover:bg-[#F97316]/80 text-white w-full sm:w-auto">
-                    Schedule Demo <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
+                <ScheduleButton className="bg-[#F97316] hover:bg-[#F97316]/80 text-white w-full sm:w-auto">
+                  Schedule Demo <ArrowRight className="ml-2 h-4 w-4" />
+                </ScheduleButton>
               </div>
             </div>
           </div>

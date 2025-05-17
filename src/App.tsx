@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -12,6 +11,7 @@ import PageTransition from "./components/PageTransition";
 import LiveChat from "./components/chat/LiveChat";
 import { AuthProvider } from "./hooks/useAuth";
 import AuthRequired from "./components/AuthRequired";
+import { CalendlyProvider } from "./components/calendly/CalendlyProvider";
 
 // Import pages
 import Index from "./pages/Index";
@@ -95,11 +95,13 @@ const App: React.FC = () => {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <AuthProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <AppContent />
-              </BrowserRouter>
+              <CalendlyProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <AppContent />
+                </BrowserRouter>
+              </CalendlyProvider>
             </AuthProvider>
           </TooltipProvider>
         </QueryClientProvider>

@@ -1,9 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import ScheduleButton from "@/components/calendly/ScheduleButton";
 
 const HeroSection = () => {
   const [visible, setVisible] = useState(false);
@@ -47,11 +47,9 @@ const HeroSection = () => {
             </ul>
             
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-              <Link to="/get-quote" className="w-full sm:w-auto">
-                <Button className="bg-accent hover:bg-accent/80 text-white px-6 py-5 rounded-md w-full text-base">
-                  Get Your Free Technology Assessment <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <ScheduleButton className="w-full sm:w-auto bg-accent hover:bg-accent/80 text-white px-6 py-5 rounded-md text-base">
+                Get Your Free Technology Assessment <ArrowRight className="ml-2 h-4 w-4" />
+              </ScheduleButton>
               <Link to="/products" className="w-full sm:w-auto">
                 <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white px-6 py-5 rounded-md w-full text-base">
                   Explore Our Solutions
@@ -78,11 +76,9 @@ const HeroSection = () => {
                       <p className="text-gray-300 text-sm">Get an actionable plan tailored to your business needs</p>
                     </div>
                   </div>
-                  <Link to="/get-quote" className="block">
-                    <Button className="w-full bg-accent hover:bg-accent/90 py-5 text-white">
-                      Schedule Your Free Assessment Now
-                    </Button>
-                  </Link>
+                  <ScheduleButton className="w-full bg-accent hover:bg-accent/90 py-5 text-white">
+                    Schedule Your Free Assessment Now
+                  </ScheduleButton>
                 </div>
               </div>
             </div>}
@@ -92,11 +88,9 @@ const HeroSection = () => {
                 <span className="inline-block mb-2 px-3 py-1 bg-accent/20 text-accent rounded-full text-xs font-medium">FREE ASSESSMENT</span>
                 <h3 className="text-lg font-bold mb-3 text-white">Boost Your Business</h3>
                 <p className="text-sm text-gray-300 mb-4">Get a free technology assessment and custom solution roadmap.</p>
-                <Link to="/get-quote" className="block">
-                  <Button className="w-full bg-accent hover:bg-accent/90 py-4 text-white">
-                    Get Started Now
-                  </Button>
-                </Link>
+                <ScheduleButton className="w-full bg-accent hover:bg-accent/90 py-4 text-white">
+                  Get Started Now
+                </ScheduleButton>
               </div>
             </div>}
         </div>

@@ -1,10 +1,10 @@
-
 import React from 'react';
 import ProductCard from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import ScheduleButton from '@/components/calendly/ScheduleButton';
 
 interface ProductType {
   title: string;
@@ -136,12 +136,10 @@ const ProductsView: React.FC<ProductsViewProps> = ({ selectedProduct }) => {
                   View Pricing
                 </Button>
               </Link>
-              <Link to="/contact">
-                <Button variant="outline" size="lg" className="border-gray-700 hover:bg-gray-800">
-                  Request Demo
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <ScheduleButton variant="outline" size="lg" className="border-gray-700 hover:bg-gray-800">
+                Request Demo
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </ScheduleButton>
             </div>
           </div>
         </div>
@@ -151,11 +149,9 @@ const ProductsView: React.FC<ProductsViewProps> = ({ selectedProduct }) => {
       <div className="mt-12 text-center">
         <h3 className="text-xl text-white mb-4">Ready to optimize your operations?</h3>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link to="/get-quote">
-            <Button className="bg-accent hover:bg-accent/80 text-white">
-              Get a Consultation <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <ScheduleButton className="bg-accent hover:bg-accent/80 text-white">
+            Get a Consultation <ArrowRight className="ml-2 h-4 w-4" />
+          </ScheduleButton>
           <Link to={`/packages?product=${productDetail.id}`}>
             <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white">
               View Pricing Plans

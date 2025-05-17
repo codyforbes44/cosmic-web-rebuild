@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
+import ScheduleButton from "@/components/calendly/ScheduleButton";
 
 const HelpSection: React.FC = () => {
   return (
@@ -9,12 +9,11 @@ const HelpSection: React.FC = () => {
       <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
         We understand that each business has unique needs. Let our experts help you choose the right package for your specific requirements.
       </p>
-      <Button 
+      <ScheduleButton 
         className="bg-brand-gold hover:bg-brand-gold/80 text-white"
-        onClick={() => window.location.href="/contact?subject=Package%20Consultation"}
       >
         Schedule a Consultation
-      </Button>
+      </ScheduleButton>
     </div>
   );
 };

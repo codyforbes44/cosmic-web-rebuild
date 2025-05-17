@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import ScheduleButton from "@/components/calendly/ScheduleButton";
 
 const ContactCTA: React.FC = () => {
   const navigate = useNavigate();
@@ -25,13 +26,12 @@ const ContactCTA: React.FC = () => {
             >
               Contact Us
             </Button>
-            <Button 
+            <ScheduleButton 
               variant="outline" 
-              onClick={() => navigate('/get-quote')}
               className="border-accent text-accent hover:bg-accent hover:text-white"
             >
               Get a Free Consultation
-            </Button>
+            </ScheduleButton>
           </div>
         </div>
       </CardContent>

@@ -7,6 +7,7 @@ import ServiceSocialProof from "./ServiceSocialProof";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import ScheduleButton from "@/components/calendly/ScheduleButton";
 
 interface ServicesViewProps {
   selectedService: ServiceType;
@@ -34,11 +35,9 @@ const ServicesView = ({ selectedService }: ServicesViewProps) => {
       <div className="mt-12 text-center">
         <h3 className="text-xl text-white mb-4">Ready to explore more options?</h3>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link to="/get-quote">
-            <Button className="bg-accent hover:bg-accent/80 text-white">
-              Get a Consultation <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <ScheduleButton className="bg-accent hover:bg-accent/80 text-white">
+            Get a Consultation <ArrowRight className="ml-2 h-4 w-4" />
+          </ScheduleButton>
           <Link to="/portfolio">
             <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white">
               View Our Portfolio
