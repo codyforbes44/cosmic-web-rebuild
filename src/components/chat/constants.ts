@@ -78,7 +78,6 @@ export const DEFAULT_RESPONSE = "Thanks for reaching out! I don't have specific 
 export const INITIAL_MESSAGE: Message = {
   id: '1', 
   sender: 'agent', 
-  text: 'Hi there! 👋 Welcome to Ʒʙɪ. I'm here to help answer your questions about our digital marketing, business intelligence, and technology solutions. How can I assist you today?', 
+  text: "Hi there! 👋 Welcome to Ʒʙɪ. I'm here to help answer your questions about our digital marketing, business intelligence, and technology solutions. How can I assist you today?", 
   time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 };
-
