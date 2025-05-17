@@ -2,7 +2,9 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
-import { useState } from "react";
+import ServicesSubMenu from "@/components/ServicesSubMenu";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const services = [
   {
@@ -74,7 +76,20 @@ const services = [
 ];
 
 const Services = () => {
+  const location = useLocation();
   const [selectedService, setSelectedService] = useState(services[0]);
+  
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const serviceParam = searchParams.get('service');
+    
+    if (serviceParam) {
+      const foundService = services.find(service => service.id === serviceParam);
+      if (foundService) {
+        setSelectedService(foundService);
+      }
+    }
+  }, [location.search]);
 
   return (
     <>
@@ -82,7 +97,7 @@ const Services = () => {
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mt-12 mb-16">
+          <div className="text-center mt-12 mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Our Services
             </h1>
@@ -91,25 +106,11 @@ const Services = () => {
             </p>
           </div>
 
-          {/* Service Selection */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {services.map((service) => (
-              <button
-                key={service.id}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  selectedService.id === service.id
-                    ? 'bg-accent text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-                onClick={() => setSelectedService(service)}
-              >
-                {service.name}
-              </button>
-            ))}
-          </div>
+          {/* Services Sub-Menu */}
+          <ServicesSubMenu />
 
           {/* Selected Service Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-16">
             <div className="space-card p-6 overflow-hidden rounded-xl">
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img 
