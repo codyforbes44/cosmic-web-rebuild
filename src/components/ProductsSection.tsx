@@ -7,13 +7,6 @@ import { Package } from 'lucide-react';
 
 const productData = [
   {
-    id: '3biConnect',
-    title: '3BI Connect',
-    description: 'Complete platform for trucking companies to manage drivers and streamline operations.',
-    color: '#F97316',
-    image: '/lovable-uploads/c3fa73ab-8505-4e8a-bf40-2d48a383fff8.png',
-  },
-  {
     id: 'cpn',
     title: 'Carrier Partner Network',
     description: 'Connecting trucking companies and drivers, streamlining transitions with secure document management.',
@@ -71,7 +64,7 @@ const ProductsSection: React.FC = () => {
           </motion.p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {productData.map((product, index) => (
             <motion.div
               key={product.id}
