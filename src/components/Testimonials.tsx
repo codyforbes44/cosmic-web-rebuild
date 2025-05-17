@@ -1,9 +1,11 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Star, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+
 const testimonials = [{
   id: 1,
   name: "Sarah Johnson",
@@ -29,72 +31,58 @@ const testimonials = [{
   metric: "28% cost reduction",
   rating: 5
 }];
+
 const Testimonials: React.FC = () => {
-  return <section className="py-16 md:py-24 bg-space-deep-blue/50">
+  return (
+    <section className="py-16 md:py-24 bg-space-deep-blue/50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <motion.span className="text-accent font-medium text-sm uppercase tracking-wider bg-accent/10 px-3 py-1 rounded-full" initial={{
-          opacity: 0,
-          y: 20
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} viewport={{
-          once: true
-        }} transition={{
-          duration: 0.5
-        }}>
+          <motion.span 
+            className="text-accent font-medium text-sm uppercase tracking-wider bg-accent/10 px-3 py-1 rounded-full" 
+            initial={{ opacity: 0, y: 20 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.5 }}
+          >
             SUCCESS STORIES
           </motion.span>
           
-          <motion.h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4" initial={{
-          opacity: 0,
-          y: 20
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} viewport={{
-          once: true
-        }} transition={{
-          duration: 0.5,
-          delay: 0.1
-        }}>
+          <motion.h2 
+            className="text-3xl md:text-4xl font-bold mt-2 mb-4" 
+            initial={{ opacity: 0, y: 20 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             Real Results for Real Businesses
           </motion.h2>
           
-          <motion.p className="text-gray-300 max-w-2xl mx-auto text-lg" initial={{
-          opacity: 0,
-          y: 20
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} viewport={{
-          once: true
-        }} transition={{
-          duration: 0.5,
-          delay: 0.2
-        }}>
+          <motion.p 
+            className="text-gray-300 max-w-2xl mx-auto text-lg" 
+            initial={{ opacity: 0, y: 20 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             See how our technology solutions have transformed businesses like yours
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => <motion.div key={testimonial.id} initial={{
-          opacity: 0,
-          y: 20
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} viewport={{
-          once: true
-        }} transition={{
-          duration: 0.5,
-          delay: index * 0.1
-        }}>
+          {testimonials.map((testimonial, index) => (
+            <motion.div 
+              key={testimonial.id} 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true }} 
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
               <Card className="h-full bg-space-dark-blue border-gray-800 overflow-hidden shadow-lg hover:border-accent/50 transition-all duration-300">
                 <CardContent className="pt-6">
                   <div className="flex mb-2">
-                    {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="h-5 w-5 fill-brand-gold text-brand-gold" />)}
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-brand-gold text-brand-gold" />
+                    ))}
                   </div>
                   
                   <div className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-medium rounded mb-3">
@@ -104,33 +92,37 @@ const Testimonials: React.FC = () => {
                   <p className="text-gray-200 italic mb-6">"{testimonial.content}"</p>
                 </CardContent>
                 <CardFooter className="flex items-center border-t border-gray-800 pt-4">
-                  <img src={testimonial.image} alt={testimonial.name} className="h-12 w-12 rounded-full mr-4 object-cover" />
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name} 
+                    className="h-12 w-12 rounded-full mr-4 object-cover" 
+                  />
                   <div>
                     <h4 className="font-medium text-white">{testimonial.name}</h4>
                     <p className="text-sm text-gray-400">{testimonial.position}</p>
                   </div>
                 </CardFooter>
               </Card>
-            </motion.div>)}
+            </motion.div>
+          ))}
         </div>
         
-        <motion.div className="mt-10 text-center" initial={{
-        opacity: 0,
-        y: 20
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true
-      }} transition={{
-        duration: 0.5,
-        delay: 0.4
-      }}>
+        <motion.div 
+          className="mt-10 text-center" 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <Link to="/portfolio">
-            
+            <Button variant="outline" className="gap-2">
+              View All Case Studies <ArrowRight className="h-4 w-4" />
+            </Button>
           </Link>
         </motion.div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Testimonials;

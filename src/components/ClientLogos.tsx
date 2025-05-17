@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 const clients = [
   { name: "TechForward Inc." },
@@ -44,8 +44,8 @@ const ClientLogos: React.FC = () => {
               }}
             >
               <div className="relative flex flex-col items-center">
-                <Sparkles 
-                  className="h-8 md:h-10 w-auto text-brand-gold animate-twinkle" 
+                <Star 
+                  className="h-8 md:h-10 w-auto text-brand-gold shimmer-star" 
                   style={{ 
                     filter: "drop-shadow(0 0 5px rgba(155, 135, 245, 0.7))"
                   }} 
