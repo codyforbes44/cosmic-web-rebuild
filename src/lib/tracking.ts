@@ -52,18 +52,18 @@ export const trackVisit = async (path: string): Promise<void> => {
     
     // Gather visitor information
     const visitorData: VisitorData = {
-      sessionId: getSessionId(),
-      userAgent: navigator.userAgent,
+      session_id: getSessionId(),
+      user_agent: navigator.userAgent,
       language: navigator.language,
-      screenWidth: window.screen.width,
-      screenHeight: window.screen.height,
+      screen_width: window.screen.width,
+      screen_height: window.screen.height,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       referrer: document.referrer || 'direct',
       path: path,
       browser: userAgentInfo.browser,
       os: userAgentInfo.os,
-      deviceType: userAgentInfo.deviceType,
-      createdAt: new Date().toISOString(),
+      device_type: userAgentInfo.deviceType,
+      created_at: new Date().toISOString(),
     };
     
     // Log visitor data to console for debugging
@@ -85,11 +85,11 @@ export const trackFormSubmission = async (formName: string, formData: Record<str
   try {
     // Prepare submission data
     const submissionData: FormSubmissionData = {
-      sessionId: getSessionId(),
-      formName,
-      formData,
+      session_id: getSessionId(),
+      form_name: formName,
+      form_data: formData,
       path,
-      createdAt: new Date().toISOString()
+      created_at: new Date().toISOString()
     };
     
     console.log('Tracking form submission:', submissionData);

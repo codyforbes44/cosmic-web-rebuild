@@ -25,18 +25,18 @@ export type ContactFormData = {
   email: string;
   subject: string;
   message: string;
-  createdAt: string;
+  created_at: string;
 };
 
 export type QuoteFormData = {
-  fullName: string;
-  companyName: string;
+  full_name: string;
+  company_name: string;
   email: string;
   phone: string;
   budget?: string;
-  serviceType: string;
-  projectDescription: string;
+  service_type: string;
+  project_description: string;
   timeline?: string;
-  termsAccepted: boolean;
-  createdAt: string;
+  terms_accepted: boolean;
+  created_at: string;
 };

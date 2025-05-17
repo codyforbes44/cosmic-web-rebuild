@@ -23,8 +23,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { submitToSupabase, ContactFormData } from "@/lib/supabase";
-import { trackFormSubmission } from '@/lib/tracking';
-import { useLocation } from 'react-router-dom';
+import { useTracking } from '@/hooks/use-tracking';
+import { Loader2, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -36,7 +37,8 @@ const formSchema = z.object({
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const location = useLocation();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { trackFormSubmission } = useTracking();
   
   // Initialize form with react-hook-form and zod validation
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,7 +61,7 @@ const ContactForm = () => {
         email: data.email,
         subject: data.subject,
         message: data.message,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
       };
       
       // Submit data using our helper function
@@ -68,11 +70,16 @@ const ContactForm = () => {
       if (!success) throw error;
       
       // Track form submission
-      await trackFormSubmission('contact', data, location.pathname);
+      await trackFormSubmission('contact', data);
       
       // Show success message to user
       toast.success("Thank you for your message! We'll get back to you soon.");
-      form.reset();
+      setIsSuccess(true);
+      
+      setTimeout(() => {
+        form.reset();
+        setIsSuccess(false);
+      }, 3000);
     } catch (error: any) {
       console.error('Error submitting form:', error);
       toast.error(error?.message || "Failed to submit the form. Please try again later.");
@@ -82,7 +89,12 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="space-card p-8 rounded-xl">
+    <motion.div 
+      className="space-card p-8 rounded-xl shadow-lg backdrop-blur-sm border border-gray-800"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <h2 className="text-2xl font-bold mb-6 text-white">Send us a message</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -95,8 +107,9 @@ const ContactForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className="bg-gray-800 border border-gray-700 text-white focus:border-accent"
+                    className="bg-gray-800 border border-gray-700 text-white focus:border-accent focus:ring-1 focus:ring-accent"
                     placeholder="Your name"
+                    disabled={isSubmitting || isSuccess}
                   />
                 </FormControl>
                 <FormMessage />
@@ -114,8 +127,9 @@ const ContactForm = () => {
                   <Input
                     {...field}
                     type="email"
-                    className="bg-gray-800 border border-gray-700 text-white focus:border-accent"
+                    className="bg-gray-800 border border-gray-700 text-white focus:border-accent focus:ring-1 focus:ring-accent"
                     placeholder="your.email@example.com"
+                    disabled={isSubmitting || isSuccess}
                   />
                 </FormControl>
                 <FormMessage />
@@ -132,13 +146,14 @@ const ContactForm = () => {
                 <Select 
                   onValueChange={field.onChange} 
                   defaultValue={field.value}
+                  disabled={isSubmitting || isSuccess}
                 >
                   <FormControl>
-                    <SelectTrigger className="bg-gray-800 border border-gray-700 text-white focus:border-accent">
+                    <SelectTrigger className="bg-gray-800 border border-gray-700 text-white focus:border-accent focus:ring-1 focus:ring-accent">
                       <SelectValue placeholder="Select a subject" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-gray-800 border border-gray-700 text-white">
                     <SelectItem value="general">General Inquiry</SelectItem>
                     <SelectItem value="feedback">Website Feedback</SelectItem>
                     <SelectItem value="collaboration">Collaboration</SelectItem>
@@ -161,8 +176,9 @@ const ContactForm = () => {
                   <Textarea
                     {...field}
                     rows={5}
-                    className="bg-gray-800 border border-gray-700 text-white focus:border-accent"
+                    className="bg-gray-800 border border-gray-700 text-white focus:border-accent focus:ring-1 focus:ring-accent resize-none"
                     placeholder="How can we help you?"
+                    disabled={isSubmitting || isSuccess}
                   />
                 </FormControl>
                 <FormMessage />
@@ -172,22 +188,28 @@ const ContactForm = () => {
           
           <Button
             type="submit"
-            className="w-full bg-accent hover:bg-accent/80 text-white py-3"
-            disabled={isSubmitting}
+            className={`w-full py-3 h-auto transition-all duration-200 ${
+              isSuccess
+                ? 'bg-green-600 hover:bg-green-700'
+                : 'bg-accent hover:bg-accent/80'
+            } text-white`}
+            disabled={isSubmitting || isSuccess}
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
+                <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5" />
                 Sending...
+              </span>
+            ) : isSuccess ? (
+              <span className="flex items-center justify-center">
+                <CheckCircle className="mr-2 h-5 w-5" />
+                Message Sent!
               </span>
             ) : 'Send Message'}
           </Button>
         </form>
       </Form>
-    </div>
+    </motion.div>
   );
 };
 

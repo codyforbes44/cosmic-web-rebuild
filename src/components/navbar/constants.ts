@@ -1,53 +1,51 @@
 
-export interface NavLink {
+import { Menu, Files, Home, BarChartHorizontalBig } from 'lucide-react';
+
+export type NavLink = {
   name: string;
   path: string;
+  icon?: any;
   disabled?: boolean;
-}
+};
 
 export const navLinks: NavLink[] = [
-  { name: 'Home', path: '/' },
+  { name: 'Home', path: '/', icon: Home },
+  { name: 'Portfolio', path: '/portfolio', icon: Files },
+  { name: 'News', path: '/news', icon: Menu },
   { name: 'About', path: '/about' },
-  { name: 'News', path: '/news' },
   { name: 'Contact', path: '/contact' },
-  { name: 'FAQ', path: '/faq' }
+  { name: 'Analytics', path: '/analytics', icon: BarChartHorizontalBig },
 ];
 
 export const serviceCategories = [
-  { 
-    title: 'Strategic Consulting', 
-    href: '/services?service=strategy', 
-    color: '#7C3AED',
-    description: 'Expert guidance to align your technology with business goals'
+  {
+    title: 'Custom Software Development',
+    href: '/services#custom-software',
+    color: '#06B6D4', // teal
   },
-  { 
-    title: 'Digital Transformation', 
-    href: '/services?service=digital', 
-    color: '#2563EB',
-    description: 'Modernize operations and drive innovation with digital solutions'
+  {
+    title: 'Data Analytics',
+    href: '/services#data-analytics',
+    color: '#F59E0B', // amber
   },
-  { 
-    title: 'Custom Software', 
-    href: '/services?service=custom', 
-    color: '#E11D48',
-    description: 'Tailor-made software solutions designed for your unique needs'
+  {
+    title: 'Cloud Solutions',
+    href: '/services#cloud-solutions',
+    color: '#8B5CF6', // violet
   },
-  { 
-    title: 'Web & Mobile Apps', 
-    href: '/services?service=web', 
-    color: '#F59E0B',
-    description: 'Responsive applications that deliver exceptional user experiences'
+  {
+    title: 'IT Consulting',
+    href: '/services#it-consulting',
+    color: '#EC4899', // pink
   },
-  { 
-    title: 'Data Analytics', 
-    href: '/services?service=analytics', 
-    color: '#059669',
-    description: 'Transform data into actionable business intelligence'
+  {
+    title: 'Managed Services',
+    href: '/services#managed-services',
+    color: '#10B981', // emerald
   },
-  { 
-    title: 'AI & Machine Learning', 
-    href: '/services?service=ai', 
-    color: '#8B5CF6',
-    description: 'Advanced AI solutions to automate processes and gain insights'
+  {
+    title: 'Cybersecurity',
+    href: '/services#cybersecurity',
+    color: '#EF4444', // red
   },
 ];

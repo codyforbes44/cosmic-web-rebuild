@@ -2,29 +2,29 @@
 // Define types for visitor tracking
 export interface VisitorData {
   id?: string;
-  sessionId: string;
-  userAgent: string;
+  session_id: string;
+  user_agent: string;
   language: string;
-  screenWidth: number;
-  screenHeight: number;
+  screen_width: number;
+  screen_height: number;
   timezone: string;
   referrer: string;
   path: string;
-  ipAddress?: string;
-  countryCode?: string;
+  ip_address?: string;
+  country_code?: string;
   city?: string;
   browser?: string;
   os?: string;
-  deviceType?: string;
-  createdAt: string;
+  device_type?: string;
+  created_at: string;
 }
 
 // Define types for form submission tracking
 export interface FormSubmissionData {
   id?: string;
-  sessionId: string;
-  formName: string;
-  formData: Record<string, any>;
+  session_id: string;
+  form_name: string;
+  form_data: Record<string, any>;
   path: string;
-  createdAt: string;
+  created_at: string;
 }
