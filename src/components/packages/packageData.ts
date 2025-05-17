@@ -12,6 +12,25 @@ export interface PackageType {
 
 export const packageData: PackageType[] = [
   {
+    id: '3bi-complete',
+    name: '3BI Complete',
+    description: 'Full-featured platform for operations',
+    price: '$499',
+    color: '#F97316',
+    forProducts: ['3biConnect'],
+    popular: true,
+    features: [
+      'Unlimited carriers and drivers',
+      'AI-powered driver retention analysis',
+      'Complete operations dashboard',
+      'Custom reporting and metrics',
+      'Premium support with SLA',
+      'Full API access',
+      'Unlimited storage',
+      'Training and onboarding services'
+    ]
+  },
+  {
     id: 'basic',
     name: 'Basic',
     description: 'Perfect for small teams and startups',
@@ -28,21 +47,36 @@ export const packageData: PackageType[] = [
     ]
   },
   {
-    id: 'pro',
-    name: 'Professional',
-    description: 'Advanced features for growing trucking companies',
-    price: '$199',
+    id: 'carrier-advanced',
+    name: 'Carrier Advanced',
+    description: 'Enhanced carrier network capabilities',
+    price: '$299',
     color: '#8B5CF6',
-    popular: true,
-    forProducts: ['truckOnboard', 'cpn'],
+    forProducts: ['cpn', '3biConnect'],
     features: [
-      'Up to 20 users',
-      'Advanced workflow automation',
-      'Interactive training modules',
-      'Priority email support',
-      'Document versioning',
-      'API access',
-      '10GB storage per account'
+      'Up to 50 carriers',
+      'Advanced driver matching algorithm',
+      'Automated background checks',
+      'Real-time notifications',
+      'Credential verification',
+      'Enhanced analytics dashboard',
+      '20GB storage'
+    ]
+  },
+  {
+    id: 'carrier-basic',
+    name: 'Carrier Basic',
+    description: 'Essential tools for carrier partner network',
+    price: '$149',
+    color: '#0EA5E9',
+    forProducts: ['cpn'],
+    features: [
+      'Up to 10 carriers',
+      'Basic driver matching',
+      'Document exchange platform',
+      'Email notifications',
+      'Basic analytics',
+      '5GB storage'
     ]
   },
   {
@@ -64,55 +98,21 @@ export const packageData: PackageType[] = [
     ]
   },
   {
-    id: 'carrier-basic',
-    name: 'Carrier Basic',
-    description: 'Essential tools for carrier partner network',
-    price: '$149',
-    color: '#0EA5E9',
-    forProducts: ['cpn'],
-    features: [
-      'Up to 10 carriers',
-      'Basic driver matching',
-      'Document exchange platform',
-      'Email notifications',
-      'Basic analytics',
-      '5GB storage'
-    ]
-  },
-  {
-    id: 'carrier-advanced',
-    name: 'Carrier Advanced',
-    description: 'Enhanced carrier network capabilities',
-    price: '$299',
+    id: 'pro',
+    name: 'Professional',
+    description: 'Advanced features for growing trucking companies',
+    price: '$199',
     color: '#8B5CF6',
-    forProducts: ['cpn', '3biConnect'],
-    features: [
-      'Up to 50 carriers',
-      'Advanced driver matching algorithm',
-      'Automated background checks',
-      'Real-time notifications',
-      'Credential verification',
-      'Enhanced analytics dashboard',
-      '20GB storage'
-    ]
-  },
-  {
-    id: '3bi-complete',
-    name: '3BI Complete',
-    description: 'Full-featured platform for operations',
-    price: '$499',
-    color: '#F97316',
-    forProducts: ['3biConnect'],
     popular: true,
+    forProducts: ['truckOnboard', 'cpn'],
     features: [
-      'Unlimited carriers and drivers',
-      'AI-powered driver retention analysis',
-      'Complete operations dashboard',
-      'Custom reporting and metrics',
-      'Premium support with SLA',
-      'Full API access',
-      'Unlimited storage',
-      'Training and onboarding services'
+      'Up to 20 users',
+      'Advanced workflow automation',
+      'Interactive training modules',
+      'Priority email support',
+      'Document versioning',
+      'API access',
+      '10GB storage per account'
     ]
   }
-];
+].sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically by name

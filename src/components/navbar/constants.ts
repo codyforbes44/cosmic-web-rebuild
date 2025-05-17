@@ -1,3 +1,4 @@
+
 import { Menu, Files, Home, BarChartHorizontalBig, BookOpen, HelpCircle, Mail, Info, Newspaper, Package } from 'lucide-react';
 
 export type NavLink = {
@@ -21,18 +22,8 @@ export const navLinks: NavLink[] = [
 
 export const serviceCategories = [
   {
-    title: 'Dynamic Advertising',
-    href: '/services#dynamic-advertising',
-    color: '#06B6D4', // teal
-  },
-  {
-    title: 'Social Media Advertising',
-    href: '/services#social-media-advertising',
-    color: '#F59E0B', // amber
-  },
-  {
-    title: 'Recruitment Marketing',
-    href: '/services#recruitment-marketing',
+    title: 'AI Integrations',
+    href: '/services#ai-integrations',
     color: '#8B5CF6', // violet
   },
   {
@@ -41,38 +32,48 @@ export const serviceCategories = [
     color: '#EC4899', // pink
   },
   {
-    title: 'Web Development',
-    href: '/services#web-development',
-    color: '#10B981', // emerald
-  },
-  {
     title: 'Custom Software',
     href: '/services#custom-software',
     color: '#E11D48', // red
   },
   {
-    title: 'Workflow Automation',
-    href: '/services#workflow-automation',
-    color: '#6366F1', // indigo
+    title: 'Dynamic Advertising',
+    href: '/services#dynamic-advertising',
+    color: '#06B6D4', // teal
   },
   {
-    title: 'AI Integrations',
-    href: '/services#ai-integrations',
+    title: 'Recruitment Marketing',
+    href: '/services#recruitment-marketing',
     color: '#8B5CF6', // violet
+  },
+  {
+    title: 'Social Media Advertising',
+    href: '/services#social-media-advertising',
+    color: '#F59E0B', // amber
+  },
+  {
+    title: 'Web Development',
+    href: '/services#web-development',
+    color: '#10B981', // emerald
   },
   {
     title: 'Web3 Services',
     href: '/services#web3-services',
     color: '#EF4444', // red
   },
+  {
+    title: 'Workflow Automation',
+    href: '/services#workflow-automation',
+    color: '#6366F1', // indigo
+  },
 ];
 
 export const productCategories = [
   {
-    title: 'TruckOnboard',
-    href: '/products#truckOnboard',
-    color: '#0EA5E9', // sky blue
-    description: 'Remote driver onboarding made simple',
+    title: '3BI Connect',
+    href: '/products#3biConnect',
+    color: '#F97316', // orange
+    description: 'Complete platform for trucking companies',
   },
   {
     title: 'Carrier Partner Network',
@@ -81,9 +82,10 @@ export const productCategories = [
     description: 'Simplifying driver transitions',
   },
   {
-    title: '3BI Connect',
-    href: '/products#3biConnect',
-    color: '#F97316', // orange
-    description: 'Complete platform for trucking companies',
+    title: 'TruckOnboard',
+    href: '/products#truckOnboard',
+    color: '#0EA5E9', // sky blue
+    description: 'Remote driver onboarding made simple',
   },
 ];
+

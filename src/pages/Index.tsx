@@ -5,11 +5,11 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import AstronomyFacts from "@/components/AstronomyFacts";
 import BusinessCaseStudy from "@/components/BusinessCaseStudy";
+import CTASection from "@/components/CTASection";
 import Newsletter from "@/components/Newsletter";
+import ProductsSection from "@/components/ProductsSection";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
-import CTASection from "@/components/CTASection";
-import ProductsSection from "@/components/ProductsSection";
 
 const Index = () => {
   return (
@@ -24,12 +24,12 @@ const Index = () => {
       <Navbar />
       <main className="relative overflow-x-hidden z-10">
         <HeroSection />
-        <Testimonials />
-        <ProductsSection />
         <AstronomyFacts />
         <BusinessCaseStudy />
         <CTASection />
         <Newsletter />
+        <ProductsSection />
+        <Testimonials />
       </main>
       <Footer />
     </>

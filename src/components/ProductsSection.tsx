@@ -7,11 +7,11 @@ import { Package } from 'lucide-react';
 
 const productData = [
   {
-    id: 'truckOnboard',
-    title: 'TruckOnboard',
-    description: 'Remote driver onboarding made simple with digital documents and automated workflows.',
-    color: '#0EA5E9',
-    image: '/lovable-uploads/3019ba2a-e413-4c57-b1dc-f784e0d9511a.png',
+    id: '3biConnect',
+    title: '3BI Connect',
+    description: 'Complete platform for trucking companies to manage drivers and streamline operations.',
+    color: '#F97316',
+    image: '/lovable-uploads/c3fa73ab-8505-4e8a-bf40-2d48a383fff8.png',
   },
   {
     id: 'cpn',
@@ -21,13 +21,13 @@ const productData = [
     image: '/lovable-uploads/b526c888-e2db-4d66-b8eb-fc8218763c99.png',
   },
   {
-    id: '3biConnect',
-    title: '3BI Connect',
-    description: 'Complete platform for trucking companies to manage drivers and streamline operations.',
-    color: '#F97316',
-    image: '/lovable-uploads/c3fa73ab-8505-4e8a-bf40-2d48a383fff8.png',
+    id: 'truckOnboard',
+    title: 'TruckOnboard',
+    description: 'Remote driver onboarding made simple with digital documents and automated workflows.',
+    color: '#0EA5E9',
+    image: '/lovable-uploads/3019ba2a-e413-4c57-b1dc-f784e0d9511a.png',
   },
-];
+].sort((a, b) => a.title.localeCompare(b.title)); // Sort alphabetically by title
 
 const ProductsSection: React.FC = () => {
   return (
