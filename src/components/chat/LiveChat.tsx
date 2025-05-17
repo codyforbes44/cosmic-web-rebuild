@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '@/integrations/supabase/client';
 import ChatButton from './ChatButton';
 import ChatHeader from './ChatHeader';
-import UserInfoForm from './UserInfoForm';
 import MessageList from './MessageList';
 import ChatInput from './ChatInput';
 import { AUTO_RESPONSES, DEFAULT_RESPONSE, INITIAL_MESSAGE } from './constants';
@@ -16,7 +15,6 @@ export default function LiveChat() {
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [newMessage, setNewMessage] = useState('');
-  const [userInfo, setUserInfo] = useState<UserInfo>({ name: '', email: '', submitted: false });
   const [lastSeenId, setLastSeenId] = useState('1');
   const [sessionId, setSessionId] = useState('');
 
@@ -36,12 +34,12 @@ export default function LiveChat() {
     }
   }, [messages, isOpen]);
 
-  // Focus input when opened and user info submitted
+  // Focus input when opened
   useEffect(() => {
-    if (isOpen && userInfo.submitted && chatInputRef.current) {
+    if (isOpen && chatInputRef.current) {
       chatInputRef.current.focus();
     }
-  }, [isOpen, userInfo.submitted]);
+  }, [isOpen]);
 
   // Clean up pending timeout on unmount
   useEffect(() => {
@@ -64,18 +62,13 @@ export default function LiveChat() {
   const minimize = useCallback(() => setIsMinimized(true), []);
   const restore = useCallback(() => setIsMinimized(false), []);
 
-  const handleUserInfoChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserInfo(info => ({ ...info, [name]: value }));
-  }, []);
-
   // Store chat interaction in Supabase
   const storeChatInteraction = async (message: string, response: string) => {
     try {
       await supabase.from('chat_interactions').insert({
         session_id: sessionId,
-        user_name: userInfo.name || null,
-        user_email: userInfo.email || null,
+        user_name: null,
+        user_email: null,
         message,
         response
       });
@@ -83,21 +76,6 @@ export default function LiveChat() {
       console.error('Error storing chat interaction:', error);
     }
   };
-
-  const submitUserInfo = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    setUserInfo(info => ({ ...info, submitted: true }));
-    const welcome: Message = { 
-      id: uuidv4(), 
-      sender: 'agent', 
-      text: `Hi ${userInfo.name}! Thanks for providing your information. How can I assist you with your project today?`, 
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
-    };
-    setMessages(msgs => [...msgs, welcome]);
-    
-    // Store the welcome message interaction
-    storeChatInteraction('User submitted info', welcome.text);
-  }, [userInfo.name, sessionId]);
 
   const sendMessage = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -145,14 +123,10 @@ export default function LiveChat() {
           <ChatHeader isTyping={isTyping} minimize={minimize} restore={restore} isMinimized={isMinimized} />
 
           {!isMinimized && (
-            userInfo.submitted ? (
-              <>
-                <MessageList messages={messages} isTyping={isTyping} scrollAnchorRef={scrollAnchorRef} />
-                <ChatInput newMessage={newMessage} onChange={e => setNewMessage(e.target.value)} onSubmit={sendMessage} inputRef={chatInputRef} />
-              </>
-            ) : (
-              <UserInfoForm name={userInfo.name} email={userInfo.email} onChange={handleUserInfoChange} onSubmit={submitUserInfo} />
-            )
+            <>
+              <MessageList messages={messages} isTyping={isTyping} scrollAnchorRef={scrollAnchorRef} />
+              <ChatInput newMessage={newMessage} onChange={e => setNewMessage(e.target.value)} onSubmit={sendMessage} inputRef={chatInputRef} />
+            </>
           )}
         </div>
       )}
