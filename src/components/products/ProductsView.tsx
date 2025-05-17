@@ -131,7 +131,7 @@ const ProductsView: React.FC<ProductsViewProps> = ({ selectedProduct }) => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/packages">
+              <Link to={`/packages?product=${productDetail.id}`}>
                 <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
                   View Pricing
                 </Button>
@@ -156,7 +156,7 @@ const ProductsView: React.FC<ProductsViewProps> = ({ selectedProduct }) => {
               Get a Consultation <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
-          <Link to="/packages">
+          <Link to={`/packages?product=${productDetail.id}`}>
             <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white">
               View Pricing Plans
             </Button>

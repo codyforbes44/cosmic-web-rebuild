@@ -1,63 +1,118 @@
 
-// Define package data
-export const packages = [
+export interface PackageType {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  color: string;
+  features: string[];
+  forProducts?: string[]; // Product IDs this package is for
+  popular?: boolean;
+}
+
+export const packageData: PackageType[] = [
   {
-    id: "starter",
-    name: "Starter",
-    description: "For small businesses getting started with digital services",
-    price: "$1,499",
-    period: "per month",
+    id: 'basic',
+    name: 'Basic',
+    description: 'Perfect for small teams and startups',
+    price: '$99',
+    color: '#0EA5E9',
+    forProducts: ['truckOnboard'],
     features: [
-      "Up to 5 active projects",
-      "Basic strategy consultation",
-      "Standard implementation",
-      "Email support (24h response time)",
-      "Monthly reporting"
-    ],
-    cta: "Get Started",
-    color: "#9b87f5", // Purple from your color palette
-    popular: false
+      'Up to 5 users',
+      'Digital document management',
+      'Basic onboarding workflow',
+      'Email support',
+      'Secure document storage',
+      '2GB storage per account'
+    ]
   },
   {
-    id: "professional",
-    name: "Professional",
-    description: "For growing businesses needing comprehensive support",
-    price: "$3,999",
-    period: "per month",
+    id: 'pro',
+    name: 'Professional',
+    description: 'Advanced features for growing trucking companies',
+    price: '$199',
+    color: '#8B5CF6',
+    popular: true,
+    forProducts: ['truckOnboard', 'cpn'],
     features: [
-      "Up to 15 active projects",
-      "Advanced strategy consultation",
-      "Premium implementation",
-      "Priority email & phone support",
-      "Weekly reporting and insights",
-      "Quarterly strategy reviews",
-      "Custom integrations",
-      "Dedicated account manager"
-    ],
-    cta: "Get Started",
-    color: "#1EAEDB", // Bright Blue from your color palette
-    popular: true
+      'Up to 20 users',
+      'Advanced workflow automation',
+      'Interactive training modules',
+      'Priority email support',
+      'Document versioning',
+      'API access',
+      '10GB storage per account'
+    ]
   },
   {
-    id: "enterprise",
-    name: "Enterprise",
-    description: "Custom solutions for large organizations with complex needs",
-    price: "Custom",
-    period: "custom pricing",
+    id: 'enterprise',
+    name: 'Enterprise',
+    description: 'Complete solution for large logistics operations',
+    price: '$399',
+    color: '#F97316',
+    forProducts: ['truckOnboard', 'cpn', '3biConnect'],
     features: [
-      "Unlimited active projects",
-      "Executive strategy consultation",
-      "Enterprise-grade implementation",
-      "24/7 priority support",
-      "Dedicated development team",
-      "Custom reporting dashboards",
-      "Monthly strategy reviews",
-      "Advanced security features",
-      "On-site training and support",
-      "Custom SLA"
-    ],
-    cta: "Contact Us",
-    color: "#0F172A", // Space dark blue from your color palette
-    popular: false
+      'Unlimited users',
+      'Custom workflow design',
+      'Advanced analytics',
+      'Dedicated account manager',
+      'Phone and email support',
+      'Custom integrations',
+      'White-label options',
+      'Unlimited storage'
+    ]
+  },
+  {
+    id: 'carrier-basic',
+    name: 'Carrier Basic',
+    description: 'Essential tools for carrier partner network',
+    price: '$149',
+    color: '#0EA5E9',
+    forProducts: ['cpn'],
+    features: [
+      'Up to 10 carriers',
+      'Basic driver matching',
+      'Document exchange platform',
+      'Email notifications',
+      'Basic analytics',
+      '5GB storage'
+    ]
+  },
+  {
+    id: 'carrier-advanced',
+    name: 'Carrier Advanced',
+    description: 'Enhanced carrier network capabilities',
+    price: '$299',
+    color: '#8B5CF6',
+    forProducts: ['cpn', '3biConnect'],
+    features: [
+      'Up to 50 carriers',
+      'Advanced driver matching algorithm',
+      'Automated background checks',
+      'Real-time notifications',
+      'Credential verification',
+      'Enhanced analytics dashboard',
+      '20GB storage'
+    ]
+  },
+  {
+    id: '3bi-complete',
+    name: '3BI Complete',
+    description: 'Full-featured platform for operations',
+    price: '$499',
+    color: '#F97316',
+    forProducts: ['3biConnect'],
+    popular: true,
+    features: [
+      'Unlimited carriers and drivers',
+      'AI-powered driver retention analysis',
+      'Complete operations dashboard',
+      'Custom reporting and metrics',
+      'Premium support with SLA',
+      'Full API access',
+      'Unlimited storage',
+      'Training and onboarding services'
+    ]
   }
 ];
