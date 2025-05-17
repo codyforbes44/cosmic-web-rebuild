@@ -12,13 +12,13 @@ interface SEOProps {
 
 const SEO = ({
   title,
-  description = "ƷBI provides innovative business technology solutions and expert consulting services",
-  keywords = "business consulting, technology solutions, digital transformation, ƷBI",
+  description = "ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth",
+  keywords = "business consulting, technology solutions, digital transformation, ƷBI, custom software development, data analytics, AI solutions",
   image = "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
   url = window.location.href,
   type = "website"
 }: SEOProps) => {
-  const siteTitle = `${title} | ƷBI`;
+  const siteTitle = `${title} | ƷBI - Business Technology Solutions`;
   
   // Convert relative image paths to absolute URLs
   const absoluteImageUrl = image.startsWith('http') 
@@ -48,6 +48,11 @@ const SEO = ({
       
       {/* Canonical URL */}
       <link rel="canonical" href={url} />
+      
+      {/* Additional SEO tags for business websites */}
+      <meta name="robots" content="index, follow" />
+      <meta name="author" content="ƷBI Technology Solutions" />
+      <meta name="geo.region" content="US" />
     </Helmet>
   );
 };

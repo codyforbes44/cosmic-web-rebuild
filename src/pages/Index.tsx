@@ -7,6 +7,8 @@ import AstronomyFacts from "@/components/AstronomyFacts";
 import BusinessCaseStudy from "@/components/BusinessCaseStudy";
 import Newsletter from "@/components/Newsletter";
 import SEO from "@/components/SEO";
+import Testimonials from "@/components/Testimonials";
+import CTASection from "@/components/CTASection";
 
 const Index = () => {
   return (
@@ -20,8 +22,10 @@ const Index = () => {
       <main className="overflow-x-hidden">
         <StarBackground />
         <HeroSection />
+        <Testimonials />
         <AstronomyFacts />
         <BusinessCaseStudy />
+        <CTASection />
         <Newsletter />
       </main>
       <Footer />
