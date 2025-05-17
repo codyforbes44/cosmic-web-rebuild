@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import MobileNavLink from './MobileNavLink';
 import MobileServicesMenu from './MobileServicesMenu';
 import { navLinks } from './constants';
+import { Phone } from 'lucide-react';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -32,9 +33,21 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-10 bg-space-dark-blue/95 backdrop-blur-sm md:hidden"
         >
-          <div className="h-full flex flex-col justify-between py-24 px-6 overflow-y-auto">
+          <div className="h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
             <div>
-              <nav className="space-y-6">
+              <div className="mb-8 pb-4 border-b border-gray-700">
+                <Link to="/get-quote" onClick={onClose} className="block mb-4">
+                  <Button className="w-full bg-accent hover:bg-accent/80 text-white py-5 font-semibold text-base">
+                    Get a Free Quote
+                  </Button>
+                </Link>
+                <a href="tel:+11234567890" className="flex items-center justify-center gap-2 w-full py-3 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
+                  <Phone size={18} />
+                  <span className="font-medium">(123) 456-7890</span>
+                </a>
+              </div>
+              
+              <nav className="space-y-5">
                 {/* Home Link */}
                 <MobileNavLink 
                   key={navLinks[0].name}
@@ -51,11 +64,12 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   transition={{ duration: 0.3, delay: 0.1 }}
                 >
                   <button 
-                    className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''}`}
+                    className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full`}
                     onClick={toggleServices}
+                    aria-expanded={showServices}
                   >
-                    Services
-                    <span className="ml-2">{showServices ? '−' : '+'}</span>
+                    <span>Services</span>
+                    <span className="ml-2 text-2xl font-light">{showServices ? '−' : '+'}</span>
                   </button>
                   
                   {showServices && (
@@ -80,18 +94,15 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.6 }}
-              className="py-6"
+              className="py-6 space-y-4"
             >
-              <Link to="/get-quote" onClick={onClose}>
-                <Button className="w-full bg-accent hover:bg-accent/80 text-white py-6">
-                  Get a Free Quote
-                </Button>
-              </Link>
-              <div className="mt-6 text-center text-gray-400 text-sm">
-                <p>Need immediate assistance?</p>
-                <a href="tel:+11234567890" className="text-accent hover:underline">
-                  Call (123) 456-7890
-                </a>
+              <div className="text-sm text-center space-y-2">
+                <p className="text-gray-400">Trusted by industry leaders</p>
+                <div className="flex justify-center space-x-4">
+                  <div className="w-8 h-8 bg-gray-700 rounded-full"></div>
+                  <div className="w-8 h-8 bg-gray-700 rounded-full"></div>
+                  <div className="w-8 h-8 bg-gray-700 rounded-full"></div>
+                </div>
               </div>
             </motion.div>
           </div>
