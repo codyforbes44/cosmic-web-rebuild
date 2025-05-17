@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
-
 const Footer = () => {
-  return (
-    <footer className="bg-space-deep-blue pt-16 pb-8 border-t border-gray-800">
+  return <footer className="bg-space-deep-blue pt-16 pb-8 border-t border-gray-800">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
@@ -28,28 +26,26 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Services</h3>
             <ul className="space-y-2">
-              {serviceCategories.map((service) => (
-                <li key={service.href}>
-                  <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{ "--color": service.color } as React.CSSProperties}>
+              {serviceCategories.map(service => <li key={service.href}>
+                  <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
+                "--color": service.color
+              } as React.CSSProperties}>
                     {service.title}
                   </Link>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
           
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Company</h3>
             <ul className="space-y-2">
-              {navLinks.map((link) => (
-                <li key={link.path}>
+              {navLinks.map(link => <li key={link.path}>
                   <Link to={link.path} className="footer-link">
                     {link.name}
                   </Link>
-                </li>
-              ))}
+                </li>)}
               {/* Keep Contact link separately as it's likely important */}
-              <li><Link to="/contact" className="footer-link">Contact</Link></li>
+              
             </ul>
           </div>
           
@@ -57,15 +53,8 @@ const Footer = () => {
             <h3 className="text-lg font-medium mb-4 text-white">Stay Updated</h3>
             <p className="text-gray-400 mb-4">Subscribe to our newsletter for the latest industry trends and company updates.</p>
             <form className="flex flex-col space-y-2">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
-                className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent"
-              />
-              <button 
-                type="submit" 
-                className="bg-accent hover:bg-accent/80 text-white px-4 py-2 rounded-md transition-colors"
-              >
+              <input type="email" placeholder="Your email address" className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent" />
+              <button type="submit" className="bg-accent hover:bg-accent/80 text-white px-4 py-2 rounded-md transition-colors">
                 Subscribe
               </button>
             </form>
@@ -83,8 +72,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
