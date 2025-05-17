@@ -49,25 +49,16 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   onClose={onClose}
                 />
                 
-                {/* Portfolio Link */}
-                <MobileNavItem 
-                  key={navLinks[1].name}
-                  link={navLinks[1]} 
-                  isActive={isActive(navLinks[1].path) === 'active'} 
-                  index={1}
-                  onClose={onClose}
-                />
-                
                 {/* Services Toggle */}
                 <MobileServiceToggle onClose={onClose} />
                 
                 {/* Remaining Links */}
-                {navLinks.slice(2).map((link, index) => (
+                {navLinks.slice(1).map((link, index) => (
                   <MobileNavItem 
                     key={link.name}
                     link={link} 
                     isActive={isActive(link.path) === 'active'} 
-                    index={index + 3}
+                    index={index + 2}
                     onClose={onClose}
                   />
                 ))}

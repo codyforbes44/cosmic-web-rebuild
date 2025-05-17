@@ -10,7 +10,7 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/', icon: Home },
-  { name: 'Portfolio', path: '/portfolio', icon: Files },
+  // Portfolio link removed
   { name: 'News', path: '/news', icon: Menu },
   { name: 'About', path: '/about' },
   { name: 'FAQ', path: '/faq', icon: HelpCircle },

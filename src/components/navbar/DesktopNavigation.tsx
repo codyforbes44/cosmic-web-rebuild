@@ -22,19 +22,11 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
         index={0}
       />
 
-      {/* Portfolio link */}
-      <DesktopNavItem 
-        key={navLinks[1].name}
-        link={navLinks[1]} 
-        isActive={isActive(navLinks[1].path) === 'active'} 
-        index={1}
-      />
-
       {/* Services Dropdown */}
       <ServiceDropdown isActive={isServicesActive} />
 
       {/* Remaining links */}
-      {navLinks.slice(2).map((link, index) => (
+      {navLinks.slice(1).map((link, index) => (
         <DesktopNavItem 
           key={link.name}
           link={link} 
