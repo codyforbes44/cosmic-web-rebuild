@@ -27,7 +27,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       setLoading(true);
       setError(null);
       
-      // Fetch visitor data
+      // Fetch visitor data from visitor_tracking table
       const { data: visitors, error: visitorError } = await supabase
         .from('visitor_tracking')
         .select('*')
@@ -35,7 +35,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       
       if (visitorError) throw visitorError;
       
-      // Fetch form submission data
+      // Fetch form submission data from form_submissions table
       const { data: forms, error: formError } = await supabase
         .from('form_submissions')
         .select('*')
@@ -43,7 +43,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       
       if (formError) throw formError;
       
-      // Fetch chat interaction data
+      // Fetch chat interaction data from chat_interactions table
       const { data: chats, error: chatError } = await supabase
         .from('chat_interactions')
         .select('*')
@@ -51,7 +51,31 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       
       if (chatError) throw chatError;
 
-      // Clean up data - ensure all data has the expected fields and handle nulls
+      // Fetch contact submissions data
+      const { data: contacts, error: contactError } = await supabase
+        .from('contact_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (contactError) throw contactError;
+
+      // Fetch newsletter subscribers data
+      const { data: subscribers, error: subscriberError } = await supabase
+        .from('newsletter_subscribers')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (subscriberError) throw subscriberError;
+
+      // Fetch quote submissions data
+      const { data: quotes, error: quoteError } = await supabase
+        .from('quote_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (quoteError) throw quoteError;
+
+      // Clean up data - ensure all visitor data has the expected fields and handle nulls
       const cleanVisitors = (visitors || []).map(visitor => ({
         ...visitor,
         browser: visitor.browser || 'Unknown',
@@ -67,9 +91,19 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       setFormData(forms as FormSubmissionData[] || []);
       setChatData(chats || []);
       
+      // Use quotes, contacts and subscribers data as needed in your application
+      // These are fetched but not used in the current UI
+      
+      const totalRecords = (cleanVisitors?.length || 0) + 
+                          (forms?.length || 0) + 
+                          (chats?.length || 0) +
+                          (contacts?.length || 0) + 
+                          (subscribers?.length || 0) + 
+                          (quotes?.length || 0);
+      
       toast({
         title: "Analytics data loaded",
-        description: `Loaded ${cleanVisitors.length} visitor records, ${forms?.length || 0} form submissions, and ${chats?.length || 0} chat interactions`,
+        description: `Successfully loaded ${totalRecords} total records from all Supabase tables`,
         variant: "default"
       });
     } catch (err: any) {

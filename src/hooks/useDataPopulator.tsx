@@ -10,7 +10,7 @@ export const useDataPopulator = () => {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Reset analytics data - no demo data generation
+  // Reset analytics data across all tables
   const populateData = async () => {
     setIsProcessing(true);
     setProgress(0);
@@ -18,25 +18,48 @@ export const useDataPopulator = () => {
     setError(null);
     
     try {
-      // Clear existing data
+      const totalSteps = 6; // Number of tables to clear
+      let currentStep = 0;
+      
       toast({
         title: "Clearing analytics data",
-        description: "Removing all existing analytics data...",
+        description: "Removing analytics data from all Supabase tables...",
         variant: "default"
       });
       
+      // Clear visitor tracking data
       await supabase.from('visitor_tracking').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-      setProgress(33);
+      currentStep++;
+      setProgress(Math.round((currentStep / totalSteps) * 100));
       
+      // Clear form submissions
       await supabase.from('form_submissions').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-      setProgress(66);
+      currentStep++;
+      setProgress(Math.round((currentStep / totalSteps) * 100));
       
+      // Clear chat interactions
       await supabase.from('chat_interactions').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-      setProgress(100);
+      currentStep++;
+      setProgress(Math.round((currentStep / totalSteps) * 100));
+      
+      // Clear contact submissions
+      await supabase.from('contact_submissions').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      currentStep++;
+      setProgress(Math.round((currentStep / totalSteps) * 100));
+      
+      // Clear newsletter subscribers
+      await supabase.from('newsletter_subscribers').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      currentStep++;
+      setProgress(Math.round((currentStep / totalSteps) * 100));
+      
+      // Clear quote submissions
+      await supabase.from('quote_submissions').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      currentStep++;
+      setProgress(Math.round((currentStep / totalSteps) * 100));
       
       toast({
         title: "Data reset complete",
-        description: "Successfully reset analytics data. The dashboard will now show only new activity.",
+        description: "Successfully reset all analytics data across all tables. The dashboard will now show only new activity.",
         variant: "default"
       });
     } catch (err: any) {

@@ -5,7 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2, RefreshCw } from 'lucide-react';
 import { useDataPopulator } from '@/hooks/useDataPopulator';
 import DataPopulatorStatus from './DataPopulatorStatus';
-import { DataPopulatorProps } from '@/types/generatedData';
+
+interface DataPopulatorProps {
+  className?: string;
+}
 
 const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
   const { isProcessing, progress, processedCount, error, populateData } = useDataPopulator();
@@ -15,7 +18,7 @@ const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2">
           <Trash2 className="h-5 w-5" />
-          Reset Analytics Data
+          Reset All Analytics Data
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -36,7 +39,7 @@ const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
             {isProcessing ? (
               <>
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                Resetting Analytics Data...
+                Resetting All Tables...
               </>
             ) : (
               <>
@@ -45,8 +48,9 @@ const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
               </>
             )}
           </Button>
-          <p className="text-xs text-gray-500 text-center">
-            Warning: This will permanently delete all existing analytics data
+          <p className="text-xs text-gray-400 text-center">
+            Warning: This will permanently delete data from visitor_tracking, form_submissions, chat_interactions, 
+            contact_submissions, newsletter_subscribers, and quote_submissions tables
           </p>
         </div>
       </CardContent>

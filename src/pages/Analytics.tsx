@@ -48,14 +48,15 @@ const Analytics = () => {
                 className="flex items-center gap-2 border-gray-700 text-white hover:bg-gray-800"
               >
                 <RefreshCw className="h-4 w-4" />
-                Refresh Data
+                Refresh All Data
               </Button>
             </div>
             
             <div className="mb-6 bg-gray-800/50 border border-gray-700 rounded-md p-4 text-white">
               <p className="font-medium">Welcome, {user?.email}</p>
               <p className="text-sm text-gray-400 mt-1">
-                You have full access to all analytics data.
+                Viewing data from all Supabase tables including visitor tracking, form submissions, 
+                chat interactions, contacts, newsletters and quotes
               </p>
             </div>
             

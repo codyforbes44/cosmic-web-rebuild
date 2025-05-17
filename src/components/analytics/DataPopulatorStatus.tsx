@@ -30,6 +30,7 @@ const DataPopulatorStatus: React.FC<DataPopulatorStatusProps> = ({
           <Progress value={progress} className="h-2" />
           <p className="text-sm text-gray-400">
             Reset progress: {progress}% complete
+            {processedCount > 0 && ` (${processedCount} records processed)`}
           </p>
         </div>
       )}
