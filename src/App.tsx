@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -34,17 +35,6 @@ import Auth from "./pages/Auth";
 
 // Initialize Supabase client in supabase.ts
 import "./lib/supabase";
-
-// Create a query client with better defaults
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
 
 // AppContent component to use hooks inside Routes
 const AppContent = () => {
@@ -88,7 +78,19 @@ const AppContent = () => {
   );
 };
 
+// Create a query client with better defaults - moved inside the component
 const App: React.FC = () => {
+  // Create the query client inside the component
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 5, // 5 minutes
+        retry: 1,
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+  
   return (
     <React.StrictMode>
       <HelmetProvider>
