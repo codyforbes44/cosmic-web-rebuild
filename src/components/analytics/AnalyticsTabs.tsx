@@ -48,15 +48,15 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({
       </TabsContent>
       
       <TabsContent value="visitors" className="mt-0">
-        <VisitorMetadataTable data={visitorData} />
+        <VisitorMetadataTable visitorData={visitorData} />
       </TabsContent>
       
       <TabsContent value="forms" className="mt-0">
-        <FormSubmissionCharts data={formData} />
+        <FormSubmissionCharts formData={formData} />
       </TabsContent>
       
       <TabsContent value="chat" className="mt-0">
-        <ChatInteractionsAnalytics data={chatData} />
+        <ChatInteractionsAnalytics chatData={chatData} />
       </TabsContent>
       
       <TabsContent value="tools" className="mt-0">
