@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { 
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
@@ -65,7 +66,7 @@ const FormSubmissionCharts: React.FC<FormSubmissionChartsProps> = ({ formData })
   
   // Process form fields completion data
   const prepareFormFieldsData = () => {
-    const fieldCounts = {};
+    const fieldCounts: Record<string, number> = {};
     
     formData.forEach(submission => {
       if (submission.form_data && typeof submission.form_data === 'object') {
@@ -104,7 +105,7 @@ const FormSubmissionCharts: React.FC<FormSubmissionChartsProps> = ({ formData })
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) => `${name}: ${(Number(percent) * 100).toFixed(0)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
