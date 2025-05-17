@@ -57,6 +57,30 @@ const getIpAddress = async (): Promise<string | null> => {
   }
 };
 
+// Get location data from IP address
+const getLocationData = async (ipAddress: string | null): Promise<{ country_code?: string; city?: string }> => {
+  if (!ipAddress) return {};
+  
+  try {
+    const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
+    const data = await response.json();
+    
+    // Check if the API returned an error
+    if (data.error) {
+      console.error('Error in IP geolocation:', data.reason);
+      return {};
+    }
+    
+    return {
+      country_code: data.country_code,
+      city: data.city
+    };
+  } catch (err) {
+    console.error('Error getting location data:', err);
+    return {};
+  }
+};
+
 // Track visitor data
 export const trackVisit = async (path: string): Promise<void> => {
   try {
@@ -64,6 +88,9 @@ export const trackVisit = async (path: string): Promise<void> => {
     
     // Get visitor IP address
     const ipAddress = await getIpAddress();
+    
+    // Get location data from IP
+    const locationData = await getLocationData(ipAddress);
     
     // Gather visitor information
     const visitorData: VisitorData = {
@@ -79,6 +106,8 @@ export const trackVisit = async (path: string): Promise<void> => {
       os: userAgentInfo.os,
       device_type: userAgentInfo.deviceType,
       ip_address: ipAddress,
+      country_code: locationData.country_code,
+      city: locationData.city,
       created_at: new Date().toISOString(),
     };
     
