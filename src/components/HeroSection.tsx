@@ -17,7 +17,7 @@ const HeroSection = () => {
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      opacity: 0.5  // Changed from 0.7 to 0.5 for more transparency
+      opacity: 0.3  // Changed from 0.5 to 0.3 for more transparency
     }} />
       
       {/* Gradient overlay */}
