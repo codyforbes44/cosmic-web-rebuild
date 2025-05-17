@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 const HeroSection = () => {
   const [visible, setVisible] = useState(false);
   const isMobile = useIsMobile();
+  
   useEffect(() => {
     setVisible(true);
   }, []);
+  
   return <section className="relative min-h-[90vh] md:min-h-screen overflow-hidden flex items-center justify-center pt-16">
       {/* Circuit board background */}
       <div className="absolute inset-0 z-0" style={{
@@ -17,7 +20,7 @@ const HeroSection = () => {
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      opacity: 0.3  // Changed from 0.5 to 0.3 for more transparency
+      opacity: 0.4  // Changed from 0.3 to 0.4 for better visibility
     }} />
       
       {/* Gradient overlay */}
@@ -94,4 +97,5 @@ const HeroSection = () => {
       </div>
     </section>;
 };
+
 export default HeroSection;
