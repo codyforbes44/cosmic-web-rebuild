@@ -1,13 +1,14 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 
 const clients = [
-  { name: "TechForward Inc.", logo: "/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" },
-  { name: "InnovateNow", logo: "/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" },
-  { name: "Global Logistics Partners", logo: "/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" },
-  { name: "TransTech Solutions", logo: "/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" },
-  { name: "Freight Excellence", logo: "/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" }
+  { name: "TechForward Inc." },
+  { name: "InnovateNow" },
+  { name: "Global Logistics Partners" },
+  { name: "TransTech Solutions" },
+  { name: "Freight Excellence" }
 ];
 
 const ClientLogos: React.FC = () => {
@@ -20,7 +21,7 @@ const ClientLogos: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-4"
         >
-          <p className="text-gray-300 text-sm uppercase tracking-wider font-medium">Trusted by industry leaders</p>
+          <p className="text-gray-300 text-sm uppercase tracking-wider font-medium">TRUSTED BY INDUSTRY LEADERS</p>
         </motion.div>
         
         <motion.div 
@@ -32,17 +33,25 @@ const ClientLogos: React.FC = () => {
           {clients.map((client, index) => (
             <motion.div 
               key={index}
-              className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+              className="opacity-70 hover:opacity-100 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 * index }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.1,
+                rotate: 5,
+                transition: { duration: 0.3 }
+              }}
             >
-              <img 
-                src={client.logo} 
-                alt={`${client.name} logo`} 
-                className="h-8 md:h-10 w-auto object-contain"
-              />
+              <div className="relative flex flex-col items-center">
+                <Sparkles 
+                  className="h-8 md:h-10 w-auto text-brand-gold animate-twinkle" 
+                  style={{ 
+                    filter: "drop-shadow(0 0 5px rgba(155, 135, 245, 0.7))"
+                  }} 
+                />
+                <span className="text-brand-gold text-xs mt-1.5 font-medium">{client.name}</span>
+              </div>
             </motion.div>
           ))}
         </motion.div>
