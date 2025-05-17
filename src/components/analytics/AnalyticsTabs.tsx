@@ -5,6 +5,7 @@ import { VisitorData, FormSubmissionData } from '@/types/tracking';
 import VisitorCharts from './VisitorCharts';
 import FormSubmissionCharts from './FormSubmissionCharts';
 import VisitorMetadataTable from './VisitorMetadataTable';
+import UpdateVisitorLocations from './UpdateVisitorLocations';
 
 interface AnalyticsTabsProps {
   visitorData: VisitorData[];
@@ -13,7 +14,7 @@ interface AnalyticsTabsProps {
 
 const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData }) => {
   return (
-    <Tabs defaultValue="forms" className="mb-8">
+    <Tabs defaultValue="visitors" className="mb-8">
       <TabsList className="bg-gray-800/50 border-gray-700">
         <TabsTrigger value="visitors">Visitors</TabsTrigger>
         <TabsTrigger value="forms">Form Submissions</TabsTrigger>
@@ -29,7 +30,10 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData }) 
       </TabsContent>
       
       <TabsContent value="metadata" className="mt-6">
-        <VisitorMetadataTable visitorData={visitorData} />
+        <div className="space-y-6">
+          <UpdateVisitorLocations />
+          <VisitorMetadataTable visitorData={visitorData} />
+        </div>
       </TabsContent>
     </Tabs>
   );
