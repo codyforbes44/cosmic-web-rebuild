@@ -25,6 +25,7 @@ import TermsOfService from "./pages/TermsOfService";
 import Accessibility from "./pages/Accessibility";
 import Analytics from "./pages/Analytics";
 import NotFound from "./pages/NotFound";
+import Packages from "./pages/Packages";
 
 // Initialize Supabase client in supabase.ts
 import "./lib/supabase";
@@ -66,6 +67,7 @@ const AppContent = () => {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/accessibility" element={<Accessibility />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/packages" element={<Packages />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
