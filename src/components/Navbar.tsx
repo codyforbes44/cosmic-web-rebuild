@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Ban } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -12,6 +12,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const serviceCategories = [
   {
@@ -99,7 +100,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Portfolio', path: '/portfolio', disabled: true },
     { name: 'Packages', path: '/packages' },
     { name: 'Business Insights', path: '/news' },
     { name: 'About', path: '/about' },
@@ -215,19 +216,35 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: (index + 2) * 0.1 }}
             >
-              <Link 
-                to={link.path} 
-                className={`nav-link ${isActive(link.path)}`}
-                aria-current={isActive(link.path) ? 'page' : undefined}
-              >
-                {link.name}
-                {isActive(link.path) && (
-                  <motion.div 
-                    className="h-0.5 bg-accent mt-1" 
-                    layoutId="navbar-indicator"
-                  />
-                )}
-              </Link>
+              {link.disabled ? (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="nav-link text-gray-500 cursor-not-allowed flex items-center">
+                        {link.name}
+                        <Ban size={16} className="ml-1 opacity-70" />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Coming soon</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              ) : (
+                <Link 
+                  to={link.path} 
+                  className={`nav-link ${isActive(link.path)}`}
+                  aria-current={isActive(link.path) ? 'page' : undefined}
+                >
+                  {link.name}
+                  {isActive(link.path) && (
+                    <motion.div 
+                      className="h-0.5 bg-accent mt-1" 
+                      layoutId="navbar-indicator"
+                    />
+                  )}
+                </Link>
+              )}
             </motion.div>
           ))}
           
@@ -315,14 +332,21 @@ const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: (index + 2) * 0.1 }}
                 >
-                  <Link 
-                    to={link.path} 
-                    className={`nav-link text-xl ${isActive(link.path)}`}
-                    onClick={() => setIsMobileNavOpen(false)}
-                    aria-current={isActive(link.path) ? 'page' : undefined}
-                  >
-                    {link.name}
-                  </Link>
+                  {link.disabled ? (
+                    <span className="nav-link text-xl text-gray-500 cursor-not-allowed flex items-center">
+                      {link.name}
+                      <Ban size={18} className="ml-2 opacity-70" />
+                    </span>
+                  ) : (
+                    <Link 
+                      to={link.path} 
+                      className={`nav-link text-xl ${isActive(link.path)}`}
+                      onClick={() => setIsMobileNavOpen(false)}
+                      aria-current={isActive(link.path) ? 'page' : undefined}
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
 
