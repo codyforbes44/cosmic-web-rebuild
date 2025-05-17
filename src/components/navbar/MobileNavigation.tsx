@@ -1,12 +1,14 @@
 
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { X } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { navLinks } from './constants';
-import { Phone } from 'lucide-react';
 import MobileNavItem from './MobileNavItem';
 import MobileServiceToggle from './MobileServiceToggle';
+import { Button } from '@/components/ui/button';
+import { LogIn, LogOut } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -14,76 +16,66 @@ interface MobileNavigationProps {
   onClose: () => void;
 }
 
-const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) => {
+const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, onClose }) => {
+  const { user, signOut } = useAuth();
+  
+  const handleSignOut = () => {
+    signOut();
+    onClose();
+  };
+  
+  if (!isOpen) return null;
+
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          key="mobile-nav"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-10 bg-space-dark-blue/95 backdrop-blur-sm md:hidden"
-        >
-          <div className="h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
-            <div>
-              <div className="mb-8 pb-6 border-b border-gray-700">
-                <Link to="/get-quote" onClick={onClose} className="block mb-5">
-                  <Button className="w-full bg-accent hover:bg-accent/80 text-white py-6 font-semibold text-base">
-                    Get a Free Consultation
-                  </Button>
-                </Link>
-                <a href="tel:+18177572828" className="flex items-center justify-center gap-2 w-full py-4 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
-                  <Phone size={18} />
-                  <span className="font-medium">(817) 757-2828</span>
-                </a>
-              </div>
-              
-              <nav className="space-y-6">
-                {/* Home Link */}
-                <MobileNavItem 
-                  key={navLinks[0].name}
-                  link={navLinks[0]} 
-                  isActive={isActive(navLinks[0].path) === 'active'} 
-                  index={0}
-                  onClose={onClose}
-                />
-                
-                {/* Services Toggle */}
-                <MobileServiceToggle onClose={onClose} />
-                
-                {/* Remaining Links */}
-                {navLinks.slice(1).map((link, index) => (
-                  <MobileNavItem 
-                    key={link.name}
-                    link={link} 
-                    isActive={isActive(link.path) === 'active'} 
-                    index={index + 2}
-                    onClose={onClose}
-                  />
-                ))}
-              </nav>
-            </div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.6 }}
-              className="py-6 space-y-4 mt-8"
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="md:hidden absolute top-0 left-0 right-0 z-10 bg-space-dark-blue-900 backdrop-blur-md shadow-lg pt-20"
+      id="mobile-menu"
+    >
+      <X className="absolute top-4 right-4 text-gray-400" size={24} />
+      <div className="py-4 px-4 flex flex-col space-y-3">
+        <MobileServiceToggle />
+        
+        {navLinks.map((link) => {
+          // Skip admin-only links if user is not logged in
+          if (link.adminOnly && !user) return null;
+          
+          return (
+            <MobileNavItem
+              key={link.path}
+              path={link.path}
+              name={link.name}
+              isActive={isActive(link.path)}
+              icon={link.icon}
+              onClose={onClose}
+            />
+          );
+        })}
+        
+        {user ? (
+          <Button 
+            variant="ghost" 
+            className="justify-start text-gray-200 hover:text-white hover:bg-gray-800"
+            onClick={handleSignOut}
+          >
+            <LogOut size={18} className="mr-2" />
+            Logout
+          </Button>
+        ) : (
+          <Link to="/auth" onClick={onClose}>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start text-gray-200 hover:text-white hover:bg-gray-800"
             >
-              <div className="text-sm text-center space-y-3">
-                <p className="text-gray-400">Trusted by industry leaders</p>
-                <div className="flex justify-center space-x-6">
-                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
-                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
-                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+              <LogIn size={18} className="mr-2" />
+              Login
+            </Button>
+          </Link>
+        )}
+      </div>
+    </motion.div>
   );
 };
 

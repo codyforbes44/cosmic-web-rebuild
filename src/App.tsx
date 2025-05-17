@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -9,6 +10,8 @@ import { useExternalLinks } from "./hooks/use-external-links";
 import { initializeTracking } from "./lib/tracking";
 import PageTransition from "./components/PageTransition";
 import LiveChat from "./components/chat/LiveChat";
+import { AuthProvider } from "./hooks/useAuth";
+import AuthRequired from "./components/AuthRequired";
 
 // Import pages
 import Index from "./pages/Index";
@@ -26,6 +29,7 @@ import Accessibility from "./pages/Accessibility";
 import Analytics from "./pages/Analytics";
 import NotFound from "./pages/NotFound";
 import Packages from "./pages/Packages";
+import Auth from "./pages/Auth";
 
 // Initialize Supabase client in supabase.ts
 import "./lib/supabase";
@@ -66,7 +70,12 @@ const AppContent = () => {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/accessibility" element={<Accessibility />} />
-        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/analytics" element={
+          <AuthRequired>
+            <Analytics />
+          </AuthRequired>
+        } />
         <Route path="/packages" element={<Packages />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
@@ -82,11 +91,13 @@ const App: React.FC = () => {
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AppContent />
-            </BrowserRouter>
+            <AuthProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <AppContent />
+              </BrowserRouter>
+            </AuthProvider>
           </TooltipProvider>
         </QueryClientProvider>
       </HelmetProvider>

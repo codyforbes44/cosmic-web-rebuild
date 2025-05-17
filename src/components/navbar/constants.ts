@@ -6,6 +6,7 @@ export type NavLink = {
   path: string;
   icon?: any;
   disabled?: boolean;
+  adminOnly?: boolean;
 };
 
 export const navLinks: NavLink[] = [
@@ -15,7 +16,7 @@ export const navLinks: NavLink[] = [
   { name: 'About', path: '/about' },
   { name: 'FAQ', path: '/faq', icon: HelpCircle },
   { name: 'Contact', path: '/contact' },
-  { name: 'Analytics', path: '/analytics', icon: BarChartHorizontalBig, disabled: true },
+  { name: 'Analytics', path: '/analytics', icon: BarChartHorizontalBig, adminOnly: true },
 ];
 
 export const serviceCategories = [
