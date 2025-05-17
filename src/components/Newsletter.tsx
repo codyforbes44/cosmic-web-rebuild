@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
-import { isSupabaseConfigured, submitToSupabase } from '@/lib/supabase';
+import { submitToSupabase } from '@/lib/supabase';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ const Newsletter = () => {
         throw new Error('Please enter a valid email address');
       }
       
-      // Submit to Supabase or handle demo mode
+      // Submit to Supabase
       const { success, error } = await submitToSupabase('newsletter_subscribers', {
         email,
         createdAt: new Date().toISOString()
@@ -93,14 +93,6 @@ const Newsletter = () => {
           <p className="mt-4 text-sm text-gray-500">
             We respect your privacy and will never share your information.
           </p>
-          
-          {!isSupabaseConfigured && (
-            <div className="mt-6 p-3 bg-yellow-900/30 border border-yellow-700 rounded-md inline-block">
-              <p className="text-yellow-300 text-sm">
-                <strong>Demo Mode:</strong> Newsletter subscription is simulated.
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </section>

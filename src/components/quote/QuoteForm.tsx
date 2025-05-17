@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
-import { submitToSupabase, QuoteFormData, isSupabaseConfigured } from "@/lib/supabase";
+import { submitToSupabase, QuoteFormData } from "@/lib/supabase";
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -83,11 +83,7 @@ const QuoteForm = () => {
       if (!success) throw error;
       
       // Show success message to user
-      const messageText = isSupabaseConfigured 
-        ? "Thank you for your request! We'll get back to you with a quote within 1-2 business days." 
-        : "Demo mode: Your quote request has been received! In a real app, this would be saved to Supabase.";
-      
-      toast.success(messageText);
+      toast.success("Thank you for your request! We'll get back to you with a quote within 1-2 business days.");
       form.reset();
     } catch (error: any) {
       console.error('Error submitting form:', error);
@@ -101,14 +97,6 @@ const QuoteForm = () => {
     <Card className="space-card p-8 rounded-xl">
       <CardContent className="p-0">
         <h2 className="text-2xl font-bold mb-6 text-white">Request Your Quote</h2>
-        {!isSupabaseConfigured && (
-          <div className="mb-4 p-3 bg-yellow-900/30 border border-yellow-700 rounded-md">
-            <p className="text-yellow-300 text-sm">
-              <strong>Demo Mode:</strong> This form is running without a backend connection. 
-              Your submissions won't be stored permanently.
-            </p>
-          </div>
-        )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
