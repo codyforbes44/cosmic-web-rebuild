@@ -53,7 +53,9 @@ const HeroSection = () => {
                 </Button>
               </Link>
               <Link to="/packages" className="w-full sm:w-auto">
-                
+                <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white px-6 py-5 rounded-md w-full text-base">
+                  View Subscription Plans
+                </Button>
               </Link>
             </div>
           </div>

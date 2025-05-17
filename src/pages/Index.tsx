@@ -9,6 +9,7 @@ import Newsletter from "@/components/Newsletter";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
 import CTASection from "@/components/CTASection";
+import ProductsSection from "@/components/ProductsSection";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
       <main className="relative overflow-x-hidden z-10">
         <HeroSection />
         <Testimonials />
+        <ProductsSection />
         <AstronomyFacts />
         <BusinessCaseStudy />
         <CTASection />
