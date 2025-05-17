@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -117,7 +116,7 @@
   }
   
   .pulse-animation {
-    animation: melodic-pulse 8s ease-in-out infinite;
+    animation: melodic-pulse 12s ease-in-out infinite;
   }
   
   .scrollbar-thin {
@@ -163,27 +162,15 @@
     transform: scale(1);
     box-shadow: 0 8px 16px -4px rgba(155, 135, 245, 0.3);
   }
-  20% {
-    transform: scale(1.02);
-    box-shadow: 0 10px 20px -4px rgba(155, 135, 245, 0.4);
-  }
-  30% {
+  25% {
     transform: scale(1.01);
     box-shadow: 0 9px 18px -4px rgba(155, 135, 245, 0.35);
-  }
-  40% {
-    transform: scale(1.03);
-    box-shadow: 0 12px 24px -4px rgba(155, 135, 245, 0.5);
   }
   50% {
-    transform: scale(1.01);
-    box-shadow: 0 9px 18px -4px rgba(155, 135, 245, 0.35);
-  }
-  60% {
     transform: scale(1.02);
     box-shadow: 0 10px 20px -4px rgba(155, 135, 245, 0.4);
   }
-  80% {
+  75% {
     transform: scale(1.01);
     box-shadow: 0 9px 18px -4px rgba(155, 135, 245, 0.35);
   }
