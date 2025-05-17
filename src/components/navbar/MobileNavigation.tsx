@@ -57,11 +57,20 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   onClose={onClose}
                 />
                 
+                {/* Portfolio Link */}
+                <MobileNavLink 
+                  key={navLinks[1].name}
+                  link={navLinks[1]} 
+                  isActive={isActive(navLinks[1].path) === 'active'} 
+                  index={1}
+                  onClose={onClose}
+                />
+                
                 {/* Services Link/Submenu */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
                 >
                   <button 
                     className={`nav-link ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full text-xl font-medium py-2`}
@@ -78,12 +87,12 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                 </motion.div>
                 
                 {/* Remaining Links */}
-                {navLinks.slice(1).map((link, index) => (
+                {navLinks.slice(2).map((link, index) => (
                   <MobileNavLink 
                     key={link.name}
                     link={link} 
                     isActive={isActive(link.path) === 'active'} 
-                    index={index + 1}
+                    index={index + 3}
                     onClose={onClose}
                   />
                 ))}

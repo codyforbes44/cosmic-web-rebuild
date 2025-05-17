@@ -1,5 +1,5 @@
 
-import { Menu, Files, Home, BarChartHorizontalBig } from 'lucide-react';
+import { Menu, Files, Home, BarChartHorizontalBig, BookOpen, HelpCircle } from 'lucide-react';
 
 export type NavLink = {
   name: string;
@@ -10,8 +10,10 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/', icon: Home },
+  { name: 'Portfolio', path: '/portfolio', icon: Files },
   { name: 'News', path: '/news', icon: Menu },
   { name: 'About', path: '/about' },
+  { name: 'FAQ', path: '/faq', icon: HelpCircle },
   { name: 'Contact', path: '/contact' },
   { name: 'Analytics', path: '/analytics', icon: BarChartHorizontalBig, disabled: true },
 ];
