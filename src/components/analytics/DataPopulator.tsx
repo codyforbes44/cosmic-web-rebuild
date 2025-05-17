@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Database, RefreshCw } from 'lucide-react';
 import { useDataPopulator } from '@/hooks/useDataPopulator';
 import DataPopulatorStatus from './DataPopulatorStatus';
@@ -15,11 +15,8 @@ const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2">
           <Database className="h-5 w-5" />
-          Analytics Data Populator
+          Analytics Data Management
         </CardTitle>
-        <CardDescription className="text-gray-400">
-          Generate sample analytics data for testing and demonstration purposes
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <DataPopulatorStatus
@@ -44,7 +41,7 @@ const DataPopulator: React.FC<DataPopulatorProps> = ({ className }) => {
             ) : (
               <>
                 <Database className="h-4 w-4 mr-2" />
-                Populate Analytics Data
+                Reset & Populate Analytics Data
               </>
             )}
           </Button>

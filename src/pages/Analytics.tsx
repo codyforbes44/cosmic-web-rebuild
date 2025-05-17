@@ -19,7 +19,7 @@ import DataPopulator from '@/components/analytics/DataPopulator';
 
 const Analytics = () => {
   const { user } = useAuth();
-  const { visitorData, formData, chatData, loading, error, refetch } = useAnalytics();
+  const { visitorData, formData, chatData, loading, error, refetch, realDataPercentage } = useAnalytics();
   
   if (loading) {
     return <AnalyticsLoadingState />;
@@ -55,11 +55,10 @@ const Analytics = () => {
             <div className="mb-6 bg-gray-800/50 border border-gray-700 rounded-md p-4 text-white">
               <p className="font-medium">Welcome, {user?.email}</p>
               <p className="text-sm text-gray-400 mt-1">
-                You are logged in as an administrator and have full access to all analytics data.
+                You have full access to all analytics data.
               </p>
             </div>
             
-            <DataPopulator />
             <AnalyticsSummaryCards 
               visitorData={visitorData} 
               formData={formData} 
@@ -70,6 +69,7 @@ const Analytics = () => {
               formData={formData} 
               chatData={chatData} 
               refetch={refetch}
+              realDataPercentage={realDataPercentage}
             />
           </div>
         </div>

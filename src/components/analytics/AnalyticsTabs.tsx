@@ -32,18 +32,13 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({
           <TabsTrigger value="visitors">Raw Visitor Data</TabsTrigger>
           <TabsTrigger value="forms">Form Submissions</TabsTrigger>
           <TabsTrigger value="chat">Chat Analytics</TabsTrigger>
-          <TabsTrigger value="tools">Data Tools</TabsTrigger>
+          <TabsTrigger value="tools">Data Management</TabsTrigger>
         </TabsList>
       </div>
       
       <TabsContent value="charts" className="mt-0 space-y-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <VisitorCharts visitorData={visitorData} />
-          </div>
-          <div className="lg:col-span-1">
-            <UpdateVisitorLocations />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+          <VisitorCharts visitorData={visitorData} />
         </div>
       </TabsContent>
       

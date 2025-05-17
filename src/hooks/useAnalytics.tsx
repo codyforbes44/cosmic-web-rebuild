@@ -32,8 +32,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       const { data: visitors, error: visitorError } = await supabase
         .from('visitor_tracking')
         .select('*')
-        .order('created_at', { ascending: false })
-        .limit(500);
+        .order('created_at', { ascending: false });
       
       if (visitorError) throw visitorError;
       
