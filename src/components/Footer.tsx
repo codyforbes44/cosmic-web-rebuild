@@ -11,7 +11,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white"><span className="text-accent">Ʒ</span>BI</h3>
+            <div className="mb-4">
+              <img 
+                src="/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" 
+                alt="3BI Logo" 
+                className="h-8 w-auto"
+              />
+            </div>
             <p className="text-gray-400 mb-4">
               Providing innovative technology solutions and expert consulting services to help businesses thrive in the digital age.
             </p>
