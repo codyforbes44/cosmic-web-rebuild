@@ -14,7 +14,7 @@ const SEO = ({
   title,
   description = "ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth",
   keywords = "business consulting, technology solutions, digital transformation, ƷBI, custom software development, data analytics, AI solutions",
-  image = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+  image = "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png",
   url = window.location.href,
   type = "website"
 }: SEOProps) => {
