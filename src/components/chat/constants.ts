@@ -66,6 +66,10 @@ export const AUTO_RESPONSES = [
   {
     keywords: ['what sets', 'apart', 'differentiate'],
     response: "What sets Ʒʙɪ apart is our unique combination of innovative thinking, data-driven expertise, and personalized service. We don't just implement solutions – we partner with you to understand your business goals and develop strategies that deliver measurable results. How can our approach benefit your specific business needs?"
+  },
+  {
+    keywords: ['hello', 'hi', 'hey', 'morning', 'afternoon', 'evening'],
+    response: "Hello there! 👋 Welcome to Ʒʙɪ. I'm excited to chat with you today. How can I help with your digital marketing, business intelligence, or technology needs?"
   }
 ];
 
@@ -77,3 +81,4 @@ export const INITIAL_MESSAGE: Message = {
   text: 'Hi there! 👋 Welcome to Ʒʙɪ. I'm here to help answer your questions about our digital marketing, business intelligence, and technology solutions. How can I assist you today?', 
   time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 };
+
