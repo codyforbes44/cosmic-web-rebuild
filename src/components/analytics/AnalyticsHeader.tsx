@@ -21,7 +21,7 @@ const AnalyticsHeader: React.FC = () => {
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Data from the last 500 visitor sessions</p>
+            <p>Data from the last 500 visitor sessions (excluding Lovable visits)</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

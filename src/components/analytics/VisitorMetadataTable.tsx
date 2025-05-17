@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -22,15 +22,25 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
   
+  // Filter out visits from Lovable domains
+  const filteredVisitorData = useMemo(() => {
+    return visitorData.filter(visitor => {
+      // Check if referrer or path contains lovable domain
+      const referrer = visitor.referrer?.toLowerCase() || '';
+      const path = visitor.path?.toLowerCase() || '';
+      return !referrer.includes('lovable.') && !path.includes('lovable.');
+    });
+  }, [visitorData]);
+  
   // Calculate paginated data
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentVisitorData = visitorData.slice(indexOfFirstRow, indexOfLastRow);
-  const totalPages = Math.ceil(visitorData.length / rowsPerPage);
+  const currentVisitorData = filteredVisitorData.slice(indexOfFirstRow, indexOfLastRow);
+  const totalPages = Math.ceil(filteredVisitorData.length / rowsPerPage);
   
   // Function to export visitor data as CSV
   const exportToCsv = () => {
-    if (!visitorData.length) return;
+    if (!filteredVisitorData.length) return;
     
     // Create CSV headers
     const headers = [
@@ -45,7 +55,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
     ].join(',');
     
     // Format data rows
-    const rows = visitorData.map(visitor => [
+    const rows = filteredVisitorData.map(visitor => [
       visitor.session_id,
       visitor.browser || 'Unknown',
       visitor.os || 'Unknown',
@@ -75,7 +85,12 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
     <Card className="bg-gray-800/50 border-gray-700 text-white">
       <CardHeader>
         <div className="flex justify-between items-center">
-          <CardTitle>Visitor Metadata Details</CardTitle>
+          <div>
+            <CardTitle>Visitor Metadata Details</CardTitle>
+            <CardDescription className="text-gray-400">
+              Detailed information about each visitor session (excluding Lovable visits)
+            </CardDescription>
+          </div>
           <Button 
             variant="outline" 
             size="sm"
@@ -86,9 +101,6 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
             Export CSV
           </Button>
         </div>
-        <CardDescription className="text-gray-400">
-          Detailed information about each visitor session
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="rounded-md border border-gray-700">
@@ -126,7 +138,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
           </Table>
         </div>
         
-        {visitorData.length > rowsPerPage && (
+        {filteredVisitorData.length > rowsPerPage && (
           <div className="flex items-center justify-center space-x-2 mt-4">
             <Button
               variant="outline"
