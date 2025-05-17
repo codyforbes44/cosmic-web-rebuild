@@ -12,4 +12,3 @@ export const useCalendly = create<CalendlyStore>((set) => ({
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
 }));
-</lov-add-dependency>zustand@latest</lov-add-dependency>
