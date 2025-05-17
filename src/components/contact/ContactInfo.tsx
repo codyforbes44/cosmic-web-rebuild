@@ -1,3 +1,4 @@
+
 import React from 'react';
 const ContactInfo = () => {
   return <div>
@@ -13,7 +14,7 @@ const ContactInfo = () => {
             </div>
             <div>
               <h3 className="text-white font-bold">Email</h3>
-              <a href="mailto:info@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">support@3bi.io</a>
+              <a href="mailto:support@3bi.io" className="text-gray-300 hover:text-accent transition-colors">support@3bi.io</a>
               <br />
               
             </div>
@@ -27,7 +28,7 @@ const ContactInfo = () => {
             </div>
             <div>
               <h3 className="text-white font-bold">Phone</h3>
-              <a href="tel:+15551234567" className="text-gray-300 hover:text-accent transition-colors">+1 (817) 757-2828</a>
+              <a href="tel:+18177572828" className="text-gray-300 hover:text-accent transition-colors">+1 (817) 757-2828</a>
             </div>
           </div>
           
