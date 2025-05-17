@@ -12,6 +12,25 @@ export interface PackageType {
 
 export const packageData: PackageType[] = [
   {
+    id: '3bi-complete',
+    name: '3BI Complete',
+    description: 'Full-featured platform for operations',
+    price: '$499',
+    color: '#F97316',
+    forProducts: ['3biConnect'],
+    popular: true,
+    features: [
+      'Unlimited carriers and drivers',
+      'AI-powered driver retention analysis',
+      'Complete operations dashboard',
+      'Custom reporting and metrics',
+      'Premium support with SLA',
+      'Full API access',
+      'Unlimited storage',
+      'Training and onboarding services'
+    ]
+  },
+  {
     id: 'basic',
     name: 'Basic',
     description: 'Perfect for small teams and startups',
@@ -33,7 +52,7 @@ export const packageData: PackageType[] = [
     description: 'Enhanced carrier network capabilities',
     price: '$299',
     color: '#8B5CF6',
-    forProducts: ['cpn'],
+    forProducts: ['cpn', '3biConnect'],
     features: [
       'Up to 50 carriers',
       'Advanced driver matching algorithm',
@@ -66,7 +85,7 @@ export const packageData: PackageType[] = [
     description: 'Complete solution for large logistics operations',
     price: '$399',
     color: '#F97316',
-    forProducts: ['truckOnboard', 'cpn'],
+    forProducts: ['truckOnboard', 'cpn', '3biConnect'],
     features: [
       'Unlimited users',
       'Custom workflow design',

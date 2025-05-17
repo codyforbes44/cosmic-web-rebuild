@@ -46,6 +46,22 @@ const productDetails = [
       'Communication tools'
     ],
     image: '/lovable-uploads/b526c888-e2db-4d66-b8eb-fc8218763c99.png'
+  },
+  {
+    id: '3biConnect',
+    title: '3BI Connect',
+    color: '#F97316',
+    description: 'Complete platform for trucking companies',
+    fullDescription: 'The complete platform for trucking companies to manage drivers, improve retention, and streamline operations.',
+    features: [
+      'Driver-centric interface',
+      'Data-driven insights',
+      'Time-saving automation',
+      'Retention analytics',
+      'Operations management',
+      'Communication tools'
+    ],
+    image: '/lovable-uploads/c3fa73ab-8505-4e8a-bf40-2d48a383fff8.png'
   }
 ];
 
