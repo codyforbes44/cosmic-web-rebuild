@@ -10,7 +10,7 @@ interface ChatHeaderProps {
 
 export default function ChatHeader({ isTyping, minimize, restore, isMinimized }: ChatHeaderProps) {
   return (
-    <div className="bg-accent p-3 flex justify-between items-center rounded-t-lg shadow-md">
+    <div className="bg-accent p-3 flex justify-between items-center rounded-t-lg shadow-md h-12">
       <div className="flex items-center">
         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center mr-2.5 shadow-inner">
           <span className="text-accent font-bold text-base">Ʒ</span>
