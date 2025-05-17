@@ -12,6 +12,7 @@ import AnalyticsErrorState from '@/components/analytics/AnalyticsErrorState';
 import AnalyticsHeader from '@/components/analytics/AnalyticsHeader';
 import AnalyticsSummaryCards from '@/components/analytics/AnalyticsSummaryCards';
 import AnalyticsTabs from '@/components/analytics/AnalyticsTabs';
+import DataPopulator from '@/components/analytics/DataPopulator';
 
 const Analytics = () => {
   const { visitorData, formData, chatData, loading, error } = useAnalytics();
@@ -36,6 +37,7 @@ const Analytics = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <AnalyticsHeader />
+            <DataPopulator />
             <AnalyticsSummaryCards 
               visitorData={visitorData} 
               formData={formData} 

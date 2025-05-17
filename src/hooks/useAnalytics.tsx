@@ -9,6 +9,7 @@ interface UseAnalyticsReturn {
   chatData: any[]; // Chat interaction data
   loading: boolean;
   error: string | null;
+  refetch: () => Promise<void>; // Add refetch function
 }
 
 export const useAnalytics = (): UseAnalyticsReturn => {
@@ -18,50 +19,51 @@ export const useAnalytics = (): UseAnalyticsReturn => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Fetch visitor data
+      const { data: visitors, error: visitorError } = await supabase
+        .from('visitor_tracking')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(500);
+      
+      if (visitorError) throw visitorError;
+      
+      // Fetch form submission data
+      const { data: forms, error: formError } = await supabase
+        .from('form_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (formError) throw formError;
+      
+      // Fetch chat interaction data
+      const { data: chats, error: chatError } = await supabase
+        .from('chat_interactions')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (chatError) throw chatError;
+      
+      // Cast data to the correct types
+      setVisitorData(visitors as VisitorData[] || []);
+      setFormData(forms as FormSubmissionData[] || []);
+      setChatData(chats || []);
+    } catch (err: any) {
+      console.error('Error fetching analytics data:', err);
+      setError(err.message || 'Failed to load analytics data');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        
-        // Fetch visitor data
-        const { data: visitors, error: visitorError } = await supabase
-          .from('visitor_tracking')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(500);
-        
-        if (visitorError) throw visitorError;
-        
-        // Fetch form submission data
-        const { data: forms, error: formError } = await supabase
-          .from('form_submissions')
-          .select('*')
-          .order('created_at', { ascending: false });
-        
-        if (formError) throw formError;
-        
-        // Fetch chat interaction data
-        const { data: chats, error: chatError } = await supabase
-          .from('chat_interactions')
-          .select('*')
-          .order('created_at', { ascending: false });
-        
-        if (chatError) throw chatError;
-        
-        // Cast data to the correct types
-        setVisitorData(visitors as VisitorData[] || []);
-        setFormData(forms as FormSubmissionData[] || []);
-        setChatData(chats || []);
-      } catch (err: any) {
-        console.error('Error fetching analytics data:', err);
-        setError(err.message || 'Failed to load analytics data');
-      } finally {
-        setLoading(false);
-      }
-    };
-    
     fetchData();
   }, []);
 
-  return { visitorData, formData, chatData, loading, error };
+  return { visitorData, formData, chatData, loading, error, refetch: fetchData };
 };
