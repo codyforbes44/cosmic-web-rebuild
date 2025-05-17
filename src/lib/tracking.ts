@@ -45,10 +45,25 @@ const parseUserAgent = (userAgent: string): { browser: string; os: string; devic
   return { browser, os, deviceType };
 };
 
+// Get visitor IP address
+const getIpAddress = async (): Promise<string | null> => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch (err) {
+    console.error('Error getting IP address:', err);
+    return null;
+  }
+};
+
 // Track visitor data
 export const trackVisit = async (path: string): Promise<void> => {
   try {
     const userAgentInfo = parseUserAgent(navigator.userAgent);
+    
+    // Get visitor IP address
+    const ipAddress = await getIpAddress();
     
     // Gather visitor information
     const visitorData: VisitorData = {
@@ -63,6 +78,7 @@ export const trackVisit = async (path: string): Promise<void> => {
       browser: userAgentInfo.browser,
       os: userAgentInfo.os,
       device_type: userAgentInfo.deviceType,
+      ip_address: ipAddress,
       created_at: new Date().toISOString(),
     };
     

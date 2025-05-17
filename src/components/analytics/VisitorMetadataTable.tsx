@@ -44,7 +44,8 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
     
     // Create CSV headers
     const headers = [
-      'Session ID', 
+      'Session ID',
+      'IP Address', 
       'Browser', 
       'OS', 
       'Device Type', 
@@ -57,6 +58,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
     // Format data rows
     const rows = filteredVisitorData.map(visitor => [
       visitor.session_id,
+      visitor.ip_address || 'Unknown',
       visitor.browser || 'Unknown',
       visitor.os || 'Unknown',
       visitor.device_type || 'Unknown',
@@ -110,6 +112,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
                 <TableHead>Browser</TableHead>
                 <TableHead>OS</TableHead>
                 <TableHead>Device</TableHead>
+                <TableHead>IP Address</TableHead>
                 <TableHead>Screen Size</TableHead>
                 <TableHead>Path</TableHead>
                 <TableHead>Referrer</TableHead>
@@ -123,6 +126,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
                     <TableCell>{visitor.browser || 'Unknown'}</TableCell>
                     <TableCell>{visitor.os || 'Unknown'}</TableCell>
                     <TableCell>{visitor.device_type || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.ip_address || 'Unknown'}</TableCell>
                     <TableCell>{`${visitor.screen_width || 0}x${visitor.screen_height || 0}`}</TableCell>
                     <TableCell className="max-w-[150px] truncate">{visitor.path}</TableCell>
                     <TableCell className="max-w-[150px] truncate">{visitor.referrer}</TableCell>
@@ -131,7 +135,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-4">No visitor data available</TableCell>
+                  <TableCell colSpan={8} className="text-center py-4">No visitor data available</TableCell>
                 </TableRow>
               )}
             </TableBody>
