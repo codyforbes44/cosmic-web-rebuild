@@ -69,6 +69,7 @@ const Analytics = () => {
               visitorData={visitorData} 
               formData={formData} 
               chatData={chatData} 
+              refetch={refetch}
             />
           </div>
         </div>

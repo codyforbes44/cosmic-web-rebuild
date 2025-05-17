@@ -7,14 +7,16 @@ import FormSubmissionCharts from './FormSubmissionCharts';
 import VisitorMetadataTable from './VisitorMetadataTable';
 import UpdateVisitorLocations from './UpdateVisitorLocations';
 import ChatInteractionsAnalytics from './ChatInteractionsAnalytics';
+import ChatbotIconSelector from './ChatbotIconSelector';
 
 interface AnalyticsTabsProps {
   visitorData: VisitorData[];
   formData: FormSubmissionData[];
   chatData: any[]; // Chat interaction data
+  refetch: () => Promise<void>;
 }
 
-const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData, chatData }) => {
+const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData, chatData, refetch }) => {
   return (
     <Tabs defaultValue="visitors" className="mb-8">
       <TabsList className="bg-gray-800/50 border-gray-700">
@@ -22,6 +24,7 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData, ch
         <TabsTrigger value="forms">Form Submissions</TabsTrigger>
         <TabsTrigger value="chat">Chat Interactions</TabsTrigger>
         <TabsTrigger value="metadata">Visitor Metadata</TabsTrigger>
+        <TabsTrigger value="settings">Chat Settings</TabsTrigger>
       </TabsList>
       
       <TabsContent value="visitors" className="mt-6">
@@ -40,6 +43,12 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData, ch
         <div className="space-y-6">
           <UpdateVisitorLocations />
           <VisitorMetadataTable visitorData={visitorData} />
+        </div>
+      </TabsContent>
+      
+      <TabsContent value="settings" className="mt-6">
+        <div className="space-y-6">
+          <ChatbotIconSelector refetchAnalytics={refetch} />
         </div>
       </TabsContent>
     </Tabs>
