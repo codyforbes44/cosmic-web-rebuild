@@ -9,7 +9,177 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+      form_submissions: {
+        Row: {
+          created_at: string
+          form_data: Json
+          form_name: string
+          id: string
+          path: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          form_data: Json
+          form_name: string
+          id?: string
+          path: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          form_data?: Json
+          form_name?: string
+          id?: string
+          path?: string
+          session_id?: string
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      quote_submissions: {
+        Row: {
+          budget: string | null
+          company_name: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string
+          project_description: string
+          service_type: string
+          terms_accepted: boolean
+          timeline: string | null
+        }
+        Insert: {
+          budget?: string | null
+          company_name: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          phone: string
+          project_description: string
+          service_type: string
+          terms_accepted: boolean
+          timeline?: string | null
+        }
+        Update: {
+          budget?: string | null
+          company_name?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          project_description?: string
+          service_type?: string
+          terms_accepted?: boolean
+          timeline?: string | null
+        }
+        Relationships: []
+      }
+      visitor_tracking: {
+        Row: {
+          browser: string | null
+          city: string | null
+          country_code: string | null
+          created_at: string
+          device_type: string | null
+          id: string
+          ip_address: string | null
+          language: string | null
+          os: string | null
+          path: string
+          referrer: string | null
+          screen_height: number | null
+          screen_width: number | null
+          session_id: string
+          timezone: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          browser?: string | null
+          city?: string | null
+          country_code?: string | null
+          created_at?: string
+          device_type?: string | null
+          id?: string
+          ip_address?: string | null
+          language?: string | null
+          os?: string | null
+          path: string
+          referrer?: string | null
+          screen_height?: number | null
+          screen_width?: number | null
+          session_id: string
+          timezone?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          browser?: string | null
+          city?: string | null
+          country_code?: string | null
+          created_at?: string
+          device_type?: string | null
+          id?: string
+          ip_address?: string | null
+          language?: string | null
+          os?: string | null
+          path?: string
+          referrer?: string | null
+          screen_height?: number | null
+          screen_width?: number | null
+          session_id?: string
+          timezone?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

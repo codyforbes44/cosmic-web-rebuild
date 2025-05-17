@@ -7,8 +7,8 @@ export const submitToSupabase = async <T extends Record<string, any>>(
   data: T
 ): Promise<{ success: boolean; error: Error | null }> => {
   try {
-    // Use type assertion to bypass TypeScript's type checking for table names
-    const { error } = await (supabase.from(tableName) as any).insert([data]);
+    // Cast to any to bypass TypeScript's type checking for table names
+    const { error } = await supabase.from(tableName as any).insert([data]);
     
     if (error) throw error;
     
