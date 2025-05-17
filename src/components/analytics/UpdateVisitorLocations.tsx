@@ -18,7 +18,7 @@ const UpdateVisitorLocations: React.FC = () => {
   } = useLocationUpdater();
 
   return (
-    <Card className={`bg-gray-800/50 border-gray-700 text-white`}>
+    <Card className="bg-gray-800/50 border-gray-700 text-white">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2">
           <MapPin className="h-5 w-5" />

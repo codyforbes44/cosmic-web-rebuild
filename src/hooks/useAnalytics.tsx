@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { VisitorData, FormSubmissionData } from '@/types/tracking';
 import { useToast } from '@/components/ui/use-toast';
@@ -22,6 +22,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
   const [error, setError] = useState<string | null>(null);
   const [realDataPercentage, setRealDataPercentage] = useState<number>(0);
   const { toast } = useToast();
+  const initialFetchCompleted = useRef(false);
   
   const fetchData = async () => {
     try {
@@ -96,7 +97,10 @@ export const useAnalytics = (): UseAnalyticsReturn => {
   };
   
   useEffect(() => {
-    fetchData();
+    if (!initialFetchCompleted.current) {
+      initialFetchCompleted.current = true;
+      fetchData();
+    }
   }, []);
 
   return { 
