@@ -23,7 +23,7 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center">
+              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center font-medium">
                 {link.name}
                 <Ban size={16} className="ml-1 opacity-70" />
               </span>
@@ -36,7 +36,7 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
       ) : (
         <Link 
           to={link.path} 
-          className={`nav-link ${isActive ? 'active' : ''}`}
+          className={`nav-link ${isActive ? 'active' : ''} font-medium`}
           aria-current={isActive ? 'page' : undefined}
         >
           {link.name}
