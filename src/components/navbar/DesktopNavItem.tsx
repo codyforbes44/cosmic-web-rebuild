@@ -27,7 +27,7 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, i
         <TooltipProvider delayDuration={300}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center text-base font-medium">
+              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center text-base font-medium px-4 py-2">
                 {name}
                 <Ban size={16} className="ml-1 opacity-70" />
               </span>
@@ -40,7 +40,7 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, i
       ) : (
         <Link 
           to={path} 
-          className={`nav-link ${isActive ? 'active' : ''} text-base font-medium hover:text-white transition-colors duration-200`}
+          className={`nav-link ${isActive ? 'active' : ''} text-base font-medium hover:text-white transition-colors duration-200 px-4 py-2 block`}
           aria-current={isActive ? 'page' : undefined}
         >
           {name}

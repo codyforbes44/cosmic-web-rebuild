@@ -18,9 +18,10 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({ link, isActive, index, on
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
+      className="relative"
     >
       {link.disabled ? (
-        <span className="nav-link text-lg text-gray-500 cursor-not-allowed flex items-center py-3 px-2">
+        <span className="nav-link text-lg text-gray-500 cursor-not-allowed flex items-center py-3 px-4">
           {link.name}
           <Ban size={18} className="ml-2 opacity-70" />
           <span className="sr-only">Unauthorized</span>
@@ -28,7 +29,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({ link, isActive, index, on
       ) : (
         <Link 
           to={link.path} 
-          className={`nav-link text-lg ${isActive ? 'active' : ''} py-3 px-2 block w-full hover:text-white transition-colors duration-200`}
+          className={`nav-link text-lg ${isActive ? 'active' : ''} py-3 px-4 block w-full hover:text-white transition-colors duration-200`}
           onClick={onClose}
           aria-current={isActive ? 'page' : undefined}
         >
