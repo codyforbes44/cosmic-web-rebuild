@@ -17,7 +17,7 @@ const services = [
     deliverables: 'Campaign strategy, Creative assets, Performance analytics',
     duration: '1-3 months',
     process: 'Strategy, Creative Development, Implementation, Optimization',
-    key_benefit: 'Increase ROI with advertising that adapts to your audience's needs and behaviors'
+    key_benefit: 'Increase ROI with advertising that adapts to your audience\'s needs and behaviors'
   },
   {
     id: 'social-media-advertising',
