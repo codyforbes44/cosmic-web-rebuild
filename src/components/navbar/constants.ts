@@ -1,5 +1,4 @@
-
-import { Menu, Files, Home, BarChartHorizontalBig, BookOpen, HelpCircle } from 'lucide-react';
+import { Menu, Files, Home, BarChartHorizontalBig, BookOpen, HelpCircle, Mail, Info, Newspaper } from 'lucide-react';
 
 export type NavLink = {
   name: string;
@@ -11,11 +10,11 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/', icon: Home },
-  // Portfolio link removed
-  { name: 'News', path: '/news', icon: Menu },
-  { name: 'About', path: '/about' },
+  { name: 'About', path: '/about', icon: Info },
+  { name: 'Services', path: '/services', icon: Menu },
+  { name: 'News', path: '/news', icon: Newspaper },
   { name: 'FAQ', path: '/faq', icon: HelpCircle },
-  { name: 'Contact', path: '/contact' },
+  { name: 'Contact', path: '/contact', icon: Mail },
   { name: 'Analytics', path: '/analytics', icon: BarChartHorizontalBig, adminOnly: true },
 ];
 

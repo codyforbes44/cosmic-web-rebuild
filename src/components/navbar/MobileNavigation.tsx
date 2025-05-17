@@ -36,11 +36,14 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
     >
       <X className="absolute top-4 right-4 text-gray-400" size={24} />
       <div className="py-4 px-4 flex flex-col space-y-3">
-        <MobileServiceToggle onClose={onClose} />
-        
         {navLinks.map((link, index) => {
           // Skip admin-only links if user is not logged in
           if (link.adminOnly && !user) return null;
+          
+          // Special handling for Services to use toggle dropdown
+          if (link.path === '/services') {
+            return <MobileServiceToggle key={link.path} onClose={onClose} />;
+          }
           
           return (
             <MobileNavItem
