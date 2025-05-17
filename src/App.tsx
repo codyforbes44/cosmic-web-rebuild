@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -9,6 +8,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { useExternalLinks } from "./hooks/use-external-links";
 import { initializeTracking } from "./lib/tracking";
 import PageTransition from "./components/PageTransition";
+import LiveChat from "./components/chat/LiveChat";
 
 // Import pages
 import Index from "./pages/Index";
@@ -71,6 +71,7 @@ const AppContent = () => {
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <LiveChat />
     </PageTransition>
   );
 };
