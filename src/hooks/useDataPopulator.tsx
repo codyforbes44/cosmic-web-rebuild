@@ -12,6 +12,12 @@ export const useDataPopulator = () => {
 
   // Reset analytics data across all tables
   const populateData = async () => {
+    // Prevent multiple simultaneous calls
+    if (isProcessing) {
+      console.log('Data reset operation already in progress');
+      return;
+    }
+    
     setIsProcessing(true);
     setProgress(0);
     setProcessedCount(0);

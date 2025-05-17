@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import SEO from '@/components/SEO';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -20,6 +20,8 @@ import AnalyticsTabs from '@/components/analytics/AnalyticsTabs';
 const Analytics = () => {
   const { user } = useAuth();
   const { visitorData, formData, chatData, loading, error, refetch } = useAnalytics();
+  
+  // Remove any auto-refresh behavior to prevent loops
   
   if (loading) {
     return <AnalyticsLoadingState />;

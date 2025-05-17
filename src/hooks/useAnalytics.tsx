@@ -21,9 +21,17 @@ export const useAnalytics = (): UseAnalyticsReturn => {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const initialFetchCompleted = useRef(false);
+  const isFetchingRef = useRef(false);
   
   const fetchData = async () => {
+    // Prevent multiple simultaneous fetch calls
+    if (isFetchingRef.current) {
+      console.log('Another fetch operation is already in progress');
+      return;
+    }
+    
     try {
+      isFetchingRef.current = true;
       setLoading(true);
       setError(null);
       
@@ -101,11 +109,15 @@ export const useAnalytics = (): UseAnalyticsReturn => {
                           (subscribers?.length || 0) + 
                           (quotes?.length || 0);
       
-      toast({
-        title: "Analytics data loaded",
-        description: `Successfully loaded ${totalRecords} total records from all Supabase tables`,
-        variant: "default"
-      });
+      if (!initialFetchCompleted.current) {
+        console.log('Initial data fetch completed');
+      } else {
+        toast({
+          title: "Analytics data loaded",
+          description: `Successfully loaded ${totalRecords} total records from all Supabase tables`,
+          variant: "default"
+        });
+      }
     } catch (err: any) {
       console.error('Error fetching analytics data:', err);
       setError(err.message || 'Failed to load analytics data');
@@ -116,6 +128,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       });
     } finally {
       setLoading(false);
+      isFetchingRef.current = false;
     }
   };
   

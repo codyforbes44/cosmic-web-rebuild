@@ -13,6 +13,12 @@ export const useLocationUpdater = () => {
   const { toast } = useToast();
 
   const updateVisitorLocations = async () => {
+    // Prevent multiple simultaneous calls
+    if (isProcessing) {
+      console.log('Location update operation already in progress');
+      return;
+    }
+    
     try {
       setError(null);
       setIsProcessing(true);
