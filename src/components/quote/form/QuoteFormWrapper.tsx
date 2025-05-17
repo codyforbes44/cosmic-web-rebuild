@@ -64,11 +64,11 @@ const QuoteFormWrapper = () => {
       await trackFormSubmission('quote', data, location.pathname);
       
       // Show success message to user
-      toast.success("Thank you for your request! We'll get back to you with a quote within 1-2 business days.");
+      toast.success("Thank you for your request! We'll get back to you with a consultation within 1-2 business days.");
       form.reset();
     } catch (error: any) {
       console.error('Error submitting form:', error);
-      toast.error(error?.message || "Failed to submit your quote request. Please try again later.");
+      toast.error(error?.message || "Failed to submit your consultation request. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -77,7 +77,7 @@ const QuoteFormWrapper = () => {
   return (
     <Card className="space-card p-8 rounded-xl">
       <CardContent className="p-0">
-        <h2 className="text-2xl font-bold mb-6 text-white">Request Your Quote</h2>
+        <h2 className="text-2xl font-bold mb-6 text-white">Request Your Consultation</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <PersonalInfoFields control={form.control} />

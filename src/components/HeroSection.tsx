@@ -49,7 +49,7 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link to="/get-quote" className="w-full sm:w-auto">
                 <Button className="bg-accent hover:bg-accent/80 text-white px-6 py-5 rounded-md w-full text-base">
-                  Get Your Free Quote <ArrowRight className="ml-2 h-4 w-4" />
+                  Get Your Free Consultation <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/packages" className="w-full sm:w-auto">

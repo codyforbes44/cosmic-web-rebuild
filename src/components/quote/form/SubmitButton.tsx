@@ -20,7 +20,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
           </svg>
           Processing...
         </span>
-      ) : 'Submit Request for Quote'}
+      ) : 'Submit Request for Consultation'}
     </Button>
   );
 };

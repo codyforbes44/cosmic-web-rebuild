@@ -41,7 +41,7 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
         transition={{ duration: 0.3, delay: 0.6 }}
       >
         <Link to="/get-quote">
-          <Button className="bg-accent hover:bg-accent/80 text-white">Get a Quote</Button>
+          <Button className="bg-accent hover:bg-accent/80 text-white">Get a Consultation</Button>
         </Link>
       </motion.div>
     </nav>

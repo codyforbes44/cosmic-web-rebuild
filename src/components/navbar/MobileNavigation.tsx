@@ -38,12 +38,12 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               <div className="mb-8 pb-6 border-b border-gray-700">
                 <Link to="/get-quote" onClick={onClose} className="block mb-5">
                   <Button className="w-full bg-accent hover:bg-accent/80 text-white py-6 font-semibold text-base">
-                    Get a Free Quote
+                    Get a Free Consultation
                   </Button>
                 </Link>
-                <a href="tel:+11234567890" className="flex items-center justify-center gap-2 w-full py-4 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
+                <a href="tel:+18177572828" className="flex items-center justify-center gap-2 w-full py-4 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
                   <Phone size={18} />
-                  <span className="font-medium">(123) 456-7890</span>
+                  <span className="font-medium">(817) 757-2828</span>
                 </a>
               </div>
               
