@@ -14,7 +14,7 @@ import AnalyticsSummaryCards from '@/components/analytics/AnalyticsSummaryCards'
 import AnalyticsTabs from '@/components/analytics/AnalyticsTabs';
 
 const Analytics = () => {
-  const { visitorData, formData, loading, error } = useAnalytics();
+  const { visitorData, formData, chatData, loading, error } = useAnalytics();
   
   if (loading) {
     return <AnalyticsLoadingState />;
@@ -36,8 +36,16 @@ const Analytics = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <AnalyticsHeader />
-            <AnalyticsSummaryCards visitorData={visitorData} formData={formData} />
-            <AnalyticsTabs visitorData={visitorData} formData={formData} />
+            <AnalyticsSummaryCards 
+              visitorData={visitorData} 
+              formData={formData} 
+              chatData={chatData} 
+            />
+            <AnalyticsTabs 
+              visitorData={visitorData} 
+              formData={formData} 
+              chatData={chatData} 
+            />
           </div>
         </div>
       </main>

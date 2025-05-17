@@ -6,6 +6,7 @@ import { VisitorData, FormSubmissionData } from '@/types/tracking';
 interface UseAnalyticsReturn {
   visitorData: VisitorData[];
   formData: FormSubmissionData[];
+  chatData: any[]; // Chat interaction data
   loading: boolean;
   error: string | null;
 }
@@ -13,6 +14,7 @@ interface UseAnalyticsReturn {
 export const useAnalytics = (): UseAnalyticsReturn => {
   const [visitorData, setVisitorData] = useState<VisitorData[]>([]);
   const [formData, setFormData] = useState<FormSubmissionData[]>([]);
+  const [chatData, setChatData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -38,9 +40,18 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         
         if (formError) throw formError;
         
+        // Fetch chat interaction data
+        const { data: chats, error: chatError } = await supabase
+          .from('chat_interactions')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (chatError) throw chatError;
+        
         // Cast data to the correct types
         setVisitorData(visitors as VisitorData[] || []);
         setFormData(forms as FormSubmissionData[] || []);
+        setChatData(chats || []);
       } catch (err: any) {
         console.error('Error fetching analytics data:', err);
         setError(err.message || 'Failed to load analytics data');
@@ -52,5 +63,5 @@ export const useAnalytics = (): UseAnalyticsReturn => {
     fetchData();
   }, []);
 
-  return { visitorData, formData, loading, error };
+  return { visitorData, formData, chatData, loading, error };
 };

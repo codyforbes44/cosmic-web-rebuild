@@ -6,18 +6,21 @@ import VisitorCharts from './VisitorCharts';
 import FormSubmissionCharts from './FormSubmissionCharts';
 import VisitorMetadataTable from './VisitorMetadataTable';
 import UpdateVisitorLocations from './UpdateVisitorLocations';
+import ChatInteractionsAnalytics from './ChatInteractionsAnalytics';
 
 interface AnalyticsTabsProps {
   visitorData: VisitorData[];
   formData: FormSubmissionData[];
+  chatData: any[]; // Chat interaction data
 }
 
-const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData }) => {
+const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData, chatData }) => {
   return (
     <Tabs defaultValue="visitors" className="mb-8">
       <TabsList className="bg-gray-800/50 border-gray-700">
         <TabsTrigger value="visitors">Visitors</TabsTrigger>
         <TabsTrigger value="forms">Form Submissions</TabsTrigger>
+        <TabsTrigger value="chat">Chat Interactions</TabsTrigger>
         <TabsTrigger value="metadata">Visitor Metadata</TabsTrigger>
       </TabsList>
       
@@ -27,6 +30,10 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ visitorData, formData }) 
       
       <TabsContent value="forms" className="mt-6">
         <FormSubmissionCharts formData={formData} />
+      </TabsContent>
+      
+      <TabsContent value="chat" className="mt-6">
+        <ChatInteractionsAnalytics chatData={chatData} />
       </TabsContent>
       
       <TabsContent value="metadata" className="mt-6">

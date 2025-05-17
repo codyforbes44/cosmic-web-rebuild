@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '@/integrations/supabase/client';
 import ChatButton from './ChatButton';
 import ChatHeader from './ChatHeader';
 import UserInfoForm from './UserInfoForm';
@@ -17,10 +18,16 @@ export default function LiveChat() {
   const [newMessage, setNewMessage] = useState('');
   const [userInfo, setUserInfo] = useState<UserInfo>({ name: '', email: '', submitted: false });
   const [lastSeenId, setLastSeenId] = useState('1');
+  const [sessionId, setSessionId] = useState('');
 
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<HTMLInputElement>(null);
   const responseTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Generate a session ID when component mounts
+  useEffect(() => {
+    setSessionId(uuidv4());
+  }, []);
 
   // Scroll on new messages
   useEffect(() => {
@@ -62,6 +69,21 @@ export default function LiveChat() {
     setUserInfo(info => ({ ...info, [name]: value }));
   }, []);
 
+  // Store chat interaction in Supabase
+  const storeChatInteraction = async (message: string, response: string) => {
+    try {
+      await supabase.from('chat_interactions').insert({
+        session_id: sessionId,
+        user_name: userInfo.name || null,
+        user_email: userInfo.email || null,
+        message,
+        response
+      });
+    } catch (error) {
+      console.error('Error storing chat interaction:', error);
+    }
+  };
+
   const submitUserInfo = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     setUserInfo(info => ({ ...info, submitted: true }));
@@ -72,7 +94,10 @@ export default function LiveChat() {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
     };
     setMessages(msgs => [...msgs, welcome]);
-  }, [userInfo.name]);
+    
+    // Store the welcome message interaction
+    storeChatInteraction('User submitted info', welcome.text);
+  }, [userInfo.name, sessionId]);
 
   const sendMessage = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -105,8 +130,11 @@ export default function LiveChat() {
       };
       setMessages(msgs => [...msgs, agentMsg]);
       setIsTyping(false);
+      
+      // Store the interaction in Supabase
+      storeChatInteraction(text, respText);
     }, 1500);
-  }, [newMessage]);
+  }, [newMessage, sessionId]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
