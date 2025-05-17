@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { supabase, ContactFormData } from "@/lib/supabase";
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -45,15 +46,31 @@ const ContactForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Prepare data for Supabase
+      const submissionData: ContactFormData = {
+        ...data,
+        createdAt: new Date().toISOString(),
+      };
+      
+      // Insert data into Supabase
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([submissionData]);
+      
+      if (error) throw error;
+      
       toast.success("Thank you for your message! We'll get back to you soon.");
       form.reset();
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      toast.error(error.message || "Failed to submit the form. Please try again later.");
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (

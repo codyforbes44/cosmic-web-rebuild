@@ -24,6 +24,9 @@ import TermsOfService from "./pages/TermsOfService";
 import Accessibility from "./pages/Accessibility";
 import NotFound from "./pages/NotFound";
 
+// Initialize Supabase client in supabase.ts
+import "./lib/supabase";
+
 // Create a query client with better defaults
 const queryClient = new QueryClient({
   defaultOptions: {

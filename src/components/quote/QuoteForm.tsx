@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
+import { supabase, QuoteFormData } from "@/lib/supabase";
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -59,16 +60,32 @@ const QuoteForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Prepare data for Supabase
+      const submissionData: QuoteFormData = {
+        ...data,
+        createdAt: new Date().toISOString(),
+      };
+      
+      // Insert data into Supabase
+      const { error } = await supabase
+        .from('quote_requests')
+        .insert([submissionData]);
+      
+      if (error) throw error;
+      
       toast.success("Thank you for your request! We'll get back to you with a quote within 1-2 business days.");
       console.log("Form submitted:", data);
       form.reset();
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      toast.error(error.message || "Failed to submit your quote request. Please try again later.");
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
