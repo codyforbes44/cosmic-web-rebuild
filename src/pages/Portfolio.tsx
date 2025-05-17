@@ -4,6 +4,8 @@ import StarBackground from "@/components/StarBackground";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import SEO from "@/components/SEO";
 
 const projects = [
   {
@@ -95,18 +97,24 @@ const Portfolio = () => {
 
   return (
     <>
-      <Navbar />
+      <SEO 
+        title="Our Portfolio" 
+        description="Explore our successful projects and see how we've helped businesses transform and grow."
+      />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
+      <Navbar />
+      <main className="relative min-h-screen pt-20 pb-24 z-10">
         <div className="container mx-auto px-4">
-          <div className="text-center mt-12 mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Our Portfolio
-            </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              Explore our successful projects and see how we've helped businesses transform and grow
-            </p>
-          </div>
+          <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl mb-12">
+            <CardContent className="p-8 text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                Our Portfolio
+              </h1>
+              <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+                Explore our successful projects and see how we've helped businesses transform and grow
+              </p>
+            </CardContent>
+          </Card>
 
           {/* Category filters */}
           <div className="flex flex-wrap justify-center gap-4 mb-16">
