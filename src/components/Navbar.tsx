@@ -1,9 +1,56 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+
+const serviceCategories = [
+  {
+    title: "Strategic Consulting",
+    description: "Technology strategy development and roadmap planning aligned with business objectives.",
+    href: "/services?service=strategy",
+    color: "#7C3AED"
+  },
+  {
+    title: "Digital Transformation",
+    description: "End-to-end digital transformation services to modernize legacy systems.",
+    href: "/services?service=digital",
+    color: "#2563EB"
+  },
+  {
+    title: "Custom Software",
+    description: "Tailored software solutions designed for your unique business challenges.",
+    href: "/services?service=custom",
+    color: "#E11D48"
+  },
+  {
+    title: "Web & Mobile Apps",
+    description: "Responsive, user-friendly applications for web and mobile platforms.",
+    href: "/services?service=web",
+    color: "#F59E0B"
+  },
+  {
+    title: "Data Analytics",
+    description: "Transform your data into actionable insights with advanced analytics.",
+    href: "/services?service=analytics",
+    color: "#059669"
+  },
+  {
+    title: "AI & Machine Learning",
+    description: "Leverage artificial intelligence to optimize operations and gain competitive advantages.",
+    href: "/services?service=ai",
+    color: "#8B5CF6"
+  }
+];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,7 +99,6 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
     { name: 'Portfolio', path: '/portfolio' },
     { name: 'Business Insights', path: '/news' },
     { name: 'About', path: '/about' },
@@ -61,8 +107,13 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => {
+    if (path === '/services') {
+      return location.pathname === path ? 'active' : '';
+    }
     return location.pathname === path ? 'active' : '';
   };
+
+  const isServicesActive = location.pathname === '/services';
 
   return (
     <header 
@@ -87,12 +138,81 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link, index) => (
+          {/* Home and other links */}
+          {navLinks.slice(0, 1).map((link, index) => (
             <motion.div
               key={link.name}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              <Link 
+                to={link.path} 
+                className={`nav-link ${isActive(link.path)}`}
+                aria-current={isActive(link.path) ? 'page' : undefined}
+              >
+                {link.name}
+                {isActive(link.path) && (
+                  <motion.div 
+                    className="h-0.5 bg-accent mt-1" 
+                    layoutId="navbar-indicator"
+                  />
+                )}
+              </Link>
+            </motion.div>
+          ))}
+
+          {/* Services Dropdown */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <NavigationMenu className="z-50">
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={`nav-link bg-transparent ${isServicesActive ? 'active' : ''}`}>
+                    Services
+                    {isServicesActive && (
+                      <motion.div 
+                        className="h-0.5 bg-accent mt-1 absolute bottom-0 left-0 right-0" 
+                        layoutId="navbar-indicator"
+                      />
+                    )}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-gray-800 border border-gray-700">
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {serviceCategories.map((service) => (
+                        <li key={service.href}>
+                          <Link
+                            to={service.href}
+                            className={cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 focus:bg-gray-700"
+                            )}
+                          >
+                            <div className="text-sm font-medium leading-none" style={{ color: service.color }}>
+                              {service.title}
+                            </div>
+                            <p className="line-clamp-2 text-sm leading-snug text-gray-400">
+                              {service.description}
+                            </p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </motion.div>
+
+          {/* Remaining links */}
+          {navLinks.slice(1).map((link, index) => (
+            <motion.div
+              key={link.name}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: (index + 2) * 0.1 }}
             >
               <Link 
                 to={link.path} 
@@ -145,7 +265,8 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
           >
             <nav className="container mx-auto px-4 flex flex-col space-y-6">
-              {navLinks.map((link, index) => (
+              {/* Regular links */}
+              {navLinks.slice(0, 1).map((link, index) => (
                 <motion.div
                   key={link.name}
                   initial={{ opacity: 0, x: -20 }}
@@ -162,6 +283,48 @@ const Navbar = () => {
                   </Link>
                 </motion.div>
               ))}
+
+              {/* Services with dropdown */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+              >
+                <div className="nav-link text-xl">Services</div>
+                <div className="pl-4 mt-2 space-y-2">
+                  {serviceCategories.map((service, idx) => (
+                    <Link 
+                      key={service.href}
+                      to={service.href} 
+                      className="block text-gray-300 hover:text-white py-1"
+                      onClick={() => setIsMobileNavOpen(false)}
+                      style={{ color: service.color }}
+                    >
+                      {service.title}
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Remaining links */}
+              {navLinks.slice(1).map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: (index + 2) * 0.1 }}
+                >
+                  <Link 
+                    to={link.path} 
+                    className={`nav-link text-xl ${isActive(link.path)}`}
+                    onClick={() => setIsMobileNavOpen(false)}
+                    aria-current={isActive(link.path) ? 'page' : undefined}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
