@@ -7,7 +7,6 @@ import SEO from "@/components/SEO";
 import ContactHeader from "@/components/contact/ContactHeader";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactInfo from "@/components/contact/ContactInfo";
-import ScheduleCTA from "@/components/contact/ScheduleCTA";
 
 const Contact = () => {
   return (
@@ -32,9 +31,6 @@ const Contact = () => {
               {/* Contact Information */}
               <ContactInfo />
             </div>
-            
-            {/* Schedule CTA */}
-            <ScheduleCTA />
           </div>
         </section>
       </main>
