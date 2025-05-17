@@ -22,6 +22,7 @@ const Index = () => {
         keywords="business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation, custom software development"
         image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
       />
+      <div id="top"></div>
       <StarBackground />
       <Navbar />
       <main className="relative overflow-x-hidden z-10">

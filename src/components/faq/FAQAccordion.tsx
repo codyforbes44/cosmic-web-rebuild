@@ -37,7 +37,7 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ questions, category, naviga
               <Button 
                 variant="link" 
                 className="text-accent p-0 mt-2 h-auto"
-                onClick={() => navigationFunction('/services')}
+                onClick={() => navigationFunction('/services#top')}
               >
                 View our full services catalog →
               </Button>
@@ -46,7 +46,7 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ questions, category, naviga
               <Button 
                 variant="link" 
                 className="text-accent p-0 mt-2 h-auto"
-                onClick={() => navigationFunction('/packages')}
+                onClick={() => navigationFunction('/packages#top')}
               >
                 Browse our startup packages →
               </Button>

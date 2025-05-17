@@ -38,7 +38,7 @@ const ServicesView = ({ selectedService }: ServicesViewProps) => {
           <ScheduleButton className="bg-accent hover:bg-accent/80 text-white">
             Get a Consultation <ArrowRight className="ml-2 h-4 w-4" />
           </ScheduleButton>
-          <Link to="/portfolio">
+          <Link to="/portfolio#top">
             <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white">
               View Our Portfolio
             </Button>

@@ -12,17 +12,17 @@ const FAQSection: React.FC = () => {
         Have more questions about our packages? Find answers to common questions or reach out to our team.
       </p>
       <div className="flex flex-wrap justify-center gap-4">
-        <Link to="/faq?category=pricing">
+        <Link to="/faq?category=pricing#top">
           <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white">
             Pricing FAQs <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </Link>
-        <Link to="/faq?category=services">
+        <Link to="/faq?category=services#top">
           <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white">
             Services FAQs <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </Link>
-        <Link to="/contact">
+        <Link to="/contact#top">
           <Button className="bg-accent hover:bg-accent/80 text-white">
             Contact Us <ChevronRight className="h-4 w-4 ml-1" />
           </Button>

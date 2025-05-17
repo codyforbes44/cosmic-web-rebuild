@@ -52,6 +52,7 @@ const Analytics = () => {
             title="Analytics Dashboard" 
             description="View website analytics and visitor data."
           />
+          <div id="top"></div>
           <StarBackground />
           <Navbar />
           <main className="relative min-h-screen pt-20 pb-24 flex items-center justify-center z-10">
@@ -83,6 +84,7 @@ const Analytics = () => {
           title="Analytics Dashboard" 
           description="View website analytics and visitor data."
         />
+        <div id="top"></div>
         <StarBackground />
         <Navbar />
         <main className="relative min-h-screen pt-20 pb-24 z-10">
@@ -131,6 +133,7 @@ const Analytics = () => {
         title="Analytics Dashboard" 
         description="View website analytics and visitor data."
       />
+      <div id="top"></div>
       <StarBackground />
       <Navbar />
       <main className="relative min-h-screen pt-20 pb-24 z-10">

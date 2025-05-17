@@ -39,7 +39,7 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, i
         </TooltipProvider>
       ) : (
         <Link 
-          to={path} 
+          to={`${path}#top`} 
           className={`nav-link ${isActive ? 'active' : ''} text-base font-medium hover:text-white transition-colors duration-200 px-4 py-2 block`}
           aria-current={isActive ? 'page' : undefined}
         >

@@ -21,7 +21,7 @@ const ContactCTA: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate('/contact#top')}
               className="bg-accent hover:bg-accent/80 text-white"
             >
               Contact Us

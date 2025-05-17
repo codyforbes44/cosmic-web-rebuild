@@ -65,7 +65,7 @@ const ContactFAQ = () => {
       
       <div className="mt-8 text-center">
         <p className="text-gray-300 mb-4">Need more detailed information about our services?</p>
-        <Link to="/faq">
+        <Link to="/faq#top">
           <Button className="bg-accent hover:bg-accent/80 text-white">
             View All FAQs <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
