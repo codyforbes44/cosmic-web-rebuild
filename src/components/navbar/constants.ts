@@ -1,4 +1,3 @@
-
 import { Menu, Files, Home, BarChartHorizontalBig } from 'lucide-react';
 
 export type NavLink = {
@@ -10,7 +9,6 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/', icon: Home },
-  { name: 'Portfolio', path: '/portfolio', icon: Files, disabled: true },
   { name: 'News', path: '/news', icon: Menu },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
