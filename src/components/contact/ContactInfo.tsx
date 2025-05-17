@@ -40,7 +40,7 @@ const ContactInfo = () => {
             </div>
             <div>
               <h3 className="text-white font-bold">Location</h3>
-              <p className="text-gray-300">123 Business Way</p>
+              <p className="text-gray-300">Texas, USA</p>
               
             </div>
           </div>
