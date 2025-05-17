@@ -21,6 +21,7 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, i
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
+      className="relative"
     >
       {disabled ? (
         <TooltipProvider delayDuration={300}>
@@ -39,13 +40,13 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, i
       ) : (
         <Link 
           to={path} 
-          className={`nav-link ${isActive ? 'active' : ''} text-base font-medium`}
+          className={`nav-link ${isActive ? 'active' : ''} text-base font-medium hover:text-white transition-colors duration-200`}
           aria-current={isActive ? 'page' : undefined}
         >
           {name}
           {isActive && (
             <motion.div 
-              className="h-0.5 bg-accent mt-1" 
+              className="h-0.5 bg-accent mt-1 absolute bottom-0 left-0 right-0" 
               layoutId="navbar-indicator"
             />
           )}

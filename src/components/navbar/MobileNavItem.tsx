@@ -28,11 +28,12 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({ link, isActive, index, on
       ) : (
         <Link 
           to={link.path} 
-          className={`nav-link text-lg ${isActive ? 'active' : ''} py-3 px-2 block w-full`}
+          className={`nav-link text-lg ${isActive ? 'active' : ''} py-3 px-2 block w-full hover:text-white transition-colors duration-200`}
           onClick={onClose}
           aria-current={isActive ? 'page' : undefined}
         >
           {link.name}
+          {isActive && <span className="h-0.5 bg-accent block mt-1 rounded"></span>}
         </Link>
       )}
     </motion.div>
