@@ -2,6 +2,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
+import ServicesSubMenu from "@/components/ServicesSubMenu";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -104,6 +105,9 @@ const Services = () => {
               Comprehensive technology solutions designed to transform your business and drive innovation
             </p>
           </div>
+
+          {/* Services Sub-Menu */}
+          <ServicesSubMenu />
 
           {/* Selected Service Details */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-16">
