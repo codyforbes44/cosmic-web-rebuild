@@ -1,8 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 interface CaseStudy {
+  id: string;
   title: string;
   client: string;
   description: string;
@@ -19,6 +21,7 @@ const BusinessCaseStudy = () => {
     // Simulate API fetch delay
     const timer = setTimeout(() => {
       setCaseStudy({
+        id: "1",
         title: "Enterprise Digital Transformation",
         client: "Global Manufacturing Inc.",
         description: "ƷBI partnered with Global Manufacturing Inc. to modernize their operations through an end-to-end digital transformation initiative. We implemented cloud-based ERP systems, developed custom workflow automation tools, and created a comprehensive data analytics platform, resulting in a 35% increase in operational efficiency and 28% reduction in costs.",
@@ -73,7 +76,11 @@ const BusinessCaseStudy = () => {
                   <p className="text-white">{caseStudy?.results}</p>
                 </div>
                 
-                <Button className="bg-accent hover:bg-accent/80 text-white">Read Full Case Study</Button>
+                <Button asChild className="bg-accent hover:bg-accent/80 text-white">
+                  <Link to={`/case-study/${caseStudy?.id}`}>
+                    Read Full Case Study
+                  </Link>
+                </Button>
               </>
             )}
           </div>

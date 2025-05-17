@@ -16,6 +16,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import GetQuote from "./pages/GetQuote";
 import Partners from "./pages/Partners";
+import CaseStudy from "./pages/CaseStudy";
 import NotFound from "./pages/NotFound";
 
 // Create a query client with better defaults
@@ -42,6 +43,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/case-study/:id" element={<CaseStudy />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
