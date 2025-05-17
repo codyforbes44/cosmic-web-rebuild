@@ -64,7 +64,7 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   transition={{ duration: 0.3, delay: 0.1 }}
                 >
                   <button 
-                    className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full`}
+                    className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full text-2xl font-medium`}
                     onClick={toggleServices}
                     aria-expanded={showServices}
                   >
