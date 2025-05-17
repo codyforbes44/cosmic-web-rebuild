@@ -56,6 +56,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
       'Language',
       'Timezone',
       'Country',
+      'State',
       'City',
       'User Agent'
     ].join(',');
@@ -74,6 +75,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
       visitor.language || 'Unknown',
       visitor.timezone || 'Unknown',
       visitor.country_code || 'Unknown',
+      visitor.state || 'Unknown',
       visitor.city || 'Unknown',
       (visitor.user_agent && visitor.user_agent.length > 30) ? 
         `${visitor.user_agent.substring(0, 30)}...` : 
@@ -128,6 +130,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
                 <TableHead>Device</TableHead>
                 <TableHead>IP Address</TableHead>
                 <TableHead>Country</TableHead>
+                <TableHead>State</TableHead>
                 <TableHead>City</TableHead>
                 <TableHead>Language</TableHead>
                 <TableHead>Timezone</TableHead>
@@ -147,6 +150,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
                     <TableCell>{visitor.device_type || 'Unknown'}</TableCell>
                     <TableCell>{visitor.ip_address || 'Unknown'}</TableCell>
                     <TableCell>{visitor.country_code || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.state || 'Unknown'}</TableCell>
                     <TableCell>{visitor.city || 'Unknown'}</TableCell>
                     <TableCell>{visitor.language || 'Unknown'}</TableCell>
                     <TableCell>{visitor.timezone || 'Unknown'}</TableCell>
@@ -157,7 +161,7 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={13} className="text-center py-4">No visitor data available</TableCell>
+                  <TableCell colSpan={14} className="text-center py-4">No visitor data available</TableCell>
                 </TableRow>
               )}
             </TableBody>

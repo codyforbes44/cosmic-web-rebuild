@@ -139,6 +139,7 @@ export type Database = {
           screen_height: number | null
           screen_width: number | null
           session_id: string
+          state: string | null
           timezone: string | null
           user_agent: string | null
         }
@@ -157,6 +158,7 @@ export type Database = {
           screen_height?: number | null
           screen_width?: number | null
           session_id: string
+          state?: string | null
           timezone?: string | null
           user_agent?: string | null
         }
@@ -175,6 +177,7 @@ export type Database = {
           screen_height?: number | null
           screen_width?: number | null
           session_id?: string
+          state?: string | null
           timezone?: string | null
           user_agent?: string | null
         }

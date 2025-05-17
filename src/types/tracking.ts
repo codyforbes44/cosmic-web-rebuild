@@ -13,6 +13,7 @@ export interface VisitorData {
   ip_address?: string;
   country_code?: string;
   city?: string;
+  state?: string;
   browser?: string;
   os?: string;
   device_type?: string;

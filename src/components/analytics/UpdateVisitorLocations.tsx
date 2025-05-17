@@ -17,7 +17,7 @@ const UpdateVisitorLocations: React.FC = () => {
   const { toast } = useToast();
 
   // Get location data from IP address
-  const getLocationData = async (ipAddress: string | null): Promise<{ country_code?: string; city?: string }> => {
+  const getLocationData = async (ipAddress: string | null): Promise<{ country_code?: string; city?: string; state?: string }> => {
     if (!ipAddress) return {};
     
     try {
@@ -32,7 +32,8 @@ const UpdateVisitorLocations: React.FC = () => {
       
       return {
         country_code: data.country_code,
-        city: data.city
+        city: data.city,
+        state: data.region_code // This field contains state codes (e.g., "CA" for California)
       };
     } catch (err) {
       console.error('Error getting location data:', err);
@@ -92,12 +93,13 @@ const UpdateVisitorLocations: React.FC = () => {
             const locationData = await getLocationData(visitor.ip_address);
             
             // Update record
-            if (locationData.country_code || locationData.city) {
+            if (locationData.country_code || locationData.city || locationData.state) {
               const { error: updateError } = await supabase
                 .from('visitor_tracking')
                 .update({
                   country_code: locationData.country_code,
-                  city: locationData.city
+                  city: locationData.city,
+                  state: locationData.state
                 })
                 .eq('id', visitor.id);
               
