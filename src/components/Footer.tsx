@@ -1,6 +1,8 @@
+
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
+
 const Footer = () => {
   return <footer className="bg-space-deep-blue pt-16 pb-8 border-t border-gray-800">
       <div className="container mx-auto px-4">
@@ -37,15 +39,35 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-4 text-white">Company</h3>
-            <ul className="space-y-2">
-              {navLinks.map(link => <li key={link.path}>
-                  <Link to={link.path} className="footer-link">
-                    {link.name}
-                  </Link>
-                </li>)}
-              {/* Keep Contact link separately as it's likely important */}
-              
+            <h3 className="text-lg font-medium mb-4 text-white">Contact Us</h3>
+            <ul className="space-y-4">
+              <li>
+                <div className="flex items-start">
+                  <Mail size={18} className="text-accent mr-3 mt-1" />
+                  <div>
+                    <p className="text-white font-medium">Email</p>
+                    <a href="mailto:support@3bi.io" className="text-gray-400 hover:text-accent transition-colors">support@3bi.io</a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-start">
+                  <Phone size={18} className="text-accent mr-3 mt-1" />
+                  <div>
+                    <p className="text-white font-medium">Phone</p>
+                    <a href="tel:+18177572828" className="text-gray-400 hover:text-accent transition-colors">+1 (817) 757-2828</a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-start">
+                  <MapPin size={18} className="text-accent mr-3 mt-1" />
+                  <div>
+                    <p className="text-white font-medium">Location</p>
+                    <p className="text-gray-400">Texas, USA</p>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
           
