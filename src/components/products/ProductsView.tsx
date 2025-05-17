@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ProductCard from './ProductCard';
 import { Button } from '@/components/ui/button';
@@ -142,21 +143,6 @@ const ProductsView: React.FC<ProductsViewProps> = ({ selectedProduct }) => {
               </ScheduleButton>
             </div>
           </div>
-        </div>
-      </div>
-      
-      {/* CTA section */}
-      <div className="mt-12 text-center">
-        <h3 className="text-xl text-white mb-4">Ready to optimize your operations?</h3>
-        <div className="flex flex-wrap justify-center gap-4">
-          <ScheduleButton className="bg-accent hover:bg-accent/80 text-white">
-            Get a Consultation <ArrowRight className="ml-2 h-4 w-4" />
-          </ScheduleButton>
-          <Link to={`/packages?product=${productDetail.id}`}>
-            <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white">
-              View Pricing Plans
-            </Button>
-          </Link>
         </div>
       </div>
     </div>
