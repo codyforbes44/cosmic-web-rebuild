@@ -7,7 +7,6 @@ import SEO from "@/components/SEO";
 import ContactHeader from "@/components/contact/ContactHeader";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactInfo from "@/components/contact/ContactInfo";
-import ContactFAQ from "@/components/contact/ContactFAQ";
 
 const Contact = () => {
   return (
@@ -31,10 +30,6 @@ const Contact = () => {
               
               {/* Contact Information */}
               <ContactInfo />
-            </div>
-            
-            <div className="max-w-5xl mx-auto mt-16">
-              <ContactFAQ />
             </div>
           </div>
         </section>
