@@ -16,51 +16,57 @@ interface VisitorChartsProps {
 }
 
 const VisitorCharts: React.FC<VisitorChartsProps> = ({ visitorData }) => {
-  // Process visitor data for charts
-  const browserData = visitorData.reduce((acc, visitor) => {
-    const browser = visitor.browser || 'Unknown';
-    const existing = acc.find(item => item.name === browser);
-    
-    if (existing) {
-      existing.value += 1;
-    } else {
-      acc.push({ name: browser, value: 1 });
-    }
-    
-    return acc;
-  }, [] as Array<{ name: string; value: number }>);
+  // Process visitor data for charts - safely handle undefined/null
+  const browserData = React.useMemo(() => {
+    return visitorData.reduce((acc, visitor) => {
+      const browser = visitor.browser || 'Unknown';
+      const existing = acc.find(item => item.name === browser);
+      
+      if (existing) {
+        existing.value += 1;
+      } else {
+        acc.push({ name: browser, value: 1 });
+      }
+      
+      return acc;
+    }, [] as Array<{ name: string; value: number }>);
+  }, [visitorData]);
   
-  const deviceData = visitorData.reduce((acc, visitor) => {
-    const device = visitor.device_type || 'Unknown';
-    const existing = acc.find(item => item.name === device);
-    
-    if (existing) {
-      existing.value += 1;
-    } else {
-      acc.push({ name: device, value: 1 });
-    }
-    
-    return acc;
-  }, [] as Array<{ name: string; value: number }>);
+  const deviceData = React.useMemo(() => {
+    return visitorData.reduce((acc, visitor) => {
+      const device = visitor.device_type || 'Unknown';
+      const existing = acc.find(item => item.name === device);
+      
+      if (existing) {
+        existing.value += 1;
+      } else {
+        acc.push({ name: device, value: 1 });
+      }
+      
+      return acc;
+    }, [] as Array<{ name: string; value: number }>);
+  }, [visitorData]);
   
   // Recent pages visited
-  const pageVisits = visitorData.reduce((acc, visitor) => {
-    const path = visitor.path;
-    const existing = acc.find(item => item.name === path);
-    
-    if (existing) {
-      existing.value += 1;
-    } else {
-      acc.push({ name: path, value: 1 });
-    }
-    
-    return acc;
-  }, [] as Array<{ name: string; value: number }>)
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 5);
+  const pageVisits = React.useMemo(() => {
+    return visitorData.reduce((acc, visitor) => {
+      const path = visitor.path || '/';
+      const existing = acc.find(item => item.name === path);
+      
+      if (existing) {
+        existing.value += 1;
+      } else {
+        acc.push({ name: path, value: 1 });
+      }
+      
+      return acc;
+    }, [] as Array<{ name: string; value: number }>)
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 5);
+  }, [visitorData]);
   
   // Format data for daily visit chart
-  const getDailyVisits = () => {
+  const dailyVisitData = React.useMemo(() => {
     const last7Days = new Array(7).fill(null).map((_, i) => {
       const date = new Date();
       date.setDate(date.getDate() - (6 - i));
@@ -71,6 +77,8 @@ const VisitorCharts: React.FC<VisitorChartsProps> = ({ visitorData }) => {
     });
     
     visitorData.forEach(visitor => {
+      if (!visitor.created_at) return;
+      
       const visitDate = visitor.created_at.split('T')[0];
       const dayObj = last7Days.find(day => day.date === visitDate);
       if (dayObj) {
@@ -82,9 +90,7 @@ const VisitorCharts: React.FC<VisitorChartsProps> = ({ visitorData }) => {
       name: new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' }),
       visits: day.visits
     }));
-  };
-  
-  const dailyVisitData = getDailyVisits();
+  }, [visitorData]);
 
   return (
     <div className="space-y-6">
@@ -112,26 +118,32 @@ const VisitorCharts: React.FC<VisitorChartsProps> = ({ visitorData }) => {
             <CardTitle>Browsers</CardTitle>
           </CardHeader>
           <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={browserData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {browserData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#1E293B', color: '#fff', border: 'none' }} />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
+            {browserData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={browserData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {browserData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ backgroundColor: '#1E293B', color: '#fff', border: 'none' }} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-400">
+                No browser data available
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -143,26 +155,32 @@ const VisitorCharts: React.FC<VisitorChartsProps> = ({ visitorData }) => {
             <CardTitle>Device Types</CardTitle>
           </CardHeader>
           <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={deviceData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {deviceData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#1E293B', color: '#fff', border: 'none' }} />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
+            {deviceData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={deviceData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {deviceData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ backgroundColor: '#1E293B', color: '#fff', border: 'none' }} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-400">
+                No device data available
+              </div>
+            )}
           </CardContent>
         </Card>
         
@@ -171,19 +189,25 @@ const VisitorCharts: React.FC<VisitorChartsProps> = ({ visitorData }) => {
             <CardTitle>Top Pages</CardTitle>
           </CardHeader>
           <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                layout="vertical"
-                data={pageVisits}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                <XAxis type="number" stroke="#aaa" />
-                <YAxis dataKey="name" type="category" stroke="#aaa" width={100} />
-                <Tooltip contentStyle={{ backgroundColor: '#1E293B', color: '#fff', border: 'none' }} />
-                <Bar dataKey="value" name="Visits" fill="#06B6D4" />
-              </BarChart>
-            </ResponsiveContainer>
+            {pageVisits.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  layout="vertical"
+                  data={pageVisits}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                  <XAxis type="number" stroke="#aaa" />
+                  <YAxis dataKey="name" type="category" stroke="#aaa" width={100} />
+                  <Tooltip contentStyle={{ backgroundColor: '#1E293B', color: '#fff', border: 'none' }} />
+                  <Bar dataKey="value" name="Visits" fill="#06B6D4" />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-400">
+                No page visit data available
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
