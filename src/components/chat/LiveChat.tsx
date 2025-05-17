@@ -17,6 +17,7 @@ export default function LiveChat() {
   const [newMessage, setNewMessage] = useState('');
   const [lastSeenId, setLastSeenId] = useState('1');
   const [sessionId, setSessionId] = useState('');
+  const [showWelcomeAnimation, setShowWelcomeAnimation] = useState(false);
 
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<HTMLInputElement>(null);
@@ -47,6 +48,17 @@ export default function LiveChat() {
       if (responseTimeout.current) clearTimeout(responseTimeout.current);
     };
   }, []);
+
+  // Welcome animation when chat opens
+  useEffect(() => {
+    if (isOpen) {
+      setShowWelcomeAnimation(true);
+      const timer = setTimeout(() => {
+        setShowWelcomeAnimation(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   // Compute unread count
   const unreadCount = messages.filter(m => m.id > lastSeenId && m.sender === 'agent').length;
@@ -119,7 +131,11 @@ export default function LiveChat() {
       <ChatButton isOpen={isOpen} unreadCount={unreadCount} toggle={toggleChat} />
 
       {isOpen && (
-        <div className={`bg-space-dark-blue rounded-lg shadow-xl overflow-hidden absolute bottom-20 right-0 w-80 md:w-96 transition-all duration-300 ${isMinimized ? 'h-14' : 'h-[80vh] max-h-[600px]'}`}>          
+        <div 
+          className={`bg-space-dark-blue rounded-lg shadow-2xl overflow-hidden absolute bottom-20 right-0 w-80 md:w-96 transition-all duration-300 
+            ${isMinimized ? 'h-14' : 'h-[80vh] max-h-[600px]'}
+            ${showWelcomeAnimation ? 'animate-scale-in' : ''}`}
+        >          
           <ChatHeader isTyping={isTyping} minimize={minimize} restore={restore} isMinimized={isMinimized} />
 
           {!isMinimized && (

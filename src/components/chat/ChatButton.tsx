@@ -11,7 +11,7 @@ export default function ChatButton({ isOpen, unreadCount, toggle }: ChatButtonPr
   return (
     <button
       aria-label={isOpen ? 'Close chat' : 'Open chat'}
-      className="w-16 h-16 rounded-full bg-accent hover:bg-accent/80 text-white flex items-center justify-center shadow-lg transition-colors relative"
+      className="w-16 h-16 rounded-full bg-accent hover:bg-accent/90 text-white flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-105 pulse-animation"
       onClick={toggle}
     >
       {isOpen ? (
@@ -20,7 +20,7 @@ export default function ChatButton({ isOpen, unreadCount, toggle }: ChatButtonPr
         <>
           <MessageCircle className="h-8 w-8" />
           {unreadCount > 0 && (
-            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center">
+            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center animate-pulse">
               {unreadCount}
             </div>
           )}

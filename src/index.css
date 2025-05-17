@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -101,6 +102,81 @@
   
   .footer-link {
     @apply text-gray-400 hover:text-brand-gold transition-colors duration-300;
+  }
+  
+  /* Chat component styling */
+  .message-bubble {
+    @apply break-words;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+  }
+  
+  .typing-animation {
+    display: inline-block;
+    animation: ellipsis-animation 1.5s infinite;
+  }
+  
+  .pulse-animation {
+    animation: subtle-pulse 3s ease-in-out infinite;
+  }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 135, 245, 0.3);
+    border-radius: 20px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(155, 135, 245, 0.5);
+  }
+  
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out forwards;
+  }
+}
+
+@keyframes ellipsis-animation {
+  0%, 100% {
+    content: '.';
+  }
+  33% {
+    content: '..';
+  }
+  66% {
+    content: '...';
+  }
+}
+
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px -5px rgba(155, 135, 245, 0.4);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px -5px rgba(155, 135, 245, 0.6);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
