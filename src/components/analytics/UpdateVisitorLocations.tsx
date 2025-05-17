@@ -1,147 +1,22 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { RefreshCw, MapPin, AlertCircle, Globe } from 'lucide-react';
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { VisitorData } from "@/types/tracking";
+import { RefreshCw, MapPin, Globe } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
+import { useLocationUpdater } from '@/hooks/useLocationUpdater';
+import ErrorMessage from './ErrorMessage';
+import ProcessingProgress from './ProcessingProgress';
 
 const UpdateVisitorLocations: React.FC = () => {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [processedCount, setProcessedCount] = useState(0);
-  const [totalToProcess, setTotalToProcess] = useState(0);
-  const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
-
-  // Get location data from IP address
-  const getLocationData = async (ipAddress: string | null): Promise<{ country_code?: string; city?: string; state?: string }> => {
-    if (!ipAddress) return {};
-    
-    try {
-      // Use a reliable IP geolocation service
-      const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
-      const data = await response.json();
-      
-      // Check if the API returned an error
-      if (data.error) {
-        console.error('Error in IP geolocation:', data.reason);
-        return {};
-      }
-      
-      return {
-        country_code: data.country_code,
-        city: data.city,
-        state: data.region_code // This field contains state codes (e.g., "CA" for California)
-      };
-    } catch (err) {
-      console.error('Error getting location data:', err);
-      return {};
-    }
-  };
-
-  const updateVisitorLocations = async () => {
-    setIsProcessing(true);
-    setProgress(0);
-    setProcessedCount(0);
-    setError(null);
-    
-    try {
-      // Get visitors with IP addresses but missing location data
-      const { data: visitors, error: fetchError } = await supabase
-        .from('visitor_tracking')
-        .select('*')
-        .is('country_code', null)
-        .not('ip_address', 'is', null);
-      
-      if (fetchError) throw fetchError;
-      
-      if (!visitors || visitors.length === 0) {
-        toast({
-          title: "No records to process",
-          description: "All visitor records with IP addresses already have location data.",
-          variant: "default"
-        });
-        setIsProcessing(false);
-        return;
-      }
-      
-      setTotalToProcess(visitors.length);
-      toast({
-        title: "Processing started",
-        description: `Found ${visitors.length} records to update with location data.`,
-        variant: "default"
-      });
-      
-      // Process in batches to avoid rate limits
-      const batchSize = 5;
-      const totalBatches = Math.ceil(visitors.length / batchSize);
-      
-      for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
-        const batchStart = batchIndex * batchSize;
-        const batchEnd = Math.min((batchIndex + 1) * batchSize, visitors.length);
-        const batch = visitors.slice(batchStart, batchEnd);
-        
-        // Process each visitor in the current batch
-        const updates = await Promise.all(
-          batch.map(async (visitor: VisitorData) => {
-            // Skip if no IP address
-            if (!visitor.ip_address) return null;
-            
-            // Get location data
-            const locationData = await getLocationData(visitor.ip_address);
-            
-            // Update record
-            if (locationData.country_code || locationData.city || locationData.state) {
-              const { error: updateError } = await supabase
-                .from('visitor_tracking')
-                .update({
-                  country_code: locationData.country_code,
-                  city: locationData.city,
-                  state: locationData.state
-                })
-                .eq('id', visitor.id);
-              
-              if (updateError) {
-                console.error(`Error updating visitor ${visitor.id}:`, updateError);
-                return null;
-              }
-              
-              return visitor.id;
-            }
-            
-            return null;
-          })
-        );
-        
-        // Update progress
-        const successfulUpdates = updates.filter(id => id !== null).length;
-        setProcessedCount(prev => prev + successfulUpdates);
-        const newProgress = Math.round(((batchIndex + 1) * batchSize / visitors.length) * 100);
-        setProgress(Math.min(newProgress, 100));
-        
-        // Add a small delay to avoid overwhelming the API
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-      
-      toast({
-        title: "Processing completed",
-        description: `Updated location data for ${processedCount} visitor records.`,
-        variant: "default"
-      });
-    } catch (err: any) {
-      setError(err.message || "An error occurred while processing location data");
-      toast({
-        title: "Error updating locations",
-        description: err.message || "An error occurred while processing location data",
-        variant: "destructive"
-      });
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const {
+    isProcessing,
+    progress,
+    processedCount,
+    totalToProcess,
+    error,
+    updateVisitorLocations
+  } = useLocationUpdater();
 
   return (
     <Card className="bg-gradient-to-br from-purple-900/70 to-indigo-900/70 border-purple-500/40 text-white">
@@ -160,26 +35,15 @@ const UpdateVisitorLocations: React.FC = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {error && (
-          <div className="flex items-center gap-2 text-red-300 mb-4 p-2 bg-red-900/30 rounded-md border border-red-500/30">
-            <AlertCircle className="h-4 w-4" />
-            <p className="text-sm">{error}</p>
-          </div>
-        )}
+        <ErrorMessage error={error} />
         
         <div className="space-y-4">
-          {isProcessing && (
-            <div className="space-y-2">
-              <Progress 
-                value={progress} 
-                className="h-2 bg-purple-800"
-                indicatorClassName="bg-gradient-to-r from-yellow-400 to-amber-500" 
-              />
-              <p className="text-sm text-purple-200">
-                Processing {processedCount} of {totalToProcess} records ({progress}% complete)
-              </p>
-            </div>
-          )}
+          <ProcessingProgress 
+            isProcessing={isProcessing}
+            progress={progress}
+            processedCount={processedCount}
+            totalToProcess={totalToProcess}
+          />
         </div>
       </CardContent>
       <CardFooter>
