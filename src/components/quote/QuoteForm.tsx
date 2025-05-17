@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -24,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
-import { supabase, QuoteFormData, isSupabaseConfigured } from "@/lib/supabase";
+import { submitToSupabase, QuoteFormData, isSupabaseConfigured } from "@/lib/supabase";
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -64,15 +63,7 @@ const QuoteForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Check if Supabase is properly configured
-      if (!isSupabaseConfigured) {
-        console.log('Quote request data:', data);
-        toast.success("Demo mode: Your quote request has been received! In a real app, this would be saved to Supabase.");
-        form.reset();
-        return;
-      }
-      
-      // Prepare data for Supabase - Explicitly define all required properties
+      // Prepare data for submission
       const submissionData: QuoteFormData = {
         fullName: data.fullName,
         companyName: data.companyName,
@@ -86,19 +77,21 @@ const QuoteForm = () => {
         createdAt: new Date().toISOString(),
       };
       
-      // Insert data into Supabase
-      const { error } = await supabase
-        .from('quote_requests')
-        .insert([submissionData]);
+      // Submit data using our helper function
+      const { success, error } = await submitToSupabase('quote_requests', submissionData);
       
-      if (error) throw error;
+      if (!success) throw error;
       
-      toast.success("Thank you for your request! We'll get back to you with a quote within 1-2 business days.");
-      console.log("Form submitted:", data);
+      // Show success message to user
+      const messageText = isSupabaseConfigured 
+        ? "Thank you for your request! We'll get back to you with a quote within 1-2 business days." 
+        : "Demo mode: Your quote request has been received! In a real app, this would be saved to Supabase.";
+      
+      toast.success(messageText);
       form.reset();
     } catch (error: any) {
       console.error('Error submitting form:', error);
-      toast.error(error.message || "Failed to submit your quote request. Please try again later.");
+      toast.error(error?.message || "Failed to submit your quote request. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }

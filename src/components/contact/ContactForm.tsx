@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -22,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { supabase, ContactFormData, isSupabaseConfigured } from "@/lib/supabase";
+import { submitToSupabase, ContactFormData, isSupabaseConfigured } from "@/lib/supabase";
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -50,15 +49,7 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Check if Supabase is properly configured
-      if (!isSupabaseConfigured) {
-        console.log('Form submission data:', data);
-        toast.success("Demo mode: Your message has been received! In a real app, this would be saved to Supabase.");
-        form.reset();
-        return;
-      }
-      
-      // Prepare data for Supabase - Explicitly define all required properties
+      // Prepare data for submission
       const submissionData: ContactFormData = {
         name: data.name,
         email: data.email,
@@ -67,18 +58,21 @@ const ContactForm = () => {
         createdAt: new Date().toISOString(),
       };
       
-      // Insert data into Supabase
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert([submissionData]);
+      // Submit data using our helper function
+      const { success, error } = await submitToSupabase('contact_submissions', submissionData);
       
-      if (error) throw error;
+      if (!success) throw error;
       
-      toast.success("Thank you for your message! We'll get back to you soon.");
+      // Show success message to user
+      const messageText = isSupabaseConfigured 
+        ? "Thank you for your message! We'll get back to you soon." 
+        : "Demo mode: Your message has been received! In a real app, this would be saved to Supabase.";
+      
+      toast.success(messageText);
       form.reset();
     } catch (error: any) {
       console.error('Error submitting form:', error);
-      toast.error(error.message || "Failed to submit the form. Please try again later.");
+      toast.error(error?.message || "Failed to submit the form. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }

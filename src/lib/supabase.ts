@@ -13,7 +13,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || defaultAnonKey
 const isUsingPlaceholders = supabaseUrl === defaultUrl || supabaseAnonKey === defaultAnonKey;
 
 if (isUsingPlaceholders) {
-  console.warn('Using placeholder Supabase credentials. Please connect your project to Supabase for full functionality.');
+  console.warn('Using placeholder Supabase credentials. For full functionality, please connect your project to Supabase.');
 }
 
 // Create and export the Supabase client
@@ -21,6 +21,28 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Add flag to check if we're using real credentials
 export const isSupabaseConfigured = !isUsingPlaceholders;
+
+// Helper function to handle form submission to Supabase
+export const submitToSupabase = async <T extends Record<string, any>>(
+  tableName: string, 
+  data: T
+): Promise<{ success: boolean; error: Error | null }> => {
+  try {
+    if (!isSupabaseConfigured) {
+      console.log(`Demo mode - would submit to ${tableName}:`, data);
+      return { success: true, error: null };
+    }
+
+    const { error } = await supabase.from(tableName).insert([data]);
+    
+    if (error) throw error;
+    
+    return { success: true, error: null };
+  } catch (error: any) {
+    console.error(`Error submitting to ${tableName}:`, error);
+    return { success: false, error };
+  }
+};
 
 // Type definitions for our forms
 export type ContactFormData = {
