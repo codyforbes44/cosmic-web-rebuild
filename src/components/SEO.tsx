@@ -12,8 +12,8 @@ interface SEOProps {
 
 const SEO = ({
   title,
-  description = "ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth",
-  keywords = "business consulting, technology solutions, digital transformation, ƷBI, custom software development, data analytics, AI solutions",
+  description = "Boost efficiency and grow your business with ƷBI's innovative technology solutions. Expert consulting, custom software, and data analytics that deliver measurable results.",
+  keywords = "business consulting, technology solutions, digital transformation, ƷBI, custom software development, data analytics, AI solutions, business efficiency",
   image = "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png",
   url = window.location.href,
   type = "website"
