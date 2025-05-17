@@ -4,9 +4,12 @@ import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
 
 const Footer = () => {
-  return <footer className="bg-space-deep-blue pt-16 pb-8 border-t border-gray-800">
-      <div className="container mx-auto px-4">
+  return (
+    <footer className="bg-space-deep-blue bg-opacity-90 backdrop-blur-sm pt-16 pb-8 border-t border-gray-800 relative">
+      <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
+      <div className="container mx-auto px-4 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Company Info */}
           <div>
             <h3 className="text-xl font-bold mb-4 text-white"><span className="text-accent">Ʒ</span>BI</h3>
             <p className="text-gray-400 mb-4">
@@ -25,6 +28,7 @@ const Footer = () => {
             </div>
           </div>
           
+          {/* Services Links */}
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Services</h3>
             <ul className="space-y-2">
@@ -38,6 +42,7 @@ const Footer = () => {
             </ul>
           </div>
           
+          {/* Contact Information */}
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Contact Us</h3>
             <ul className="space-y-4">
@@ -71,11 +76,12 @@ const Footer = () => {
             </ul>
           </div>
           
+          {/* Newsletter Signup */}
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Stay Updated</h3>
             <p className="text-gray-400 mb-4">Subscribe to our newsletter for the latest industry trends and company updates.</p>
             <form className="flex flex-col space-y-2">
-              <input type="email" placeholder="Your email address" className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent" />
+              <input type="email" placeholder="Your email address" className="px-4 py-2 bg-gray-800/80 border border-gray-700 rounded-md focus:outline-none focus:border-accent" />
               <button type="submit" className="bg-accent hover:bg-accent/80 text-white px-4 py-2 rounded-md transition-colors">
                 Subscribe
               </button>
@@ -83,7 +89,8 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-gray-800 pt-8">
+        {/* Copyright & Legal Links */}
+        <div className="border-t border-gray-800/80 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ƷBI. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
@@ -94,6 +101,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
 export default Footer;
