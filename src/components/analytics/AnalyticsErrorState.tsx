@@ -17,9 +17,9 @@ const AnalyticsErrorState: React.FC<AnalyticsErrorStateProps> = ({ error }) => {
         title="Analytics Dashboard" 
         description="View website analytics and visitor data."
       />
-      <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24 flex items-center justify-center">
+      <Navbar />
+      <main className="relative min-h-screen pt-20 pb-24 flex items-center justify-center z-10">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Error Loading Analytics</h2>
           <p className="text-gray-300 mb-6">{error}</p>

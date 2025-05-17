@@ -36,9 +36,9 @@ const News = () => {
         description="Stay informed with the latest industry insights, technology trends and success stories from ƷBI's business experts."
         keywords="business technology, digital transformation, custom software, data analytics, AI solutions, web development"
       />
-      <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
+      <Navbar />
+      <main className="relative min-h-screen pt-20 pb-24 z-10">
         <div className="container mx-auto px-4">
           <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl mb-12">
             <CardContent className="p-8 text-center">

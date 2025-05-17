@@ -30,9 +30,9 @@ const Analytics = () => {
         title="Analytics Dashboard" 
         description="View website analytics and visitor data."
       />
-      <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
+      <Navbar />
+      <main className="relative min-h-screen pt-20 pb-24 z-10">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <AnalyticsHeader />
