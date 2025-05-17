@@ -78,23 +78,23 @@ const AppContent = () => {
   );
 };
 
-// Create a query client with better defaults - moved inside the component
-const App: React.FC = () => {
-  // Create the query client inside the component
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5, // 5 minutes
-        retry: 1,
-        refetchOnWindowFocus: false,
-      },
+// Create QueryClient outside of the component to avoid recreation on renders
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+      refetchOnWindowFocus: false,
     },
-  });
-  
+  },
+});
+
+// App component
+const App: React.FC = () => {
   return (
-    <React.StrictMode>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <React.StrictMode>
           <TooltipProvider>
             <AuthProvider>
               <CalendlyProvider>
@@ -106,9 +106,9 @@ const App: React.FC = () => {
               </CalendlyProvider>
             </AuthProvider>
           </TooltipProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
-    </React.StrictMode>
+        </React.StrictMode>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 
