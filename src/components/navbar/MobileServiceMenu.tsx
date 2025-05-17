@@ -3,18 +3,17 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { serviceCategories } from './constants';
 
-interface MobileServicesMenuProps {
+interface MobileServiceMenuProps {
   onClose: () => void;
 }
 
-const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
+const MobileServiceMenu = ({ onClose }: MobileServiceMenuProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}
     >
-      <div className="nav-link text-xl font-medium">Services</div>
       <div className="pl-4 mt-2 space-y-2">
         {serviceCategories.map((service) => (
           <Link 
@@ -32,4 +31,4 @@ const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
   );
 };
 
-export default MobileServicesMenu;
+export default MobileServiceMenu;

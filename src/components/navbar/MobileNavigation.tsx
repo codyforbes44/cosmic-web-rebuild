@@ -1,13 +1,12 @@
 
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import MobileNavLink from './MobileNavLink';
-import MobileServicesMenu from './MobileServicesMenu';
 import { navLinks } from './constants';
 import { Phone } from 'lucide-react';
+import MobileNavItem from './MobileNavItem';
+import MobileServiceToggle from './MobileServiceToggle';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -16,13 +15,6 @@ interface MobileNavigationProps {
 }
 
 const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) => {
-  const location = useLocation();
-  const [showServices, setShowServices] = useState(false);
-  
-  const toggleServices = () => {
-    setShowServices(!showServices);
-  };
-  
   return (
     <AnimatePresence>
       {isOpen && (
@@ -49,7 +41,7 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               
               <nav className="space-y-6">
                 {/* Home Link */}
-                <MobileNavLink 
+                <MobileNavItem 
                   key={navLinks[0].name}
                   link={navLinks[0]} 
                   isActive={isActive(navLinks[0].path) === 'active'} 
@@ -58,7 +50,7 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                 />
                 
                 {/* Portfolio Link */}
-                <MobileNavLink 
+                <MobileNavItem 
                   key={navLinks[1].name}
                   link={navLinks[1]} 
                   isActive={isActive(navLinks[1].path) === 'active'} 
@@ -66,29 +58,12 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   onClose={onClose}
                 />
                 
-                {/* Services Link/Submenu */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  <button 
-                    className={`nav-link ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full text-xl font-medium py-2`}
-                    onClick={toggleServices}
-                    aria-expanded={showServices}
-                  >
-                    <span>Services</span>
-                    <span className="ml-2 text-2xl font-light">{showServices ? '−' : '+'}</span>
-                  </button>
-                  
-                  {showServices && (
-                    <MobileServicesMenu onClose={onClose} />
-                  )}
-                </motion.div>
+                {/* Services Toggle */}
+                <MobileServiceToggle onClose={onClose} />
                 
                 {/* Remaining Links */}
                 {navLinks.slice(2).map((link, index) => (
-                  <MobileNavLink 
+                  <MobileNavItem 
                     key={link.name}
                     link={link} 
                     isActive={isActive(link.path) === 'active'} 

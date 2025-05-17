@@ -6,13 +6,13 @@ import { motion } from 'framer-motion';
 import { NavLink } from './constants';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-interface DesktopNavLinkProps {
+interface DesktopNavItemProps {
   link: NavLink;
   isActive: boolean;
   index: number;
 }
 
-const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
+const DesktopNavItem = ({ link, isActive, index }: DesktopNavItemProps) => {
   return (
     <motion.div
       key={link.name}
@@ -53,4 +53,4 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
   );
 };
 
-export default DesktopNavLink;
+export default DesktopNavItem;

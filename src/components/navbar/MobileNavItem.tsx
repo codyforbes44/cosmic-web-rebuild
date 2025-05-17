@@ -4,14 +4,14 @@ import { motion } from 'framer-motion';
 import { Ban } from 'lucide-react';
 import { NavLink } from './constants';
 
-interface MobileNavLinkProps {
+interface MobileNavItemProps {
   link: NavLink;
   isActive: boolean;
   index: number;
   onClose: () => void;
 }
 
-const MobileNavLink = ({ link, isActive, index, onClose }: MobileNavLinkProps) => {
+const MobileNavItem = ({ link, isActive, index, onClose }: MobileNavItemProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -38,4 +38,4 @@ const MobileNavLink = ({ link, isActive, index, onClose }: MobileNavLinkProps) =
   );
 };
 
-export default MobileNavLink;
+export default MobileNavItem;

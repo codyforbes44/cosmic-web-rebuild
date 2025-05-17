@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { navLinks } from './constants';
-import DesktopNavLink from './DesktopNavLink';
+import DesktopNavItem from './DesktopNavItem';
 import ServiceDropdown from './ServiceDropdown';
 
 interface DesktopNavigationProps {
@@ -15,7 +15,7 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
   return (
     <nav className="hidden md:flex items-center space-x-6">
       {/* Home link */}
-      <DesktopNavLink 
+      <DesktopNavItem 
         key={navLinks[0].name}
         link={navLinks[0]} 
         isActive={isActive(navLinks[0].path) === 'active'} 
@@ -23,7 +23,7 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
       />
 
       {/* Portfolio link */}
-      <DesktopNavLink 
+      <DesktopNavItem 
         key={navLinks[1].name}
         link={navLinks[1]} 
         isActive={isActive(navLinks[1].path) === 'active'} 
@@ -35,7 +35,7 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
 
       {/* Remaining links */}
       {navLinks.slice(2).map((link, index) => (
-        <DesktopNavLink 
+        <DesktopNavItem 
           key={link.name}
           link={link} 
           isActive={isActive(link.path) === 'active'} 
