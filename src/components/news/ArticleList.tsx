@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { BusinessArticle } from "@/types/news";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ArticleListProps {
   articles: BusinessArticle[];
@@ -22,9 +23,9 @@ const ArticleList = ({ articles, categories, onSelectArticle }: ArticleListProps
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {articles.map((article) => (
-        <div
+        <Card
           key={article.id}
-          className="space-card overflow-hidden rounded-xl cursor-pointer hover:shadow-lg transition-all duration-300"
+          className="space-card bg-space-deep-blue/60 backdrop-blur-sm border border-gray-700/40 rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300"
           onClick={() => onSelectArticle(article)}
         >
           <div className="aspect-video overflow-hidden">
@@ -34,7 +35,7 @@ const ArticleList = ({ articles, categories, onSelectArticle }: ArticleListProps
               className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
             />
           </div>
-          <div className="p-5">
+          <CardContent className="p-5">
             <div className="flex items-center mb-3">
               <span className="text-xs text-accent bg-accent/10 px-3 py-1 rounded-full">
                 {categories.find(c => c.value === article.category)?.label || article.category}
@@ -53,8 +54,8 @@ const ArticleList = ({ articles, categories, onSelectArticle }: ArticleListProps
               <BookOpen className="mr-1 h-4 w-4" />
               Read full article
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );

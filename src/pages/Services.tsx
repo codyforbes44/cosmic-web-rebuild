@@ -5,6 +5,7 @@ import StarBackground from "@/components/StarBackground";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
   {
@@ -102,93 +103,109 @@ const Services = () => {
       <StarBackground />
       <main className="min-h-screen pt-24 pb-24">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Our Services
-            </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              Comprehensive technology solutions designed to transform your business and drive innovation
-            </p>
-
-            {/* Tabs Navigation */}
-            <div className="mt-10 mb-12">
-              <Tabs 
-                value={selectedService.id} 
-                onValueChange={handleTabChange}
-                className="justify-center"
-              >
-                <TabsList className="bg-gray-800/60 inline-flex flex-wrap gap-2 h-auto p-2 rounded-xl">
-                  {services.map((service) => (
-                    <TabsTrigger 
-                      key={service.id} 
-                      value={service.id}
-                      className="data-[state=active]:text-white text-sm px-4 py-2 rounded-md transition-colors duration-200"
-                      style={{ 
-                        borderBottom: selectedService.id === service.id ? `2px solid ${service.color}` : 'none',
-                        color: selectedService.id === service.id ? service.color : 'inherit'
-                      }}
-                    >
-                      {service.name}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
-            </div>
-          </div>
-
-          {/* Selected Service Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div className="space-card p-4 md:p-6 overflow-hidden rounded-xl shadow-lg">
-              <div className="aspect-square overflow-hidden rounded-lg">
-                <img 
-                  src={selectedService.image} 
-                  alt={selectedService.name} 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-              </div>
-            </div>
-
-            <div className="space-card p-6 md:p-8 rounded-xl shadow-lg">
-              <h2 
-                className="text-3xl md:text-4xl font-bold mb-4" 
-                style={{ color: selectedService.color }}
-              >
-                {selectedService.name}
-              </h2>
-              <p className="text-gray-300 text-lg mb-8">
-                {selectedService.description}
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-gray-800/60 p-4 rounded-lg">
-                  <h3 className="text-sm text-gray-400 mb-1">Deliverables</h3>
-                  <p className="text-white font-medium">{selectedService.deliverables}</p>
-                </div>
-                <div className="bg-gray-800/60 p-4 rounded-lg">
-                  <h3 className="text-sm text-gray-400 mb-1">Typical Duration</h3>
-                  <p className="text-white font-medium">{selectedService.duration}</p>
-                </div>
-                <div className="bg-gray-800/60 p-4 rounded-lg col-span-1 md:col-span-2">
-                  <h3 className="text-sm text-gray-400 mb-1">Process</h3>
-                  <p className="text-white font-medium">{selectedService.process}</p>
-                </div>
-              </div>
-
-              <div 
-                className="bg-opacity-20 backdrop-blur-sm p-5 rounded-lg" 
-                style={{ backgroundColor: `${selectedService.color}20` }}
-              >
-                <h3 
-                  className="text-lg font-medium mb-2"
-                  style={{ color: selectedService.color }}
-                >
-                  Key Benefit
-                </h3>
-                <p className="text-gray-300">
-                  {selectedService.key_benefit}
+          <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl mb-12">
+            <CardContent className="p-8">
+              <div className="text-center">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                  Our Services
+                </h1>
+                <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+                  Comprehensive technology solutions designed to transform your business and drive innovation
                 </p>
               </div>
-            </div>
+
+              {/* Tabs Navigation */}
+              <div className="mt-10 mb-8">
+                <Tabs 
+                  value={selectedService.id} 
+                  onValueChange={handleTabChange}
+                  className="justify-center"
+                >
+                  <TabsList className="bg-gray-800/60 inline-flex flex-wrap gap-2 h-auto p-2 rounded-xl">
+                    {services.map((service) => (
+                      <TabsTrigger 
+                        key={service.id} 
+                        value={service.id}
+                        className="data-[state=active]:text-white text-sm px-4 py-2 rounded-md transition-colors duration-200"
+                        style={{ 
+                          borderBottom: selectedService.id === service.id ? `2px solid ${service.color}` : 'none',
+                          color: selectedService.id === service.id ? service.color : 'inherit'
+                        }}
+                      >
+                        {service.name}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Selected Service Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+            <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl overflow-hidden shadow-lg h-full">
+              <CardContent className="p-0">
+                <div className="aspect-square overflow-hidden">
+                  <img 
+                    src={selectedService.image} 
+                    alt={selectedService.name} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl shadow-lg h-full">
+              <CardContent className="p-6 md:p-8">
+                <h2 
+                  className="text-3xl md:text-4xl font-bold mb-4" 
+                  style={{ color: selectedService.color }}
+                >
+                  {selectedService.name}
+                </h2>
+                <p className="text-gray-300 text-lg mb-8">
+                  {selectedService.description}
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                  <Card className="bg-gray-800/60 rounded-lg">
+                    <CardContent className="p-4">
+                      <h3 className="text-sm text-gray-400 mb-1">Deliverables</h3>
+                      <p className="text-white font-medium">{selectedService.deliverables}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-gray-800/60 rounded-lg">
+                    <CardContent className="p-4">
+                      <h3 className="text-sm text-gray-400 mb-1">Typical Duration</h3>
+                      <p className="text-white font-medium">{selectedService.duration}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-gray-800/60 rounded-lg col-span-1 md:col-span-2">
+                    <CardContent className="p-4">
+                      <h3 className="text-sm text-gray-400 mb-1">Process</h3>
+                      <p className="text-white font-medium">{selectedService.process}</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <Card 
+                  className="rounded-lg backdrop-blur-sm"
+                  style={{ backgroundColor: `${selectedService.color}20` }}
+                >
+                  <CardContent className="p-5">
+                    <h3 
+                      className="text-lg font-medium mb-2"
+                      style={{ color: selectedService.color }}
+                    >
+                      Key Benefit
+                    </h3>
+                    <p className="text-gray-300">
+                      {selectedService.key_benefit}
+                    </p>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>
