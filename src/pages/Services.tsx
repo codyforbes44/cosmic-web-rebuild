@@ -3,7 +3,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const services = [
   {
@@ -76,6 +77,7 @@ const services = [
 
 const Services = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState(services[0]);
   
   useEffect(() => {
@@ -90,6 +92,10 @@ const Services = () => {
     }
   }, [location.search]);
 
+  const handleTabChange = (value: string) => {
+    navigate(`/services?service=${value}`);
+  };
+
   return (
     <>
       <Navbar />
@@ -103,10 +109,35 @@ const Services = () => {
             <p className="text-gray-300 max-w-2xl mx-auto text-lg">
               Comprehensive technology solutions designed to transform your business and drive innovation
             </p>
+
+            {/* Tabs Navigation */}
+            <div className="mt-12 mb-6">
+              <Tabs 
+                value={selectedService.id} 
+                onValueChange={handleTabChange}
+                className="justify-center"
+              >
+                <TabsList className="bg-gray-800/60 inline-flex flex-wrap gap-1 h-auto p-1.5">
+                  {services.map((service) => (
+                    <TabsTrigger 
+                      key={service.id} 
+                      value={service.id}
+                      className="data-[state=active]:text-white text-sm"
+                      style={{ 
+                        borderBottom: selectedService.id === service.id ? `2px solid ${service.color}` : 'none',
+                        color: selectedService.id === service.id ? service.color : 'inherit'
+                      }}
+                    >
+                      {service.name}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+            </div>
           </div>
 
           {/* Selected Service Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-8">
             <div className="space-card p-6 overflow-hidden rounded-xl">
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img 
