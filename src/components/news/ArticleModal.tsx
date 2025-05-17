@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { BusinessArticle } from "@/types/news";
+import { Share } from "lucide-react";
 
 interface ArticleModalProps {
   article: BusinessArticle;
@@ -9,6 +10,18 @@ interface ArticleModalProps {
 }
 
 const ArticleModal = ({ article, categories, onClose }: ArticleModalProps) => {
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: article.title,
+        text: article.excerpt,
+        url: window.location.href
+      }).catch(err => {
+        console.error("Error sharing:", err);
+      });
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
       <div className="bg-space-deep-blue border border-gray-700 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-auto">
@@ -39,6 +52,13 @@ const ArticleModal = ({ article, categories, onClose }: ArticleModalProps) => {
                 day: 'numeric'
               })}
             </span>
+            <button 
+              onClick={handleShare}
+              className="ml-auto text-gray-400 hover:text-accent"
+              aria-label="Share article"
+            >
+              <Share size={18} />
+            </button>
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white">{article.title}</h2>
           <p className="text-gray-400 mb-6">By {article.author}</p>
