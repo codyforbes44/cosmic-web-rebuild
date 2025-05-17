@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -67,18 +66,18 @@ const QuoteForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Prepare data for submission
+      // Prepare data for submission - map camelCase form fields to snake_case DB fields
       const submissionData: QuoteFormData = {
-        fullName: data.fullName,
-        companyName: data.companyName,
+        full_name: data.fullName,
+        company_name: data.companyName,
         email: data.email,
         phone: data.phone,
         budget: data.budget,
-        serviceType: data.serviceType,
-        projectDescription: data.projectDescription,
+        service_type: data.serviceType,
+        project_description: data.projectDescription,
         timeline: data.timeline,
-        termsAccepted: data.termsAccepted,
-        createdAt: new Date().toISOString(),
+        terms_accepted: data.termsAccepted,
+        created_at: new Date().toISOString(),
       };
       
       // Submit data using our helper function

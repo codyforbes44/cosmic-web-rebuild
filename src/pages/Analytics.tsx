@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { 
@@ -51,8 +50,9 @@ const Analytics = () => {
         
         if (formError) throw formError;
         
-        setVisitorData(visitors || []);
-        setFormData(forms || []);
+        // Cast data to the correct types
+        setVisitorData(visitors as VisitorData[] || []);
+        setFormData(forms as FormSubmissionData[] || []);
       } catch (err: any) {
         console.error('Error fetching analytics data:', err);
         setError(err.message || 'Failed to load analytics data');

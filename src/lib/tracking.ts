@@ -87,7 +87,7 @@ export const trackFormSubmission = async (formName: string, formData: Record<str
     const submissionData: FormSubmissionData = {
       session_id: getSessionId(),
       form_name: formName,
-      form_data: formData,
+      form_data: formData, // Using any type to match Json from Supabase
       path,
       created_at: new Date().toISOString()
     };

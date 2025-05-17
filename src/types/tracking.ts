@@ -24,7 +24,7 @@ export interface FormSubmissionData {
   id?: string;
   session_id: string;
   form_name: string;
-  form_data: Record<string, any>;
+  form_data: any; // Changed from Record<string, any> to any to match Json type
   path: string;
   created_at: string;
 }
