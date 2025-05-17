@@ -6,44 +6,31 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 const ServicesList = () => {
   const services = [
     {
-      category: "Business Strategy",
+      category: "Digital Marketing",
       items: [
-        "Digital Transformation",
-        "Process Optimization",
-        "Market Analysis & Research",
-        "Growth Strategy"
+        "Dynamic Advertising",
+        "Social Media Advertising",
+        "Recruitment Marketing"
       ],
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
     {
       category: "Technology Solutions",
       items: [
-        "Custom Software Development",
-        "Enterprise Applications",
-        "Cloud Migration & Management",
-        "Data Analytics & Insights"
+        "Web Development",
+        "Custom Software",
+        "Workflow Automation"
       ],
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1573495612937-f02b76716e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
     {
-      category: "AI & Innovation",
+      category: "Innovation",
       items: [
-        "AI Integration",
-        "Process Automation",
-        "Machine Learning Solutions",
-        "Innovation Consulting"
+        "AI Integrations",
+        "Web3 Services",
+        "Business Intelligence Reporting"
       ],
-      image: "https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-      category: "Support Services",
-      items: [
-        "Managed IT Services",
-        "24/7 Technical Support",
-        "Training & Implementation",
-        "Security & Compliance"
-      ],
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad675?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     }
   ];
 

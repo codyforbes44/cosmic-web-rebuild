@@ -18,33 +18,48 @@ export const navLinks: NavLink[] = [
 
 export const serviceCategories = [
   {
-    title: 'Custom Software Development',
-    href: '/services#custom-software',
+    title: 'Dynamic Advertising',
+    href: '/services#dynamic-advertising',
     color: '#06B6D4', // teal
   },
   {
-    title: 'Data Analytics',
-    href: '/services#data-analytics',
+    title: 'Social Media Advertising',
+    href: '/services#social-media-advertising',
     color: '#F59E0B', // amber
   },
   {
-    title: 'Cloud Solutions',
-    href: '/services#cloud-solutions',
+    title: 'Recruitment Marketing',
+    href: '/services#recruitment-marketing',
     color: '#8B5CF6', // violet
   },
   {
-    title: 'IT Consulting',
-    href: '/services#it-consulting',
+    title: 'Business Intelligence Reporting',
+    href: '/services#business-intelligence',
     color: '#EC4899', // pink
   },
   {
-    title: 'Managed Services',
-    href: '/services#managed-services',
+    title: 'Web Development',
+    href: '/services#web-development',
     color: '#10B981', // emerald
   },
   {
-    title: 'Cybersecurity',
-    href: '/services#cybersecurity',
+    title: 'Custom Software',
+    href: '/services#custom-software',
+    color: '#E11D48', // red
+  },
+  {
+    title: 'Workflow Automation',
+    href: '/services#workflow-automation',
+    color: '#6366F1', // indigo
+  },
+  {
+    title: 'AI Integrations',
+    href: '/services#ai-integrations',
+    color: '#8B5CF6', // violet
+  },
+  {
+    title: 'Web3 Services',
+    href: '/services#web3-services',
     color: '#EF4444', // red
   },
 ];
