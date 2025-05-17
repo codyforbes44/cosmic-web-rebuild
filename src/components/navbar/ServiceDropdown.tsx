@@ -48,7 +48,8 @@ const ServiceDropdown = ({ isActive }: ServiceDropdownProps) => {
                         {service.title}
                       </div>
                       <p className="line-clamp-2 text-sm leading-snug text-gray-400">
-                        {service.description}
+                        {/* Replace the description access with a default or hard-coded description */}
+                        Explore our {service.title.toLowerCase()} solutions tailored for your business needs
                       </p>
                     </Link>
                   </li>
