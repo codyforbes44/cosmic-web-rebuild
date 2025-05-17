@@ -1,7 +1,6 @@
-
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin } from 'lucide-react';
-import { serviceCategories } from './navbar/constants';
+import { serviceCategories, navLinks } from './navbar/constants';
 
 const Footer = () => {
   return (
@@ -42,10 +41,14 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Company</h3>
             <ul className="space-y-2">
-              <li><Link to="/about" className="footer-link">Our Mission</Link></li>
-              <li><Link to="/team" className="footer-link">Our Team</Link></li>
-              <li><Link to="/faq" className="footer-link">FAQ</Link></li>
-              <li><Link to="/partners" className="footer-link">Partners</Link></li>
+              {navLinks.map((link) => (
+                <li key={link.path}>
+                  <Link to={link.path} className="footer-link">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+              {/* Keep Contact link separately as it's likely important */}
               <li><Link to="/contact" className="footer-link">Contact</Link></li>
             </ul>
           </div>
