@@ -52,7 +52,12 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
       'Screen Size', 
       'Path', 
       'Referrer', 
-      'Date'
+      'Date',
+      'Language',
+      'Timezone',
+      'Country',
+      'City',
+      'User Agent'
     ].join(',');
     
     // Format data rows
@@ -65,7 +70,14 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
       `${visitor.screen_width}x${visitor.screen_height}`,
       visitor.path,
       visitor.referrer,
-      new Date(visitor.created_at).toLocaleString()
+      new Date(visitor.created_at).toLocaleString(),
+      visitor.language || 'Unknown',
+      visitor.timezone || 'Unknown',
+      visitor.country_code || 'Unknown',
+      visitor.city || 'Unknown',
+      (visitor.user_agent && visitor.user_agent.length > 30) ? 
+        `${visitor.user_agent.substring(0, 30)}...` : 
+        (visitor.user_agent || 'Unknown')
     ].join(','));
     
     // Combine headers and rows
@@ -105,37 +117,47 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border border-gray-700">
+        <div className="rounded-md border border-gray-700 overflow-auto">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-gray-800/70 bg-gray-800/40">
+                <TableHead>Date</TableHead>
+                <TableHead>Session ID</TableHead>
                 <TableHead>Browser</TableHead>
                 <TableHead>OS</TableHead>
                 <TableHead>Device</TableHead>
                 <TableHead>IP Address</TableHead>
+                <TableHead>Country</TableHead>
+                <TableHead>City</TableHead>
+                <TableHead>Language</TableHead>
+                <TableHead>Timezone</TableHead>
                 <TableHead>Screen Size</TableHead>
                 <TableHead>Path</TableHead>
                 <TableHead>Referrer</TableHead>
-                <TableHead>Date</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentVisitorData.length > 0 ? (
                 currentVisitorData.map((visitor, index) => (
                   <TableRow key={index} className="hover:bg-gray-800/70">
+                    <TableCell>{new Date(visitor.created_at).toLocaleString()}</TableCell>
+                    <TableCell className="max-w-[100px] truncate">{visitor.session_id}</TableCell>
                     <TableCell>{visitor.browser || 'Unknown'}</TableCell>
                     <TableCell>{visitor.os || 'Unknown'}</TableCell>
                     <TableCell>{visitor.device_type || 'Unknown'}</TableCell>
                     <TableCell>{visitor.ip_address || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.country_code || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.city || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.language || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.timezone || 'Unknown'}</TableCell>
                     <TableCell>{`${visitor.screen_width || 0}x${visitor.screen_height || 0}`}</TableCell>
                     <TableCell className="max-w-[150px] truncate">{visitor.path}</TableCell>
                     <TableCell className="max-w-[150px] truncate">{visitor.referrer}</TableCell>
-                    <TableCell>{new Date(visitor.created_at).toLocaleString()}</TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-4">No visitor data available</TableCell>
+                  <TableCell colSpan={13} className="text-center py-4">No visitor data available</TableCell>
                 </TableRow>
               )}
             </TableBody>
