@@ -32,11 +32,15 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="md:hidden absolute top-0 left-0 right-0 z-10 bg-space-dark-blue-900 backdrop-blur-md shadow-lg pt-20"
+      className="md:hidden fixed top-0 left-0 right-0 bottom-0 z-50 bg-space-dark-blue/95 backdrop-blur-md shadow-lg pt-20"
       id="mobile-menu"
     >
-      <X className="absolute top-4 right-4 text-gray-400" size={24} />
-      <div className="py-4 px-4 flex flex-col space-y-4">
+      <X 
+        className="absolute top-4 right-4 text-gray-400 cursor-pointer" 
+        size={24} 
+        onClick={onClose}
+      />
+      <div className="py-4 px-4 flex flex-col space-y-4 overflow-y-auto max-h-[calc(100vh-80px)]">
         {navLinks.map((link, index) => {
           // Skip admin-only links if user is not logged in
           if (link.adminOnly && !user) return null;
@@ -72,7 +76,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
             Logout
           </Button>
         ) : (
-          <Link to="/auth" onClick={onClose}>
+          <Link to="/auth#top" onClick={onClose}>
             <Button 
               variant="ghost" 
               className="w-full justify-start text-gray-200 hover:text-white hover:bg-gray-800 mt-2"
