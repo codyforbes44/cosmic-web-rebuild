@@ -17,9 +17,9 @@ const Contact = () => {
         image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
         type="website"
       />
-      <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
+      <Navbar />
+      <main className="relative min-h-screen pt-20 pb-24 z-10">
         <section className="py-20">
           <div className="container mx-auto px-4">
             <ContactHeader />

@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import StarBackground from '@/components/StarBackground';
 import { useAnalytics } from '@/hooks/useAnalytics';
 
-// Import our new component structure
+// Import our component structure
 import AnalyticsLoadingState from '@/components/analytics/AnalyticsLoadingState';
 import AnalyticsErrorState from '@/components/analytics/AnalyticsErrorState';
 import AnalyticsHeader from '@/components/analytics/AnalyticsHeader';
