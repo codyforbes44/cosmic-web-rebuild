@@ -1,9 +1,6 @@
-
 import React from 'react';
-
 const ContactInfo = () => {
-  return (
-    <div>
+  return <div>
       <div className="space-card p-8 rounded-xl mb-8">
         <h2 className="text-2xl font-bold mb-6 text-white">Contact Information</h2>
         <div className="space-y-6">
@@ -16,9 +13,9 @@ const ContactInfo = () => {
             </div>
             <div>
               <h3 className="text-white font-bold">Email</h3>
-              <a href="mailto:info@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">info@zbi-consulting.com</a>
+              <a href="mailto:info@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">info@3bi.io</a>
               <br />
-              <a href="mailto:support@zbi-consulting.com" className="text-gray-300 hover:text-accent transition-colors">support@zbi-consulting.com</a>
+              
             </div>
           </div>
           
@@ -44,7 +41,7 @@ const ContactInfo = () => {
             <div>
               <h3 className="text-white font-bold">Location</h3>
               <p className="text-gray-300">123 Business Way</p>
-              <p className="text-gray-300">Innovation Center, IC 12345</p>
+              
             </div>
           </div>
         </div>
@@ -75,8 +72,6 @@ const ContactInfo = () => {
           </a>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ContactInfo;
