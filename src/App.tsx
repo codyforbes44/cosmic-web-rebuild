@@ -16,6 +16,7 @@ import AuthRequired from "./components/AuthRequired";
 // Import pages
 import Index from "./pages/Index";
 import Services from "./pages/Services";
+import Products from "./pages/Products";
 import Portfolio from "./pages/Portfolio"; 
 import News from "./pages/News";
 import About from "./pages/About";
@@ -60,6 +61,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/products" element={<Products />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/news" element={<News />} />
         <Route path="/about" element={<About />} />

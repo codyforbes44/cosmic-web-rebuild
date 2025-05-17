@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { navLinks } from './constants';
 import DesktopNavItem from './DesktopNavItem';
 import ServiceDropdown from './ServiceDropdown';
+import ProductDropdown from './ProductDropdown';
 import { Button } from '@/components/ui/button';
 import { LogIn, LogOut } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -11,9 +12,10 @@ import { useAuth } from '@/hooks/useAuth';
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
   isServicesActive: boolean;
+  isProductsActive: boolean;
 }
 
-const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServicesActive }) => {
+const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServicesActive, isProductsActive }) => {
   const { user, signOut } = useAuth();
   
   return (
@@ -25,6 +27,11 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServi
         // Special handling for Services to use dropdown
         if (link.path === '/services') {
           return <ServiceDropdown key={link.path} isActive={isServicesActive} />;
+        }
+        
+        // Special handling for Products to use dropdown
+        if (link.path === '/products') {
+          return <ProductDropdown key={link.path} isActive={isProductsActive} />;
         }
         
         return (

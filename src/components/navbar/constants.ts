@@ -1,4 +1,4 @@
-import { Menu, Files, Home, BarChartHorizontalBig, BookOpen, HelpCircle, Mail, Info, Newspaper } from 'lucide-react';
+import { Menu, Files, Home, BarChartHorizontalBig, BookOpen, HelpCircle, Mail, Info, Newspaper, Package } from 'lucide-react';
 
 export type NavLink = {
   name: string;
@@ -11,6 +11,7 @@ export type NavLink = {
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/', icon: Home },
   { name: 'About', path: '/about', icon: Info },
+  { name: 'Products', path: '/products', icon: Package },
   { name: 'Services', path: '/services', icon: Menu },
   { name: 'News', path: '/news', icon: Newspaper },
   { name: 'FAQ', path: '/faq', icon: HelpCircle },
@@ -63,5 +64,26 @@ export const serviceCategories = [
     title: 'Web3 Services',
     href: '/services#web3-services',
     color: '#EF4444', // red
+  },
+];
+
+export const productCategories = [
+  {
+    title: 'TruckOnboard',
+    href: '/products#truckOnboard',
+    color: '#0EA5E9', // sky blue
+    description: 'Remote driver onboarding made simple',
+  },
+  {
+    title: 'Carrier Partner Network',
+    href: '/products#cpn',
+    color: '#8B5CF6', // violet
+    description: 'Simplifying driver transitions',
+  },
+  {
+    title: '3BI Connect',
+    href: '/products#3biConnect',
+    color: '#F97316', // orange
+    description: 'Complete platform for trucking companies',
   },
 ];

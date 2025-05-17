@@ -55,10 +55,14 @@ const Navbar = () => {
     if (path === '/services') {
       return location.pathname === path ? 'active' : '';
     }
+    if (path === '/products') {
+      return location.pathname === path ? 'active' : '';
+    }
     return location.pathname === path ? 'active' : '';
   };
 
   const isServicesActive = location.pathname === '/services';
+  const isProductsActive = location.pathname === '/products';
 
   const closeMobileMenu = () => setIsMobileNavOpen(false);
 
@@ -87,6 +91,7 @@ const Navbar = () => {
         <DesktopNavigation 
           isActive={isActive} 
           isServicesActive={isServicesActive} 
+          isProductsActive={isProductsActive} 
         />
 
         {/* Mobile Navigation Toggle */}

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { navLinks } from './constants';
 import MobileNavItem from './MobileNavItem';
 import MobileServiceToggle from './MobileServiceToggle';
+import MobileProductToggle from './MobileProductToggle';
 import { Button } from '@/components/ui/button';
 import { LogIn, LogOut } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -43,6 +44,11 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
           // Special handling for Services to use dropdown
           if (link.path === '/services') {
             return <MobileServiceToggle key={link.path} onClose={onClose} />;
+          }
+          
+          // Special handling for Products to use dropdown
+          if (link.path === '/products') {
+            return <MobileProductToggle key={link.path} onClose={onClose} />;
           }
           
           return (
