@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -64,7 +63,7 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   transition={{ duration: 0.3, delay: 0.1 }}
                 >
                   <button 
-                    className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full text-2xl font-medium`}
+                    className={`nav-link ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full text-xl font-medium`}
                     onClick={toggleServices}
                     aria-expanded={showServices}
                   >

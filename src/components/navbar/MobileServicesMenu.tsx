@@ -14,7 +14,7 @@ const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}
     >
-      <div className="nav-link text-2xl font-medium">Services</div>
+      <div className="nav-link text-xl font-medium">Services</div>
       <div className="pl-4 mt-2 space-y-2">
         {serviceCategories.map((service) => (
           <Link 

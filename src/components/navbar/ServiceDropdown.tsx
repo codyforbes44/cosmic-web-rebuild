@@ -25,7 +25,7 @@ const ServiceDropdown = ({ isActive }: ServiceDropdownProps) => {
       <NavigationMenu className="z-50">
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={`nav-link bg-transparent ${isActive ? 'active' : ''} text-lg font-medium`}>
+            <NavigationMenuTrigger className={`nav-link bg-transparent ${isActive ? 'active' : ''} font-medium`}>
               Services
               {isActive && (
                 <motion.div 
