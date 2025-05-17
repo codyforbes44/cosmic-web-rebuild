@@ -11,7 +11,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import StarBackground from '@/components/StarBackground';
 import SEO from '@/components/SEO';
-import { Loader2, Info } from 'lucide-react';
+import { Loader2, Info, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip as TooltipUI,
@@ -19,6 +19,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
@@ -27,6 +36,10 @@ const Analytics = () => {
   const [formData, setFormData] = useState<FormSubmissionData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Add new state for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
   
   useEffect(() => {
     const fetchData = async () => {
@@ -148,6 +161,55 @@ const Analytics = () => {
   
   const dailyVisitData = getDailyVisits();
   
+  // Function to export visitor data as CSV
+  const exportToCsv = () => {
+    if (!visitorData.length) return;
+    
+    // Create CSV headers
+    const headers = [
+      'Session ID', 
+      'Browser', 
+      'OS', 
+      'Device Type', 
+      'Screen Size', 
+      'Path', 
+      'Referrer', 
+      'Date'
+    ].join(',');
+    
+    // Format data rows
+    const rows = visitorData.map(visitor => [
+      visitor.session_id,
+      visitor.browser || 'Unknown',
+      visitor.os || 'Unknown',
+      visitor.device_type || 'Unknown',
+      `${visitor.screen_width}x${visitor.screen_height}`,
+      visitor.path,
+      visitor.referrer,
+      new Date(visitor.created_at).toLocaleString()
+    ].join(','));
+    
+    // Combine headers and rows
+    const csvContent = [headers, ...rows].join('\n');
+    
+    // Create download link
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `visitor_data_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
+  // Calculate paginated data
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentVisitorData = visitorData.slice(indexOfFirstRow, indexOfLastRow);
+  const totalPages = Math.ceil(visitorData.length / rowsPerPage);
+  
   if (loading) {
     return (
       <>
@@ -254,6 +316,7 @@ const Analytics = () => {
               <TabsList className="bg-gray-800/50 border-gray-700">
                 <TabsTrigger value="visitors">Visitors</TabsTrigger>
                 <TabsTrigger value="forms">Form Submissions</TabsTrigger>
+                <TabsTrigger value="metadata">Visitor Metadata</TabsTrigger>
               </TabsList>
               
               <TabsContent value="visitors" className="mt-6">
@@ -408,6 +471,88 @@ const Analytics = () => {
                     </CardContent>
                   </Card>
                 </div>
+              </TabsContent>
+              
+              <TabsContent value="metadata" className="mt-6">
+                <Card className="bg-gray-800/50 border-gray-700 text-white">
+                  <CardHeader>
+                    <div className="flex justify-between items-center">
+                      <CardTitle>Visitor Metadata Details</CardTitle>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={exportToCsv}
+                        className="flex items-center gap-2"
+                      >
+                        <Download className="h-4 w-4" />
+                        Export CSV
+                      </Button>
+                    </div>
+                    <CardDescription className="text-gray-400">
+                      Detailed information about each visitor session
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="rounded-md border border-gray-700">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="hover:bg-gray-800/70 bg-gray-800/40">
+                            <TableHead>Browser</TableHead>
+                            <TableHead>OS</TableHead>
+                            <TableHead>Device</TableHead>
+                            <TableHead>Screen Size</TableHead>
+                            <TableHead>Path</TableHead>
+                            <TableHead>Referrer</TableHead>
+                            <TableHead>Date</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {currentVisitorData.length > 0 ? (
+                            currentVisitorData.map((visitor, index) => (
+                              <TableRow key={index} className="hover:bg-gray-800/70">
+                                <TableCell>{visitor.browser || 'Unknown'}</TableCell>
+                                <TableCell>{visitor.os || 'Unknown'}</TableCell>
+                                <TableCell>{visitor.device_type || 'Unknown'}</TableCell>
+                                <TableCell>{`${visitor.screen_width || 0}x${visitor.screen_height || 0}`}</TableCell>
+                                <TableCell className="max-w-[150px] truncate">{visitor.path}</TableCell>
+                                <TableCell className="max-w-[150px] truncate">{visitor.referrer}</TableCell>
+                                <TableCell>{new Date(visitor.created_at).toLocaleString()}</TableCell>
+                              </TableRow>
+                            ))
+                          ) : (
+                            <TableRow>
+                              <TableCell colSpan={7} className="text-center py-4">No visitor data available</TableCell>
+                            </TableRow>
+                          )}
+                        </TableBody>
+                      </Table>
+                    </div>
+                    
+                    {visitorData.length > rowsPerPage && (
+                      <div className="flex items-center justify-center space-x-2 mt-4">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                          disabled={currentPage === 1}
+                        >
+                          Previous
+                        </Button>
+                        <span className="text-sm text-gray-400">
+                          Page {currentPage} of {totalPages}
+                        </span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                          disabled={currentPage === totalPages}
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               </TabsContent>
             </Tabs>
           </div>
