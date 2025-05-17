@@ -98,53 +98,6 @@ const About = () => {
               </Card>
             </div>
 
-            <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl mb-16">
-              <CardHeader>
-                <CardTitle className="text-3xl font-bold text-center text-white">Our Leadership Team</CardTitle>
-              </CardHeader>
-              <CardContent className="p-8">
-                <p className="text-gray-300 text-center mb-12">
-                  ƷBI is led by a team of technology visionaries and business experts with extensive experience in delivering transformative digital solutions.
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <Card className="space-card bg-space-deep-blue/60 backdrop-blur-sm border border-gray-700/40 rounded-xl">
-                    <CardContent className="p-6 flex flex-col items-center">
-                      <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
-                        <img 
-                          src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=922&q=80" 
-                          alt="Alexander Mitchell"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-white">Alexander Mitchell</h3>
-                      <p className="text-accent mb-2">CEO & Founder</p>
-                      <p className="text-gray-400 text-center">
-                        With over 20 years in technology leadership, Alex brings strategic vision and industry expertise to guide ƷBI's growth.
-                      </p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="space-card bg-space-deep-blue/60 backdrop-blur-sm border border-gray-700/40 rounded-xl">
-                    <CardContent className="p-6 flex flex-col items-center">
-                      <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
-                        <img 
-                          src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=934&q=80" 
-                          alt="Sarah Johnson"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-white">Sarah Johnson</h3>
-                      <p className="text-accent mb-2">CTO</p>
-                      <p className="text-gray-400 text-center">
-                        Sarah leads our technical operations, bringing innovation and excellence to every solution we deliver.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CardContent>
-            </Card>
-
             <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl">
               <CardContent className="p-8 md:p-12 text-center">
                 <h2 className="text-3xl font-bold mb-6 text-white">Ready to Transform Your Business?</h2>
