@@ -35,12 +35,12 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
       id="mobile-menu"
     >
       <X className="absolute top-4 right-4 text-gray-400" size={24} />
-      <div className="py-4 px-4 flex flex-col space-y-3">
+      <div className="py-4 px-4 flex flex-col space-y-4">
         {navLinks.map((link, index) => {
           // Skip admin-only links if user is not logged in
           if (link.adminOnly && !user) return null;
           
-          // Special handling for Services to use toggle dropdown
+          // Special handling for Services to use dropdown
           if (link.path === '/services') {
             return <MobileServiceToggle key={link.path} onClose={onClose} />;
           }
@@ -59,7 +59,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
         {user ? (
           <Button 
             variant="ghost" 
-            className="justify-start text-gray-200 hover:text-white hover:bg-gray-800"
+            className="justify-start text-gray-200 hover:text-white hover:bg-gray-800 mt-2"
             onClick={handleSignOut}
           >
             <LogOut size={18} className="mr-2" />
@@ -69,7 +69,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, isActive, o
           <Link to="/auth" onClick={onClose}>
             <Button 
               variant="ghost" 
-              className="w-full justify-start text-gray-200 hover:text-white hover:bg-gray-800"
+              className="w-full justify-start text-gray-200 hover:text-white hover:bg-gray-800 mt-2"
             >
               <LogIn size={18} className="mr-2" />
               Login

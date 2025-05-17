@@ -17,7 +17,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServi
   const { user, signOut } = useAuth();
   
   return (
-    <nav className="hidden md:flex items-center space-x-2">
+    <nav className="hidden md:flex items-center space-x-4">
       {navLinks.map((link, index) => {
         // Skip admin-only links if user is not logged in
         if (link.adminOnly && !user) return null;
@@ -41,7 +41,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServi
       {user ? (
         <Button 
           variant="ghost" 
-          className="text-gray-200 hover:text-white hover:bg-gray-800"
+          className="text-gray-200 hover:text-white hover:bg-gray-800 ml-2"
           onClick={signOut}
         >
           <LogOut size={16} className="mr-1" />
@@ -49,7 +49,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServi
         </Button>
       ) : (
         <Link to="/auth">
-          <Button variant="ghost" className="text-gray-200 hover:text-white hover:bg-gray-800">
+          <Button variant="ghost" className="text-gray-200 hover:text-white hover:bg-gray-800 ml-2">
             <LogIn size={16} className="mr-1" />
             Login
           </Button>
