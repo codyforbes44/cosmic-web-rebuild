@@ -107,9 +107,9 @@ const CTASection: React.FC = () => {
                 <p className="text-gray-300 mb-4">Speak directly with our team about your business technology needs.</p>
               </div>
               <div className="mt-auto">
-                <a href="tel:+11234567890" className="w-full">
+                <a href="tel:+18177572828" className="w-full">
                   <Button variant="outline" className="w-full border-accent text-accent hover:bg-accent hover:text-white">
-                    (123) 456-7890
+                    (817) 757-2828
                   </Button>
                 </a>
               </div>
