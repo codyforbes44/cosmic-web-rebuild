@@ -30,7 +30,7 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
               </span>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Coming soon</p>
+              <p>Unauthorized</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

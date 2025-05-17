@@ -22,6 +22,7 @@ const MobileNavLink = ({ link, isActive, index, onClose }: MobileNavLinkProps) =
         <span className="nav-link text-xl text-gray-500 cursor-not-allowed flex items-center py-3 px-2">
           {link.name}
           <Ban size={18} className="ml-2 opacity-70" />
+          <span className="sr-only">Unauthorized</span>
         </span>
       ) : (
         <Link 
