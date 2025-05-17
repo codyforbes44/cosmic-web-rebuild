@@ -41,7 +41,10 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         .select('*')
         .order('created_at', { ascending: false });
       
-      if (visitorError) throw visitorError;
+      if (visitorError) {
+        console.error('Error fetching visitor data:', visitorError);
+        throw new Error(`Error fetching visitor data: ${visitorError.message}`);
+      }
       
       // Fetch form submission data from form_submissions table
       const { data: forms, error: formError } = await supabase
@@ -49,7 +52,10 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         .select('*')
         .order('created_at', { ascending: false });
       
-      if (formError) throw formError;
+      if (formError) {
+        console.error('Error fetching form data:', formError);
+        throw new Error(`Error fetching form data: ${formError.message}`);
+      }
       
       // Fetch chat interaction data from chat_interactions table
       const { data: chats, error: chatError } = await supabase
@@ -57,7 +63,10 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         .select('*')
         .order('created_at', { ascending: false });
       
-      if (chatError) throw chatError;
+      if (chatError) {
+        console.error('Error fetching chat data:', chatError);
+        throw new Error(`Error fetching chat data: ${chatError.message}`);
+      }
 
       // Fetch contact submissions data
       const { data: contacts, error: contactError } = await supabase
@@ -65,7 +74,10 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (contactError) throw contactError;
+      if (contactError) {
+        console.error('Error fetching contact data:', contactError);
+        throw new Error(`Error fetching contact data: ${contactError.message}`);
+      }
 
       // Fetch newsletter subscribers data
       const { data: subscribers, error: subscriberError } = await supabase
@@ -73,7 +85,10 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (subscriberError) throw subscriberError;
+      if (subscriberError) {
+        console.error('Error fetching subscriber data:', subscriberError);
+        throw new Error(`Error fetching subscriber data: ${subscriberError.message}`);
+      }
 
       // Fetch quote submissions data
       const { data: quotes, error: quoteError } = await supabase
@@ -81,7 +96,10 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (quoteError) throw quoteError;
+      if (quoteError) {
+        console.error('Error fetching quote data:', quoteError);
+        throw new Error(`Error fetching quote data: ${quoteError.message}`);
+      }
 
       // Clean up data - ensure all visitor data has the expected fields and handle nulls
       const cleanVisitors = (visitors || []).map(visitor => ({
@@ -111,6 +129,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
       
       if (!initialFetchCompleted.current) {
         console.log('Initial data fetch completed');
+        initialFetchCompleted.current = true;
       } else {
         toast({
           title: "Analytics data loaded",
@@ -121,11 +140,16 @@ export const useAnalytics = (): UseAnalyticsReturn => {
     } catch (err: any) {
       console.error('Error fetching analytics data:', err);
       setError(err.message || 'Failed to load analytics data');
-      toast({
-        title: "Error loading analytics",
-        description: err.message || "There was a problem fetching the analytics data",
-        variant: "destructive"
-      });
+      
+      if (!initialFetchCompleted.current) {
+        initialFetchCompleted.current = true;
+      } else {
+        toast({
+          title: "Error loading analytics",
+          description: err.message || "There was a problem fetching the analytics data",
+          variant: "destructive"
+        });
+      }
     } finally {
       setLoading(false);
       isFetchingRef.current = false;
@@ -135,7 +159,6 @@ export const useAnalytics = (): UseAnalyticsReturn => {
   // Only fetch data once on initial component mount
   useEffect(() => {
     if (!initialFetchCompleted.current) {
-      initialFetchCompleted.current = true;
       fetchData();
     }
   }, []);
