@@ -1,38 +1,5 @@
 
-import { createClient } from '@supabase/supabase-js';
-
-// Get environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-// Check if Supabase credentials are available
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error(
-    'Supabase credentials are missing. Make sure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set in your environment variables.'
-  );
-}
-
-// Create a mock client when credentials are missing (for development only)
-const createMockClient = () => {
-  return {
-    from: (table: string) => ({
-      insert: async () => ({ error: null }),
-      select: async () => ({ data: [], error: null }),
-      update: async () => ({ error: null }),
-      delete: async () => ({ error: null }),
-    }),
-    auth: {
-      signUp: async () => ({ error: null }),
-      signIn: async () => ({ error: null }),
-      signOut: async () => ({ error: null }),
-    },
-  };
-};
-
-// Create and export the Supabase client
-export const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : createMockClient() as any;
+import { supabase } from '@/integrations/supabase/client';
 
 // Helper function to handle form submission to Supabase
 export const submitToSupabase = async <T extends Record<string, any>>(
@@ -40,12 +7,6 @@ export const submitToSupabase = async <T extends Record<string, any>>(
   data: T
 ): Promise<{ success: boolean; error: Error | null }> => {
   try {
-    // If we're using the mock client, just pretend it worked
-    if (!supabaseUrl || !supabaseAnonKey) {
-      console.warn(`Using mock Supabase client for ${tableName}. Data will not be saved.`, data);
-      return { success: true, error: null };
-    }
-    
     const { error } = await supabase.from(tableName).insert([data]);
     
     if (error) throw error;

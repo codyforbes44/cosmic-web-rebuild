@@ -3,10 +3,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
 import { submitToSupabase } from '@/lib/supabase';
+import { trackFormSubmission } from '@/lib/tracking';
+import { useLocation } from 'react-router-dom';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const location = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +28,9 @@ const Newsletter = () => {
       });
       
       if (!success) throw error;
+      
+      // Track newsletter subscription
+      await trackFormSubmission('newsletter', { email }, location.pathname);
       
       toast.success("Thank you for subscribing to our newsletter!");
       setEmail('');

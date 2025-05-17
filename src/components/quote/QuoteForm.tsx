@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -24,6 +25,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { submitToSupabase, QuoteFormData } from "@/lib/supabase";
+import { trackFormSubmission } from '@/lib/tracking';
+import { useLocation } from 'react-router-dom';
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -42,6 +45,7 @@ const formSchema = z.object({
 
 const QuoteForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const location = useLocation();
   
   // Initialize form with react-hook-form and zod validation
   const form = useForm<z.infer<typeof formSchema>>({
@@ -81,6 +85,9 @@ const QuoteForm = () => {
       const { success, error } = await submitToSupabase('quote_requests', submissionData);
       
       if (!success) throw error;
+      
+      // Track form submission
+      await trackFormSubmission('quote', data, location.pathname);
       
       // Show success message to user
       toast.success("Thank you for your request! We'll get back to you with a quote within 1-2 business days.");

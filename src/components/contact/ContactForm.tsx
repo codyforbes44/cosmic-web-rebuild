@@ -23,6 +23,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { submitToSupabase, ContactFormData } from "@/lib/supabase";
+import { trackFormSubmission } from '@/lib/tracking';
+import { useLocation } from 'react-router-dom';
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -34,6 +36,7 @@ const formSchema = z.object({
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const location = useLocation();
   
   // Initialize form with react-hook-form and zod validation
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,6 +66,9 @@ const ContactForm = () => {
       const { success, error } = await submitToSupabase('contact_submissions', submissionData);
       
       if (!success) throw error;
+      
+      // Track form submission
+      await trackFormSubmission('contact', data, location.pathname);
       
       // Show success message to user
       toast.success("Thank you for your message! We'll get back to you soon.");
