@@ -65,7 +65,7 @@ export default function ChatButton({ isOpen, unreadCount, toggle }: ChatButtonPr
   return (
     <button
       aria-label={isOpen ? 'Close chat' : 'Open chat'}
-      className="w-16 h-16 rounded-full bg-accent hover:bg-accent/90 text-white flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-105 pulse-animation overflow-hidden border-2 border-white"
+      className="relative w-16 h-16 rounded-full bg-accent hover:bg-accent/90 text-white flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden border-2 border-white"
       onClick={toggle}
     >
       {isOpen ? (
@@ -78,6 +78,8 @@ export default function ChatButton({ isOpen, unreadCount, toggle }: ChatButtonPr
               {unreadCount}
             </div>
           )}
+          {/* Green online indicator */}
+          <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-green-400 border-2 border-white online-indicator"></div>
         </>
       )}
     </button>
