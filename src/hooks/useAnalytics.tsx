@@ -11,7 +11,6 @@ interface UseAnalyticsReturn {
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
-  realDataPercentage: number;
 }
 
 export const useAnalytics = (): UseAnalyticsReturn => {
@@ -20,7 +19,6 @@ export const useAnalytics = (): UseAnalyticsReturn => {
   const [chatData, setChatData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [realDataPercentage, setRealDataPercentage] = useState<number>(0);
   const { toast } = useToast();
   const initialFetchCompleted = useRef(false);
   
@@ -64,17 +62,6 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         state: visitor.state || null
       }));
       
-      // Calculate percentage of records with real geographical data (non-default values)
-      if (cleanVisitors.length > 0) {
-        const recordsWithRealData = cleanVisitors.filter(
-          visitor => visitor.country_code !== 'Unknown' && visitor.country_code !== null
-        ).length;
-        
-        setRealDataPercentage(Math.round((recordsWithRealData / cleanVisitors.length) * 100));
-      } else {
-        setRealDataPercentage(0);
-      }
-      
       // Set data
       setVisitorData(cleanVisitors as VisitorData[]);
       setFormData(forms as FormSubmissionData[] || []);
@@ -112,7 +99,6 @@ export const useAnalytics = (): UseAnalyticsReturn => {
     chatData, 
     loading, 
     error, 
-    refetch: fetchData,
-    realDataPercentage 
+    refetch: fetchData
   };
 };

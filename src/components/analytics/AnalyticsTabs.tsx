@@ -14,15 +14,13 @@ interface AnalyticsTabsProps {
   formData: FormSubmissionData[];
   chatData: any[];
   refetch: () => Promise<void>;
-  realDataPercentage?: number;
 }
 
 const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ 
   visitorData, 
   formData, 
   chatData, 
-  refetch,
-  realDataPercentage = 0
+  refetch
 }) => {
   return (
     <Tabs defaultValue="charts" className="space-y-4">

@@ -8,6 +8,7 @@ import { useAnalytics } from '@/hooks/useAnalytics';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { RefreshCw } from 'lucide-react';
+import AuthRequired from '@/components/AuthRequired';
 
 // Import our component structure
 import AnalyticsLoadingState from '@/components/analytics/AnalyticsLoadingState';
@@ -18,7 +19,7 @@ import AnalyticsTabs from '@/components/analytics/AnalyticsTabs';
 
 const Analytics = () => {
   const { user } = useAuth();
-  const { visitorData, formData, chatData, loading, error, refetch, realDataPercentage } = useAnalytics();
+  const { visitorData, formData, chatData, loading, error, refetch } = useAnalytics();
   
   if (loading) {
     return <AnalyticsLoadingState />;
@@ -29,7 +30,7 @@ const Analytics = () => {
   }
   
   return (
-    <>
+    <AuthRequired>
       <SEO 
         title="Analytics Dashboard" 
         description="View website analytics and visitor data."
@@ -68,13 +69,12 @@ const Analytics = () => {
               formData={formData} 
               chatData={chatData} 
               refetch={refetch}
-              realDataPercentage={realDataPercentage}
             />
           </div>
         </div>
       </main>
       <Footer />
-    </>
+    </AuthRequired>
   );
 };
 
