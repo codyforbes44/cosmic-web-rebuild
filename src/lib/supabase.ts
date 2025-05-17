@@ -1,17 +1,26 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Default values for local development (these are safe to expose, since they won't work without proper credentials)
+const defaultUrl = 'https://placeholder-project.supabase.co';
+const defaultAnonKey = 'placeholder-key';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables. Please connect your project to Supabase.');
+// Get environment variables or use default placeholders
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || defaultUrl;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || defaultAnonKey;
+
+// Check if running with real credentials or placeholders
+const isUsingPlaceholders = supabaseUrl === defaultUrl || supabaseAnonKey === defaultAnonKey;
+
+if (isUsingPlaceholders) {
+  console.warn('Using placeholder Supabase credentials. Please connect your project to Supabase for full functionality.');
 }
 
-export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || ''
-);
+// Create and export the Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Add flag to check if we're using real credentials
+export const isSupabaseConfigured = !isUsingPlaceholders;
 
 // Type definitions for our forms
 export type ContactFormData = {

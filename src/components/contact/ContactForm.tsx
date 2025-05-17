@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { supabase, ContactFormData } from "@/lib/supabase";
+import { supabase, ContactFormData, isSupabaseConfigured } from "@/lib/supabase";
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -50,6 +50,14 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
+      // Check if Supabase is properly configured
+      if (!isSupabaseConfigured) {
+        console.log('Form submission data:', data);
+        toast.success("Demo mode: Your message has been received! In a real app, this would be saved to Supabase.");
+        form.reset();
+        return;
+      }
+      
       // Prepare data for Supabase - Explicitly define all required properties
       const submissionData: ContactFormData = {
         name: data.name,
@@ -79,6 +87,14 @@ const ContactForm = () => {
   return (
     <div className="space-card p-8 rounded-xl">
       <h2 className="text-2xl font-bold mb-6 text-white">Send us a message</h2>
+      {!isSupabaseConfigured && (
+        <div className="mb-4 p-3 bg-yellow-900/30 border border-yellow-700 rounded-md">
+          <p className="text-yellow-300 text-sm">
+            <strong>Demo Mode:</strong> This form is running without a backend connection. 
+            Your submissions won't be stored permanently.
+          </p>
+        </div>
+      )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
