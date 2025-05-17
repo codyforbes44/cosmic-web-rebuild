@@ -15,8 +15,9 @@ const Index = () => {
     <>
       <SEO 
         title="Professional Technology Solutions" 
-        description="ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth."
-        keywords="business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation"
+        description="Transform your business with ƷBI's innovative technology solutions. Expert consulting, custom software development, and data analytics to drive growth and efficiency."
+        keywords="business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation, custom software development"
+        image="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
       />
       <Navbar />
       <main className="overflow-x-hidden">
