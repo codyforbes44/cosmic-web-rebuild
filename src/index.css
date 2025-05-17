@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -119,6 +120,10 @@
     animation: melodic-pulse 12s ease-in-out infinite;
   }
   
+  .slow-pulse-animation {
+    animation: slow-melodic-pulse 25s ease-in-out infinite;
+  }
+  
   .scrollbar-thin {
     scrollbar-width: thin;
   }
@@ -173,6 +178,25 @@
   75% {
     transform: scale(1.01);
     box-shadow: 0 9px 18px -4px rgba(155, 135, 245, 0.35);
+  }
+}
+
+@keyframes slow-melodic-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 16px -4px rgba(155, 135, 245, 0.3);
+  }
+  25% {
+    transform: scale(1.005);
+    box-shadow: 0 9px 18px -4px rgba(155, 135, 245, 0.32);
+  }
+  50% {
+    transform: scale(1.01);
+    box-shadow: 0 10px 20px -4px rgba(155, 135, 245, 0.35);
+  }
+  75% {
+    transform: scale(1.005);
+    box-shadow: 0 9px 18px -4px rgba(155, 135, 245, 0.32);
   }
 }
 
