@@ -10,8 +10,8 @@ interface UseAnalyticsReturn {
   chatData: any[]; // Chat interaction data
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>; // Add refetch function
-  realDataPercentage: number; // Percentage of records with real geographical data
+  refetch: () => Promise<void>;
+  realDataPercentage: number;
 }
 
 export const useAnalytics = (): UseAnalyticsReturn => {
@@ -71,9 +71,11 @@ export const useAnalytics = (): UseAnalyticsReturn => {
         ).length;
         
         setRealDataPercentage(Math.round((recordsWithRealData / cleanVisitors.length) * 100));
+      } else {
+        setRealDataPercentage(0);
       }
       
-      // Cast data to the correct types
+      // Set data
       setVisitorData(cleanVisitors as VisitorData[]);
       setFormData(forms as FormSubmissionData[] || []);
       setChatData(chats || []);
@@ -96,6 +98,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
     }
   };
   
+  // Only fetch data once on initial component mount
   useEffect(() => {
     if (!initialFetchCompleted.current) {
       initialFetchCompleted.current = true;

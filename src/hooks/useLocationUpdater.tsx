@@ -1,9 +1,8 @@
 
 import { useState } from 'react';
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { getLocationDataFromIp } from '@/utils/ipGeolocation';
-import { VisitorData } from "@/types/tracking";
+import { supabase } from '@/integrations/supabase/client';
+import { getLocationData } from '@/utils/ipGeolocation';
+import { useToast } from '@/components/ui/use-toast';
 
 export const useLocationUpdater = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -14,25 +13,26 @@ export const useLocationUpdater = () => {
   const { toast } = useToast();
 
   const updateVisitorLocations = async () => {
-    setIsProcessing(true);
-    setProgress(0);
-    setProcessedCount(0);
-    setError(null);
-    
     try {
-      // Get visitors with IP addresses but missing location data
+      setError(null);
+      setIsProcessing(true);
+      setProgress(0);
+      setProcessedCount(0);
+      
+      // Get visitors with missing location data
       const { data: visitors, error: fetchError } = await supabase
         .from('visitor_tracking')
-        .select('*')
-        .is('country_code', null)
-        .not('ip_address', 'is', null);
+        .select('id, ip_address')
+        .or('country_code.is.null,city.is.null')
+        .order('created_at', { ascending: false })
+        .limit(100); // Process in batches of 100 to prevent timeout
       
       if (fetchError) throw fetchError;
       
       if (!visitors || visitors.length === 0) {
         toast({
-          title: "No records to process",
-          description: "All visitor records with IP addresses already have location data.",
+          title: "No data to update",
+          description: "All visitor records already have location data",
           variant: "default"
         });
         setIsProcessing(false);
@@ -40,80 +40,57 @@ export const useLocationUpdater = () => {
       }
       
       setTotalToProcess(visitors.length);
-      toast({
-        title: "Processing started",
-        description: `Found ${visitors.length} records to update with location data.`,
-        variant: "default"
-      });
       
-      // Process in batches to avoid rate limits
-      const batchSize = 5;
-      const totalBatches = Math.ceil(visitors.length / batchSize);
-      
-      for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
-        const batchStart = batchIndex * batchSize;
-        const batchEnd = Math.min((batchIndex + 1) * batchSize, visitors.length);
-        const batch = visitors.slice(batchStart, batchEnd);
+      // Process each visitor
+      let updatedCount = 0;
+      for (const [index, visitor] of visitors.entries()) {
+        if (!visitor.ip_address) {
+          setProcessedCount(index + 1);
+          setProgress(Math.round(((index + 1) / visitors.length) * 100));
+          continue;
+        }
         
-        // Process each visitor in the current batch
-        const updates = await Promise.all(
-          batch.map(async (visitor: VisitorData) => {
-            // Skip if no IP address
-            if (!visitor.ip_address) return null;
-            
-            // Get location data
-            const locationData = await getLocationDataFromIp(visitor.ip_address);
-            
-            // Update record
-            if (locationData.country_code || locationData.city || locationData.state) {
-              const { error: updateError } = await supabase
-                .from('visitor_tracking')
-                .update({
-                  country_code: locationData.country_code,
-                  city: locationData.city,
-                  state: locationData.state
-                })
-                .eq('id', visitor.id);
+        try {
+          const locationData = await getLocationData(visitor.ip_address);
+          
+          if (locationData) {
+            const { error: updateError } = await supabase
+              .from('visitor_tracking')
+              .update({
+                country_code: locationData.country_code,
+                city: locationData.city,
+                state: locationData.region
+              })
+              .eq('id', visitor.id);
               
-              if (updateError) {
-                console.error(`Error updating visitor ${visitor.id}:`, updateError);
-                return null;
-              }
-              
-              return visitor.id;
-            }
-            
-            return null;
-          })
-        );
+            if (!updateError) updatedCount++;
+          }
+        } catch (locationError) {
+          console.error(`Error getting location for IP ${visitor.ip_address}:`, locationError);
+        }
         
-        // Update progress
-        const successfulUpdates = updates.filter(id => id !== null).length;
-        setProcessedCount(prev => prev + successfulUpdates);
-        const newProgress = Math.round(((batchIndex + 1) * batchSize / visitors.length) * 100);
-        setProgress(Math.min(newProgress, 100));
-        
-        // Add a small delay to avoid overwhelming the API
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        setProcessedCount(index + 1);
+        setProgress(Math.round(((index + 1) / visitors.length) * 100));
       }
       
       toast({
-        title: "Processing completed",
-        description: `Updated location data for ${processedCount} visitor records.`,
+        title: "Location data updated",
+        description: `Updated location data for ${updatedCount} visitor records`,
         variant: "default"
       });
     } catch (err: any) {
-      setError(err.message || "An error occurred while processing location data");
+      console.error('Error updating visitor locations:', err);
+      setError(err.message || 'Failed to update location data');
       toast({
         title: "Error updating locations",
-        description: err.message || "An error occurred while processing location data",
+        description: err.message || "There was a problem updating the location data",
         variant: "destructive"
       });
     } finally {
       setIsProcessing(false);
     }
   };
-
+  
   return {
     isProcessing,
     progress,
