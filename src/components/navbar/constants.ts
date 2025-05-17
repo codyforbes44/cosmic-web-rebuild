@@ -1,3 +1,4 @@
+
 import { Menu, Files, Home, BarChartHorizontalBig } from 'lucide-react';
 
 export type NavLink = {

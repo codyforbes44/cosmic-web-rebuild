@@ -9,29 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
   {
-    id: 'strategy',
-    name: 'Strategic Consulting',
-    description: 'Comprehensive technology strategy development and roadmap planning aligned with your business objectives.',
-    image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-    color: '#7C3AED',
-    deliverables: 'Technology roadmap, Gap analysis, ROI projections',
-    duration: '4-8 weeks',
-    process: 'Assessment, Analysis, Strategy Development, Implementation Planning',
-    key_benefit: 'Align technology investments with business goals to maximize ROI and competitive advantage'
-  },
-  {
-    id: 'digital',
-    name: 'Digital Transformation',
-    description: 'End-to-end digital transformation services to modernize legacy systems and create innovative digital experiences.',
-    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
-    color: '#2563EB',
-    deliverables: 'Transformation blueprint, System architecture, Implementation roadmap',
-    duration: '3-12 months',
-    process: 'Discovery, Design, Development, Deployment, Support',
-    key_benefit: 'Increase operational efficiency while reducing costs through strategic technology adoption'
-  },
-  {
-    id: 'custom',
+    id: 'custom-software',
     name: 'Custom Software',
     description: 'Tailored software solutions designed and developed to address your unique business challenges.',
     image: 'https://images.unsplash.com/photo-1573495612937-f02b76716e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -42,18 +20,7 @@ const services = [
     key_benefit: 'Purpose-built software that perfectly addresses your specific business requirements'
   },
   {
-    id: 'web',
-    name: 'Web & Mobile Apps',
-    description: 'Responsive, user-friendly applications for web and mobile platforms with exceptional user experiences.',
-    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    color: '#F59E0B',
-    deliverables: 'Progressive web apps, Native mobile apps, Responsive websites',
-    duration: '1-6 months',
-    process: 'UI/UX Design, Frontend Development, Backend Integration, Testing',
-    key_benefit: 'Reach your customers on any device with intuitive, engaging digital experiences'
-  },
-  {
-    id: 'analytics',
+    id: 'data-analytics',
     name: 'Data Analytics',
     description: 'Transform your data into actionable insights with advanced analytics and visualization solutions.',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -64,15 +31,48 @@ const services = [
     key_benefit: 'Make data-driven decisions with real-time insights into your business operations'
   },
   {
-    id: 'ai',
-    name: 'AI & Machine Learning',
-    description: 'Leverage artificial intelligence and machine learning to optimize operations and gain competitive advantages.',
+    id: 'cloud-solutions',
+    name: 'Cloud Solutions',
+    description: 'End-to-end cloud migration and management services to modernize your IT infrastructure and improve scalability.',
+    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
+    color: '#2563EB',
+    deliverables: 'Cloud architecture, Migration roadmap, Managed services',
+    duration: '2-6 months',
+    process: 'Assessment, Planning, Migration, Optimization, Management',
+    key_benefit: 'Increase operational agility and reduce infrastructure costs with modern cloud solutions'
+  },
+  {
+    id: 'it-consulting',
+    name: 'IT Consulting',
+    description: 'Strategic technology advisory services to align your IT investments with your business objectives.',
+    image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+    color: '#7C3AED',
+    deliverables: 'Technology roadmap, Gap analysis, ROI projections',
+    duration: '4-8 weeks',
+    process: 'Assessment, Analysis, Strategy Development, Implementation Planning',
+    key_benefit: 'Align technology investments with business goals to maximize ROI and competitive advantage'
+  },
+  {
+    id: 'managed-services',
+    name: 'Managed Services',
+    description: 'Comprehensive IT support and management services to ensure your systems run smoothly and securely.',
+    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    color: '#F59E0B',
+    deliverables: 'Monitoring, Maintenance, Support, Security',
+    duration: 'Ongoing',
+    process: 'Onboarding, Implementation, Monitoring, Reporting',
+    key_benefit: 'Focus on your business while experts handle your IT infrastructure and security'
+  },
+  {
+    id: 'cybersecurity',
+    name: 'Cybersecurity',
+    description: 'Protect your business with advanced security solutions to identify and mitigate digital threats.',
     image: 'https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     color: '#8B5CF6',
-    deliverables: 'Predictive models, ML algorithms, AI integrations',
-    duration: '2-6 months',
-    process: 'Data Preparation, Model Development, Validation, Integration',
-    key_benefit: 'Automate processes, predict trends, and unlock new opportunities with AI-powered solutions'
+    deliverables: 'Security assessment, Threat protection, Compliance, Training',
+    duration: '1-3 months initial, ongoing maintenance',
+    process: 'Assessment, Implementation, Monitoring, Response',
+    key_benefit: 'Safeguard your data and systems from evolving cyber threats with proactive security measures'
   }
 ];
 
@@ -82,19 +82,20 @@ const Services = () => {
   const [selectedService, setSelectedService] = useState(services[0]);
   
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const serviceParam = searchParams.get('service');
+    // Parse the hash from URL (remove the # character)
+    const hash = location.hash.replace('#', '');
     
-    if (serviceParam) {
-      const foundService = services.find(service => service.id === serviceParam);
-      if (foundService) {
-        setSelectedService(foundService);
-      }
+    // Find the service that matches the hash
+    const serviceFromHash = services.find(service => service.id === hash);
+    
+    if (serviceFromHash) {
+      // Update selected service if found
+      setSelectedService(serviceFromHash);
     }
-  }, [location.search]);
+  }, [location.hash]);
 
   const handleTabChange = (value: string) => {
-    navigate(`/services?service=${value}`);
+    navigate(`/services#${value}`);
   };
 
   return (
