@@ -1,6 +1,5 @@
-
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -13,17 +12,14 @@ const Footer = () => {
               Providing innovative technology solutions and expert consulting services to help businesses thrive in the digital age.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="footer-link" aria-label="Facebook">
+              <a href="https://www.facebook.com/3bi.io" target="_blank" rel="noopener noreferrer" className="footer-link" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="footer-link" aria-label="Twitter">
+              <a href="https://x.com/3bi_io" target="_blank" rel="noopener noreferrer" className="footer-link" aria-label="Twitter">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="footer-link" aria-label="Instagram">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="footer-link" aria-label="YouTube">
-                <Youtube size={20} />
+              <a href="https://www.linkedin.com/company/3biio" target="_blank" rel="noopener noreferrer" className="footer-link" aria-label="LinkedIn">
+                <Linkedin size={20} />
               </a>
             </div>
           </div>
