@@ -6,6 +6,7 @@ import { customService } from './customService';
 import { webService } from './webService';
 import { analyticsService } from './analyticsService';
 import { aiService } from './aiService';
+import { socialService } from './socialService';
 
 export const services: Service[] = [
   strategyService,
@@ -13,5 +14,6 @@ export const services: Service[] = [
   customService,
   webService,
   analyticsService,
-  aiService
+  aiService,
+  socialService
 ];

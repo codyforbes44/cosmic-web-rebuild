@@ -1,96 +1,147 @@
+import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon } from "lucide-react";
+
 export interface NavLink {
   name: string;
   path: string;
+  icon?: LucideIcon;
   disabled?: boolean;
-}
-
-export interface ProductCategory {
-  title: string;
-  href: string;
-  color: string;
-  description: string;
-  image: string;
 }
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
-  { name: 'News', path: '/news' },
+  { name: 'Services', path: '/services' },
+  { name: 'Products', path: '/products' },
+  { name: 'Case Studies', path: '/case-studies' },
+  { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
-  { name: 'FAQ', path: '/faq' }
 ];
+
+export interface ServiceCategory {
+  title: string;
+  href: string;
+  description: string;
+  color: string;
+}
 
 export const serviceCategories = [
-  { 
-    title: 'Dynamic Advertising', 
-    href: '/services?service=dynamic', 
-    color: '#7C3AED',
-    description: 'Targeted advertising solutions that adapt to your audience'
+  {
+    title: "Strategic Consulting",
+    href: "/services?service=strategy",
+    description: "Technology strategy development and roadmap planning aligned with business objectives",
+    color: "#10B981"
   },
-  { 
-    title: 'Social Media Advertising', 
-    href: '/services?service=social', 
-    color: '#2563EB',
-    description: 'Engage your audience across all major social platforms'
+  {
+    title: "Digital Marketing",
+    href: "/services?service=digital",
+    description: "Strategic digital marketing solutions for trucking companies",
+    color: "#2563EB"
   },
-  { 
-    title: 'Recruitment Marketing', 
-    href: '/services?service=recruitment', 
-    color: '#E11D48',
-    description: 'Attract top talent with specialized recruitment campaigns'
+  {
+    title: "Social Media Marketing",
+    href: "/services?service=social",
+    description: "Strategic social media solutions for trucking and logistics",
+    color: "#E91E63"
   },
-  { 
-    title: 'Business Insights Reporting', 
-    href: '/services?service=insights', 
-    color: '#059669',
-    description: 'Data-driven insights to inform strategic business decisions'
+  {
+    title: "Custom Development",
+    href: "/services?service=custom",
+    description: "Tailor-made software solutions for your unique business needs",
+    color: "#8B5CF6"
   },
-  { 
-    title: 'Web Development', 
-    href: '/services?service=web', 
-    color: '#F59E0B',
-    description: 'Custom websites designed for performance and user experience'
+  {
+    title: "Web & Mobile Apps",
+    href: "/services?service=web",
+    description: "Modern web and mobile application development",
+    color: "#F59E0B"
   },
-  { 
-    title: 'Custom Software', 
-    href: '/services?service=custom', 
-    color: '#8B5CF6',
-    description: 'Tailor-made software solutions for your unique business needs'
+  {
+    title: "Data Analytics",
+    href: "/services?service=analytics",
+    description: "Advanced analytics and visualization solutions",
+    color: "#EC4899"
   },
-  { 
-    title: 'Workflow Automation', 
-    href: '/services?service=workflow', 
-    color: '#14B8A6',
-    description: 'Streamline your business processes with intelligent automation'
-  },
-  { 
-    title: 'AI Integrations', 
-    href: '/services?service=ai', 
-    color: '#6366F1',
-    description: 'Leverage AI to enhance your products and services'
+  {
+    title: "AI & Machine Learning",
+    href: "/services?service=ai",
+    description: "Intelligent automation and prediction solutions",
+    color: "#06B6D4"
   }
 ];
 
-export const productCategories: ProductCategory[] = [
+export interface Product {
+  title: string;
+  href: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+export const products: Product[] = [
   {
-    title: '3BI Connect',
-    href: '/products/3bi-connect',
-    color: '#2563EB',
-    description: 'The complete platform for trucking companies to manage drivers, improve retention, and streamline operations.',
-    image: '/lovable-uploads/7f21da0a-fd77-43ea-a7af-3b11648397c0.png'
+    title: "AI Trucking Assistant",
+    href: "/products/ai-trucking-assistant",
+    description: "AI-powered virtual assistant for trucking operations",
+    icon: Rocket,
   },
   {
-    title: 'Carrier Partner Network',
-    href: '/products/carrier-partner-network',
-    color: '#059669',
-    description: 'A comprehensive platform connecting trucking companies and drivers, streamlining the employment transition process.',
-    image: '/lovable-uploads/1e9d8177-66c6-4b9f-b830-04c0e28d026e.png'
+    title: "Custom TMS",
+    href: "/products/custom-tms",
+    description: "Customizable Transportation Management System",
+    icon: Code,
   },
   {
-    title: 'TruckOnboard',
-    href: '/products/truck-onboard',
-    color: '#0EA5E9',
-    description: 'Streamline your truck driver orientation process with digital documents, interactive training modules, and automated workflows.',
-    image: '/lovable-uploads/091052a6-ec42-4606-a053-375fcee0c98f.png'
-  }
+    title: "Driver Management",
+    href: "/products/driver-management",
+    description: "Streamline driver management processes",
+    icon: CircleUserRound,
+  },
+  {
+    title: "Analytics Dashboard",
+    href: "/products/analytics-dashboard",
+    description: "Real-time analytics dashboard for informed decisions",
+    icon: LayoutDashboard,
+  },
 ];
+
+export interface DashboardConfig {
+  sidebarNav: {
+    title: string;
+    href: string;
+    icon?: LucideIcon;
+  }[];
+}
+
+export const dashboardConfig: DashboardConfig = {
+  sidebarNav: [
+    {
+      title: "Profile",
+      href: "/dashboard/profile",
+      icon: CircleUserRound,
+    },
+    {
+      title: "Billing",
+      href: "/dashboard/billing",
+      icon: Mail,
+    },
+    {
+      title: "Invoices",
+      href: "/dashboard/invoices",
+      icon: FileText,
+    },
+    {
+      title: "Schedule",
+      href: "/dashboard/schedule",
+      icon: Calendar,
+    },
+    {
+      title: "Education",
+      href: "/dashboard/education",
+      icon: GraduationCap,
+    },
+    {
+      title: "Careers",
+      href: "/dashboard/careers",
+      icon: Briefcase,
+    },
+  ],
+}
