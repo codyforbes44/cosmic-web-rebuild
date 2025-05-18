@@ -18,7 +18,6 @@ import GetQuote from "./pages/GetQuote";
 import Partners from "./pages/Partners";
 import CaseStudy from "./pages/CaseStudy";
 import FAQ from "./pages/FAQ";
-import Packages from "./pages/Packages";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Accessibility from "./pages/Accessibility";
@@ -54,7 +53,6 @@ const App: React.FC = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/get-quote" element={<GetQuote />} />
                 <Route path="/partners" element={<Partners />} />
-                <Route path="/packages" element={<Packages />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsOfService />} />

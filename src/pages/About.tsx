@@ -91,47 +91,6 @@ const About = () => {
             </div>
           </div>
 
-          <div className="space-card p-8 rounded-xl mb-12">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-6 text-center text-white">Our Leadership Team</h2>
-              <p className="text-gray-300 text-center mb-12">
-                ƷBI is led by a team of technology visionaries and business experts with extensive experience in delivering transformative digital solutions.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-space-deep-blue/50 p-6 rounded-xl flex flex-col items-center">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
-                    <img 
-                      src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=922&q=80" 
-                      alt="Alexander Mitchell"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Alexander Mitchell</h3>
-                  <p className="text-accent mb-2">CEO & Founder</p>
-                  <p className="text-gray-400 text-center">
-                    With over 20 years in technology leadership, Alex brings strategic vision and industry expertise to guide ƷBI's growth.
-                  </p>
-                </div>
-                
-                <div className="bg-space-deep-blue/50 p-6 rounded-xl flex flex-col items-center">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
-                    <img 
-                      src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=934&q=80" 
-                      alt="Sarah Johnson"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Sarah Johnson</h3>
-                  <p className="text-accent mb-2">CTO</p>
-                  <p className="text-gray-400 text-center">
-                    Sarah leads our technical operations, bringing innovation and excellence to every solution we deliver.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="space-card p-8 rounded-xl text-center">
             <h2 className="text-3xl font-bold mb-6 text-white">Ready to Transform Your Business?</h2>
             <p className="text-gray-300 max-w-2xl mx-auto mb-8">

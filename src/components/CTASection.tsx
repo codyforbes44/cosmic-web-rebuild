@@ -53,12 +53,6 @@ const CTASection: React.FC = () => {
                   <p className="text-gray-200 text-sm md:text-base">{item}</p>
                 </div>
               ))}
-              
-              <div className="pt-3 md:pt-4">
-                <Link to="/packages" className="text-brand-gold hover:text-brand-gold/80 underline underline-offset-4 text-sm md:text-base">
-                  Or browse our service packages →
-                </Link>
-              </div>
             </div>
           </div>
         </motion.div>
