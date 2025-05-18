@@ -1,9 +1,9 @@
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 const projects = [
   {
@@ -161,7 +161,7 @@ const Portfolio = () => {
             ))}
           </div>
 
-          {/* Project details modal - showing project details but removing case study navigation */}
+          {/* Project details modal */}
           {selectedProject && (
             <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
               <div className="bg-space-deep-blue max-w-4xl w-full rounded-xl overflow-hidden">
@@ -200,11 +200,7 @@ const Portfolio = () => {
                     </div>
                   </div>
                   
-                  <div className="flex flex-wrap gap-4">
-                    <Button variant="outline" onClick={handleCloseDetails}>
-                      Close
-                    </Button>
-                  </div>
+                  <Button className="bg-accent hover:bg-accent/80 text-white">Request Similar Project</Button>
                 </div>
               </div>
             </div>

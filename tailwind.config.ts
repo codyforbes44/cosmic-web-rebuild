@@ -73,7 +73,7 @@ export default {
 				},
 				brand: {
 					'blue': '#1EAEDB',
-					'gold': '#9b87f5',   // Changed from gold to a professional purple color
+					'gold': '#F2C94C',
 					'black': '#000000',
 					'white': '#FFFFFF'
 				}

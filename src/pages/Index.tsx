@@ -7,26 +7,21 @@ import AstronomyFacts from "@/components/AstronomyFacts";
 import BusinessCaseStudy from "@/components/BusinessCaseStudy";
 import Newsletter from "@/components/Newsletter";
 import SEO from "@/components/SEO";
-import Testimonials from "@/components/Testimonials";
-import CTASection from "@/components/CTASection";
 
 const Index = () => {
   return (
     <>
       <SEO 
         title="Professional Technology Solutions" 
-        description="Transform your business with ƷBI's innovative technology solutions. Expert consulting, custom software development, and data analytics to drive growth and efficiency."
-        keywords="business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation, custom software development"
-        image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
+        description="ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth."
+        keywords="business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation"
       />
       <Navbar />
       <main className="overflow-x-hidden">
         <StarBackground />
         <HeroSection />
-        <Testimonials />
         <AstronomyFacts />
         <BusinessCaseStudy />
-        <CTASection />
         <Newsletter />
       </main>
       <Footer />
