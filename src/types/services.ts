@@ -1,5 +1,5 @@
 
-import { ReactNode } from 'react';
+import { LucideIcon } from 'lucide-react';
 
 export interface ServiceTestimonial {
   name: string;
@@ -11,7 +11,7 @@ export interface ServiceTestimonial {
 export interface ServiceResult {
   label: string;
   value: string;
-  icon?: ReactNode;
+  icon?: LucideIcon;
 }
 
 export interface ServiceCaseStudyData {
