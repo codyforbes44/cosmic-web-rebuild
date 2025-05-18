@@ -6,39 +6,26 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 const ServicesList = () => {
   const services = [
     {
-      category: "Business Strategy",
+      category: "Advertising",
       items: [
-        "Digital Transformation",
-        "Process Optimization",
-        "Market Analysis & Research",
-        "Growth Strategy"
+        "Dynamic Advertising",
+        "Social Media Advertising",
+        "Recruitment Marketing"
       ]
     },
     {
-      category: "Technology Solutions",
+      category: "Development",
       items: [
-        "Custom Software Development",
-        "Enterprise Applications",
-        "Cloud Migration & Management",
-        "Data Analytics & Insights"
+        "Web Development",
+        "Custom Software",
+        "Workflow Automation"
       ]
     },
     {
-      category: "AI & Innovation",
+      category: "Business & AI",
       items: [
-        "AI Integration",
-        "Process Automation",
-        "Machine Learning Solutions",
-        "Innovation Consulting"
-      ]
-    },
-    {
-      category: "Support Services",
-      items: [
-        "Managed IT Services",
-        "24/7 Technical Support",
-        "Training & Implementation",
-        "Security & Compliance"
+        "Business Insights Reporting",
+        "AI Integrations"
       ]
     }
   ];

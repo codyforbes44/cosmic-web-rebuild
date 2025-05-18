@@ -15,39 +15,51 @@ export const navLinks: NavLink[] = [
 
 export const serviceCategories = [
   { 
-    title: 'Strategic Consulting', 
-    href: '/services?service=strategy', 
+    title: 'Dynamic Advertising', 
+    href: '/services?service=dynamic', 
     color: '#7C3AED',
-    description: 'Expert guidance to align your technology with business goals'
+    description: 'Targeted advertising solutions that adapt to your audience'
   },
   { 
-    title: 'Digital Transformation', 
-    href: '/services?service=digital', 
+    title: 'Social Media Advertising', 
+    href: '/services?service=social', 
     color: '#2563EB',
-    description: 'Modernize operations and drive innovation with digital solutions'
+    description: 'Engage your audience across all major social platforms'
+  },
+  { 
+    title: 'Recruitment Marketing', 
+    href: '/services?service=recruitment', 
+    color: '#E11D48',
+    description: 'Attract top talent with specialized recruitment campaigns'
+  },
+  { 
+    title: 'Business Insights Reporting', 
+    href: '/services?service=insights', 
+    color: '#059669',
+    description: 'Data-driven insights to inform strategic business decisions'
+  },
+  { 
+    title: 'Web Development', 
+    href: '/services?service=web', 
+    color: '#F59E0B',
+    description: 'Custom websites designed for performance and user experience'
   },
   { 
     title: 'Custom Software', 
     href: '/services?service=custom', 
-    color: '#E11D48',
-    description: 'Tailor-made software solutions designed for your unique needs'
-  },
-  { 
-    title: 'Web & Mobile Apps', 
-    href: '/services?service=web', 
-    color: '#F59E0B',
-    description: 'Responsive applications that deliver exceptional user experiences'
-  },
-  { 
-    title: 'Data Analytics', 
-    href: '/services?service=analytics', 
-    color: '#059669',
-    description: 'Transform data into actionable business intelligence'
-  },
-  { 
-    title: 'AI & Machine Learning', 
-    href: '/services?service=ai', 
     color: '#8B5CF6',
-    description: 'Advanced AI solutions to automate processes and gain insights'
+    description: 'Tailor-made software solutions for your unique business needs'
   },
+  { 
+    title: 'Workflow Automation', 
+    href: '/services?service=workflow', 
+    color: '#14B8A6',
+    description: 'Streamline your business processes with intelligent automation'
+  },
+  { 
+    title: 'AI Integrations', 
+    href: '/services?service=ai', 
+    color: '#6366F1',
+    description: 'Leverage AI to enhance your products and services'
+  }
 ];

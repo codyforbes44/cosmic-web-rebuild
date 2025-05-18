@@ -10,52 +10,64 @@ interface Service {
 }
 
 const services: Record<string, Service[]> = {
-  consulting: [
+  advertising: [
     {
-      category: 'consulting',
-      title: 'Strategic Technology Consulting',
-      content: 'Our expert consultants work with your team to develop comprehensive technology strategies aligned with your business objectives, ensuring optimal ROI and competitive advantage.',
+      category: 'advertising',
+      title: 'Dynamic Advertising',
+      content: 'Our dynamic advertising solutions adapt in real-time to your target audience, delivering personalized content that drives engagement and conversions.',
       image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
     },
     {
-      category: 'consulting',
-      title: 'Digital Transformation',
-      content: 'We guide businesses through their digital transformation journey, helping modernize legacy systems, implement new technologies, and create seamless digital experiences for customers.',
+      category: 'advertising',
+      title: 'Social Media Advertising',
+      content: 'Leverage the power of social platforms with our targeted social media advertising strategies that connect your brand with the right audience at the right time.',
       image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
+    },
+    {
+      category: 'advertising',
+      title: 'Recruitment Marketing',
+      content: 'Attract the best talent with our specialized recruitment marketing strategies designed to showcase your company culture and opportunities.',
+      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80',
     },
   ],
   development: [
     {
       category: 'development',
-      title: 'Custom Software Development',
-      content: 'Our team designs and builds tailored software solutions that address your specific business challenges, from enterprise applications to specialized industry tools.',
+      title: 'Web Development',
+      content: 'Our expert team creates responsive, high-performance websites that deliver exceptional user experiences and drive business results.',
       image: 'https://images.unsplash.com/photo-1573495612937-f02b76716e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
     {
       category: 'development',
-      title: 'Web & Mobile Applications',
-      content: 'We create responsive, user-friendly web and mobile applications that deliver exceptional user experiences across all devices, helping your business reach customers wherever they are.',
+      title: 'Custom Software',
+      content: 'We design and develop tailored software solutions that address your specific business challenges and streamline your operations.',
       image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
-  ],
-  analytics: [
     {
-      category: 'analytics',
-      title: 'Business Intelligence & Analytics',
-      content: 'Transform your data into actionable insights with our advanced analytics solutions, helping you make data-driven decisions that improve operations and drive business growth.',
+      category: 'development',
+      title: 'Workflow Automation',
+      content: 'Streamline your business processes with our intelligent automation solutions that reduce manual tasks and increase efficiency.',
+      image: 'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    },
+  ],
+  innovation: [
+    {
+      category: 'innovation',
+      title: 'Business Insights Reporting',
+      content: 'Transform your data into actionable insights with our comprehensive business intelligence and reporting solutions.',
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
     {
-      category: 'analytics',
-      title: 'Predictive Analytics & AI',
-      content: 'Leverage the power of artificial intelligence and machine learning to forecast trends, optimize processes, and gain competitive advantages in your market.',
+      category: 'innovation',
+      title: 'AI Integrations',
+      content: 'Leverage the power of artificial intelligence to enhance your products and services, optimize processes, and gain competitive advantages.',
       image: 'https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     },
   ],
 };
 
 const AstronomyFacts = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('consulting');
+  const [activeCategory, setActiveCategory] = useState<string>('advertising');
 
   return (
     <section className="py-24 bg-gradient-to-b from-space-dark-blue to-space-deep-blue">
@@ -67,17 +79,17 @@ const AstronomyFacts = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="consulting" value={activeCategory} onValueChange={setActiveCategory} className="w-full">
+        <Tabs defaultValue="advertising" value={activeCategory} onValueChange={setActiveCategory} className="w-full">
           <div className="flex justify-center mb-8">
             <TabsList className="bg-gray-800 p-1">
-              <TabsTrigger value="consulting" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Consulting
+              <TabsTrigger value="advertising" className="data-[state=active]:bg-accent data-[state=active]:text-white">
+                Advertising
               </TabsTrigger>
               <TabsTrigger value="development" className="data-[state=active]:bg-accent data-[state=active]:text-white">
                 Development
               </TabsTrigger>
-              <TabsTrigger value="analytics" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Analytics
+              <TabsTrigger value="innovation" className="data-[state=active]:bg-accent data-[state=active]:text-white">
+                Innovation
               </TabsTrigger>
             </TabsList>
           </div>
