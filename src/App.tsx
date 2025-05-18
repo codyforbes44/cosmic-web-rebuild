@@ -14,6 +14,14 @@ import Portfolio from "./pages/Portfolio";
 import News from "./pages/News";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import GetQuote from "./pages/GetQuote";
+import Partners from "./pages/Partners";
+import CaseStudy from "./pages/CaseStudy";
+import FAQ from "./pages/FAQ";
+import Packages from "./pages/Packages";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import Accessibility from "./pages/Accessibility";
 import NotFound from "./pages/NotFound";
 
 // Create a query client with better defaults
@@ -40,9 +48,17 @@ const App: React.FC = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/case-study/:id" element={<CaseStudy />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/get-quote" element={<GetQuote />} />
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/packages" element={<Packages />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/accessibility" element={<Accessibility />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

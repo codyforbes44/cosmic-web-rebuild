@@ -2,7 +2,9 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const services = [
   {
@@ -74,53 +76,79 @@ const services = [
 ];
 
 const Services = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState(services[0]);
+  
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const serviceParam = searchParams.get('service');
+    
+    if (serviceParam) {
+      const foundService = services.find(service => service.id === serviceParam);
+      if (foundService) {
+        setSelectedService(foundService);
+      }
+    }
+  }, [location.search]);
+
+  const handleTabChange = (value: string) => {
+    navigate(`/services?service=${value}`);
+  };
 
   return (
     <>
       <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mt-12 mb-16">
+      <main className="min-h-screen pt-24 pb-24">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Our Services
             </h1>
             <p className="text-gray-300 max-w-2xl mx-auto text-lg">
               Comprehensive technology solutions designed to transform your business and drive innovation
             </p>
-          </div>
 
-          {/* Service Selection */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {services.map((service) => (
-              <button
-                key={service.id}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  selectedService.id === service.id
-                    ? 'bg-accent text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-                onClick={() => setSelectedService(service)}
+            {/* Tabs Navigation */}
+            <div className="mt-10 mb-12">
+              <Tabs 
+                value={selectedService.id} 
+                onValueChange={handleTabChange}
+                className="justify-center"
               >
-                {service.name}
-              </button>
-            ))}
+                <TabsList className="bg-gray-800/60 inline-flex flex-wrap gap-2 h-auto p-2 rounded-xl">
+                  {services.map((service) => (
+                    <TabsTrigger 
+                      key={service.id} 
+                      value={service.id}
+                      className="data-[state=active]:text-white text-sm px-4 py-2 rounded-md transition-colors duration-200"
+                      style={{ 
+                        borderBottom: selectedService.id === service.id ? `2px solid ${service.color}` : 'none',
+                        color: selectedService.id === service.id ? service.color : 'inherit'
+                      }}
+                    >
+                      {service.name}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+            </div>
           </div>
 
           {/* Selected Service Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-card p-6 overflow-hidden rounded-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="space-card p-4 md:p-6 overflow-hidden rounded-xl shadow-lg">
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img 
                   src={selectedService.image} 
                   alt={selectedService.name} 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
               </div>
             </div>
 
-            <div className="space-card p-8 rounded-xl">
+            <div className="space-card p-6 md:p-8 rounded-xl shadow-lg">
               <h2 
                 className="text-3xl md:text-4xl font-bold mb-4" 
                 style={{ color: selectedService.color }}
@@ -140,14 +168,22 @@ const Services = () => {
                   <h3 className="text-sm text-gray-400 mb-1">Typical Duration</h3>
                   <p className="text-white font-medium">{selectedService.duration}</p>
                 </div>
-                <div className="bg-gray-800/60 p-4 rounded-lg">
+                <div className="bg-gray-800/60 p-4 rounded-lg col-span-1 md:col-span-2">
                   <h3 className="text-sm text-gray-400 mb-1">Process</h3>
                   <p className="text-white font-medium">{selectedService.process}</p>
                 </div>
               </div>
 
-              <div className="bg-accent/20 p-5 rounded-lg">
-                <h3 className="text-lg font-medium text-accent mb-2">Key Benefit</h3>
+              <div 
+                className="bg-opacity-20 backdrop-blur-sm p-5 rounded-lg" 
+                style={{ backgroundColor: `${selectedService.color}20` }}
+              >
+                <h3 
+                  className="text-lg font-medium mb-2"
+                  style={{ color: selectedService.color }}
+                >
+                  Key Benefit
+                </h3>
                 <p className="text-gray-300">
                   {selectedService.key_benefit}
                 </p>

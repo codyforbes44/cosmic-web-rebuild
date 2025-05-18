@@ -1,8 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 interface CaseStudy {
+  id: string;
   title: string;
   client: string;
   description: string;
@@ -19,6 +22,7 @@ const BusinessCaseStudy = () => {
     // Simulate API fetch delay
     const timer = setTimeout(() => {
       setCaseStudy({
+        id: "1",
         title: "Enterprise Digital Transformation",
         client: "Global Manufacturing Inc.",
         description: "ƷBI partnered with Global Manufacturing Inc. to modernize their operations through an end-to-end digital transformation initiative. We implemented cloud-based ERP systems, developed custom workflow automation tools, and created a comprehensive data analytics platform, resulting in a 35% increase in operational efficiency and 28% reduction in costs.",
@@ -28,56 +32,63 @@ const BusinessCaseStudy = () => {
       });
       setLoading(false);
     }, 1000);
-
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <section className="py-24 bg-space-deep-blue">
+    <section className="py-16 md:py-24 bg-space-deep-blue/30 relative">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="section-heading">Featured Case Study</h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-            Discover how we've helped our clients achieve exceptional results through innovative technology solutions
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-card overflow-hidden rounded-xl order-1 lg:order-2">
-            {loading ? (
-              <div className="flex items-center justify-center h-96">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
-              </div>
-            ) : (
-              <img 
-                src={caseStudy?.image} 
-                alt={caseStudy?.title} 
-                className="w-full h-96 object-cover"
-              />
-            )}
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
           </div>
-
-          <div className="space-card p-6 overflow-hidden rounded-xl order-2 lg:order-1">
-            {loading ? (
-              <div className="flex items-center justify-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
-              </div>
-            ) : (
-              <>
-                <span className="text-accent font-medium text-sm">{caseStudy?.industry} Industry</span>
-                <h3 className="text-2xl font-bold my-3 text-white">{caseStudy?.title}</h3>
-                <p className="text-gray-300 mb-6">{caseStudy?.description}</p>
-                
-                <div className="bg-gray-800/40 p-4 rounded-lg mb-6">
-                  <h4 className="text-sm uppercase text-gray-400 mb-2">Results</h4>
-                  <p className="text-white">{caseStudy?.results}</p>
+        ) : caseStudy ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <span className="inline-block text-accent mb-4 text-sm uppercase tracking-wider bg-accent/10 px-3 py-1 rounded-full">Case Study</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{caseStudy.title}</h2>
+              <p className="text-gray-300 mb-6">{caseStudy.description}</p>
+              
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                <div>
+                  <h4 className="text-sm text-gray-400 mb-1">Client</h4>
+                  <p className="font-medium">{caseStudy.client}</p>
                 </div>
-                
-                <Button className="bg-accent hover:bg-accent/80 text-white">Read Full Case Study</Button>
-              </>
-            )}
+                <div>
+                  <h4 className="text-sm text-gray-400 mb-1">Industry</h4>
+                  <p className="font-medium">{caseStudy.industry}</p>
+                </div>
+              </div>
+              
+              <div className="mb-8">
+                <h4 className="text-sm text-gray-400 mb-2">Results</h4>
+                <p className="font-medium text-accent">{caseStudy.results}</p>
+              </div>
+              
+              <Link to={`/case-study/${caseStudy.id}`}>
+                <Button className="group" variant="outline">
+                  View Full Case Study
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            </div>
+            
+            <div className="order-1 lg:order-2">
+              <div className="relative">
+                <div className="absolute -inset-0.5 bg-accent/30 rounded-lg blur-xl opacity-60"></div>
+                <img 
+                  src={caseStudy.image} 
+                  alt={caseStudy.title}
+                  className="rounded-lg shadow-2xl relative w-full object-cover aspect-[4/3]"
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="text-center">
+            <p>No case study available at the moment.</p>
+          </div>
+        )}
       </div>
     </section>
   );

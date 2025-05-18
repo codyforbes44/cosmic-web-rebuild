@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
 
 const projects = [
   {
@@ -80,6 +81,7 @@ const categories = [
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
+  const navigate = useNavigate();
 
   const filteredProjects = activeCategory === "all" 
     ? projects 
@@ -91,6 +93,10 @@ const Portfolio = () => {
 
   const handleCloseDetails = () => {
     setSelectedProject(null);
+  };
+  
+  const handleViewFullCaseStudy = (projectId) => {
+    navigate(`/case-study/${projectId}`);
   };
 
   return (
@@ -200,7 +206,20 @@ const Portfolio = () => {
                     </div>
                   </div>
                   
-                  <Button className="bg-accent hover:bg-accent/80 text-white">Request Similar Project</Button>
+                  <div className="flex flex-wrap gap-4">
+                    <Button 
+                      className="bg-accent hover:bg-accent/80 text-white"
+                      onClick={() => {
+                        handleCloseDetails();
+                        handleViewFullCaseStudy(selectedProject.id);
+                      }}
+                    >
+                      Read Full Case Study
+                    </Button>
+                    <Button variant="outline" onClick={handleCloseDetails}>
+                      Close
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

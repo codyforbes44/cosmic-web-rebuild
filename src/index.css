@@ -26,7 +26,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 47 89% 62%;
+    --accent: 258 80% 75%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -63,6 +63,10 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-space-grotesk;
   }
+  
+  a {
+    @apply text-brand-gold hover:text-brand-gold/80 transition-colors duration-300;
+  }
 }
 
 @layer components {
@@ -94,5 +98,9 @@
   .section-heading::after {
     content: "";
     @apply block w-full h-1 bg-brand-gold mt-2;
+  }
+  
+  .footer-link {
+    @apply text-gray-400 hover:text-brand-gold transition-colors duration-300;
   }
 }

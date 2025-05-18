@@ -2,8 +2,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import DesktopNavigation from './navbar/DesktopNavigation';
+import MobileNavigation from './navbar/MobileNavigation';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,18 +51,16 @@ const Navbar = () => {
     };
   }, [isMobileNavOpen]);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'News', path: '/news' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
-  ];
-
   const isActive = (path: string) => {
+    if (path === '/services') {
+      return location.pathname === path ? 'active' : '';
+    }
     return location.pathname === path ? 'active' : '';
   };
+
+  const isServicesActive = location.pathname === '/services';
+
+  const closeMobileMenu = () => setIsMobileNavOpen(false);
 
   return (
     <header 
@@ -77,7 +76,7 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
           >
             <img 
-              src="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png" 
+              src="/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" 
               alt="ƷBI Logo" 
               className="h-9 w-auto"
             />
@@ -85,40 +84,10 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link, index) => (
-            <motion.div
-              key={link.name}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <Link 
-                to={link.path} 
-                className={`nav-link ${isActive(link.path)}`}
-                aria-current={isActive(link.path) ? 'page' : undefined}
-              >
-                {link.name}
-                {isActive(link.path) && (
-                  <motion.div 
-                    className="h-0.5 bg-accent mt-1" 
-                    layoutId="navbar-indicator"
-                  />
-                )}
-              </Link>
-            </motion.div>
-          ))}
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.6 }}
-          >
-            <Link to="/contact">
-              <Button className="bg-accent hover:bg-accent/80 text-white">Get a Quote</Button>
-            </Link>
-          </motion.div>
-        </nav>
+        <DesktopNavigation 
+          isActive={isActive} 
+          isServicesActive={isServicesActive} 
+        />
 
         {/* Mobile Navigation Toggle */}
         <button 
@@ -133,47 +102,11 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isMobileNavOpen && (
-          <motion.div 
-            id="mobile-menu"
-            className="md:hidden bg-space-deep-blue/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full pt-20 z-10"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <nav className="container mx-auto px-4 flex flex-col space-y-6">
-              {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                >
-                  <Link 
-                    to={link.path} 
-                    className={`nav-link text-xl ${isActive(link.path)}`}
-                    onClick={() => setIsMobileNavOpen(false)}
-                    aria-current={isActive(link.path) ? 'page' : undefined}
-                  >
-                    {link.name}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.6 }}
-              >
-                <Link to="/contact" onClick={() => setIsMobileNavOpen(false)}>
-                  <Button className="btn-primary mt-4 w-full">Get a Quote</Button>
-                </Link>
-              </motion.div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <MobileNavigation 
+        isOpen={isMobileNavOpen} 
+        isActive={isActive} 
+        onClose={closeMobileMenu}
+      />
     </header>
   );
 };
