@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from "@/components/ui/button";
-import { toast } from 'sonner';
+import { toast } from '@/components/ui/sonner';
 import {
   Form,
   FormControl,
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
+import { supabase } from '@/integrations/supabase/client';
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -59,16 +60,31 @@ const QuoteForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Save to Supabase
+      const { error } = await supabase
+        .from('quote_requests')
+        .insert([data]);
+      
+      if (error) {
+        console.error('Error submitting quote request:', error);
+        toast.error("There was a problem submitting your request. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+      
       toast.success("Thank you for your request! We'll get back to you with a quote within 1-2 business days.");
       console.log("Form submitted:", data);
       form.reset();
+    } catch (err) {
+      console.error('Exception when submitting quote request:', err);
+      toast.error("An unexpected error occurred. Please try again later.");
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -22,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { supabase } from '@/integrations/supabase/client';
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -45,15 +45,30 @@ const ContactForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Save to Supabase
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([data]);
+      
+      if (error) {
+        console.error('Error submitting contact form:', error);
+        toast.error("There was a problem sending your message. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+      
       toast.success("Thank you for your message! We'll get back to you soon.");
       form.reset();
+    } catch (err) {
+      console.error('Exception when submitting contact form:', err);
+      toast.error("An unexpected error occurred. Please try again later.");
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
