@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
@@ -11,6 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import VisitorTable from "@/components/analytics/VisitorTable";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
 
@@ -260,6 +260,7 @@ const Analytics: React.FC = () => {
                   <TabsTrigger value="visitors">Visitors</TabsTrigger>
                   <TabsTrigger value="geography">Geography</TabsTrigger>
                   <TabsTrigger value="sources">Sources</TabsTrigger>
+                  <TabsTrigger value="data">Raw Data</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview">
@@ -476,6 +477,19 @@ const Analytics: React.FC = () => {
                           <Bar dataKey="value" name="Visitors" fill="#8884d8" />
                         </BarChart>
                       </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                {/* New tab for raw data table */}
+                <TabsContent value="data">
+                  <Card className="bg-card/20 backdrop-blur-sm border-white/10">
+                    <CardHeader>
+                      <CardTitle>Complete Visitor Data</CardTitle>
+                      <CardDescription>Comprehensive table of all visitor metadata</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <VisitorTable visitorData={visitorData} isLoading={loading} />
                     </CardContent>
                   </Card>
                 </TabsContent>
