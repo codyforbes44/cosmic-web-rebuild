@@ -19,7 +19,7 @@ const LiveChat = () => {
   } = useChatState();
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50 dark">
       {/* Chat Window */}
       {isOpen && (
         <ChatWindow
