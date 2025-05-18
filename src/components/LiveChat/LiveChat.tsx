@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Avatar } from "@/components/ui/avatar"
-import { AvatarImage } from "@radix-ui/react-avatar"
-import { Send } from 'lucide-react';
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Avatar } from "@/components/ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
+import { Send, MessageSquare, X, Mic } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { findRelevantResponse } from "./chatbotKnowledge";
+import { useToast } from "@/hooks/use-toast";
+import './LiveChat.css';
 
 interface ChatMessage {
   id: string;
@@ -26,14 +28,42 @@ const LiveChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [message, setMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [unreadMessages, setUnreadMessages] = useState(0);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     // Scroll to bottom when messages change
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [messages]);
+    
+    // Update unread count if chat is not open
+    if (!isOpen && messages.length > 0 && messages[messages.length - 1].sender === 'bot') {
+      setUnreadMessages(prev => prev + 1);
+    }
+  }, [messages, isOpen]);
+
+  useEffect(() => {
+    // Show welcome message when chat is first opened
+    if (isOpen && messages.length === 0) {
+      setTimeout(() => {
+        const welcomeMessage: ChatMessage = {
+          id: Date.now().toString(),
+          text: "👋 Welcome to ƷBI! How can I help you today?",
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages([welcomeMessage]);
+      }, 500);
+    }
+    
+    // Reset unread count when opening the chat
+    if (isOpen) {
+      setUnreadMessages(0);
+    }
+  }, [isOpen]);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -53,8 +83,13 @@ const LiveChat = () => {
     setMessages(prev => [...prev, newUserMessage]);
     setMessage('');
     
-    // Generate AI response
+    // Show typing indicator
+    setIsTyping(true);
+    
+    // Generate AI response with a realistic delay
     setTimeout(() => {
+      setIsTyping(false);
+      
       // First try to find a relevant response from our knowledge base
       const knowledgeResponse = findRelevantResponse(message);
       
@@ -80,32 +115,94 @@ const LiveChat = () => {
         };
         setMessages(prev => [...prev, newBotMessage]);
       }
-    }, 1000);
+    }, Math.random() * 1000 + 1000); // Random delay between 1-2 seconds for realism
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {/* Chat Window */}
       {isOpen && (
-        <div className="w-80 h-[450px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col">
+        <div className="w-[350px] h-[500px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col chat-window dark:bg-slate-900 dark:border dark:border-slate-700">
           {/* Chat Header */}
-          <div className="bg-space-cadet p-4 text-white font-bold">
-            Live Chat
+          <div className="bg-space-cadet p-4 flex justify-between items-center dark:bg-slate-800">
+            <div className="flex items-center">
+              <Avatar className="w-8 h-8 mr-3">
+                <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
+              </Avatar>
+              <div>
+                <h3 className="text-white font-bold">ƷBI Assistant</h3>
+                <p className="text-xs text-slate-300">AI powered support</p>
+              </div>
+            </div>
+            <button 
+              onClick={toggleChat} 
+              className="text-white hover:bg-slate-700 p-1 rounded-full transition-colors"
+              aria-label="Close chat"
+            >
+              <X size={18} />
+            </button>
           </div>
 
           {/* Chat Messages */}
-          <div ref={chatContainerRef} className="flex-1 p-4 overflow-y-auto space-y-2">
+          <div 
+            ref={chatContainerRef} 
+            className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50 dark:bg-slate-900"
+          >
             {messages.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`rounded-lg p-2 max-w-[70%] ${msg.sender === 'user' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}`}>
+              <div 
+                key={msg.id} 
+                className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} message`}
+              >
+                {msg.sender === 'bot' && (
+                  <Avatar className="w-8 h-8 mr-2 flex-shrink-0 self-end">
+                    <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
+                  </Avatar>
+                )}
+                <div 
+                  className={`rounded-lg p-3 max-w-[80%] message-bubble ${
+                    msg.sender === 'user' 
+                      ? 'bg-blue-600 text-white user-message'
+                      : 'bg-white border border-slate-200 agent-message dark:bg-slate-800 dark:text-white dark:border-slate-700'
+                  }`}
+                >
                   {msg.text}
+                  <div 
+                    className={`text-xs mt-1 ${
+                      msg.sender === 'user' 
+                        ? 'text-blue-100' 
+                        : 'text-slate-400'
+                    }`}
+                  >
+                    {new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                  </div>
                 </div>
+                {msg.sender === 'user' && (
+                  <Avatar className="w-8 h-8 ml-2 flex-shrink-0 self-end">
+                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="User" />
+                  </Avatar>
+                )}
               </div>
             ))}
+            
+            {/* Typing indicator */}
+            {isTyping && (
+              <div className="flex justify-start message">
+                <Avatar className="w-8 h-8 mr-2 flex-shrink-0">
+                  <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
+                </Avatar>
+                <div className="bg-white rounded-lg p-3 border border-slate-200 typing-indicator dark:bg-slate-800 dark:text-white dark:border-slate-700">
+                  <div className="flex space-x-1">
+                    <div className="w-2 h-2 rounded-full bg-slate-300 dot dark:bg-slate-600"></div>
+                    <div className="w-2 h-2 rounded-full bg-slate-300 dot animation-delay-150 dark:bg-slate-600"></div>
+                    <div className="w-2 h-2 rounded-full bg-slate-300 dot animation-delay-300 dark:bg-slate-600"></div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Chat Input */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700">
             <div className="flex items-center space-x-2">
               <Input
                 type="text"
@@ -117,8 +214,14 @@ const LiveChat = () => {
                     handleSendMessage();
                   }
                 }}
+                className="flex-1 dark:bg-slate-700 dark:border-slate-600 dark:text-white"
               />
-              <Button onClick={handleSendMessage}><Send className="h-4 w-4"/></Button>
+              <Button 
+                onClick={handleSendMessage}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Send className="h-4 w-4"/>
+              </Button>
             </div>
           </div>
         </div>
@@ -127,11 +230,19 @@ const LiveChat = () => {
       {/* Chat Button */}
       <button
         onClick={toggleChat}
-        className="bg-space-cadet text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-blue-700 transition-colors"
+        className="bg-space-cadet text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-blue-700 transition-colors chat-button relative"
+        aria-label="Open chat"
       >
-        <Avatar className="w-10 h-10">
-          <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
-        </Avatar>
+        {unreadMessages > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full unread-badge">
+            {unreadMessages}
+          </span>
+        )}
+        {!isOpen ? (
+          <MessageSquare className="h-6 w-6" />
+        ) : (
+          <X className="h-6 w-6" />
+        )}
       </button>
     </div>
   );
