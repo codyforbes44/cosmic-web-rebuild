@@ -102,7 +102,7 @@ const About = () => {
                   Contact Us
                 </Button>
               </Link>
-              <Link to="/planets">
+              <Link to="/services">
                 <Button variant="outline" className="border-gray-600 hover:bg-gray-800 text-white px-8 py-3">
                   Our Services
                 </Button>

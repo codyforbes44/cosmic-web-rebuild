@@ -65,9 +65,9 @@ const HeroSection = () => {
                   Get Your Free Quote <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              <Link to="/packages" className="w-full sm:w-auto">
+              <Link to="/services" className="w-full sm:w-auto">
                 <Button variant="outline" className="border-gray-500 hover:bg-gray-800 text-white px-6 py-5 w-full text-base">
-                  View Our Packages
+                  View Our Services
                 </Button>
               </Link>
             </div>
