@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Avatar } from "@/components/ui/avatar"
 import { AvatarImage } from "@radix-ui/react-avatar"
@@ -42,7 +43,7 @@ const LiveChat = () => {
     if (message.trim() === '') return;
     
     // Add the user message to the chat
-    const newUserMessage = {
+    const newUserMessage: ChatMessage = {
       id: Date.now().toString(),
       text: message,
       sender: 'user',
@@ -59,7 +60,7 @@ const LiveChat = () => {
       
       // If we have a knowledge-based response, use it
       if (knowledgeResponse) {
-        const newBotMessage = {
+        const newBotMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
           text: knowledgeResponse,
           sender: 'bot',
@@ -71,7 +72,7 @@ const LiveChat = () => {
         const responseIndex = Math.floor(Math.random() * chatResponses.length);
         const botResponse = chatResponses[responseIndex];
         
-        const newBotMessage = {
+        const newBotMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
           text: botResponse,
           sender: 'bot',
