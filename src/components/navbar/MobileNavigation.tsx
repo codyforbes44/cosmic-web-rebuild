@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import MobileNavLink from './MobileNavLink';
 import MobileServicesMenu from './MobileServicesMenu';
 import { navLinks } from './constants';
-import { Phone } from 'lucide-react';
+import { Phone, BarChart2 } from 'lucide-react';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -41,10 +41,21 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                     Get a Free Quote
                   </Button>
                 </Link>
-                <a href="tel:+11234567890" className="flex items-center justify-center gap-2 w-full py-3 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
-                  <Phone size={18} />
-                  <span className="font-medium">(123) 456-7890</span>
-                </a>
+                <div className="flex gap-2">
+                  <a href="tel:+11234567890" className="flex items-center justify-center gap-2 flex-1 py-3 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
+                    <Phone size={18} />
+                    <span className="font-medium">(123) 456-7890</span>
+                  </a>
+                  
+                  <Link 
+                    to="/analytics" 
+                    onClick={onClose}
+                    className="flex items-center justify-center gap-2 px-4 py-3 text-white bg-accent/20 border border-accent/30 rounded-md hover:bg-accent/30 transition-colors"
+                  >
+                    <BarChart2 size={18} />
+                    <span className="font-medium">Analytics</span>
+                  </Link>
+                </div>
               </div>
               
               <nav className="space-y-5">
