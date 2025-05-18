@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { TablesInsert } from "@/integrations/supabase/types";
 
@@ -30,21 +29,35 @@ export async function trackVisitor(): Promise<void> {
       referrer: document.referrer || null,
       screen_resolution: `${window.screen.width}x${window.screen.height}`,
       ...urlData,
-      // We can't reliably get these client-side
-      ip_address: null,
-      country: null,
-      region: null,
-      city: null,
-      // Best guess for device type based on user agent
+      // Device detection
       device_type: detectDeviceType(userAgent),
       operating_system: detectOS(userAgent),
     };
 
-    // Send data to Supabase
-    const { error } = await supabase.from('visitor_metadata').insert(metadata);
-    
-    if (error) {
-      console.error('Error tracking visitor metadata:', error);
+    try {
+      // Send data to our Edge Function to get IP and geolocation
+      const response = await fetch('/functions/v1/visitor-metadata', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(metadata),
+      });
+      
+      if (!response.ok) {
+        // If edge function fails, fall back to direct database insert without IP/geo data
+        const { error } = await supabase.from('visitor_metadata').insert(metadata);
+        if (error) {
+          console.error('Error tracking visitor metadata (fallback):', error);
+        }
+      }
+    } catch (fetchError) {
+      // Handle network errors by falling back to direct database insert
+      console.error('Failed to reach visitor-metadata edge function:', fetchError);
+      const { error } = await supabase.from('visitor_metadata').insert(metadata);
+      if (error) {
+        console.error('Error tracking visitor metadata (fallback):', error);
+      }
     }
   } catch (err) {
     console.error('Failed to track visitor metadata:', err);
