@@ -23,7 +23,7 @@ const HeroSection = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 0.7,
+          opacity: 0.4,
         }}
       />
       
