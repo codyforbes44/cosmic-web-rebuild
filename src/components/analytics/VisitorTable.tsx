@@ -15,9 +15,14 @@ import { Button } from "@/components/ui/button";
 interface VisitorTableProps {
   visitorData: any[];
   isLoading?: boolean;
+  simplified?: boolean;
 }
 
-const VisitorTable: React.FC<VisitorTableProps> = ({ visitorData, isLoading }) => {
+const VisitorTable: React.FC<VisitorTableProps> = ({ 
+  visitorData, 
+  isLoading,
+  simplified = false
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState<string>("visit_timestamp");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
@@ -142,7 +147,67 @@ const VisitorTable: React.FC<VisitorTableProps> = ({ visitorData, isLoading }) =
       </div>
     );
   }
+
+  // For simplified table (visitors tab)
+  if (simplified) {
+    return (
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-gray-700">
+              <th className="text-left py-3 px-4 text-gray-400">Time</th>
+              <th className="text-left py-3 px-4 text-gray-400">Page</th>
+              <th className="text-left py-3 px-4 text-gray-400">Location</th>
+              <th className="text-left py-3 px-4 text-gray-400">Device</th>
+              <th className="text-left py-3 px-4 text-gray-400">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visitorData.length > 0 ? (
+              visitorData.map((visitor, index) => {
+                const visitUrl = visitor.page_url ? new URL(visitor.page_url) : null;
+                const visitPath = visitUrl ? visitUrl.pathname : 'Unknown';
+                const visitTime = visitor.visit_timestamp ? new Date(visitor.visit_timestamp).toLocaleString() : 'Unknown';
+                const location = visitor.country ? `${visitor.city ? visitor.city + ', ' : ''}${visitor.country}` : 'Unknown';
+                const source = visitor.utm_source || (visitor.referrer ? 'Referral' : 'Direct');
+                
+                return (
+                  <tr key={index} className="border-b border-gray-800">
+                    <td className="py-3 px-4 text-sm text-gray-300">{visitTime}</td>
+                    <td className="py-3 px-4 text-sm text-gray-300">
+                      <span className="truncate block max-w-[140px]" title={visitPath}>
+                        {visitPath}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-gray-300">{location}</td>
+                    <td className="py-3 px-4 text-sm text-gray-300">
+                      <div className="flex items-center">
+                        <MonitorSmartphone size={14} className="mr-1" />
+                        <span>{visitor.device_type || 'Unknown'}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <Badge variant="outline" className="bg-white/5">
+                        {source}
+                      </Badge>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={5} className="text-center py-8 text-gray-400">
+                  No visitor data available
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
   
+  // Full featured table for the data tab
   return (
     <div className="space-y-4">
       <div className="overflow-x-auto rounded-lg border border-white/10 backdrop-blur-sm">
