@@ -38,31 +38,35 @@ const News = () => {
       <Navbar />
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mt-12 mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Business Insights
-            </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              Stay informed with the latest industry insights, technology trends, and success stories from our business experts
-            </p>
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="space-card p-8 rounded-xl mb-12">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                Business Insights
+              </h1>
+              <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+                Stay informed with the latest industry insights, technology trends, and success stories from our business experts
+              </p>
+            </div>
+
+            {/* Search and Filter */}
+            <SearchFilter 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+              categories={categories}
+            />
           </div>
 
-          {/* Search and Filter */}
-          <SearchFilter 
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-            categories={categories}
-          />
-
           {/* News Articles */}
-          <ArticleList 
-            articles={filteredArticles} 
-            categories={categories}
-            onSelectArticle={setSelectedArticle}
-          />
+          <div className="space-card p-8 rounded-xl">
+            <ArticleList 
+              articles={filteredArticles} 
+              categories={categories}
+              onSelectArticle={setSelectedArticle}
+            />
+          </div>
         </div>
 
         {/* Modal for Selected Article */}

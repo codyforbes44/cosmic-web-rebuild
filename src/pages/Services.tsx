@@ -101,17 +101,19 @@ const Services = () => {
       <Navbar />
       <StarBackground />
       <main className="min-h-screen pt-24 pb-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Our Services
-            </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              Comprehensive technology solutions designed to transform your business and drive innovation
-            </p>
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+          <div className="space-card p-8 rounded-xl mb-8">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                Our Services
+              </h1>
+              <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+                Comprehensive technology solutions designed to transform your business and drive innovation
+              </p>
+            </div>
 
             {/* Tabs Navigation */}
-            <div className="mt-10 mb-12">
+            <div className="mb-8">
               <Tabs 
                 value={selectedService.id} 
                 onValueChange={handleTabChange}
@@ -137,7 +139,7 @@ const Services = () => {
           </div>
 
           {/* Selected Service Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
             <div className="space-card p-4 md:p-6 overflow-hidden rounded-xl shadow-lg">
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img 

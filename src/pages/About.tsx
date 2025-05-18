@@ -11,9 +11,9 @@ const About = () => {
       <Navbar />
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="space-card p-8 rounded-xl mb-12">
+            <div className="max-w-3xl mx-auto text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
                 About <span className="text-accent">Ʒ</span>BI
               </h1>
@@ -21,8 +21,10 @@ const About = () => {
                 Pioneering innovative technology solutions to empower businesses in the digital era
               </p>
             </div>
+          </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
+          <div className="space-card p-8 rounded-xl mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <h2 className="text-3xl font-bold mb-6 text-white">Our Mission</h2>
                 <p className="text-gray-300 mb-6">
@@ -35,7 +37,7 @@ const About = () => {
                   Our team of technology experts and business consultants brings decades of combined experience across various industries, allowing us to deliver tailored solutions that address the unique challenges and opportunities facing each of our clients.
                 </p>
               </div>
-              <div className="space-card p-6 rounded-xl overflow-hidden">
+              <div className="overflow-hidden rounded-xl">
                 <img 
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1019&q=80" 
                   alt="ƷBI team collaboration"
@@ -43,9 +45,12 @@ const About = () => {
                 />
               </div>
             </div>
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
-              <div className="space-card p-8 rounded-xl text-center">
+          <div className="space-card p-8 rounded-xl mb-12">
+            <h2 className="text-3xl font-bold mb-8 text-center text-white">Our Core Values</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-space-deep-blue/50 p-8 rounded-xl text-center">
                 <div className="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
                     <path d="m22 2-7 20-4-9-9-4Z"></path>
@@ -58,7 +63,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="space-card p-8 rounded-xl text-center">
+              <div className="bg-space-deep-blue/50 p-8 rounded-xl text-center">
                 <div className="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
                     <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"></path>
@@ -72,7 +77,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="space-card p-8 rounded-xl text-center">
+              <div className="bg-space-deep-blue/50 p-8 rounded-xl text-center">
                 <div className="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
@@ -84,15 +89,17 @@ const About = () => {
                 </p>
               </div>
             </div>
+          </div>
 
-            <div className="max-w-3xl mx-auto mb-20">
+          <div className="space-card p-8 rounded-xl mb-12">
+            <div className="max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold mb-6 text-center text-white">Our Leadership Team</h2>
               <p className="text-gray-300 text-center mb-12">
                 ƷBI is led by a team of technology visionaries and business experts with extensive experience in delivering transformative digital solutions.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="flex flex-col items-center">
+                <div className="bg-space-deep-blue/50 p-6 rounded-xl flex flex-col items-center">
                   <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
                     <img 
                       src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=922&q=80" 
@@ -107,7 +114,7 @@ const About = () => {
                   </p>
                 </div>
                 
-                <div className="flex flex-col items-center">
+                <div className="bg-space-deep-blue/50 p-6 rounded-xl flex flex-col items-center">
                   <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-accent">
                     <img 
                       src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=934&q=80" 
@@ -123,27 +130,27 @@ const About = () => {
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="bg-space-deep-blue rounded-xl p-8 md:p-12 text-center">
-              <h2 className="text-3xl font-bold mb-6 text-white">Ready to Transform Your Business?</h2>
-              <p className="text-gray-300 max-w-2xl mx-auto mb-8">
-                Partner with ƷBI to leverage the power of technology and strategic innovation to achieve your business goals and stay ahead in today's competitive landscape.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/contact">
-                  <Button className="bg-accent hover:bg-accent/80 text-white px-8 py-3">
-                    Contact Us
-                  </Button>
-                </Link>
-                <Link to="/planets">
-                  <Button variant="outline" className="border-gray-600 hover:bg-gray-800 text-white px-8 py-3">
-                    Our Services
-                  </Button>
-                </Link>
-              </div>
+          <div className="space-card p-8 rounded-xl text-center">
+            <h2 className="text-3xl font-bold mb-6 text-white">Ready to Transform Your Business?</h2>
+            <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+              Partner with ƷBI to leverage the power of technology and strategic innovation to achieve your business goals and stay ahead in today's competitive landscape.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/contact">
+                <Button className="bg-accent hover:bg-accent/80 text-white px-8 py-3">
+                  Contact Us
+                </Button>
+              </Link>
+              <Link to="/planets">
+                <Button variant="outline" className="border-gray-600 hover:bg-gray-800 text-white px-8 py-3">
+                  Our Services
+                </Button>
+              </Link>
             </div>
           </div>
-        </section>
+        </div>
       </main>
       <Footer />
     </>
