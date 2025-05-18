@@ -45,7 +45,21 @@ const services = [
         { label: "Cost Savings", value: "$1.2M", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
         { label: "Efficiency Gain", value: "25%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Sarah Johnson",
+        position: "CTO, Global Manufacturing Inc.",
+        quote: "The strategic roadmap developed by the team has transformed how we approach technology investments. We now have clear priorities and measurable outcomes.",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      },
+      {
+        name: "Michael Chen",
+        position: "CEO, TechInnovate",
+        quote: "The ROI projections were spot on. We've already seen a 30% increase in operational efficiency within the first quarter of implementation.",
+        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      }
+    ]
   },
   {
     id: 'digital',
@@ -78,7 +92,21 @@ const services = [
         { label: "Error Reduction", value: "87%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
         { label: "Patient Satisfaction", value: "+42%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Dr. Emily Roberts",
+        position: "Chief Medical Officer, Regional Medical Center",
+        quote: "The digital transformation has completely changed how we deliver patient care. Our staff can now focus on patients instead of paperwork.",
+        avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      },
+      {
+        name: "Robert Thompson",
+        position: "IT Director, Healthcare Solutions",
+        quote: "The seamless integration between our legacy systems and new digital platform exceeded our expectations. The transition was remarkably smooth.",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      }
+    ]
   },
   {
     id: 'custom',
@@ -111,7 +139,21 @@ const services = [
         { label: "Delivery Time", value: "-35%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
         { label: "Customer Retention", value: "+18%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Thomas Rivera",
+        position: "Operations Director, Interstate Transport",
+        quote: "This custom platform solved problems we've struggled with for years. The ROI was evident within the first three months of implementation.",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      },
+      {
+        name: "Amanda Lewis",
+        position: "Fleet Manager, Logistics Pro",
+        quote: "The route optimization alone has saved us thousands in fuel costs. The drivers love the intuitive mobile interface too.",
+        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      }
+    ]
   },
   {
     id: 'web',
@@ -144,7 +186,21 @@ const services = [
         { label: "Engagement", value: "+125%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
         { label: "Cart Abandonment", value: "-40%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Jennifer Smith",
+        position: "Digital Marketing Director, Fashion Retailer Inc.",
+        quote: "Our conversion rates have skyrocketed since the app redesign. The seamless shopping experience has transformed our digital business.",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      },
+      {
+        name: "David Wong",
+        position: "E-commerce Manager, Online Trends",
+        quote: "The mobile-first approach paid off immediately. Our customers love how easily they can browse and purchase on any device.",
+        avatar: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      }
+    ]
   },
   {
     id: 'analytics',
@@ -177,7 +233,21 @@ const services = [
         { label: "Stock Outs", value: "-68%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
         { label: "Sales Increase", value: "+12%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Karen Martinez",
+        position: "Retail Operations Director, National Retail Chain",
+        quote: "The analytics dashboard has revolutionized our inventory management. We've reduced costs while improving product availability.",
+        avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      },
+      {
+        name: "Jason Taylor",
+        position: "Regional Manager, Retail Excellence",
+        quote: "Having real-time data at our fingertips has transformed how we make decisions. We can now respond to market changes immediately.",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      }
+    ]
   },
   {
     id: 'ai',
@@ -210,7 +280,21 @@ const services = [
         { label: "Maintenance Cost", value: "-42%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
         { label: "Equipment Lifespan", value: "+35%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Frank Miller",
+        position: "Operations Manager, Industrial Manufacturing Corp.",
+        quote: "The predictive maintenance system has been a game-changer. We've dramatically reduced downtime and extended the life of our equipment.",
+        avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      },
+      {
+        name: "Lisa Patel",
+        position: "Chief Innovation Officer, Tech Innovations",
+        quote: "The AI models have exceeded our expectations in accuracy. We're now expanding the implementation across our entire production line.",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      }
+    ]
   }
 ];
 
@@ -410,6 +494,40 @@ const Services = () => {
                     </ul>
                   </motion.div>
                 </div>
+                
+                {/* Testimonials Section */}
+                {service.testimonials && (
+                  <div className="mt-16">
+                    <h3 className="text-2xl font-bold mb-8 text-center">What Our Clients Say</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {service.testimonials.map((testimonial, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.2 + (idx * 0.1) }}
+                          className="bg-gray-800/40 p-6 rounded-xl border border-gray-700"
+                        >
+                          <div className="flex items-center mb-4">
+                            <div className="mr-4">
+                              <img 
+                                src={testimonial.avatar} 
+                                alt={testimonial.name} 
+                                className="h-14 w-14 rounded-full object-cover border-2"
+                                style={{ borderColor: service.color }}
+                              />
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-white">{testimonial.name}</h4>
+                              <p className="text-sm text-gray-400">{testimonial.position}</p>
+                            </div>
+                          </div>
+                          <p className="italic text-gray-300">"{testimonial.quote}"</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 
                 {/* Case Study */}
                 <div className="mt-16">
