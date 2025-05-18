@@ -14,9 +14,9 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4 text-white">
               <Link to="/" className="flex items-center">
                 <img 
-                  src="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png" 
+                  src="/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png" 
                   alt="3BI Logo" 
-                  className="h-8" 
+                  className="h-12" 
                 />
               </Link>
             </h3>
