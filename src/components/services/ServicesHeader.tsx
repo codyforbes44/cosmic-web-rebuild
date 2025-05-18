@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ServiceTabs from './ServiceTabs';
-import { Service } from '@/data/servicesData';
+import { Service } from '@/types/services';
 
 interface ServicesHeaderProps {
   services: Service[];

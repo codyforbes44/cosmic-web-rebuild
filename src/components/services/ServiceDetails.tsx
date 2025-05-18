@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
-import { Service } from '@/data/servicesData';
+import { Service } from '@/types/services';
 
 interface ServiceDetailsProps {
   service: Service;

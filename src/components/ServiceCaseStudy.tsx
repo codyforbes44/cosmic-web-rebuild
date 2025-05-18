@@ -1,20 +1,16 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart2, LineChart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
+import { ServiceResult } from '@/types/services';
 
 interface ServiceCaseStudyProps {
   serviceId: string;
   title: string;
   client: string;
   description: string;
-  results: {
-    label: string;
-    value: string;
-    icon?: React.ReactNode;
-  }[];
+  results: ServiceResult[];
   color: string;
 }
 

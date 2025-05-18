@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ServiceFeature from '@/components/ServiceFeature';
-import { Service } from '@/data/servicesData';
+import { Service } from '@/types/services';
 
 interface FeaturedServicesProps {
   services: Service[];

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Service } from '@/data/servicesData';
+import { Service } from '@/types/services';
 
 interface ServiceTabsProps {
   services: Service[];

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ServiceTestimonial } from '@/data/servicesData';
+import { ServiceTestimonial } from '@/types/services';
 
 interface ServiceTestimonialsProps {
   testimonials: ServiceTestimonial[];

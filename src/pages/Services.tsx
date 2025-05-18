@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import ClientLogoBanner from "@/components/ClientLogoBanner";
+import ServiceCaseStudy from "@/components/ServiceCaseStudy";
 
 import ServiceImage from "@/components/services/ServiceImage";
 import ServiceInfo from "@/components/services/ServiceInfo";
