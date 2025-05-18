@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -8,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { trackVisitor, trackPageTime } from "./utils/visitorTracking";
 import CookieConsent from "./components/CookieConsent";
+import LiveChat from "./components/LiveChat/LiveChat";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -113,6 +113,7 @@ const App: React.FC = () => {
             <BrowserRouter>
               <AppRoutes />
               <CookieConsent />
+              <LiveChat />
             </BrowserRouter>
           </TooltipProvider>
         </QueryClientProvider>
