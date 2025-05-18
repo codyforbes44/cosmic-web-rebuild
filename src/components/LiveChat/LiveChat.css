@@ -1,0 +1,83 @@
+
+/* LiveChat.css - Custom animations and effects */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInChat {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Chat window effects */
+.chat-window {
+  animation: fadeInChat 0.3s ease-out;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Chat button effects */
+.chat-button {
+  box-shadow: 0 4px 12px rgba(155, 135, 245, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.chat-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(155, 135, 245, 0.6);
+}
+
+/* Glass effect */
+.glass-effect {
+  backdrop-filter: blur(8px);
+}
+
+/* Message animations */
+.message {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.user-message .message-bubble {
+  box-shadow: 0 2px 5px rgba(30, 174, 219, 0.3);
+}
+
+.agent-message .message-bubble {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Typing indicator animation */
+.typing-indicator .dot {
+  animation: pulse 1.5s infinite;
+}
+
+/* Unread badge pulse effect */
+.unread-badge {
+  animation: pulse 2s infinite;
+}
+
+/* Form input focus effects */
+input:focus {
+  box-shadow: 0 0 0 2px rgba(155, 135, 245, 0.3);
+  transition: box-shadow 0.2s;
+}
+
+/* Button hover effects */
+button[type="submit"] {
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
