@@ -1,12 +1,9 @@
 
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import MobileNavLink from './MobileNavLink';
-import MobileServicesMenu from './MobileServicesMenu';
-import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
 import { Phone, BarChart2 } from 'lucide-react';
 
@@ -17,20 +14,6 @@ interface MobileNavigationProps {
 }
 
 const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) => {
-  const location = useLocation();
-  const [showServices, setShowServices] = useState(false);
-  const [showProducts, setShowProducts] = useState(false);
-  
-  const toggleServices = () => {
-    setShowServices(!showServices);
-    if (!showServices) setShowProducts(false);
-  };
-
-  const toggleProducts = () => {
-    setShowProducts(!showProducts);
-    if (!showProducts) setShowServices(false);
-  };
-  
   return (
     <AnimatePresence>
       {isOpen && (
@@ -67,62 +50,13 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               </div>
               
               <nav className="space-y-5">
-                {/* Home Link */}
-                <MobileNavLink 
-                  key={navLinks[0].name}
-                  link={navLinks[0]} 
-                  isActive={isActive(navLinks[0].path) === 'active'} 
-                  index={0}
-                  onClose={onClose}
-                />
-                
-                {/* Services Link/Submenu */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                >
-                  <button 
-                    className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full`}
-                    onClick={toggleServices}
-                    aria-expanded={showServices}
-                  >
-                    <span>Services</span>
-                    <span className="ml-2 text-2xl font-light">{showServices ? '−' : '+'}</span>
-                  </button>
-                  
-                  {showServices && (
-                    <MobileServicesMenu onClose={onClose} />
-                  )}
-                </motion.div>
-
-                {/* Products Link/Submenu */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  <button 
-                    className={`nav-link text-xl ${location.pathname.startsWith('/products') ? 'active' : ''} flex items-center justify-between w-full`}
-                    onClick={toggleProducts}
-                    aria-expanded={showProducts}
-                  >
-                    <span>Products</span>
-                    <span className="ml-2 text-2xl font-light">{showProducts ? '−' : '+'}</span>
-                  </button>
-                  
-                  {showProducts && (
-                    <MobileProductsMenu onClose={onClose} />
-                  )}
-                </motion.div>
-                
-                {/* Remaining Links */}
-                {navLinks.slice(1).map((link, index) => (
+                {/* All nav links */}
+                {navLinks.map((link, index) => (
                   <MobileNavLink 
                     key={link.name}
                     link={link} 
                     isActive={isActive(link.path) === 'active'} 
-                    index={index + 1}
+                    index={index}
                     onClose={onClose}
                   />
                 ))}
