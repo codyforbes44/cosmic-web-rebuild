@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { X } from 'lucide-react';
@@ -29,22 +29,22 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   return (
     <div className="w-[350px] h-[500px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col chat-window dark:bg-slate-900 dark:border dark:border-slate-700">
       {/* Chat Header */}
-      <div className="bg-space-cadet p-4 flex justify-between items-center dark:bg-slate-800">
+      <div className="bg-gradient-to-r from-brand-gold to-brand-gold/80 p-4 flex justify-between items-center">
         <div className="flex items-center">
-          <Avatar className="w-8 h-8 mr-3">
+          <Avatar className="w-10 h-10 mr-3 ring-2 ring-white/30 border-2 border-white/20">
             <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
           </Avatar>
           <div>
-            <h3 className="text-white font-bold">ƷBI Assistant</h3>
-            <p className="text-xs text-slate-300">AI powered support</p>
+            <h3 className="text-white font-bold text-lg">ƷBI Assistant</h3>
+            <p className="text-xs text-white/80">AI powered support</p>
           </div>
         </div>
         <button 
           onClick={onToggleChat} 
-          className="text-white hover:bg-slate-700 p-1 rounded-full transition-colors"
+          className="text-white hover:bg-white/10 p-2 rounded-full transition-colors"
           aria-label="Close chat"
         >
-          <X size={18} />
+          <X size={20} />
         </button>
       </div>
 

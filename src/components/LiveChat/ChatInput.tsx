@@ -16,7 +16,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   onSendMessage 
 }) => {
   return (
-    <div className="p-4 border-t border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700">
+    <div className="p-4 border-t border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-700">
       <div className="flex items-center space-x-2">
         <Input
           type="text"
@@ -28,11 +28,11 @@ const ChatInput: React.FC<ChatInputProps> = ({
               onSendMessage();
             }
           }}
-          className="flex-1 dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+          className="flex-1 rounded-full dark:bg-slate-800 dark:border-slate-700 dark:text-white"
         />
         <Button 
           onClick={onSendMessage}
-          className="bg-blue-600 hover:bg-blue-700 text-white"
+          className="bg-brand-gold hover:bg-brand-gold/80 text-white rounded-full aspect-square p-0 w-10 h-10 flex items-center justify-center"
         >
           <Send className="h-4 w-4"/>
         </Button>

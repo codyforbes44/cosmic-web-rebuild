@@ -26,23 +26,23 @@
 /* Chat window effects */
 .chat-window {
   animation: fadeInChat 0.3s ease-out;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.3), 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
 /* Chat button effects */
 .chat-button {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .chat-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(155, 135, 245, 0.4);
 }
 
 /* Glass effect */
 .glass-effect {
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 /* Message animations */
@@ -51,11 +51,11 @@
 }
 
 .user-message .message-bubble {
-  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 2px 8px rgba(155, 135, 245, 0.3);
 }
 
 .agent-message .message-bubble {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Typing indicator animation */
@@ -78,18 +78,18 @@
 
 /* Form input focus effects */
 input:focus {
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 0 0 2px rgba(155, 135, 245, 0.3);
   transition: box-shadow 0.2s;
 }
 
 /* Button hover effects */
 button[type="submit"] {
-  transition: transform 0.1s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 button[type="submit"]:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(155, 135, 245, 0.3);
 }
 
 button[type="submit"]:active {
@@ -99,14 +99,14 @@ button[type="submit"]:active {
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
   .chat-button {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
   
   .user-message .message-bubble {
-    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 2px 8px rgba(155, 135, 245, 0.2);
   }
   
   .agent-message .message-bubble {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 }

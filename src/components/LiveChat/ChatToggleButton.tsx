@@ -16,11 +16,11 @@ const ChatToggleButton: React.FC<ChatToggleButtonProps> = ({
   return (
     <button
       onClick={onToggle}
-      className="bg-space-cadet text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-blue-700 transition-colors chat-button relative"
+      className="bg-brand-gold text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-opacity-90 transition-all duration-300 chat-button relative"
       aria-label="Open chat"
     >
       {unreadMessages > 0 && (
-        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full unread-badge">
+        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-pulse unread-badge">
           {unreadMessages}
         </span>
       )}

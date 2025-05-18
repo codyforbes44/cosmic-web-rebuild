@@ -29,22 +29,22 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isTyping, chatConta
           className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} message`}
         >
           {msg.sender === 'bot' && (
-            <Avatar className="w-8 h-8 mr-2 flex-shrink-0 self-end">
+            <Avatar className="w-8 h-8 mr-2 flex-shrink-0 self-end border-2 border-white/10 dark:border-slate-700">
               <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
             </Avatar>
           )}
           <div 
-            className={`rounded-lg p-3 max-w-[80%] message-bubble ${
+            className={`rounded-2xl p-3 max-w-[80%] message-bubble ${
               msg.sender === 'user' 
-                ? 'bg-blue-600 text-white user-message'
-                : 'bg-white border border-slate-200 agent-message dark:bg-slate-800 dark:text-white dark:border-slate-700'
+                ? 'bg-brand-gold text-white user-message'
+                : 'bg-white border border-slate-100 agent-message dark:bg-slate-800 dark:text-white dark:border-slate-700'
             }`}
           >
             {msg.text}
             <div 
               className={`text-xs mt-1 ${
                 msg.sender === 'user' 
-                  ? 'text-blue-100' 
+                  ? 'text-white/70' 
                   : 'text-slate-400'
               }`}
             >
@@ -52,7 +52,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isTyping, chatConta
             </div>
           </div>
           {msg.sender === 'user' && (
-            <Avatar className="w-8 h-8 ml-2 flex-shrink-0 self-end">
+            <Avatar className="w-8 h-8 ml-2 flex-shrink-0 self-end border-2 border-white/10 dark:border-slate-700">
               <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="User" />
             </Avatar>
           )}
@@ -62,14 +62,14 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isTyping, chatConta
       {/* Typing indicator */}
       {isTyping && (
         <div className="flex justify-start message">
-          <Avatar className="w-8 h-8 mr-2 flex-shrink-0">
+          <Avatar className="w-8 h-8 mr-2 flex-shrink-0 border-2 border-white/10 dark:border-slate-700">
             <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
           </Avatar>
-          <div className="bg-white rounded-lg p-3 border border-slate-200 typing-indicator dark:bg-slate-800 dark:text-white dark:border-slate-700">
+          <div className="bg-white rounded-2xl p-3 border border-slate-100 typing-indicator dark:bg-slate-800 dark:text-white dark:border-slate-700">
             <div className="flex space-x-1">
-              <div className="w-2 h-2 rounded-full bg-slate-300 dot dark:bg-slate-600"></div>
-              <div className="w-2 h-2 rounded-full bg-slate-300 dot animation-delay-150 dark:bg-slate-600"></div>
-              <div className="w-2 h-2 rounded-full bg-slate-300 dot animation-delay-300 dark:bg-slate-600"></div>
+              <div className="w-2 h-2 rounded-full bg-brand-gold dot"></div>
+              <div className="w-2 h-2 rounded-full bg-brand-gold dot animation-delay-150"></div>
+              <div className="w-2 h-2 rounded-full bg-brand-gold dot animation-delay-300"></div>
             </div>
           </div>
         </div>
