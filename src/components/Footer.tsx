@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
@@ -8,7 +7,15 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white"><span className="text-accent">Ʒ</span>BI</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">
+              <Link to="/" className="flex items-center">
+                <img 
+                  src="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png" 
+                  alt="3BI Logo" 
+                  className="h-8" 
+                />
+              </Link>
+            </h3>
             <p className="text-gray-400 mb-4">
               Providing innovative technology solutions and expert consulting services to help businesses thrive in the digital age.
             </p>
