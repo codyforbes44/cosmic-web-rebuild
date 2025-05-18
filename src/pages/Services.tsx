@@ -59,7 +59,7 @@ const Services = () => {
               <TabsContent key={service.id} value={service.id} className="mt-0 animate-in fade-in-50">
                 {/* Service Info */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-                  <ServiceImage image={service.image} name={service.name} />
+                  <ServiceImage image={service.image} name={service.title || service.name || ''} />
                   <ServiceInfo service={service} />
                 </div>
                 
@@ -69,10 +69,12 @@ const Services = () => {
                 </div>
                 
                 {/* Testimonials Section */}
-                <ServiceTestimonials 
-                  testimonials={service.testimonials} 
-                  color={service.color} 
-                />
+                {service.testimonials && (
+                  <ServiceTestimonials 
+                    testimonials={service.testimonials} 
+                    color={service.color} 
+                  />
+                )}
                 
                 {/* Case Study */}
                 <div className="mt-16">

@@ -5,8 +5,11 @@ import { TrendingUp, BarChart2, PieChart } from 'lucide-react';
 export const aiService: Service = {
   id: 'ai',
   name: 'AI & Machine Learning',
+  title: 'AI & Machine Learning',
+  subtitle: 'Advanced artificial intelligence and machine learning solutions',
   description: 'Leverage artificial intelligence and machine learning to optimize operations and gain competitive advantages.',
   image: 'https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+  icon: PieChart, // Adding icon
   color: '#8B5CF6',
   deliverables: 'Predictive models, ML algorithms, AI integrations',
   duration: '2-6 months',
@@ -24,6 +27,23 @@ export const aiService: Service = {
     'Complex decisions requiring advanced analysis',
     'Competitors gaining advantage through AI adoption'
   ],
+  features: [
+    {
+      title: 'Machine Learning',
+      description: 'Models that learn and improve over time',
+      icon: TrendingUp
+    },
+    {
+      title: 'Predictive Analytics',
+      description: 'Forecast future events and behaviors',
+      icon: BarChart2
+    },
+    {
+      title: 'AI Integration',
+      description: 'Seamlessly incorporate AI into existing systems',
+      icon: PieChart
+    }
+  ],
   case_study: {
     title: "Predictive Maintenance System",
     client: "Industrial Manufacturing Corp.",
@@ -32,7 +52,8 @@ export const aiService: Service = {
       { label: "Downtime", value: "-78%", icon: TrendingUp },
       { label: "Maintenance Cost", value: "-42%", icon: BarChart2 },
       { label: "Equipment Lifespan", value: "+35%", icon: PieChart }
-    ]
+    ],
+    image: 'https://images.unsplash.com/photo-1551636898-47668aa61de2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   },
   testimonials: [
     {

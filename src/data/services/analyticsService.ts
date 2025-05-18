@@ -5,8 +5,11 @@ import { TrendingUp, BarChart2, PieChart } from 'lucide-react';
 export const analyticsService: Service = {
   id: 'analytics',
   name: 'Data Analytics',
+  title: 'Data Analytics',
+  subtitle: 'Advanced data analytics and visualization solutions',
   description: 'Transform your data into actionable insights with advanced analytics and visualization solutions.',
   image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+  icon: BarChart2, // Adding icon
   color: '#059669',
   deliverables: 'Dashboards, Reports, Data models, KPI tracking',
   duration: '1-3 months',
@@ -24,6 +27,23 @@ export const analyticsService: Service = {
     'Time wasted manually creating reports',
     'Decision making based on incomplete information'
   ],
+  features: [
+    {
+      title: 'Interactive Dashboards',
+      description: 'Customizable views of your most important metrics',
+      icon: BarChart2
+    },
+    {
+      title: 'Predictive Analytics',
+      description: 'Forecast future trends based on historical data',
+      icon: TrendingUp
+    },
+    {
+      title: 'Data Visualization',
+      description: 'Complex insights presented in easy-to-understand formats',
+      icon: PieChart
+    }
+  ],
   case_study: {
     title: "Retail Analytics Dashboard",
     client: "National Retail Chain",
@@ -32,7 +52,8 @@ export const analyticsService: Service = {
       { label: "Inventory Cost", value: "-23%", icon: TrendingUp },
       { label: "Stock Outs", value: "-68%", icon: BarChart2 },
       { label: "Sales Increase", value: "+12%", icon: PieChart }
-    ]
+    ],
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   },
   testimonials: [
     {

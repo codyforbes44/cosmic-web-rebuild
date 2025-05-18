@@ -29,7 +29,7 @@ const ServiceTabs: React.FC<ServiceTabsProps> = ({ services, selectedServiceId, 
               color: selectedService.id === service.id ? service.color : 'inherit'
             }}
           >
-            {service.name}
+            {service.title || service.name}
           </TabsTrigger>
         ))}
       </TabsList>

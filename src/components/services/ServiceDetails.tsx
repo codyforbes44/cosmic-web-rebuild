@@ -19,7 +19,7 @@ const ServiceDetails: React.FC<ServiceDetailsProps> = ({ service }) => {
       >
         <h3 className="text-xl font-bold mb-6">Common Challenges We Solve</h3>
         <ul className="space-y-4">
-          {service.pain_points.map((point, idx) => (
+          {(service.pain_points || []).map((point, idx) => (
             <li key={idx} className="flex items-start">
               <div 
                 className="mr-3 p-1 rounded-full mt-1" 
@@ -41,7 +41,7 @@ const ServiceDetails: React.FC<ServiceDetailsProps> = ({ service }) => {
       >
         <h3 className="text-xl font-bold mb-6">Key Benefits</h3>
         <ul className="space-y-4">
-          {service.benefits.map((benefit, idx) => (
+          {(service.benefits || []).map((benefit, idx) => (
             <li key={idx} className="flex items-start">
               <div 
                 className="mr-3 p-1 rounded-full mt-1" 

@@ -36,4 +36,14 @@ export interface Service {
   }[];
   case_study: ServiceCaseStudyData;
   image: string;
+  
+  // Adding back properties needed by components
+  name?: string; // For backward compatibility
+  deliverables?: string;
+  duration?: string;
+  process?: string;
+  key_benefit?: string;
+  benefits?: string[];
+  pain_points?: string[];
+  testimonials?: ServiceTestimonial[];
 }

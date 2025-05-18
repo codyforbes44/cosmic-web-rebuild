@@ -5,8 +5,11 @@ import { TrendingUp, BarChart2, PieChart } from 'lucide-react';
 export const strategyService: Service = {
   id: 'strategy',
   name: 'Strategic Consulting',
+  title: 'Strategic Consulting',
+  subtitle: 'Technology strategy development and roadmap planning',
   description: 'Comprehensive technology strategy development and roadmap planning aligned with your business objectives.',
   image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+  icon: TrendingUp, // Adding icon
   color: '#7C3AED',
   deliverables: 'Technology roadmap, Gap analysis, ROI projections',
   duration: '4-8 weeks',
@@ -24,6 +27,23 @@ export const strategyService: Service = {
     'Difficulty aligning IT with business objectives',
     'Concerns about wasting resources on the wrong solutions'
   ],
+  features: [
+    {
+      title: 'Technology Roadmapping',
+      description: 'Clear path to technology transformation',
+      icon: TrendingUp
+    },
+    {
+      title: 'ROI Analysis',
+      description: 'Quantify the value of technology investments',
+      icon: BarChart2
+    },
+    {
+      title: 'Strategic Planning',
+      description: 'Align technology with business objectives',
+      icon: PieChart
+    }
+  ],
   case_study: {
     title: "Tech Transformation Strategy",
     client: "Global Manufacturing Inc.",
@@ -32,7 +52,8 @@ export const strategyService: Service = {
       { label: "ROI Increase", value: "37%", icon: TrendingUp },
       { label: "Cost Savings", value: "$1.2M", icon: BarChart2 },
       { label: "Efficiency Gain", value: "25%", icon: PieChart }
-    ]
+    ],
+    image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'
   },
   testimonials: [
     {

@@ -22,7 +22,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
         className="text-3xl md:text-4xl font-bold mb-4" 
         style={{ color: service.color }}
       >
-        {service.name}
+        {service.title || service.name || ''}
       </h2>
       <p className="text-gray-300 text-lg mb-8">
         {service.description}
@@ -31,15 +31,15 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div className="bg-gray-800/60 p-4 rounded-lg">
           <h3 className="text-sm text-gray-400 mb-1">Deliverables</h3>
-          <p className="text-white font-medium">{service.deliverables}</p>
+          <p className="text-white font-medium">{service.deliverables || 'Custom solutions tailored to your needs'}</p>
         </div>
         <div className="bg-gray-800/60 p-4 rounded-lg">
           <h3 className="text-sm text-gray-400 mb-1">Typical Duration</h3>
-          <p className="text-white font-medium">{service.duration}</p>
+          <p className="text-white font-medium">{service.duration || 'Varies based on project scope'}</p>
         </div>
         <div className="bg-gray-800/60 p-4 rounded-lg col-span-1 md:col-span-2">
           <h3 className="text-sm text-gray-400 mb-1">Process</h3>
-          <p className="text-white font-medium">{service.process}</p>
+          <p className="text-white font-medium">{service.process || 'Consultation, Planning, Implementation, Review'}</p>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
           Key Benefit
         </h3>
         <p className="text-gray-300">
-          {service.key_benefit}
+          {service.key_benefit || service.description}
         </p>
       </div>
       

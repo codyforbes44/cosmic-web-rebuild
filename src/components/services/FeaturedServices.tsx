@@ -21,9 +21,9 @@ const FeaturedServices: React.FC<FeaturedServicesProps> = ({ services }) => {
         {services.slice(0, 3).map((service, idx) => (
           <ServiceFeature
             key={service.id}
-            title={service.name}
+            title={service.title || service.name || ''}
             description={service.description}
-            benefits={service.benefits.slice(0, 3)}
+            benefits={service.benefits || []}
             image={service.image}
             color={service.color}
             align={idx % 2 === 0 ? 'left' : 'right'}
