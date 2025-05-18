@@ -25,11 +25,11 @@ const ServiceDropdown = ({ isActive }: ServiceDropdownProps) => {
       <NavigationMenu className="z-50">
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={`nav-link bg-transparent ${isActive ? 'active' : ''}`}>
+            <NavigationMenuTrigger className={`nav-link bg-transparent h-10 px-3 py-2 ${isActive ? 'active' : ''}`}>
               Services
               {isActive && (
                 <motion.div 
-                  className="h-0.5 bg-accent mt-1 absolute bottom-0 left-0 right-0" 
+                  className="h-0.5 bg-accent absolute bottom-0 left-0 right-0" 
                   layoutId="navbar-indicator"
                 />
               )}
@@ -48,8 +48,7 @@ const ServiceDropdown = ({ isActive }: ServiceDropdownProps) => {
                         {service.title}
                       </div>
                       <p className="line-clamp-2 text-sm leading-snug text-gray-400">
-                        {/* Replace the description access with a default or hard-coded description */}
-                        Explore our {service.title.toLowerCase()} solutions tailored for your business needs
+                        {service.description}
                       </p>
                     </Link>
                   </li>

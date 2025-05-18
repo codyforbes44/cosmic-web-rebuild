@@ -14,7 +14,7 @@ interface DesktopNavigationProps {
 
 const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProps) => {
   return (
-    <nav className="hidden md:flex items-center space-x-8">
+    <nav className="hidden md:flex items-center space-x-4">
       {/* Home link */}
       <DesktopNavLink 
         key={navLinks[0].name}

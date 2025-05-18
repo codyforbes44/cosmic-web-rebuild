@@ -80,7 +80,7 @@
   }
 
   .nav-link {
-    @apply text-gray-200 hover:text-white transition-colors duration-300;
+    @apply text-gray-200 hover:text-white transition-colors duration-300 relative flex items-center justify-center;
   }
 
   .nav-link.active {

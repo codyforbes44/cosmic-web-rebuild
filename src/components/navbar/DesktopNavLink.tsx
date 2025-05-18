@@ -18,12 +18,13 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
+      className="relative h-full"
     >
       {link.disabled ? (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center">
+              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center h-10 px-3 py-2">
                 {link.name}
                 <Ban size={16} className="ml-1 opacity-70" />
               </span>
@@ -36,13 +37,13 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
       ) : (
         <Link 
           to={link.path} 
-          className={`nav-link ${isActive ? 'active' : ''}`}
+          className={`nav-link flex items-center h-10 px-3 py-2 ${isActive ? 'active' : ''}`}
           aria-current={isActive ? 'page' : undefined}
         >
           {link.name}
           {isActive && (
             <motion.div 
-              className="h-0.5 bg-accent mt-1" 
+              className="h-0.5 bg-accent absolute bottom-0 left-0 right-0" 
               layoutId="navbar-indicator"
             />
           )}
