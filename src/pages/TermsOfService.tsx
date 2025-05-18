@@ -6,8 +6,6 @@ import { ChevronRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import StarBackground from "@/components/StarBackground";
-import { Card, CardContent } from "@/components/ui/card";
 
 const TermsOfService = () => {
   return (
@@ -16,21 +14,19 @@ const TermsOfService = () => {
         title="Terms of Service" 
         description="Terms of service for ƷBI - understand our policies and agreements when using our services."
       />
-      <StarBackground />
       <Navbar />
       
-      <div className="relative min-h-screen z-10">
+      <div className="bg-space-deep-blue min-h-screen">
         <div className="container mx-auto px-4 py-12">
-          <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl mb-12">
-            <CardContent className="p-8 text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                Terms of Service
-              </h1>
-              <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-                Understand our policies and agreements when using our services
-              </p>
-            </CardContent>
-          </Card>
+          <div className="mb-8">
+            <div className="flex items-center text-gray-400 text-sm mb-4">
+              <Link to="/" className="hover:text-white transition-colors">Home</Link>
+              <ChevronRight size={14} className="mx-2" />
+              <span className="text-white">Terms of Service</span>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">Terms of Service</h1>
+            <div className="h-1 w-20 bg-accent mb-8"></div>
+          </div>
           
           <div className="bg-gray-900/50 rounded-lg p-8 mb-12">
             <div className="prose prose-invert max-w-none">

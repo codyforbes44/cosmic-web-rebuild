@@ -13,17 +13,11 @@ const VisitDurationChart: React.FC<VisitDurationChartProps> = ({ visitorData }) 
   // Process visitor data to estimate page visit durations
   // This is a simulation since we don't have actual duration data
   const durationData = useMemo(() => {
-    if (!visitorData || visitorData.length === 0) {
-      return [];
-    }
-    
     // Group visitors by path
     const pathGroups: Record<string, { count: number; }> = {};
     
     visitorData.forEach(visitor => {
-      if (!visitor.path) return;
-      
-      const path = visitor.path;
+      const path = visitor.path || '/';
       
       if (!pathGroups[path]) {
         pathGroups[path] = { count: 0 };

@@ -5,18 +5,13 @@ import StarBackground from "@/components/StarBackground";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import SEO from "@/components/SEO";
 
 const About = () => {
   return (
     <>
-      <SEO 
-        title="About ƷBI"
-        description="Learn about ƷBI - pioneering innovative technology solutions to empower businesses in the digital era."
-      />
-      <StarBackground />
       <Navbar />
-      <main className="relative min-h-screen pt-20 pb-24 z-10">
+      <StarBackground />
+      <main className="min-h-screen pt-20 pb-24">
         <section className="py-20">
           <div className="container mx-auto px-4">
             <Card className="space-card bg-space-deep-blue/40 backdrop-blur-md border border-gray-800/40 rounded-xl mb-16">

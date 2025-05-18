@@ -3,24 +3,24 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { serviceCategories } from './constants';
 
-interface MobileServiceMenuProps {
+interface MobileServicesMenuProps {
   onClose: () => void;
 }
 
-const MobileServiceMenu = ({ onClose }: MobileServiceMenuProps) => {
+const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}
-      className="bg-space-dark-blue/80 backdrop-blur-sm rounded-md p-2"
     >
+      <div className="nav-link text-xl font-medium">Services</div>
       <div className="pl-4 mt-2 space-y-2">
         {serviceCategories.map((service) => (
           <Link 
             key={service.href}
-            to={`${service.href}#top`}
-            className="block text-gray-300 hover:text-white py-1 text-base"
+            to={service.href} 
+            className="block text-gray-300 hover:text-white py-1 text-lg"
             onClick={onClose}
             style={{ color: service.color }}
           >
@@ -32,4 +32,4 @@ const MobileServiceMenu = ({ onClose }: MobileServiceMenuProps) => {
   );
 };
 
-export default MobileServiceMenu;
+export default MobileServicesMenu;

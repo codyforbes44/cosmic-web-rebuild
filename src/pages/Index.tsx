@@ -5,36 +5,29 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import AstronomyFacts from "@/components/AstronomyFacts";
 import BusinessCaseStudy from "@/components/BusinessCaseStudy";
-import CTASection from "@/components/CTASection";
 import Newsletter from "@/components/Newsletter";
-import ProductsSection from "@/components/ProductsSection";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
-import ClientLogos from "@/components/ClientLogos";
-import ValueProposition from "@/components/ValueProposition";
+import CTASection from "@/components/CTASection";
 
 const Index = () => {
   return (
     <>
       <SEO 
-        title="Transform Your Business with Technology - ƷBI Solutions" 
-        description="Boost efficiency and growth with ƷBI's innovative technology solutions. Custom software, data analytics, and expert consulting tailored for your business needs."
+        title="Professional Technology Solutions" 
+        description="Transform your business with ƷBI's innovative technology solutions. Expert consulting, custom software development, and data analytics to drive growth and efficiency."
         keywords="business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation, custom software development"
         image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
       />
-      <div id="top"></div>
-      <StarBackground />
       <Navbar />
-      <main className="relative overflow-x-hidden z-10">
+      <main className="overflow-x-hidden">
+        <StarBackground />
         <HeroSection />
-        <ClientLogos />
-        <ValueProposition />
         <Testimonials />
-        <ProductsSection />
+        <AstronomyFacts />
         <BusinessCaseStudy />
         <CTASection />
         <Newsletter />
-        <AstronomyFacts />
       </main>
       <Footer />
     </>

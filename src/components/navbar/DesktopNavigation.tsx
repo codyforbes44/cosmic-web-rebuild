@@ -1,67 +1,49 @@
 
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { navLinks } from './constants';
-import DesktopNavItem from './DesktopNavItem';
-import ServiceDropdown from './ServiceDropdown';
-import ProductDropdown from './ProductDropdown';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { LogIn, LogOut } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { navLinks } from './constants';
+import DesktopNavLink from './DesktopNavLink';
+import ServiceDropdown from './ServiceDropdown';
 
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
   isServicesActive: boolean;
-  isProductsActive: boolean;
 }
 
-const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ isActive, isServicesActive, isProductsActive }) => {
-  const { user, signOut } = useAuth();
-  
+const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProps) => {
   return (
-    <nav className="hidden md:flex items-center space-x-4">
-      {navLinks.map((link, index) => {
-        // Skip admin-only links if user is not logged in
-        if (link.adminOnly && !user) return null;
-        
-        // Special handling for Services to use dropdown
-        if (link.path === '/services') {
-          return <ServiceDropdown key={link.path} isActive={isServicesActive} />;
-        }
-        
-        // Special handling for Products to use dropdown
-        if (link.path === '/products') {
-          return <ProductDropdown key={link.path} isActive={isProductsActive} />;
-        }
-        
-        return (
-          <DesktopNavItem
-            key={link.path}
-            path={link.path}
-            name={link.name}
-            isActive={isActive(link.path) === 'active'}
-            index={index}
-          />
-        );
-      })}
+    <nav className="hidden md:flex items-center space-x-8">
+      {/* Home link */}
+      <DesktopNavLink 
+        key={navLinks[0].name}
+        link={navLinks[0]} 
+        isActive={isActive(navLinks[0].path) === 'active'} 
+        index={0}
+      />
+
+      {/* Services Dropdown */}
+      <ServiceDropdown isActive={isServicesActive} />
+
+      {/* Remaining links */}
+      {navLinks.slice(1).map((link, index) => (
+        <DesktopNavLink 
+          key={link.name}
+          link={link} 
+          isActive={isActive(link.path) === 'active'} 
+          index={index + 1}
+        />
+      ))}
       
-      {user ? (
-        <Button 
-          variant="ghost" 
-          className="text-gray-200 hover:text-white hover:bg-gray-800 ml-2"
-          onClick={signOut}
-        >
-          <LogOut size={16} className="mr-1" />
-          Logout
-        </Button>
-      ) : (
-        <Link to="/auth">
-          <Button variant="ghost" className="text-gray-200 hover:text-white hover:bg-gray-800 ml-2">
-            <LogIn size={16} className="mr-1" />
-            Login
-          </Button>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3, delay: 0.6 }}
+      >
+        <Link to="/get-quote">
+          <Button className="bg-accent hover:bg-accent/80 text-white">Get a Consultation</Button>
         </Link>
-      )}
+      </motion.div>
     </nav>
   );
 };

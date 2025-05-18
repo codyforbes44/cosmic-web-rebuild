@@ -35,8 +35,7 @@ const StarBackground = () => {
     // Create stars
     function initStars() {
       starsRef.current = [];
-      // Reduce star density slightly for better performance
-      const starCount = Math.floor((canvas.width * canvas.height) / 3500); 
+      const starCount = Math.floor((canvas.width * canvas.height) / 3000); // Adjust density
 
       for (let i = 0; i < starCount; i++) {
         starsRef.current.push({
@@ -50,7 +49,7 @@ const StarBackground = () => {
       }
     }
 
-    // Draw animation with performance optimizations
+    // Draw animation
     const draw = (timestamp: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -83,8 +82,7 @@ const StarBackground = () => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed top-0 left-0 w-full h-full pointer-events-none -z-20"
-      aria-hidden="true"
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
     />
   );
 };

@@ -49,9 +49,6 @@ const parseUserAgent = (userAgent: string): { browser: string; os: string; devic
 const getIpAddress = async (): Promise<string | null> => {
   try {
     const response = await fetch('https://api.ipify.org?format=json');
-    if (!response.ok) {
-      throw new Error(`Failed to fetch IP: ${response.status}`);
-    }
     const data = await response.json();
     return data.ip;
   } catch (err) {
@@ -61,17 +58,11 @@ const getIpAddress = async (): Promise<string | null> => {
 };
 
 // Get location data from IP address
-const getLocationData = async (ipAddress: string | null): Promise<{ country_code?: string; city?: string; state?: string }> => {
+const getLocationData = async (ipAddress: string | null): Promise<{ country_code?: string; city?: string }> => {
   if (!ipAddress) return {};
   
   try {
-    // Use a more reliable IP geolocation service with better error handling
     const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch location: ${response.status}`);
-    }
-    
     const data = await response.json();
     
     // Check if the API returned an error
@@ -82,8 +73,7 @@ const getLocationData = async (ipAddress: string | null): Promise<{ country_code
     
     return {
       country_code: data.country_code,
-      city: data.city,
-      state: data.region
+      city: data.city
     };
   } catch (err) {
     console.error('Error getting location data:', err);
@@ -99,14 +89,8 @@ export const trackVisit = async (path: string): Promise<void> => {
     // Get visitor IP address
     const ipAddress = await getIpAddress();
     
-    // Get location data from IP - with better error handling
-    let locationData = {};
-    try {
-      locationData = await getLocationData(ipAddress);
-    } catch (locErr) {
-      console.error('Error getting location data:', locErr);
-      // Continue with empty location data
-    }
+    // Get location data from IP
+    const locationData = await getLocationData(ipAddress);
     
     // Gather visitor information
     const visitorData: VisitorData = {
@@ -122,7 +106,8 @@ export const trackVisit = async (path: string): Promise<void> => {
       os: userAgentInfo.os,
       device_type: userAgentInfo.deviceType,
       ip_address: ipAddress,
-      ...locationData,
+      country_code: locationData.country_code,
+      city: locationData.city,
       created_at: new Date().toISOString(),
     };
     

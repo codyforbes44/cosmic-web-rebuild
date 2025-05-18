@@ -24,8 +24,6 @@ const VisitorMetadataTable: React.FC<VisitorMetadataTableProps> = ({ visitorData
   
   // Filter out visits from Lovable domains
   const filteredVisitorData = useMemo(() => {
-    if (!visitorData) return [];
-    
     return visitorData.filter(visitor => {
       // Check if referrer or path contains lovable domain
       const referrer = visitor.referrer?.toLowerCase() || '';

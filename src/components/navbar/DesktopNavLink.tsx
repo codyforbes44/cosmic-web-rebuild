@@ -3,32 +3,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Ban } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { NavLink } from './constants';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-interface DesktopNavItemProps {
-  path: string;
-  name: string;
+interface DesktopNavLinkProps {
+  link: NavLink;
   isActive: boolean;
   index: number;
 }
 
-const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, index }) => {
-  const disabled = false; // We'll assume no navigation items are disabled by default
-  
+const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
   return (
     <motion.div
-      key={name}
+      key={link.name}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
-      className="relative"
     >
-      {disabled ? (
+      {link.disabled ? (
         <TooltipProvider delayDuration={300}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center text-base font-medium px-4 py-2">
-                {name}
+              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center font-medium">
+                {link.name}
                 <Ban size={16} className="ml-1 opacity-70" />
               </span>
             </TooltipTrigger>
@@ -39,14 +36,14 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, i
         </TooltipProvider>
       ) : (
         <Link 
-          to={`${path}#top`} 
-          className={`nav-link ${isActive ? 'active' : ''} text-base font-medium hover:text-white transition-colors duration-200 px-4 py-2 block`}
+          to={link.path} 
+          className={`nav-link ${isActive ? 'active' : ''} font-medium`}
           aria-current={isActive ? 'page' : undefined}
         >
-          {name}
+          {link.name}
           {isActive && (
             <motion.div 
-              className="h-0.5 bg-accent mt-1 absolute bottom-0 left-0 right-0" 
+              className="h-0.5 bg-accent mt-1" 
               layoutId="navbar-indicator"
             />
           )}
@@ -56,4 +53,4 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ path, name, isActive, i
   );
 };
 
-export default DesktopNavItem;
+export default DesktopNavLink;

@@ -39,7 +39,7 @@ const Footer = () => {
             <h3 className="text-lg font-medium mb-4 text-white">Services</h3>
             <ul className="space-y-2">
               {serviceCategories.map(service => <li key={service.href}>
-                  <Link to={`${service.href}#top`} className="footer-link hover:text-[color:var(--color)]" style={{
+                  <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
                 "--color": service.color
               } as React.CSSProperties}>
                     {service.title}
@@ -100,9 +100,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ƷBI. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy#top" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Privacy Policy</Link>
-              <Link to="/terms#top" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Terms of Service</Link>
-              <Link to="/accessibility#top" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Accessibility</Link>
+              <Link to="/privacy" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Privacy Policy</Link>
+              <Link to="/terms" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Terms of Service</Link>
+              <Link to="/accessibility" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Accessibility</Link>
             </div>
           </div>
         </div>

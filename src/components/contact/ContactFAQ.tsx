@@ -1,9 +1,6 @@
 
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
 
 const ContactFAQ = () => {
   return (
@@ -62,15 +59,6 @@ const ContactFAQ = () => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      
-      <div className="mt-8 text-center">
-        <p className="text-gray-300 mb-4">Need more detailed information about our services?</p>
-        <Link to="/faq#top">
-          <Button className="bg-accent hover:bg-accent/80 text-white">
-            View All FAQs <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-        </Link>
-      </div>
     </div>
   );
 };

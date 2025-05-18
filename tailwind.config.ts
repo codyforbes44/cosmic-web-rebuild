@@ -115,35 +115,13 @@ export default {
 					'50%': {
 						transform: 'translateY(-10px)'
 					}
-				},
-				'scale-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'scale(0.95)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'scale(1)'
-					}
-				},
-				'pulse': {
-					'0%, 100%': { 
-						transform: 'scale(1)',
-						boxShadow: '0 0 0 0 rgba(155, 135, 245, 0.4)'
-					},
-					'50%': { 
-						transform: 'scale(1.05)',
-						boxShadow: '0 0 0 10px rgba(155, 135, 245, 0)'
-					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'twinkle': 'twinkle 3s ease-in-out infinite',
-				'float': 'float 6s ease-in-out infinite',
-				'scale-in': 'scale-in 0.3s ease-out forwards',
-				'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+				'float': 'float 6s ease-in-out infinite'
 			},
 			fontFamily: {
 				'space-grotesk': ['Space Grotesk', 'sans-serif'],

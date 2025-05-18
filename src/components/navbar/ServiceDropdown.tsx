@@ -21,12 +21,11 @@ const ServiceDropdown = ({ isActive }: ServiceDropdownProps) => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}
-      className="relative"
     >
       <NavigationMenu className="z-50">
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={`nav-link bg-transparent ${isActive ? 'active' : ''} font-medium hover:text-white transition-colors duration-200 px-4 py-2`}>
+            <NavigationMenuTrigger className={`nav-link bg-transparent ${isActive ? 'active' : ''} font-medium`}>
               Services
               {isActive && (
                 <motion.div 
@@ -49,6 +48,7 @@ const ServiceDropdown = ({ isActive }: ServiceDropdownProps) => {
                         {service.title}
                       </div>
                       <p className="line-clamp-2 text-sm leading-snug text-gray-400">
+                        {/* Replace the description access with a default or hard-coded description */}
                         Explore our {service.title.toLowerCase()} solutions tailored for your business needs
                       </p>
                     </Link>
