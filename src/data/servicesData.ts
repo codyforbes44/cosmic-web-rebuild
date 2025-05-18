@@ -1,3 +1,4 @@
+
 import { BarChart2, PieChart, TrendingUp } from 'lucide-react';
 import { Service } from '@/types/services';
 
@@ -29,9 +30,9 @@ export const services: Service[] = [
       client: "Global Manufacturing Inc.",
       description: "We developed a comprehensive technology strategy for this manufacturing leader, identifying key opportunities for digital transformation and automation.",
       results: [
-        { label: "ROI Increase", value: "37%", icon: <TrendingUp className="h-4 w-4 text-gray-400" /> },
-        { label: "Cost Savings", value: "$1.2M", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
-        { label: "Efficiency Gain", value: "25%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
+        { label: "ROI Increase", value: "37%", icon: TrendingUp },
+        { label: "Cost Savings", value: "$1.2M", icon: BarChart2 },
+        { label: "Efficiency Gain", value: "25%", icon: PieChart }
       ]
     },
     testimonials: [
@@ -76,9 +77,9 @@ export const services: Service[] = [
       client: "Regional Medical Center",
       description: "We transformed the client's outdated record systems into a modern digital platform, improving patient care and operational efficiency.",
       results: [
-        { label: "Time Saved", value: "65%", icon: <TrendingUp className="h-4 w-4 text-gray-400" /> },
-        { label: "Error Reduction", value: "87%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
-        { label: "Patient Satisfaction", value: "+42%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
+        { label: "Time Saved", value: "65%", icon: TrendingUp },
+        { label: "Error Reduction", value: "87%", icon: BarChart2 },
+        { label: "Patient Satisfaction", value: "+42%", icon: PieChart }
       ]
     },
     testimonials: [
@@ -123,9 +124,9 @@ export const services: Service[] = [
       client: "Interstate Transport Co.",
       description: "We built a custom logistics management platform that integrated route optimization, driver management, and customer communications.",
       results: [
-        { label: "Fuel Savings", value: "22%", icon: <TrendingUp className="h-4 w-4 text-gray-400" /> },
-        { label: "Delivery Time", value: "-35%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
-        { label: "Customer Retention", value: "+18%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
+        { label: "Fuel Savings", value: "22%", icon: TrendingUp },
+        { label: "Delivery Time", value: "-35%", icon: BarChart2 },
+        { label: "Customer Retention", value: "+18%", icon: PieChart }
       ]
     },
     testimonials: [
@@ -170,9 +171,9 @@ export const services: Service[] = [
       client: "Fashion Retailer Inc.",
       description: "We reimagined the client's online shopping experience with a modern, intuitive mobile app and responsive website, dramatically increasing conversions.",
       results: [
-        { label: "Conversion Rate", value: "+58%", icon: <TrendingUp className="h-4 w-4 text-gray-400" /> },
-        { label: "Engagement", value: "+125%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
-        { label: "Cart Abandonment", value: "-40%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
+        { label: "Conversion Rate", value: "+58%", icon: TrendingUp },
+        { label: "Engagement", value: "+125%", icon: BarChart2 },
+        { label: "Cart Abandonment", value: "-40%", icon: PieChart }
       ]
     },
     testimonials: [
@@ -217,9 +218,9 @@ export const services: Service[] = [
       client: "National Retail Chain",
       description: "We developed an integrated analytics platform that provided real-time insights across 200+ locations, enabling data-driven inventory and staffing decisions.",
       results: [
-        { label: "Inventory Cost", value: "-23%", icon: <TrendingUp className="h-4 w-4 text-gray-400" /> },
-        { label: "Stock Outs", value: "-68%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
-        { label: "Sales Increase", value: "+12%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
+        { label: "Inventory Cost", value: "-23%", icon: TrendingUp },
+        { label: "Stock Outs", value: "-68%", icon: BarChart2 },
+        { label: "Sales Increase", value: "+12%", icon: PieChart }
       ]
     },
     testimonials: [
@@ -264,9 +265,9 @@ export const services: Service[] = [
       client: "Industrial Manufacturing Corp.",
       description: "We implemented an AI-powered predictive maintenance system that analyzed equipment sensor data to forecast failures before they occurred.",
       results: [
-        { label: "Downtime", value: "-78%", icon: <TrendingUp className="h-4 w-4 text-gray-400" /> },
-        { label: "Maintenance Cost", value: "-42%", icon: <BarChart2 className="h-4 w-4 text-gray-400" /> },
-        { label: "Equipment Lifespan", value: "+35%", icon: <PieChart className="h-4 w-4 text-gray-400" /> }
+        { label: "Downtime", value: "-78%", icon: TrendingUp },
+        { label: "Maintenance Cost", value: "-42%", icon: BarChart2 },
+        { label: "Equipment Lifespan", value: "+35%", icon: PieChart }
       ]
     },
     testimonials: [
