@@ -63,3 +63,27 @@ export const serviceCategories = [
     description: 'Leverage AI to enhance your products and services'
   }
 ];
+
+export const productCategories = [
+  {
+    title: '3BI Connect',
+    href: '/products/3bi-connect',
+    color: '#2563EB',
+    description: 'The complete platform for trucking companies to manage drivers, improve retention, and streamline operations.',
+    image: '/lovable-uploads/7f21da0a-fd77-43ea-a7af-3b11648397c0.png'
+  },
+  {
+    title: 'Carrier Partner Network',
+    href: '/products/carrier-partner-network',
+    color: '#059669',
+    description: 'A comprehensive platform connecting trucking companies and drivers, streamlining the employment transition process.',
+    image: '/lovable-uploads/1e9d8177-66c6-4b9f-b830-04c0e28d026e.png'
+  },
+  {
+    title: 'TruckOnboard',
+    href: '/products/truck-onboard',
+    color: '#0EA5E9',
+    description: 'Streamline your truck driver orientation process with digital documents, interactive training modules, and automated workflows.',
+    image: '/lovable-uploads/091052a6-ec42-4606-a053-375fcee0c98f.png'
+  }
+];

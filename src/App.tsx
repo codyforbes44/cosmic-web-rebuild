@@ -26,6 +26,10 @@ const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
+// New Product Pages
+const Products = lazy(() => import("./pages/Products"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+
 // Loading component for Suspense
 const PageLoader = () => (
   <div className="min-h-screen bg-space-dark-blue flex items-center justify-center">
@@ -85,6 +89,11 @@ const AppRoutes: React.FC = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/accessibility" element={<Accessibility />} />
+          
+          {/* Product routes */}
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

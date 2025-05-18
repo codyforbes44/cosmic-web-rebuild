@@ -59,6 +59,7 @@ const Navbar = () => {
   };
 
   const isServicesActive = location.pathname === '/services';
+  const isProductsActive = location.pathname.startsWith('/products');
 
   const closeMobileMenu = () => setIsMobileNavOpen(false);
 
@@ -87,6 +88,7 @@ const Navbar = () => {
         <DesktopNavigation 
           isActive={isActive} 
           isServicesActive={isServicesActive} 
+          isProductsActive={isProductsActive} 
         />
 
         {/* Mobile Navigation Toggle */}

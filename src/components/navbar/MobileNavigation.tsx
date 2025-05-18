@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import MobileNavLink from './MobileNavLink';
 import MobileServicesMenu from './MobileServicesMenu';
+import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
 import { Phone, BarChart2 } from 'lucide-react';
 
@@ -18,9 +19,16 @@ interface MobileNavigationProps {
 const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) => {
   const location = useLocation();
   const [showServices, setShowServices] = useState(false);
+  const [showProducts, setShowProducts] = useState(false);
   
   const toggleServices = () => {
     setShowServices(!showServices);
+    if (!showServices) setShowProducts(false);
+  };
+
+  const toggleProducts = () => {
+    setShowProducts(!showProducts);
+    if (!showProducts) setShowServices(false);
   };
   
   return (
@@ -85,6 +93,26 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   
                   {showServices && (
                     <MobileServicesMenu onClose={onClose} />
+                  )}
+                </motion.div>
+
+                {/* Products Link/Submenu */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                >
+                  <button 
+                    className={`nav-link text-xl ${location.pathname.startsWith('/products') ? 'active' : ''} flex items-center justify-between w-full`}
+                    onClick={toggleProducts}
+                    aria-expanded={showProducts}
+                  >
+                    <span>Products</span>
+                    <span className="ml-2 text-2xl font-light">{showProducts ? '−' : '+'}</span>
+                  </button>
+                  
+                  {showProducts && (
+                    <MobileProductsMenu onClose={onClose} />
                   )}
                 </motion.div>
                 

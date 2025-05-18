@@ -5,14 +5,16 @@ import { Button } from '@/components/ui/button';
 import { navLinks } from './constants';
 import DesktopNavLink from './DesktopNavLink';
 import ServiceDropdown from './ServiceDropdown';
+import ProductDropdown from './ProductDropdown';
 import AdminNavLink from '@/components/AdminNavLink';
 
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
   isServicesActive: boolean;
+  isProductsActive: boolean;
 }
 
-const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProps) => {
+const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: DesktopNavigationProps) => {
   return (
     <nav className="hidden md:flex items-center space-x-4">
       {/* Home link */}
@@ -25,6 +27,9 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
 
       {/* Services Dropdown */}
       <ServiceDropdown isActive={isServicesActive} />
+
+      {/* Products Dropdown */}
+      <ProductDropdown isActive={isProductsActive} />
 
       {/* Remaining links */}
       {navLinks.slice(1).map((link, index) => (
