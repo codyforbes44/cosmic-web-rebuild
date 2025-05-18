@@ -17,6 +17,7 @@ export const useChatState = () => {
   const [message, setMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [unreadMessages, setUnreadMessages] = useState(0);
+  const [isPinned, setIsPinned] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,6 +49,15 @@ export const useChatState = () => {
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
+  };
+
+  const togglePin = () => {
+    setIsPinned(prev => !prev);
+    
+    // Ensure chat is open when pinned
+    if (!isOpen) {
+      setIsOpen(true);
+    }
   };
 
   const handleSendMessage = () => {
@@ -105,9 +115,11 @@ export const useChatState = () => {
     message,
     isTyping,
     unreadMessages,
+    isPinned,
     chatContainerRef,
     setMessage,
     toggleChat,
+    togglePin,
     handleSendMessage,
   };
 };
