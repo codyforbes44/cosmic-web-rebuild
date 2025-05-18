@@ -1,3 +1,4 @@
+
 import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon } from "lucide-react";
 
 export interface NavLink {
@@ -66,6 +67,40 @@ export const serviceCategories = [
     href: "/services?service=ai",
     description: "Intelligent automation and prediction solutions",
     color: "#06B6D4"
+  }
+];
+
+// Add ProductCategory interface
+export interface ProductCategory {
+  title: string;
+  href: string;
+  description: string;
+  color: string;
+  image: string;
+}
+
+// Add productCategories array
+export const productCategories: ProductCategory[] = [
+  {
+    title: "3BI Connect",
+    href: "/products/3bi-connect",
+    description: "Comprehensive platform for driver management and retention",
+    color: "#2563EB",
+    image: "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
+  },
+  {
+    title: "Carrier Partner Network",
+    href: "/products/carrier-partner-network",
+    description: "Connect with qualified drivers and streamline hiring",
+    color: "#10B981",
+    image: "/lovable-uploads/1e9d8177-66c6-4b9f-b830-04c0e28d026e.png"
+  },
+  {
+    title: "TruckOnboard",
+    href: "/products/truck-onboard",
+    description: "Digital onboarding solution for truck drivers",
+    color: "#06B6D4",
+    image: "/lovable-uploads/7f21da0a-fd77-43ea-a7af-3b11648397c0.png"
   }
 ];
 
