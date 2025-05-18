@@ -19,20 +19,21 @@ export interface ServiceCaseStudyData {
   client: string;
   description: string;
   results: ServiceResult[];
+  image: string;
 }
 
 export interface Service {
   id: string;
-  name: string;
+  title: string;
+  subtitle: string;
   description: string;
-  image: string;
+  icon: LucideIcon;
   color: string;
-  deliverables: string;
-  duration: string;
-  process: string;
-  key_benefit: string;
-  benefits: string[];
-  pain_points: string[];
+  features: {
+    title: string;
+    description: string;
+    icon: LucideIcon;
+  }[];
   case_study: ServiceCaseStudyData;
-  testimonials: ServiceTestimonial[];
+  image: string;
 }

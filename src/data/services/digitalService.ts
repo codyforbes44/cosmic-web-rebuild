@@ -31,9 +31,18 @@ export const digitalService: Service = {
     client: 'Midwest Trucking Inc.',
     description: 'We helped Midwest Trucking increase their driver applications by 200% through a targeted digital marketing campaign.',
     results: [
-      '200% increase in driver applications',
-      '40% reduction in cost per hire',
-      '60% improvement in application quality'
+      {
+        label: 'Driver Applications',
+        value: '200% Increase'
+      },
+      {
+        label: 'Cost per Hire',
+        value: '40% Reduction'
+      },
+      {
+        label: 'Application Quality',
+        value: '60% Improvement'
+      }
     ],
     image: '/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png'
   },

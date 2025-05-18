@@ -1,8 +1,15 @@
-
 export interface NavLink {
   name: string;
   path: string;
   disabled?: boolean;
+}
+
+export interface ProductCategory {
+  title: string;
+  href: string;
+  color: string;
+  description: string;
+  image: string;
 }
 
 export const navLinks: NavLink[] = [
@@ -64,7 +71,7 @@ export const serviceCategories = [
   }
 ];
 
-export const productCategories = [
+export const productCategories: ProductCategory[] = [
   {
     title: '3BI Connect',
     href: '/products/3bi-connect',

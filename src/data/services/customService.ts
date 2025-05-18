@@ -31,9 +31,18 @@ export const customService: Service = {
     client: 'Continental Freight',
     description: 'We developed a custom logistics management system that helped Continental Freight optimize their delivery routes and improve customer satisfaction.',
     results: [
-      'Reduced delivery times by 30%',
-      'Improved customer satisfaction by 40%',
-      'Decreased fuel costs by 25%'
+      {
+        label: 'Delivery Time',
+        value: '30% Reduction'
+      },
+      {
+        label: 'Customer Satisfaction',
+        value: '40% Improvement'
+      },
+      {
+        label: 'Fuel Costs',
+        value: '25% Decrease'
+      }
     ],
     image: '/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png'
   },
