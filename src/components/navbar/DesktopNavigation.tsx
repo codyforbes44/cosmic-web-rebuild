@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { navLinks } from './constants';
 import DesktopNavLink from './DesktopNavLink';
+import ServiceDropdown from './ServiceDropdown';
+import ProductDropdown from './ProductDropdown';
 import AdminNavLink from '@/components/AdminNavLink';
 
 interface DesktopNavigationProps {
@@ -15,13 +17,27 @@ interface DesktopNavigationProps {
 const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: DesktopNavigationProps) => {
   return (
     <nav className="hidden md:flex items-center space-x-4">
-      {/* All nav links */}
-      {navLinks.map((link, index) => (
+      {/* Home link */}
+      <DesktopNavLink 
+        key={navLinks[0].name}
+        link={navLinks[0]} 
+        isActive={isActive(navLinks[0].path) === 'active'} 
+        index={0}
+      />
+
+      {/* Services Dropdown */}
+      <ServiceDropdown isActive={isServicesActive} />
+
+      {/* Products Dropdown */}
+      <ProductDropdown isActive={isProductsActive} />
+
+      {/* Remaining links */}
+      {navLinks.slice(1).map((link, index) => (
         <DesktopNavLink 
           key={link.name}
           link={link} 
           isActive={isActive(link.path) === 'active'} 
-          index={index}
+          index={index + 1}
         />
       ))}
       
