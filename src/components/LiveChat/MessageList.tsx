@@ -30,7 +30,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isTyping, chatConta
         >
           {msg.sender === 'bot' && (
             <Avatar className="w-8 h-8 mr-2 flex-shrink-0 self-end border-2 border-white/10 dark:border-slate-700">
-              <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
+              <AvatarImage src="/lovable-uploads/934f1150-c3bd-4fb4-9445-ec288ccb6c47.png" alt="3BI Logo" />
             </Avatar>
           )}
           <div 
@@ -63,7 +63,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isTyping, chatConta
       {isTyping && (
         <div className="flex justify-start message">
           <Avatar className="w-8 h-8 mr-2 flex-shrink-0 border-2 border-white/10 dark:border-slate-700">
-            <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
+            <AvatarImage src="/lovable-uploads/934f1150-c3bd-4fb4-9445-ec288ccb6c47.png" alt="3BI Logo" />
           </Avatar>
           <div className="bg-white rounded-2xl p-3 border border-slate-100 typing-indicator dark:bg-slate-800 dark:text-white dark:border-slate-700">
             <div className="flex space-x-1">

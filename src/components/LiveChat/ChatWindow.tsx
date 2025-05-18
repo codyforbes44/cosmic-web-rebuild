@@ -32,7 +32,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       <div className="bg-gradient-to-r from-brand-gold to-brand-gold/80 p-4 flex justify-between items-center">
         <div className="flex items-center">
           <Avatar className="w-10 h-10 mr-3 ring-2 ring-white/30 border-2 border-white/20">
-            <AvatarImage src="/images/3bi-logo-avatar.png" alt="3BI Logo" />
+            <AvatarImage src="/lovable-uploads/934f1150-c3bd-4fb4-9445-ec288ccb6c47.png" alt="3BI Logo" />
           </Avatar>
           <div>
             <h3 className="text-white font-bold text-lg">ƷBI Assistant</h3>
