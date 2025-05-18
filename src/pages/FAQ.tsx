@@ -52,7 +52,7 @@ const FAQ = () => {
       <SEO
         title="Frequently Asked Questions | Ʒʙɪ"
         description="Find answers to commonly asked questions about Ʒʙɪ's services, products, and expertise in digital marketing and technology solutions."
-        canonicalUrl="/faq"
+        url="/faq"
       />
       <Navbar />
       <div className="bg-space-dark-blue min-h-screen py-20">
