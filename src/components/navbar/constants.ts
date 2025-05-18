@@ -1,4 +1,3 @@
-
 import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon } from "lucide-react";
 
 export interface NavLink {
@@ -11,9 +10,6 @@ export interface NavLink {
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
-  { name: 'Services', path: '/services' },
-  { name: 'Products', path: '/products' },
-  { name: 'Case Studies', path: '/case-studies' },
   { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
 ];
