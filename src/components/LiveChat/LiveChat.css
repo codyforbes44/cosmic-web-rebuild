@@ -29,6 +29,13 @@
   box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.3), 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
+/* Dark mode styles for chat window */
+.dark .chat-window {
+  background-color: hsl(222, 47%, 11%);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.5), 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
 /* Chat button effects */
 .chat-button {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -38,6 +45,14 @@
 .chat-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(155, 135, 245, 0.4);
+}
+
+.dark .chat-button {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .chat-button:hover {
+  box-shadow: 0 8px 24px rgba(155, 135, 245, 0.3);
 }
 
 /* Glass effect */
@@ -58,6 +73,17 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Dark mode message bubbles */
+.dark .user-message .message-bubble {
+  box-shadow: 0 2px 8px rgba(155, 135, 245, 0.2);
+}
+
+.dark .agent-message .message-bubble {
+  background-color: hsl(222, 47%, 15%);
+  border-color: hsl(223, 47%, 20%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Typing indicator animation */
 .typing-indicator .dot {
   animation: blink 1.5s infinite;
@@ -71,6 +97,12 @@
   animation-delay: 0.4s;
 }
 
+/* Dark mode typing indicator */
+.dark .typing-indicator {
+  background-color: hsl(222, 47%, 15%);
+  border-color: hsl(223, 47%, 20%);
+}
+
 /* Unread badge pulse effect */
 .unread-badge {
   animation: pulse 2s infinite;
@@ -80,6 +112,22 @@
 input:focus {
   box-shadow: 0 0 0 2px rgba(155, 135, 245, 0.3);
   transition: box-shadow 0.2s;
+}
+
+/* Dark mode input styles */
+.dark input {
+  background-color: hsl(222, 47%, 15%);
+  border-color: hsl(223, 47%, 20%);
+  color: white;
+}
+
+.dark input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dark input:focus {
+  box-shadow: 0 0 0 2px rgba(155, 135, 245, 0.2);
+  border-color: rgba(155, 135, 245, 0.4);
 }
 
 /* Button hover effects */
@@ -96,17 +144,45 @@ button[type="submit"]:active {
   transform: translateY(0);
 }
 
-/* Dark mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .chat-button {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  }
-  
-  .user-message .message-bubble {
-    box-shadow: 0 2px 8px rgba(155, 135, 245, 0.2);
-  }
-  
-  .agent-message .message-bubble {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
+/* Dark mode chat header */
+.dark .chat-window .bg-gradient-to-r {
+  background: linear-gradient(to right, hsl(258, 80%, 65%), hsl(258, 80%, 60%));
+}
+
+/* Dark mode message list background */
+.dark .chat-window .bg-slate-50 {
+  background-color: hsl(222, 47%, 11%);
+}
+
+/* Dark mode scrollbar customization */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Dark mode chat input area */
+.dark .chat-window .border-t.border-slate-200.bg-white {
+  background-color: hsl(222, 47%, 13%);
+  border-color: hsl(223, 47%, 20%);
+}
+
+/* Chat window transitions for theme changes */
+.chat-window,
+.message-bubble,
+input,
+button {
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
