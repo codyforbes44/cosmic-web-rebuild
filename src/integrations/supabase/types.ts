@@ -78,6 +78,72 @@ export type Database = {
         }
         Relationships: []
       }
+      visitor_metadata: {
+        Row: {
+          browser_language: string | null
+          city: string | null
+          country: string | null
+          device_type: string | null
+          id: string
+          ip_address: string | null
+          operating_system: string | null
+          page_url: string | null
+          referrer: string | null
+          region: string | null
+          screen_resolution: string | null
+          time_on_page: number | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+          visit_timestamp: string | null
+        }
+        Insert: {
+          browser_language?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          id?: string
+          ip_address?: string | null
+          operating_system?: string | null
+          page_url?: string | null
+          referrer?: string | null
+          region?: string | null
+          screen_resolution?: string | null
+          time_on_page?: number | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+          visit_timestamp?: string | null
+        }
+        Update: {
+          browser_language?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          id?: string
+          ip_address?: string | null
+          operating_system?: string | null
+          page_url?: string | null
+          referrer?: string | null
+          region?: string | null
+          screen_resolution?: string | null
+          time_on_page?: number | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+          visit_timestamp?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
