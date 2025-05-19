@@ -84,6 +84,22 @@ const faqKnowledge: KnowledgeItem[] = [
       are designed specifically to address the unique challenges of transportation companies, with a focus
       on driver recruitment, retention, and operational efficiency.
     `
+  },
+  {
+    keywords: ["different", "unique", "special", "stand out", "what makes", "why choose"],
+    response: `
+      What makes ƷBI different is our unique combination of industry expertise, innovative technology, and client-focused approach:
+      
+      1. Industry-Specific Knowledge: We specialize in technology solutions for the trucking and logistics industry, with deep understanding of the unique challenges faced by transportation companies.
+      
+      2. Data-Driven Solutions: Our platforms leverage advanced analytics and AI to provide actionable insights that drive measurable business outcomes.
+      
+      3. Custom Development: We build tailored solutions that address your specific business challenges rather than offering one-size-fits-all products.
+      
+      4. End-to-End Support: Our team provides comprehensive support from initial consultation through implementation and ongoing maintenance.
+      
+      5. Client Partnership: We see ourselves as partners in your success, not just a service provider, with a proven track record of helping transportation businesses improve operations and profitability.
+    `
   }
 ];
 
