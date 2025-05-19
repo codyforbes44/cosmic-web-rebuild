@@ -128,7 +128,11 @@ export const chatbotKnowledge: KnowledgeItem[] = [
  * Now includes user authentication check for restricted content
  */
 export function findRelevantResponse(userInput: string, isAuthenticated: boolean = false): string | null {
-  const normalizedInput = userInput.toLowerCase();
+  const normalizedInput = userInput.toLowerCase().trim();
+  
+  if (!normalizedInput || normalizedInput.length < 2) {
+    return "Could you please provide more details about what you're looking for?";
+  }
   
   // Try to find a direct match first
   for (const item of chatbotKnowledge) {
@@ -136,7 +140,7 @@ export function findRelevantResponse(userInput: string, isAuthenticated: boolean
     if (item.restricted && !isAuthenticated) continue;
     
     for (const keyword of item.keywords) {
-      if (normalizedInput.includes(keyword)) {
+      if (keyword && normalizedInput.includes(keyword)) {
         return item.response.trim();
       }
     }
@@ -147,7 +151,7 @@ export function findRelevantResponse(userInput: string, isAuthenticated: boolean
     // Skip restricted content for unauthenticated users
     (!item.restricted || isAuthenticated) &&
     item.keywords.some(keyword => 
-      keyword.length > 5 && normalizedInput.includes(keyword.substring(0, 5))
+      keyword && keyword.length > 3 && normalizedInput.includes(keyword.substring(0, 3))
     )
   );
   

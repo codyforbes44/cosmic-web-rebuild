@@ -42,7 +42,7 @@ export const useBotResponses = (
       
       // If we have a knowledge-based response, use it
       const botResponse = knowledgeResponse || 
-        "I don't have specific information about that. Could you provide more details or ask about our services, products, or company information?";
+        "I don't have specific information about that. Could you please provide more details or ask about our services, products, or company information?";
       
       // Calculate typing duration based on response length
       const typingDuration = calculateTypingDuration(botResponse, TYPING_SPEED);
