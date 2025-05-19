@@ -96,11 +96,12 @@ const AstronomyFacts = () => {
 
           {Object.entries(services).map(([category, categoryServices]) => (
             <TabsContent key={category} value={category} className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="flex flex-nowrap overflow-x-auto gap-8 pb-4 snap-x">
                 {categoryServices.map((service, index) => (
                   <div
                     key={index}
-                    className="space-card p-6 overflow-hidden hover:scale-[1.02] transition-all duration-300 h-full"
+                    className="space-card p-6 overflow-hidden hover:scale-[1.02] transition-all duration-300 
+                              min-w-[300px] max-w-[400px] flex-1 snap-start"
                   >
                     <div className="mb-4 overflow-hidden rounded-lg">
                       <img
