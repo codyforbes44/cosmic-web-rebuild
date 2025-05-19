@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Cloud, CloudSun, Sun, CloudRain, CloudSnow, Wind, Thermometer, Droplets } from 'lucide-react';
 
@@ -17,7 +18,7 @@ interface WeatherWidgetProps {
 
 const WeatherWidget = ({ 
   className = "",
-  title = "Your Local Weather",
+  title = "Local Conditions",
   units = 'imperial'
 }: WeatherWidgetProps) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
