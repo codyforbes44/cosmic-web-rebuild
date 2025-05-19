@@ -1,4 +1,23 @@
 
-// This file is now just a re-export from the services folder
-// to maintain backward compatibility with existing imports
-export { services } from './services';
+import { Service } from '@/types/services';
+import {
+  strategyService,
+  digitalService,
+  socialService,
+  customService,
+  webService,
+  analyticsService,
+  aiService,
+  recruitmentService
+} from './services';
+
+export const services: Service[] = [
+  strategyService,
+  recruitmentService, // Adding our new service near the top for visibility
+  digitalService,
+  socialService,
+  customService,
+  webService,
+  analyticsService,
+  aiService
+];

@@ -1,19 +1,20 @@
 
-import { Service } from '@/types/services';
 import { strategyService } from './strategyService';
 import { digitalService } from './digitalService';
+import { socialService } from './socialService';
 import { customService } from './customService';
 import { webService } from './webService';
 import { analyticsService } from './analyticsService';
 import { aiService } from './aiService';
-import { socialService } from './socialService';
+import { recruitmentService } from './recruitmentService';
 
-export const services: Service[] = [
+export {
   strategyService,
   digitalService,
+  socialService,
   customService,
   webService,
   analyticsService,
   aiService,
-  socialService
-];
+  recruitmentService
+};

@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -25,6 +26,7 @@ const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const RecruitmentMarketing = lazy(() => import("./pages/RecruitmentMarketing"));
 
 // New Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -77,6 +79,7 @@ const AppRoutes: React.FC = () => {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/recruitment-marketing" element={<RecruitmentMarketing />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/case-study/:id" element={<CaseStudy />} />
           <Route path="/news" element={<News />} />

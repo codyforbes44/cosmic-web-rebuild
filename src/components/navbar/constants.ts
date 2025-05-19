@@ -1,5 +1,4 @@
-
-import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon } from "lucide-react";
+import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon, Users } from "lucide-react";
 
 export interface NavLink {
   name: string;
@@ -29,6 +28,12 @@ export const serviceCategories = [
     href: "/services?service=strategy",
     description: "Technology strategy development and roadmap planning aligned with business objectives",
     color: "#10B981"
+  },
+  {
+    title: "Recruitment Marketing",
+    href: "/services?service=recruitment",
+    description: "Powerful driver recruitment campaigns that deliver results",
+    color: "#FF6B35"
   },
   {
     title: "Digital Marketing",
