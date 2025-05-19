@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
-import { Cloud, CloudSun, Sun, CloudRain, CloudSnow, Wind, Thermometer, Droplets, WifiOff } from 'lucide-react';
+import { Cloud, CloudSun, Sun, CloudRain, CloudSnow, Wind, Thermometer, Droplets, WifiOff, Signal } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface WeatherData {
   location: string;
@@ -137,7 +138,19 @@ const WeatherWidget = ({
           <div className="flex items-center justify-between mb-4">
             <span className="font-medium text-white">{weatherData.location}</span>
             {error ? (
-              <WifiOff size={24} className="text-amber-400" />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-2">
+                      <WifiOff size={18} className="text-amber-400" />
+                      <Signal size={18} className="text-amber-400" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-gray-800 text-gray-100 border-gray-700">
+                    <p>{error}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ) : (
               getWeatherIcon(weatherData.condition)
             )}
@@ -168,12 +181,6 @@ const WeatherWidget = ({
               <span className="text-lg font-medium ml-6">{weatherData.windSpeed} {units === 'imperial' ? 'mph' : 'm/s'}</span>
             </div>
           </div>
-          
-          {error && (
-            <div className="mt-3 text-xs text-amber-400 text-center">
-              {error}
-            </div>
-          )}
         </div>
       )}
     </div>
