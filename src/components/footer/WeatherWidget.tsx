@@ -37,8 +37,11 @@ const WeatherWidget = () => {
         
         const weatherResult = await weatherResponse.json();
         
+        // Format location as City, ST, CO where ST is state/region code and CO is country code
+        const formattedLocation = `${geoData.city}, ${geoData.region_code || ''}, ${geoData.country_code || ''}`;
+        
         setWeatherData({
-          location: `${geoData.city}, ${geoData.country_name}`,
+          location: formattedLocation,
           temperature: Math.round(weatherResult.main.temp),
           condition: weatherResult.weather[0].main,
           humidity: weatherResult.main.humidity,
@@ -75,7 +78,7 @@ const WeatherWidget = () => {
   if (loading) {
     return (
       <div className="bg-space-deep-blue/40 p-4 rounded-lg border border-gray-800">
-        <h3 className="text-lg font-medium mb-2 text-white">Local Weather</h3>
+        <h3 className="text-lg font-medium mb-2 text-white">Your Local Weather</h3>
         <div className="text-gray-400 animate-pulse">Loading weather data...</div>
       </div>
     );
@@ -84,7 +87,7 @@ const WeatherWidget = () => {
   if (error) {
     return (
       <div className="bg-space-deep-blue/40 p-4 rounded-lg border border-gray-800">
-        <h3 className="text-lg font-medium mb-2 text-white">Local Weather</h3>
+        <h3 className="text-lg font-medium mb-2 text-white">Your Local Weather</h3>
         <div className="text-gray-400">{error}</div>
       </div>
     );
@@ -92,7 +95,7 @@ const WeatherWidget = () => {
 
   return (
     <div className="bg-space-deep-blue/40 p-4 rounded-lg border border-gray-800">
-      <h3 className="text-lg font-medium mb-3 text-white">Local Weather</h3>
+      <h3 className="text-lg font-medium mb-3 text-white">Your Local Weather</h3>
       {weatherData && (
         <div className="text-gray-200">
           <div className="flex items-center justify-between mb-2">
