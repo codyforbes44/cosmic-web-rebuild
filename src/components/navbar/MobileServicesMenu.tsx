@@ -14,13 +14,13 @@ const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}
     >
-      <div className="nav-link text-xl">Services</div>
-      <div className="pl-4 mt-2 space-y-2">
+      <div className="nav-link text-xl text-center">Services</div>
+      <div className="mt-2 space-y-2 flex flex-col items-center">
         {serviceCategories.map((service) => (
           <Link 
             key={service.href}
             to={service.href} 
-            className="block text-gray-300 hover:text-white py-1"
+            className="block text-gray-300 hover:text-white py-1 text-center"
             onClick={onClose}
             style={{ color: service.color }}
           >

@@ -9,13 +9,14 @@ interface MobileProductsMenuProps {
 
 const MobileProductsMenu = ({ onClose }: MobileProductsMenuProps) => {
   return (
-    <div className="pl-6 pb-2 space-y-2">
+    <div className="pb-2 space-y-2 flex flex-col items-center">
       {productCategories.map((product, index) => (
         <motion.div
           key={product.href}
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.2, delay: 0.1 * index }}
+          className="text-center"
         >
           <Link 
             to={product.href} 
