@@ -1,8 +1,24 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
 
 const Footer = () => {
+  // Group service categories by type for better organization
+  const serviceGroups = {
+    marketing: serviceCategories.filter(service => 
+      service.title.includes("Marketing") || service.title.includes("Recruitment")),
+    technology: serviceCategories.filter(service => 
+      service.title.includes("Development") || 
+      service.title.includes("Web") || 
+      service.title.includes("Custom"))
+  };
+  
+  // Get remaining services that don't fit into the above categories
+  const otherServices = serviceCategories.filter(service => 
+    !serviceGroups.marketing.includes(service) && 
+    !serviceGroups.technology.includes(service));
+
   return (
     <footer className="relative bg-space-deep-blue pt-16 pb-8 border-t border-gray-800">
       {/* Opacity layer */}
@@ -36,17 +52,49 @@ const Footer = () => {
             </div>
           </div>
           
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-white">Services</h3>
-            <ul className="space-y-2">
-              {serviceCategories.map(service => <li key={service.href}>
-                  <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
-                "--color": service.color
-              } as React.CSSProperties}>
-                    {service.title}
-                  </Link>
-                </li>)}
-            </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 col-span-1 md:col-span-2">
+            <div className="mb-6 md:mb-0">
+              <h3 className="text-lg font-medium mb-4 text-white">Marketing Services</h3>
+              <ul className="space-y-2">
+                {serviceGroups.marketing.map(service => (
+                  <li key={service.href}>
+                    <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
+                      "--color": service.color
+                    } as React.CSSProperties}>
+                      {service.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className="text-lg font-medium mb-4 mt-6 text-white">Technology Services</h3>
+              <ul className="space-y-2">
+                {serviceGroups.technology.map(service => (
+                  <li key={service.href}>
+                    <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
+                      "--color": service.color
+                    } as React.CSSProperties}>
+                      {service.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-medium mb-4 text-white">Strategic Services</h3>
+              <ul className="space-y-2">
+                {otherServices.map(service => (
+                  <li key={service.href}>
+                    <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
+                      "--color": service.color
+                    } as React.CSSProperties}>
+                      {service.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           
           <div>
