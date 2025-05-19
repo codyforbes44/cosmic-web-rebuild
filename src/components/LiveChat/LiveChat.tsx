@@ -26,7 +26,7 @@ const LiveChat = () => {
     <div className={`chat-container dark ${isPinned ? 'chat-pinned' : 'chat-floating'}`}>
       {/* Chat Window */}
       {isOpen && (
-        <div className={`chat-window-wrapper ${isPinned ? 'chat-window-pinned' : ''}`}>
+        <div className="chat-window-wrapper">
           <ChatWindow
             messages={messages}
             message={message}

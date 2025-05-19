@@ -142,14 +142,13 @@ interface PartnerGridProps {
 
 const PartnerGrid: React.FC<PartnerGridProps> = ({ partners }) => {
   return (
-    <div className="flex overflow-x-auto gap-6 pb-4 snap-x">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {partners.map((partner, index) => (
         <motion.div
           key={partner.name}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: index * 0.1 }}
-          className="min-w-[300px] max-w-[400px] flex-1 snap-start"
         >
           <Card className="bg-space-deep-blue border-gray-800 h-full flex flex-col overflow-hidden transition-all duration-300 hover:border-accent/50">
             <CardHeader className="pb-2">

@@ -22,7 +22,7 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ analyticsData, loading })
 
   return (
     <Tabs defaultValue="overview" className="w-full">
-      <TabsList className="bg-card/20 backdrop-blur-sm border-white/10 mb-6 flex overflow-x-auto no-scrollbar">
+      <TabsList className="bg-card/20 backdrop-blur-sm border-white/10 mb-6">
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="visitors">Visitors</TabsTrigger>
         <TabsTrigger value="geography">Geography</TabsTrigger>
@@ -53,7 +53,7 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ analyticsData, loading })
       </TabsContent>
       
       <TabsContent value="geography">
-        <div className="flex overflow-x-auto gap-6 pb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <AnalyticsCharts 
             countryData={countryData}
             loading={loading}
@@ -63,13 +63,11 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ analyticsData, loading })
       </TabsContent>
       
       <TabsContent value="sources">
-        <div className="flex overflow-x-auto gap-6 pb-4">
-          <AnalyticsCharts
-            sourceData={sourceData}
-            loading={loading}
-            chartType="sources" 
-          />
-        </div>
+        <AnalyticsCharts
+          sourceData={sourceData}
+          loading={loading}
+          chartType="sources" 
+        />
       </TabsContent>
       
       <TabsContent value="data">

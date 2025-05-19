@@ -129,12 +129,12 @@ const FAQ = () => {
               onValueChange={setActiveTab}
               className="mb-8"
             >
-              <TabsList className="flex overflow-x-auto no-scrollbar mb-8 bg-space-deep-blue/50">
+              <TabsList className="grid grid-cols-3 mb-8 bg-space-deep-blue/50">
                 {faqCategories.map((category) => (
                   <TabsTrigger 
                     key={category.id} 
                     value={category.id}
-                    className="text-base py-3 data-[state=active]:bg-accent/10 data-[state=active]:text-accent whitespace-nowrap"
+                    className="text-base py-3 data-[state=active]:bg-accent/10 data-[state=active]:text-accent"
                   >
                     <span className="mr-2">{category.icon}</span>
                     {category.name}
@@ -179,13 +179,9 @@ const FAQ = () => {
               className="mt-16 mb-12"
             >
               <h2 className="text-2xl font-bold text-white mb-6 text-center">What Our Clients Say</h2>
-              <div className="flex overflow-x-auto gap-6 snap-x pb-4">
+              <div className="grid md:grid-cols-2 gap-6">
                 {successStories.map((story, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-space-deep-blue/60 p-6 rounded-xl border border-gray-700 shadow-xl 
-                              min-w-[300px] max-w-[500px] flex-1 snap-start"
-                  >
+                  <div key={index} className="bg-space-deep-blue/60 p-6 rounded-xl border border-gray-700 shadow-xl">
                     <div className="flex mb-4">
                       {[...Array(story.stars)].map((_, i) => (
                         <Star key={i} className="h-5 w-5 fill-brand-gold text-brand-gold" />
@@ -235,13 +231,13 @@ const FAQ = () => {
               
               <div className="mt-12 border-t border-gray-700 pt-8">
                 <h3 className="text-xl font-bold text-white mb-4">Why Choose Ʒʙɪ?</h3>
-                <div className="flex flex-nowrap overflow-x-auto gap-4">
+                <div className="grid md:grid-cols-3 gap-4">
                   {[
                     { title: "Industry Expertise", description: "Domain knowledge across multiple sectors" },
                     { title: "Custom Solutions", description: "Tailored to your specific business needs" },
                     { title: "Proven Results", description: "Track record of driving client success" }
                   ].map((benefit, idx) => (
-                    <div key={idx} className="flex items-start min-w-[220px]">
+                    <div key={idx} className="flex items-start">
                       <div className="mr-3 p-2 rounded-full bg-accent/10">
                         <Check className="h-5 w-5 text-accent" />
                       </div>
