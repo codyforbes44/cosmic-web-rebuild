@@ -1,7 +1,7 @@
 
 import React from 'react';
+import { Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { ThumbsUp, ThumbsDown, Share2 } from 'lucide-react';
 
 interface MessageActionsProps {
   lastMessageId: string;
@@ -10,79 +10,65 @@ interface MessageActionsProps {
   setShowRating: (id: string | null) => void;
 }
 
-const MessageActions: React.FC<MessageActionsProps> = ({
-  lastMessageId,
+const MessageActions: React.FC<MessageActionsProps> = ({ 
+  lastMessageId, 
   lastMessageText,
   showRating,
   setShowRating
 }) => {
   const { toast } = useToast();
 
-  const handleFeedback = (messageId: string, type: 'positive' | 'negative') => {
-    setShowRating(messageId);
-    // Here you could send the feedback to your analytics system
+  const handleCopyMessage = () => {
+    navigator.clipboard.writeText(lastMessageText);
     toast({
-      title: "Thank you for your feedback!",
-      description: type === 'positive' 
-        ? "We're glad our response was helpful." 
-        : "We'll work on improving our responses.",
-      duration: 3000,
+      title: "Copied to clipboard",
+      duration: 2000,
     });
   };
-  
-  const handleShare = (text: string) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        toast({
-          title: "Copied to clipboard!",
-          description: "You can now paste this information anywhere.",
-          duration: 2000,
-        });
-      })
-      .catch(err => {
-        toast({
-          title: "Could not copy text",
-          description: "Please try selecting and copying manually.",
-          variant: "destructive",
-        });
-      });
+
+  const handleRating = (isPositive: boolean) => {
+    // In a real app, you'd send this feedback to your backend
+    toast({
+      title: `Thank you for your ${isPositive ? 'positive' : 'negative'} feedback`,
+      description: "We appreciate your input on our responses.",
+      duration: 3000,
+    });
+    
+    // Show the rating as selected
+    setShowRating(lastMessageId);
   };
 
   return (
-    <div className="px-4 pt-1 pb-2 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
-      <div className="flex justify-center space-x-4">
-        <button 
-          onClick={() => handleFeedback(lastMessageId, 'positive')}
-          className="flex items-center text-xs px-2 py-1 text-slate-500 hover:text-brand-gold"
-          disabled={showRating !== null}
-        >
-          <ThumbsUp className="w-3 h-3 mr-1" />
-          <span>Helpful</span>
-        </button>
-        
-        <button 
-          onClick={() => handleFeedback(lastMessageId, 'negative')}
-          className="flex items-center text-xs px-2 py-1 text-slate-500 hover:text-brand-gold"
-          disabled={showRating !== null}
-        >
-          <ThumbsDown className="w-3 h-3 mr-1" />
-          <span>Not helpful</span>
-        </button>
-        
-        <button 
-          onClick={() => handleShare(lastMessageText)}
-          className="flex items-center text-xs px-2 py-1 text-slate-500 hover:text-brand-gold"
-        >
-          <Share2 className="w-3 h-3 mr-1" />
-          <span>Copy</span>
-        </button>
-      </div>
+    <div className="message-actions px-4">
+      {/* Copy button */}
+      <button 
+        onClick={handleCopyMessage}
+        className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+        aria-label="Copy message"
+        title="Copy message"
+      >
+        <Copy size={14} />
+      </button>
       
-      {showRating && (
-        <div className="text-center text-xs text-slate-500 mt-1 animate-fade-in">
-          Thank you for your feedback!
-        </div>
-      )}
+      {/* Thumbs up button */}
+      <button 
+        onClick={() => handleRating(true)}
+        className={`rating-button ${showRating === lastMessageId ? 'selected' : ''}`}
+        aria-label="Rate helpful"
+        title="This was helpful"
+      >
+        <ThumbsUp size={14} />
+      </button>
+      
+      {/* Thumbs down button */}
+      <button 
+        onClick={() => handleRating(false)}
+        className={`rating-button ${showRating === lastMessageId ? 'selected' : ''}`}
+        aria-label="Rate unhelpful"
+        title="This wasn't helpful"
+      >
+        <ThumbsDown size={14} />
+      </button>
     </div>
   );
 };

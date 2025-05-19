@@ -1,77 +1,59 @@
 
-// Auto-response configuration for chat
+// Collection of predefined responses for the chatbot
+// These are used as fallbacks or for specific scenarios
 
-// Static auto-response config
-export const AUTO_RESPONSES = [
-  {
-    keywords: ['pricing', 'cost', 'price', 'package', 'subscription'],
-    response: "Our pricing varies based on your specific needs. We offer flexible packages starting from $799/month. Would you like to speak with a sales representative to get a custom quote?"
-  },
-  {
-    keywords: ['web', 'website', 'development'],
-    response: "Our web development services include responsive design, e-commerce solutions, and custom web applications. We've helped businesses of all sizes establish a strong online presence. What kind of website are you looking to build?"
-  },
-  {
-    keywords: ['social', 'media', 'marketing', 'facebook', 'instagram', 'linkedin'],
-    response: "Our social media marketing services help businesses increase engagement and drive conversions. We offer content creation, community management, and paid advertising campaigns. Which platforms are you currently using?"
-  },
-  {
-    keywords: ['web3', 'blockchain', 'crypto', 'nft'],
-    response: "Our Web3 services include blockchain integration, smart contract development, and NFT marketplace creation. We're at the forefront of this emerging technology. What specific Web3 project are you interested in?"
-  },
-  {
-    keywords: ['software', 'app', 'application', 'development'],
-    response: "Our software development team creates custom applications tailored to your business needs. We specialize in scalable, secure, and user-friendly solutions. What kind of software are you looking to develop?"
-  },
-  {
-    keywords: ['contact', 'call', 'phone', 'email', 'reach'],
-    response: "You can reach our team at support@3bi.io or call us at (817) 757-2828. Would you like us to have someone contact you directly?"
-  },
-  {
-    keywords: ['thanks', 'thank you', 'great', 'awesome', 'excellent'],
-    response: "You're welcome! Is there anything else I can help you with today?"
-  },
-  // Ʒʙɪ-specific service info
-  {
-    keywords: ['services', 'offer', 'what services', '3bi'],
-    response: "Ʒʙɪ provides a wide range of specialized marketing and technology solutions, including:\n\n– Digital Marketing: Targeted campaigns and advertising strategies across platforms like Google, Facebook, Instagram, LinkedIn, and more to reach and engage your desired audience.\n\n– Business Intelligence (BI) Reporting: Comprehensive analysis and visual representation of marketing metrics and market analytics using tools like Tableau, Power BI, and Looker to support strategic decision-making.\n\n– Workflow Optimization Solutions: Automation and management of marketing and business operations through platforms such as Zapier, Monday.com, and Asana to improve efficiency.\n\n– AI Adaptation & Integration: Integration of AI technologies into marketing and business processes to enhance customer engagement, predictive analytics, and operational efficiency.\n\n– Technology Migrations: Assistance in transitioning businesses to new technologies, ensuring minimal disruption and seamless integration."
-  },
-  {
-    keywords: ['improve', 'marketing strategy', 'strategy'],
-    response: "We analyze your current marketing efforts to develop customized, data-driven strategies. This includes optimizing digital campaigns, enhancing brand visibility, and using targeted advertising techniques to reach the right audience effectively."
-  },
-  {
-    keywords: ['business intelligence', 'bi reporting'],
-    response: "BI reporting involves collecting, analyzing, and visualizing data related to marketing performance, customer behavior, and industry trends. This empowers organizations to make informed strategic decisions, optimize their marketing approaches, and identify opportunities for growth."
-  },
-  {
-    keywords: ['automate', 'automation', 'workflow', 'processes'],
-    response: "Absolutely! We utilize automation tools to streamline various marketing and operational tasks, such as customer communication, data management, and campaign scheduling, reducing manual workloads and enabling your team to focus on high-value initiatives."
-  },
-  {
-    keywords: ['integrate ai', 'ai', 'artificial intelligence'],
-    response: "We implement AI technologies across multiple business areas, including customer segmentation, predictive analytics, automated content personalization, and interactive chatbots to enhance customer engagement and optimize operational efficiency."
-  },
-  {
-    keywords: ['industries', 'industry'],
-    response: "Ʒʙɪ serves clients across diverse industries, including technology, healthcare, finance, manufacturing, retail, and more. We tailor our marketing and technology solutions to align with the unique requirements of each sector."
-  },
-  {
-    keywords: ['technical capabilities', 'capabilities'],
-    response: "Our technical capabilities include:\n\n– Data Visualization: Creation of clear and actionable visual reports using Tableau, Power BI, and Looker.\n– Automation Tools: Expertise in workflow automation using platforms like Zapier, Asana, and Monday.com.\n– AI Technologies: Implementation of advanced AI solutions for predictive analytics, customer engagement, and operational improvements.\n– Analytics Platforms: Proficiency in analytics tools such as Google Analytics, SEMrush, and Adobe Analytics to track, measure, and optimize marketing performance."
-  },
-  {
-    keywords: ['get in touch', 'support', 'contact'],
-    response: "You can contact us via phone at 817-757-2828, email at support@3bi.io, or through our social media channels on X and LinkedIn."
-  },
-  {
-    keywords: ['what sets', 'apart', 'differentiate'],
-    response: "Ʒʙɪ distinguishes itself through an innovative approach, deep expertise in data-driven strategies, and a commitment to leveraging the latest technologies. Our personalized service and tailored solutions ensure we address the specific challenges and goals of each client effectively."
-  },
-  {
-    keywords: ['products', 'offerings', 'solutions'],
-    response: "We offer three main product solutions:\n\n1. 3BI Connect: A comprehensive customer relationship management system tailored for marketing agencies.\n\n2. Carrier Partner Network: A logistics management platform that optimizes supply chain operations.\n\n3. TruckOnboard: An advanced fleet management solution for the transportation industry that streamlines driver onboarding and compliance."
-  }
+// Welcome messages when chat is first opened
+export const welcomeMessages = [
+  "👋 Welcome to ƷBI! How can I help you today?",
+  "Hello! Thanks for reaching out to ƷBI. What can I assist you with?",
+  "Welcome to ƷBI's support chat. How may I assist you?"
 ];
 
-export const defaultResponse = "Thank you for your message. I unfortunately do not have knowledge on that topic. Is there anything else you'd like to know about our services or products?";
+// Responses for when the user asks about products
+export const productResponses = {
+  "3bi-connect": "Our 3BI Connect platform helps trucking companies retain drivers through comprehensive driver management tools, communication features, and data analytics.",
+  "carrier-partner-network": "The Carrier Partner Network connects trucking companies with qualified drivers, streamlining the hiring process and improving match quality.",
+  "truckonboard": "TruckOnboard is our digital onboarding solution that simplifies paperwork, ensures compliance, and provides a smooth start for new drivers.",
+  "drivers-matter": "Drivers Matter is our advocacy platform focused on improving working conditions for commercial truck drivers through resources, support, and community."
+};
+
+// Responses for when the user asks about services
+export const serviceResponses = {
+  "strategy": "Our Strategic Consulting service helps align your technology investments with your business objectives and create a roadmap for implementation.",
+  "recruitment": "Our Recruitment Marketing services help trucking companies attract qualified drivers through targeted campaigns and industry-specific strategies.",
+  "digital": "Our Digital Marketing solutions help increase your online presence, generate leads, and improve conversion rates for trucking businesses.",
+  "social": "We provide comprehensive Social Media Marketing services tailored for trucking companies, building your brand and engaging with your audience.",
+  "custom": "Our Custom Development team creates tailored solutions specific to your trucking company's unique needs and workflow requirements.",
+  "web": "We develop modern, responsive web and mobile applications that enhance your operations and provide a seamless user experience.",
+  "analytics": "Our Data Analytics services turn your operational data into actionable insights to improve efficiency and decision-making.",
+  "ai": "We implement AI & Machine Learning solutions that can predict maintenance needs, optimize routes, and automate routine tasks."
+};
+
+// Responses when the user is asking for help or is confused
+export const helpResponses = [
+  "I can help you learn about our products, services, or company. What would you like to know?",
+  "Not sure where to start? You can ask about our enterprise software solutions, services, or how to get a demo.",
+  "I'm here to assist with information about ƷBI's offerings. Would you like to know about our products, services, or how to contact our team?"
+];
+
+// Responses for when the chat doesn't understand the user's input
+export const fallbackResponses = [
+  "I'm not sure I understand. Could you rephrase your question?",
+  "I don't have specific information about that. Could you ask about our products, services, or company information?",
+  "I'm still learning! To best assist you, please ask about ƷBI's products, services, or how to get in touch with our team.",
+  "I'm not able to help with that specific request. Would you like information about our products or services instead?"
+];
+
+// Closing messages
+export const closingResponses = [
+  "Is there anything else I can help you with today?",
+  "Do you have any other questions about ƷBI's products or services?",
+  "Is there something else you'd like to know about our solutions?"
+];
+
+// Thank you responses
+export const thankYouResponses = [
+  "You're welcome! If you have any more questions, feel free to ask.",
+  "Happy to help! Let me know if you need anything else.",
+  "My pleasure! Don't hesitate to reach out if you have more questions."
+];

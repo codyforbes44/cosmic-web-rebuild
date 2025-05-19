@@ -1,136 +1,116 @@
-import { useState } from 'react';
+
 import { ChatMessage } from '../types';
 import { useToast } from '@/hooks/use-toast';
 import { 
   processZapierCommand, 
   findWebhookByCategory, 
   triggerZapierWebhook,
-  parseZapierResponse,
+  parseZapierResponse
 } from '../zapierIntegration';
-import { getRandomDelay, calculateTypingDuration } from './chatUtils';
-import { THINKING_DELAY, TYPING_SPEED } from './chatStateTypes';
 
 export const useZapierChat = (
   isAuthenticated: boolean,
   setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
   setIsThinking: React.Dispatch<React.SetStateAction<boolean>>,
-  setIsTyping: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsTyping: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const { toast } = useToast();
 
-  const handleZapierCommand = async (userMessage: string): Promise<boolean> => {
-    // Block Zapier commands for unauthenticated users
+  const handleZapierCommand = (message: string): boolean => {
+    // Early return if user is not authenticated
     if (!isAuthenticated) {
-      setIsThinking(true);
-      setTimeout(() => {
-        setIsThinking(false);
-        setIsTyping(true);
-        
-        const authRequiredText = "I'm sorry, Third Party integration features are only available to authenticated users. Please sign in to access this functionality.";
-        const typingDuration = calculateTypingDuration(authRequiredText, TYPING_SPEED);
-        
-        setTimeout(() => {
-          setIsTyping(false);
-          
-          const botResponse: ChatMessage = {
-            id: Date.now().toString(),
-            text: authRequiredText,
-            sender: 'bot',
-            timestamp: new Date(),
-          };
-          
-          setMessages(prev => [...prev, botResponse]);
-        }, typingDuration);
-      }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
-      
-      return true;
+      return false;
     }
-
-    const { isCommand, webhookCategory, payload } = processZapierCommand(userMessage);
     
-    if (!isCommand || !webhookCategory) return false;
+    const { isCommand, webhookCategory, payload } = processZapierCommand(message);
     
-    // Find the webhook by category
+    if (!isCommand || !webhookCategory) {
+      return false;
+    }
+    
+    // Find registered webhook for this category
     const webhook = findWebhookByCategory(webhookCategory);
     
     if (!webhook) {
-      // Webhook not found response
-      setIsThinking(true);
+      // Add bot message saying webhook not found
       setTimeout(() => {
+        const errorMessage: ChatMessage = {
+          id: Date.now().toString(),
+          text: `I couldn't find a Zapier integration named "${webhookCategory}". Please check the available integrations in the Zapier Manager.`,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }, 1000);
+      
+      toast({
+        title: "Zapier Integration Not Found",
+        description: `No integration named "${webhookCategory}" is configured.`,
+        variant: "destructive",
+      });
+      
+      return true; // We handled it as a command
+    }
+    
+    // Show thinking state
+    setIsThinking(true);
+    
+    // Trigger the webhook
+    triggerZapierWebhook(webhook, payload)
+      .then(response => {
         setIsThinking(false);
         setIsTyping(true);
-        
-        const notFoundText = `I couldn't find a Zapier webhook for "${webhookCategory}". Please add this webhook in the Zapier Manager or check the category name.`;
-        const typingDuration = calculateTypingDuration(notFoundText, TYPING_SPEED);
         
         setTimeout(() => {
           setIsTyping(false);
           
-          const botResponse: ChatMessage = {
+          let responseText: string;
+          
+          if (response.success) {
+            responseText = `Successfully triggered "${webhook.name}"${response.data ? ':\n\n' + parseZapierResponse(response.data) : '.'}`;
+            
+            toast({
+              title: "Zapier Integration Triggered",
+              description: `"${webhook.name}" was successfully triggered.`,
+            });
+          } else {
+            responseText = `There was a problem triggering "${webhook.name}": ${response.error || 'Unknown error'}`;
+            
+            toast({
+              title: "Zapier Integration Failed",
+              description: response.error || "Failed to trigger the integration.",
+              variant: "destructive",
+            });
+          }
+          
+          const botMessage: ChatMessage = {
             id: Date.now().toString(),
-            text: notFoundText,
+            text: responseText,
             sender: 'bot',
             timestamp: new Date(),
           };
           
-          setMessages(prev => [...prev, botResponse]);
-        }, typingDuration);
-      }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
-      
-      return true;
-    }
-    
-    // Webhook found, trigger it
-    setIsThinking(true);
-    const processingText = `Processing your request with ${webhook.name}...`;
-    
-    setTimeout(() => {
-      setIsThinking(false);
-      setIsTyping(true);
-      
-      const typingDuration = calculateTypingDuration(processingText, TYPING_SPEED);
-      
-      setTimeout(() => {
-        setIsTyping(false);
+          setMessages(prev => [...prev, botMessage]);
+        }, 1500);
+      })
+      .catch(error => {
+        setIsThinking(false);
         
-        const processingMessage: ChatMessage = {
+        const errorMessage: ChatMessage = {
           id: Date.now().toString(),
-          text: processingText,
+          text: `Error triggering "${webhook.name}": ${error.message || 'Unknown error'}`,
           sender: 'bot',
           timestamp: new Date(),
         };
         
-        setMessages(prev => [...prev, processingMessage]);
+        setMessages(prev => [...prev, errorMessage]);
         
-        // Now trigger the webhook
-        triggerZapierWebhook(webhook, payload || {})
-          .then(response => {
-            setIsTyping(true);
-            
-            let resultText;
-            if (response.success) {
-              resultText = `✅ Successfully triggered "${webhook.name}"! ${response.data ? '\n\n' + parseZapierResponse(response.data) : ''}`;
-            } else {
-              resultText = `❌ Failed to trigger "${webhook.name}". ${response.error || ''}`;
-            }
-            
-            const resultTypingDuration = calculateTypingDuration(resultText, TYPING_SPEED);
-            
-            setTimeout(() => {
-              setIsTyping(false);
-              
-              const resultMessage: ChatMessage = {
-                id: (Date.now() + 1).toString(),
-                text: resultText,
-                sender: 'bot',
-                timestamp: new Date(),
-              };
-              
-              setMessages(prev => [...prev, resultMessage]);
-            }, resultTypingDuration);
-          });
-      }, typingDuration);
-    }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
+        toast({
+          title: "Zapier Integration Error",
+          description: error.message || "An unexpected error occurred.",
+          variant: "destructive",
+        });
+      });
     
     return true;
   };

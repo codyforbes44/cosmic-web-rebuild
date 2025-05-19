@@ -1,150 +1,171 @@
 
-/* Base styles */
+/* Chat container styling */
 .chat-container {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 50;
+  z-index: 1000;
+}
+
+/* Pinned chat positioning */
+.chat-pinned {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Floating chat positioning */
+.chat-floating {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Chat window styling */
+.chat-window {
+  height: 500px;
+  width: 350px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
-/* Chat window styles */
-.chat-window-wrapper {
-  position: relative;
-  transition: all 0.3s ease;
+/* Chat content area */
+.chat-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
 }
 
-.chat-window {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Message bubbles */
+.message {
+  max-width: 80%;
+  padding: 10px 16px;
+  border-radius: 18px;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* User messages */
+.message.user {
+  background-color: #2563eb;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+/* Bot messages */
+.message.bot {
+  background-color: #1f2937;
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+
+/* Chat input area */
+.chat-input {
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  background-color: white;
+}
+
+/* Chat button */
+.chat-button {
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
 }
 
 /* Pin button */
 .pin-button {
   position: absolute;
-  top: 0.5rem;
-  right: -2rem;
-  background-color: white;
+  bottom: 10px;
+  right: 10px;
+  background-color: #1f2937;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  width: 1.75rem;
-  height: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  transition: all 0.2s ease;
-  color: #9b87f5;
-  border: 1px solid rgba(155, 135, 245, 0.2);
+  cursor: pointer;
+  z-index: 10;
 }
 
-.pin-button:hover {
-  background-color: #9b87f5;
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  padding: 10px 16px;
+  align-items: center;
+  border-radius: 18px;
+  background-color: #1f2937;
   color: white;
-  transform: scale(1.05);
+  width: fit-content;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border-bottom-left-radius: 4px;
 }
 
-/* Chat position variants */
-.chat-floating {
-  transition: all 0.3s ease;
+/* Thinking spinner */
+.thinking-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-right: auto;
+  margin-bottom: 10px;
+  padding: 12px;
 }
 
-.chat-pinned {
-  bottom: 0;
-  right: 0;
-  transition: all 0.3s ease;
+/* Quick response button */
+.quick-response {
+  padding: 8px 14px;
+  border-radius: 18px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  background-color: #1f2937;
+  color: white;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
 }
 
-.chat-pinned .chat-window {
-  border-radius: 0;
-  height: 100vh !important;
-  width: 380px !important;
+.quick-response:hover {
+  background-color: #2563eb;
 }
 
-/* Message bubbles */
-.message {
-  transition: all 0.3s ease;
+/* Message actions */
+.message-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  opacity: 0.8;
 }
 
-.message-bubble {
+/* Rating buttons */
+.rating-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.rating-button.selected {
+  color: #2563eb;
+}
+
+/* Message metadata */
+.message-metadata {
+  font-size: 0.7rem;
+  margin-top: 4px;
+  color: #6b7280;
+}
+
+/* Window wrapper */
+.chat-window-wrapper {
   position: relative;
-  transition: transform 0.2s ease;
-}
-
-.user-message {
-  background-image: linear-gradient(to right, #9b87f5, #8a70e8);
-}
-
-.message-bubble:hover {
-  transform: translateY(-2px);
-}
-
-/* Typing animation */
-.typing-indicator .dot {
-  animation: bounce 1.4s infinite;
-}
-
-.typing-indicator .dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing-indicator .dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes bounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(-4px);
-  }
-}
-
-/* Fade-in animation */
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Dark mode adjustments */
-.dark .pin-button {
-  background-color: #1e293b;
-  color: #9b87f5;
-  border-color: rgba(155, 135, 245, 0.3);
-}
-
-.dark .pin-button:hover {
-  background-color: #9b87f5;
-  color: #1e293b;
-}
-
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  .chat-container {
-    bottom: 1rem;
-    right: 1rem;
-  }
-  
-  .chat-pinned {
-    bottom: 0;
-    right: 0;
-    left: 0;
-  }
-  
-  .chat-pinned .chat-window {
-    width: 100% !important;
-    border-radius: 0;
-  }
 }

@@ -1,253 +1,190 @@
 
-import { services } from "@/data/servicesData";
-import { productCategories, products } from "@/components/navbar/constants";
+// This file contains the knowledge base for the chatbot
+// Add or modify responses based on common questions/topics
 
-/**
- * Structured knowledge base for the chatbot containing information about
- * services, products, and common questions
- */
+// Define knowledge categories
+type KnowledgeCategory = {
+  patterns: RegExp[];
+  responses: string[];
+  requiresAuth?: boolean;
+};
 
-export interface KnowledgeItem {
-  keywords: string[];
-  response: string;
-  restricted?: boolean; // Property to mark restricted information
-  isCommonQuestion?: boolean; // New property to identify items that are good for quick suggestions
-}
-
-// Create service knowledge entries
-const serviceKnowledge: KnowledgeItem[] = services.map(service => ({
-  keywords: [
-    service.title.toLowerCase(), 
-    service.name?.toLowerCase() || "",
-    service.subtitle.toLowerCase(),
-    ...(service.benefits || []).map(b => b.toLowerCase())
-  ].filter(Boolean),
-  response: `
-    ${service.title} is one of our specialized services. 
-    ${service.description}
-    
-    Key benefits include:
-    ${service.benefits ? service.benefits.map(b => `- ${b}`).join('\n    ') : ''}
-    
-    For more information or to request a quote, please visit our services page or contact us directly.
-  `
-}));
-
-// Create product knowledge entries
-const productKnowledge: KnowledgeItem[] = [
-  ...productCategories.map(product => ({
-    keywords: [product.title.toLowerCase(), product.description.toLowerCase()],
-    response: `
-      ${product.title} is one of our main product offerings. 
-      ${product.description}
-      
-      To learn more or request a demo, please visit our products page or contact our sales team.
-    `
-  })),
-  ...products.map(product => ({
-    keywords: [product.title.toLowerCase(), product.description.toLowerCase()],
-    response: `
-      ${product.title} is one of our specialized solutions.
-      ${product.description}
-      
-      To learn more or request a demo, please visit our products page or contact our sales team.
-    `
-  }))
-];
-
-// FAQ knowledge entries - Now tagged with isCommonQuestion for those that should be suggested
-const faqKnowledge: KnowledgeItem[] = [
-  {
-    keywords: ["contact", "reach", "email", "phone", "get in touch"],
-    response: `
-      You can contact ƷBI through our contact form on the website, or by emailing info@3bi.ai.
-      Our team typically responds within 24-48 business hours.
-    `,
-    isCommonQuestion: true
+// Knowledge base organized by categories
+const knowledgeBase: Record<string, KnowledgeCategory> = {
+  companyInfo: {
+    patterns: [
+      /what is ƷBI/i,
+      /who are you/i,
+      /about (your|the) company/i,
+      /tell me about ƷBI/i,
+      /company info/i
+    ],
+    responses: [
+      "ƷBI is a technology solutions company specializing in enterprise software for the transportation and logistics industry. We focus on driver management, retention, and operational efficiency solutions.",
+      "We're ƷBI, a technology company that builds specialized enterprise software for trucking companies. Our solutions help improve driver retention, streamline operations, and enhance overall business performance."
+    ]
   },
-  {
-    keywords: ["quote", "pricing", "cost", "price", "estimate"],
-    response: `
-      To get a customized quote for our services or products, please fill out our quote request form.
-      Pricing varies based on your specific needs and requirements.
-    `,
-    isCommonQuestion: true
-  },
-  {
-    keywords: ["demo", "trial", "demonstration", "see it in action"],
-    response: `
-      We'd be happy to provide a demonstration of our products. You can request a demo through our product pages,
-      and one of our representatives will reach out to schedule a convenient time.
-    `,
-    isCommonQuestion: true
-  },
-  {
-    keywords: ["trucking", "logistics", "transportation", "drivers", "fleet"],
-    response: `
-      ƷBI specializes in solutions for the trucking and logistics industry. Our products and services
-      are designed specifically to address the unique challenges of transportation companies, with a focus
-      on driver recruitment, retention, and operational efficiency.
-    `,
-    isCommonQuestion: true
-  },
-  {
-    keywords: ["different", "unique", "special", "stand out", "what makes", "why choose"],
-    response: `
-      What makes ƷBI different is our unique combination of industry expertise, innovative technology, and client-focused approach:
-      
-      1. Industry-Specific Knowledge: We specialize in technology solutions for the trucking and logistics industry, with deep understanding of the unique challenges faced by transportation companies.
-      
-      2. Data-Driven Solutions: Our platforms leverage advanced analytics and AI to provide actionable insights that drive measurable business outcomes.
-      
-      3. Custom Development: We build tailored solutions that address your specific business challenges rather than offering one-size-fits-all products.
-      
-      4. End-to-End Support: Our team provides comprehensive support from initial consultation through implementation and ongoing maintenance.
-      
-      5. Client Partnership: We see ourselves as partners in your success, not just a service provider, with a proven track record of helping transportation businesses improve operations and profitability.
-    `,
-    isCommonQuestion: true
-  },
-  {
-    keywords: ["services", "service offerings", "what do you offer", "what services", "tell me about your services"],
-    response: `
-      ƷBI offers a comprehensive range of services designed for the transportation and logistics industry, including:
-      
-      - Digital Marketing Strategies
-      - Custom Software Development
-      - Driver Recruitment Solutions
-      - Analytics and Performance Tracking
-      - Social Media Management
-      - Web Development and Design
-      - AI-powered Automation Tools
-      
-      Each service is tailored to address the unique challenges faced by transportation companies. Would you like more specific information about any of these services?
-    `,
-    isCommonQuestion: true
-  },
-  {
-    keywords: ["get started", "begin", "first steps", "how to start", "initial consultation"],
-    response: `
-      Getting started with ƷBI is simple! Here's how:
-      
-      1. Schedule an initial consultation through our contact form or by calling us directly
-      2. Our team will conduct a needs assessment to understand your specific business challenges
-      3. We'll develop a customized proposal outlining recommended solutions and implementation timeline
-      4. Once approved, our team will begin implementation with regular progress updates
-      5. After launch, we provide ongoing support and optimization
-      
-      Ready to get started? Contact us today for your free initial consultation!
-    `,
-    isCommonQuestion: true
-  }
-];
-
-// Zapier integration knowledge - Now marked as restricted
-const zapierKnowledge: KnowledgeItem[] = [
-  {
-    keywords: ["zapier", "zap", "automation", "webhook", "integration", "automate"],
-    response: `
-      Zapier integration features are only available to authenticated users. 
-      Please sign in to your account to access Zapier integration functionality.
-    `,
-    restricted: true
-  },
-  {
-    keywords: ["how to use zapier", "zapier commands", "zapier help", "zapier tutorial"],
-    response: `
-      Zapier integration help and tutorials are only available to authenticated users.
-      Please sign in to your account to access Zapier integration documentation.
-    `,
-    restricted: true
-  },
-  {
-    keywords: ["zapier webhook setup", "create zapier webhook", "zapier tutorial", "webhook instructions"],
-    response: `
-      Zapier webhook setup instructions are only available to authenticated users.
-      Please sign in to your account to access Zapier webhook configuration guides.
-    `,
-    restricted: true
-  }
-];
-
-// Combine all knowledge entries
-export const chatbotKnowledge: KnowledgeItem[] = [
-  ...serviceKnowledge,
-  ...productKnowledge,
-  ...faqKnowledge,
-  ...zapierKnowledge
-];
-
-/**
- * Function to find the most relevant knowledge item based on user input
- * Now includes user authentication check for restricted content
- */
-export function findRelevantResponse(userInput: string, isAuthenticated: boolean = false): string | null {
-  const normalizedInput = userInput.toLowerCase().trim();
   
-  if (!normalizedInput || normalizedInput.length < 2) {
-    return "Could you please provide more details about what you're looking for?";
-  }
+  products: {
+    patterns: [
+      /products/i,
+      /what (solutions|products) (do you offer|do you have)/i,
+      /tell me about your (solutions|products)/i,
+      /what can (I|we) use/i
+    ],
+    responses: [
+      "ƷBI offers several enterprise products: 3BI Connect for driver management and retention, Carrier Partner Network for connecting with qualified drivers, TruckOnboard for digital driver onboarding, and Drivers Matter for driver advocacy.",
+      "Our main products include 3BI Connect (comprehensive driver management), Carrier Partner Network (driver recruitment), TruckOnboard (digital onboarding), and Drivers Matter (driver advocacy and support)."
+    ]
+  },
   
-  // Try to find a direct match first
-  for (const item of chatbotKnowledge) {
-    // Skip restricted content for unauthenticated users
-    if (item.restricted && !isAuthenticated) continue;
+  services: {
+    patterns: [
+      /services/i,
+      /what services (do you offer|do you have)/i,
+      /consulting/i,
+      /how can you help/i
+    ],
+    responses: [
+      "ƷBI offers various services including Strategic Consulting, Recruitment Marketing, Digital Marketing, Social Media Marketing, Custom Development, Web & Mobile Apps, Data Analytics, and AI & Machine Learning solutions.",
+      "Our services span from strategic consulting and marketing solutions to custom development, web/mobile apps, and advanced data analytics and AI/ML solutions tailored for the transportation industry."
+    ]
+  },
+  
+  contact: {
+    patterns: [
+      /contact/i,
+      /get in touch/i,
+      /talk to (someone|a person|a representative)/i,
+      /phone number/i,
+      /email address/i
+    ],
+    responses: [
+      "You can contact our team through the Contact page on our website, or send an email to contact@zbi-consulting.com. For immediate inquiries, call us at (800) 555-1234.",
+      "To get in touch with our team, please visit our Contact page, email us at contact@zbi-consulting.com, or call our support line at (800) 555-1234."
+    ]
+  },
+  
+  pricing: {
+    patterns: [
+      /pricing/i,
+      /how much (does it cost|is it)/i,
+      /price/i,
+      /subscription/i,
+      /payment/i
+    ],
+    responses: [
+      "Our pricing varies based on your specific needs and the scale of implementation. Please reach out through our 'Get Quote' page for a customized pricing proposal.",
+      "ƷBI offers tailored pricing based on your business size, needs, and which products you're interested in. Contact us through the 'Get Quote' page for a detailed pricing proposal."
+    ]
+  },
+  
+  demo: {
+    patterns: [
+      /demo/i,
+      /try (it|the product|the software)/i,
+      /free trial/i,
+      /see how it works/i
+    ],
+    responses: [
+      "We'd be happy to demonstrate our products! You can request a personalized demo through our website by clicking on the 'Request a Demo' button on any product page.",
+      "To see our products in action, schedule a personalized demo by clicking 'Request a Demo' on our website. Our team will walk you through the features relevant to your business needs."
+    ]
+  },
+  
+  implementation: {
+    patterns: [
+      /how (to|do I|can I|do we) (implement|integrate|set up|install)/i,
+      /onboarding process/i,
+      /get started/i
+    ],
+    responses: [
+      "Implementation begins with an initial consultation where we assess your needs. Our team will then create a custom implementation plan, provide training, and offer ongoing support to ensure a smooth transition.",
+      "Getting started with ƷBI products involves a collaborative process: we begin with understanding your specific needs, configure the software accordingly, provide comprehensive training, and offer continuous support."
+    ]
+  },
+  
+  support: {
+    patterns: [
+      /support/i,
+      /help (with|using)/i,
+      /customer service/i,
+      /technical (support|assistance)/i,
+      /troubleshoot/i
+    ],
+    responses: [
+      "Our customer support team is available Monday through Friday, 8 AM to 6 PM ET. You can reach them via email at support@zbi-consulting.com or by phone at (800) 555-5678.",
+      "ƷBI provides dedicated technical support through our help portal, email support at support@zbi-consulting.com, and phone assistance at (800) 555-5678 during business hours."
+    ]
+  },
+  
+  career: {
+    patterns: [
+      /careers/i,
+      /jobs/i,
+      /work (for|at) ƷBI/i,
+      /employment/i,
+      /hiring/i
+    ],
+    responses: [
+      "We're always looking for talented individuals to join our team! Check our website's Careers section for current openings or send your resume to careers@zbi-consulting.com.",
+      "ƷBI values innovation and expertise. Visit our Careers page to see our current openings, or submit your resume to careers@zbi-consulting.com if you're interested in joining our team."
+    ]
+  },
+  
+  // Account specific information (requires auth)
+  accountInfo: {
+    patterns: [
+      /my account/i,
+      /account settings/i,
+      /profile/i,
+      /my subscription/i,
+      /billing information/i
+    ],
+    responses: [
+      "To access your account information, please log in to your dashboard. There you can view and update your profile, subscription details, and billing information.",
+      "Your account settings, subscription details, and billing information can be managed through your personal dashboard after logging in."
+    ],
+    requiresAuth: true
+  }
+};
+
+// Function to find a relevant response based on user input
+export const findRelevantResponse = (
+  userInput: string, 
+  isAuthenticated: boolean = false
+): string | undefined => {
+  // Loop through knowledge categories
+  for (const category in knowledgeBase) {
+    const { patterns, responses, requiresAuth } = knowledgeBase[category];
     
-    for (const keyword of item.keywords) {
-      if (keyword && normalizedInput.includes(keyword)) {
-        return item.response.trim();
-      }
+    // Skip categories that require authentication if user is not authenticated
+    if (requiresAuth && !isAuthenticated) continue;
+    
+    // Check if any pattern matches the user input
+    if (patterns.some(pattern => pattern.test(userInput))) {
+      // Return a random response from the matching category
+      const randomIndex = Math.floor(Math.random() * responses.length);
+      return responses[randomIndex];
     }
   }
   
-  // If no direct match, try to find partial matches
-  const partialMatches = chatbotKnowledge.filter(item => 
-    // Skip restricted content for unauthenticated users
-    (!item.restricted || isAuthenticated) &&
-    item.keywords.some(keyword => 
-      keyword && keyword.length > 3 && normalizedInput.includes(keyword.substring(0, 3))
-    )
-  );
-  
-  if (partialMatches.length > 0) {
-    return partialMatches[0].response.trim();
-  }
-  
-  // Special case for Zapier-related queries from unauthenticated users
-  if (normalizedInput.includes("zapier") || normalizedInput.includes("zap") || 
-      normalizedInput.includes("webhook") || normalizedInput.includes("integration")) {
-    return "I'm sorry, Zapier integration features are only available to authenticated users. Please sign in to access this functionality.";
-  }
-  
-  // Fall back to a default response
-  return null;
-}
+  // Return undefined if no match is found
+  return undefined;
+};
 
-/**
- * Returns an array of suggested questions based on common questions in the knowledge base
- */
-export function getSuggestedQuestions(): string[] {
-  // Filter knowledge items that are marked as common questions
-  const commonQuestions = chatbotKnowledge
-    .filter(item => item.isCommonQuestion && !item.restricted)
-    .map(item => {
-      // For each item, find a representative question based on keywords
-      const mainKeyword = item.keywords[0];
-      
-      // Format into a question
-      if (mainKeyword.includes("what")) return mainKeyword.charAt(0).toUpperCase() + mainKeyword.slice(1) + "?";
-      if (mainKeyword.includes("how")) return mainKeyword.charAt(0).toUpperCase() + mainKeyword.slice(1) + "?";
-      if (mainKeyword === "different") return "What makes ƷBI different?";
-      if (mainKeyword === "services") return "Tell me about your services";
-      if (mainKeyword === "get started") return "How can I get started?";
-      if (mainKeyword === "contact") return "How can I contact you?";
-      if (mainKeyword === "quote") return "How do I get a quote?";
-      if (mainKeyword === "demo") return "Can I see a demo?";
-      
-      // Default to a generic format
-      return `Tell me about ${mainKeyword}`;
-    });
-  
-  // Return a limited number of suggestions (3-5 is usually a good number for UI)
-  return commonQuestions.slice(0, 5);
-}
+// Suggested questions for quick responses
+export const getSuggestedQuestions = (): string[] => {
+  return [
+    "What products do you offer?",
+    "How can I request a demo?",
+    "Tell me about your services",
+    "How does implementation work?",
+    "What makes ƷBI different?"
+  ];
+};
+
+// Export additional knowledge base functions as needed
+export const getKnowledgeCategories = (): string[] => {
+  return Object.keys(knowledgeBase);
+};
