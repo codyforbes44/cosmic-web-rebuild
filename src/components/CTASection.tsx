@@ -1,13 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import DemoRequestModal from './products/DemoRequestModal';
 
 const CTASection: React.FC = () => {
   const isMobile = useIsMobile();
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
   
   return (
     <section className="py-12 md:py-24 relative overflow-hidden">
@@ -15,6 +17,12 @@ const CTASection: React.FC = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-space-dark-blue z-0"></div>
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-space-dark-blue via-space-deep-blue/80 to-space-dark-blue z-0"></div>
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-accent/20 rounded-full blur-3xl z-0"></div>
+      
+      <DemoRequestModal 
+        isOpen={demoModalOpen} 
+        onOpenChange={setDemoModalOpen} 
+        productTitle="ƷBI Solutions"
+      />
       
       <div className="container max-w-6xl mx-auto px-4 relative z-10">
         <motion.div 
@@ -32,12 +40,14 @@ const CTASection: React.FC = () => {
                 Get a free consultation and discover how our technology solutions can help you achieve your business goals.
               </p>
               
-              <Link to="/get-quote">
-                <Button size={isMobile ? "default" : "lg"} className="w-full md:w-auto bg-accent hover:bg-accent/90 text-white flex items-center justify-center py-5 md:py-6">
-                  Schedule Your Free Consultation
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button 
+                size={isMobile ? "default" : "lg"} 
+                className="w-full md:w-auto bg-accent hover:bg-accent/90 text-white flex items-center justify-center py-5 md:py-6"
+                onClick={() => setDemoModalOpen(true)}
+              >
+                Schedule Your Free Consultation
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
             
             <div className="space-y-3 md:space-y-4 mt-2 md:mt-0">

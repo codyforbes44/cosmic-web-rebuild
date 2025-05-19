@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import DemoRequestModal from "./products/DemoRequestModal";
 
 const HeroSection = () => {
   const [visible, setVisible] = useState(false);
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
   const isMobile = useIsMobile();
   
   useEffect(() => {
@@ -30,6 +32,12 @@ const HeroSection = () => {
       {/* Gradient overlay */}
       <div 
         className="absolute inset-0 z-0 bg-gradient-to-b from-space-dark-blue/60 to-space-deep-blue/70"
+      />
+
+      <DemoRequestModal 
+        isOpen={demoModalOpen} 
+        onOpenChange={setDemoModalOpen} 
+        productTitle="ƷBI Solutions"
       />
 
       <div className="container max-w-6xl mx-auto px-4 py-12 md:py-20 z-10 text-center md:text-left transition-all duration-1000 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
@@ -95,11 +103,12 @@ const HeroSection = () => {
                       </li>
                     ))}
                   </ul>
-                  <Link to="/get-quote" className="block">
-                    <Button className="w-full bg-accent hover:bg-accent/90 py-5 text-white">
-                      Schedule Your Free Consultation
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="w-full bg-accent hover:bg-accent/90 py-5 text-white"
+                    onClick={() => setDemoModalOpen(true)}
+                  >
+                    Schedule Your Free Consultation
+                  </Button>
                 </div>
               </div>
             </div>
@@ -111,11 +120,12 @@ const HeroSection = () => {
                 <span className="inline-block mb-2 px-3 py-1 bg-accent/20 text-accent rounded-full text-xs font-medium">LIMITED OFFER</span>
                 <h3 className="text-lg font-bold mb-3 text-white">Free Consultation</h3>
                 <p className="text-sm text-gray-300 mb-4">Get expert advice and a custom quote within 48 hours.</p>
-                <Link to="/get-quote" className="block">
-                  <Button className="w-full bg-accent hover:bg-accent/90 py-4 text-white">
-                    Get Started Now
-                  </Button>
-                </Link>
+                <Button 
+                  className="w-full bg-accent hover:bg-accent/90 py-4 text-white"
+                  onClick={() => setDemoModalOpen(true)}
+                >
+                  Get Started Now
+                </Button>
               </div>
             </div>
           )}
