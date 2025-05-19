@@ -133,11 +133,11 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               >
                 {/* Phone number moved here, directly above social icons */}
                 <a 
-                  href="tel:+11234567890" 
+                  href="tel:+18177572828" 
                   className="flex items-center justify-center gap-2 py-3 px-4 mb-4 text-white bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg hover:bg-space-deep-blue transition-colors w-full"
                 >
                   <Phone size={18} />
-                  <span className="text-base font-medium">(123) 456-7890</span>
+                  <span className="text-base font-medium">(817) 757-2828</span>
                 </a>
                 
                 <div className="text-sm text-center">
