@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const CircuitBackground = () => {
@@ -6,15 +5,12 @@ const CircuitBackground = () => {
     <>
       {/* Circuit board background */}
       <div 
-        className="absolute inset-0 z-0" 
-        style={{
-          backgroundImage: "url('/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          opacity: 0.4,
-        }}
-      />
+        className="absolute inset-0 z-0 bg-space-deep-blue" 
+        aria-hidden="true"
+      >
+        {/* We'll keep the background color but remove the image for a cleaner look */}
+        <div className="absolute inset-0 bg-gradient-to-b from-space-dark-blue via-space-dark-blue/90 to-space-deep-blue/80"></div>
+      </div>
       
       {/* Gradient overlay */}
       <div 

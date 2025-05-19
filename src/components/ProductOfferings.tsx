@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { productCategories } from './navbar/constants';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const ProductOfferings = () => {
   return (
@@ -27,13 +28,13 @@ const ProductOfferings = () => {
               viewport={{ once: true }}
               className="bg-space-deep-blue/50 border border-gray-800 rounded-xl overflow-hidden hover:shadow-lg hover:shadow-accent/10 hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="h-48 overflow-hidden">
+              <AspectRatio ratio={16/9}>
                 <img 
                   src={product.image} 
                   alt={product.title} 
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </AspectRatio>
               
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-3" style={{ color: product.color }}>

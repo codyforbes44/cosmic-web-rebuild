@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Users, BarChart2, Calendar } from 'lucide-react';
 import { ProductCategory } from '@/components/navbar/constants';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface ProductCardProps {
   product: ProductCategory;
@@ -23,11 +24,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
       className="grid md:grid-cols-2 gap-8 items-center"
     >
       <div className="order-2 md:order-2">
-        <img 
-          src={product.image} 
-          alt={product.title} 
-          className="w-full h-auto rounded-lg shadow-xl border border-gray-800"
-        />
+        <div className="rounded-lg shadow-xl border border-gray-800 overflow-hidden">
+          <AspectRatio ratio={16/9}>
+            <img 
+              src={product.image} 
+              alt={product.title} 
+              className="w-full h-full object-cover"
+            />
+          </AspectRatio>
+        </div>
       </div>
       <div className="md:order-1">
         <div className="mb-4">
