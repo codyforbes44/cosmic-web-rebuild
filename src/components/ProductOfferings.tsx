@@ -20,6 +20,11 @@ const ProductOfferings = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {productCategories.map((product, index) => {
+            // Use the new image for Drivers Matter product
+            const productImage = product.title === "Drivers Matter" 
+              ? "/lovable-uploads/f2add7c3-2fca-4014-bb4d-991fa05f7668.png" 
+              : product.image;
+              
             return (
               <motion.div
                 key={index}
@@ -31,7 +36,7 @@ const ProductOfferings = () => {
               >
                 <AspectRatio ratio={16/9}>
                   <img 
-                    src={product.image} 
+                    src={productImage} 
                     alt={product.title} 
                     className="w-full h-full object-cover"
                   />
