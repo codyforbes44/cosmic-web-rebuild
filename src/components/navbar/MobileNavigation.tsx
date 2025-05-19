@@ -8,7 +8,7 @@ import MobileNavLink from './MobileNavLink';
 import MobileServicesMenu from './MobileServicesMenu';
 import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
-import { Phone } from 'lucide-react';
+import { Phone, Facebook, Twitter, Linkedin } from 'lucide-react';
 import WeatherWidget from '../footer/WeatherWidget';
 
 interface MobileNavigationProps {
@@ -130,18 +130,43 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               </nav>
             </div>
             
+            {/* Social links section - replaces trusted leaders section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.6 }}
               className="py-6 space-y-4"
             >
-              <div className="text-sm text-center space-y-2">
-                <p className="text-gray-400">Trusted by industry leaders</p>
-                <div className="flex justify-center space-x-4">
-                  <div className="w-8 h-8 bg-gray-700 rounded-full"></div>
-                  <div className="w-8 h-8 bg-gray-700 rounded-full"></div>
-                  <div className="w-8 h-8 bg-gray-700 rounded-full"></div>
+              <div className="text-sm text-center">
+                <p className="text-gray-400 mb-4">Connect with us</p>
+                <div className="flex justify-center space-x-5">
+                  <a 
+                    href="https://www.facebook.com/3bi.io" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
+                    aria-label="Facebook"
+                  >
+                    <Facebook size={20} />
+                  </a>
+                  <a 
+                    href="https://x.com/3bi_io" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
+                    aria-label="Twitter"
+                  >
+                    <Twitter size={20} />
+                  </a>
+                  <a 
+                    href="https://www.linkedin.com/company/3biio" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin size={20} />
+                  </a>
                 </div>
               </div>
             </motion.div>
