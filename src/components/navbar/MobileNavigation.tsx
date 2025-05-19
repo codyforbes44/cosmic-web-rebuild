@@ -51,13 +51,6 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                   title="" 
                   units="imperial"
                 />
-                <a 
-                  href="tel:+11234567890" 
-                  className="flex items-center justify-center gap-1 py-2 px-3 text-white bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg hover:bg-space-deep-blue transition-colors"
-                >
-                  <Phone size={16} />
-                  <span className="text-sm font-medium">(123) 456-7890</span>
-                </a>
               </div>
               
               <Link to="/get-quote" onClick={onClose} className="block w-full">
@@ -138,6 +131,15 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                 transition={{ duration: 0.3, delay: 0.6 }}
                 className="space-y-4"
               >
+                {/* Phone number moved here, directly above social icons */}
+                <a 
+                  href="tel:+11234567890" 
+                  className="flex items-center justify-center gap-2 py-3 px-4 mb-4 text-white bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg hover:bg-space-deep-blue transition-colors w-full"
+                >
+                  <Phone size={18} />
+                  <span className="text-base font-medium">(123) 456-7890</span>
+                </a>
+                
                 <div className="text-sm text-center">
                   <p className="text-gray-400 mb-4">Connect with us</p>
                   <div className="flex justify-center space-x-5">
