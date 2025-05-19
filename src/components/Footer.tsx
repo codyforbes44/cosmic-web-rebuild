@@ -58,7 +58,7 @@ const Footer = () => {
           {/* Column 2: Services */}
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Our Services</h3>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible={false} defaultValue="marketing" className="w-full">
               <AccordionItem value="marketing" className="border-gray-700">
                 <AccordionTrigger className="py-2 text-white hover:no-underline">
                   Marketing Services
