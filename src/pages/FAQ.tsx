@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import LiveChat from '@/components/LiveChat/LiveChat';
+import StarBackground from "@/components/StarBackground";
 import { motion } from 'framer-motion';
 
 // Import refactored components
@@ -25,8 +26,9 @@ const FAQ = () => {
       />
       <Navbar />
       
-      <div className="bg-space-dark-blue min-h-screen">
-        <div className="container mx-auto px-4 py-24">
+      <div className="bg-space-dark-blue min-h-screen relative overflow-hidden">
+        <StarBackground />
+        <div className="container mx-auto px-4 py-24 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
