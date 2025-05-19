@@ -1,4 +1,3 @@
-
 // This file contains the knowledge base for the chatbot
 // Add or modify responses based on common questions/topics
 
@@ -177,10 +176,8 @@ export const findRelevantResponse = (
 export const getSuggestedQuestions = (): string[] => {
   return [
     "What products do you offer?",
-    "How can I request a demo?",
-    "Tell me about your services",
-    "How does implementation work?",
-    "What makes ƷBI different?"
+    "Request a demo",
+    "How can I get started?"
   ];
 };
 

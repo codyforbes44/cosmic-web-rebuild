@@ -38,10 +38,11 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   
   const [showRating, setShowRating] = React.useState<string | null>(null);
 
-  // Use suggested questions from knowledge base, or fall back to defaults
-  const quickResponses = suggestedQuestions?.length ? 
+  // Use suggested questions from knowledge base, or fall back to defaults - always limit to 3
+  const quickResponses = (suggestedQuestions?.length ? 
     suggestedQuestions : 
-    ["Tell me about your services", "What makes ƷBI different?", "How can I get started?"];
+    ["What products do you offer?", "Request a demo", "How can I get started?"])
+    .slice(0, 3);
 
   return (
     <>
