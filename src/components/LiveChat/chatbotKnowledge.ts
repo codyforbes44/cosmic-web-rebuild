@@ -1,5 +1,5 @@
 
-import { services } from "@/data/services";
+import { services } from "@/data/servicesData";
 import { productCategories, products } from "@/components/navbar/constants";
 
 /**
