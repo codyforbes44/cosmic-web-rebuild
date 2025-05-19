@@ -18,7 +18,7 @@ interface WeatherWidgetProps {
 
 const WeatherWidget = ({ 
   className = "",
-  title = "Local Conditions",
+  title = "Local Weather",
   units = 'imperial'
 }: WeatherWidgetProps) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
@@ -28,25 +28,22 @@ const WeatherWidget = ({
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        // Use a hardcoded location as fallback in case IP geolocation fails
-        const defaultLocation = "New York";
+        // Get user's location from IP
+        const geoResponse = await fetch('https://ipapi.co/json/');
+        if (!geoResponse.ok) {
+          throw new Error('Unable to determine your location');
+        }
         
-        // Try to get user's location first
-        let userLocation;
-        try {
-          const geoResponse = await fetch('https://ipapi.co/json/');
-          if (!geoResponse.ok) throw new Error('Location service unavailable');
-          
-          const geoData = await geoResponse.json();
-          userLocation = geoData.city;
-        } catch (locationError) {
-          console.log('Location fetch error, using default:', locationError);
-          userLocation = defaultLocation;
+        const geoData = await geoResponse.json();
+        const userLocation = geoData.city;
+        
+        if (!userLocation) {
+          throw new Error('Location not available');
         }
         
         // Fetch weather data using OpenWeatherMap API
         const weatherResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${userLocation || defaultLocation}&units=${units}&appid=9de243494c0b295cca9337e1e96b00e2`
+          `https://api.openweathermap.org/data/2.5/weather?q=${userLocation}&units=${units}&appid=9de243494c0b295cca9337e1e96b00e2`
         );
         
         if (!weatherResponse.ok) {
@@ -56,7 +53,7 @@ const WeatherWidget = ({
         const weatherResult = await weatherResponse.json();
         
         setWeatherData({
-          location: userLocation || defaultLocation,
+          location: userLocation,
           temperature: Math.round(weatherResult.main.temp),
           condition: weatherResult.weather[0].main,
           humidity: weatherResult.main.humidity,
@@ -66,17 +63,7 @@ const WeatherWidget = ({
         setLoading(false);
       } catch (err) {
         console.error('Weather fetch error:', err);
-        
-        // Provide mock data as fallback if the API fails
-        setWeatherData({
-          location: 'Demo City',
-          temperature: 72,
-          condition: 'Clouds',
-          humidity: 45,
-          windSpeed: 5,
-        });
-        
-        setError('Using demo data');
+        setError('Unable to fetch local weather');
         setLoading(false);
       }
     };
@@ -105,7 +92,18 @@ const WeatherWidget = ({
       <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
         {title && <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>}
         <div className="text-gray-400 animate-pulse flex-grow flex items-center justify-center">
-          Loading weather data...
+          Detecting your location...
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !weatherData) {
+    return (
+      <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
+        {title && <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>}
+        <div className="text-amber-400 flex-grow flex items-center justify-center text-center">
+          {error}
         </div>
       </div>
     );
@@ -147,12 +145,6 @@ const WeatherWidget = ({
               <span className="text-lg font-medium ml-6">{weatherData.windSpeed} {units === 'imperial' ? 'mph' : 'm/s'}</span>
             </div>
           </div>
-          
-          {error && (
-            <div className="mt-3 text-xs text-amber-400 text-center opacity-70">
-              {error}
-            </div>
-          )}
         </div>
       )}
     </div>
