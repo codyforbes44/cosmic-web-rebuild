@@ -10,12 +10,6 @@ import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
 import { Phone, Facebook, Twitter, Linkedin } from 'lucide-react';
 import WeatherWidget from '../footer/WeatherWidget';
-import { useIsMobile } from '@/hooks/use-mobile';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTrigger
-} from "@/components/ui/drawer";
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -25,7 +19,6 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) => {
   const location = useLocation();
-  const isMobile = useIsMobile();
   const [showServices, setShowServices] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
   
@@ -49,59 +42,32 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-10 bg-space-dark-blue/95 backdrop-blur-sm md:hidden"
         >
-          <div className="h-full flex flex-col justify-between overflow-y-auto">
-            {/* Top section with call-to-actions and compact weather */}
-            <div className="px-6 pt-20 pb-4 sticky top-0 bg-space-dark-blue/95 z-10 shadow-md">
-              <div className="grid grid-cols-1 gap-3">
+          <div className="h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
+            <div>
+              {/* Compact Weather Widget at the top */}
+              <div className="mb-5">
                 <WeatherWidget 
-                  className="py-1 px-3 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg shadow-lg mb-3" 
+                  className="py-1 px-3 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg shadow-lg" 
                   title="" 
                   units="imperial"
                 />
-                
-                <Link to="/get-quote" onClick={onClose} className="block">
+              </div>
+              
+              <div className="mb-8 pb-4 border-b border-gray-700">
+                <Link to="/get-quote" onClick={onClose} className="block mb-4">
                   <Button className="w-full bg-accent hover:bg-accent/80 text-white py-5 font-semibold text-base">
                     Get a Free Quote
                   </Button>
                 </Link>
-                
-                <Drawer>
-                  <DrawerTrigger asChild>
-                    <Button variant="outline" className="w-full border-gray-600 text-white">
-                      <Phone size={18} className="mr-2" />
-                      <span className="font-medium">(123) 456-7890</span>
-                    </Button>
-                  </DrawerTrigger>
-                  <DrawerContent className="bg-space-dark-blue text-white border-t border-gray-700">
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-                      <div className="space-y-4">
-                        <div>
-                          <p className="text-sm text-gray-400 mb-1">Main Line</p>
-                          <a href="tel:+11234567890" className="flex items-center text-brand-gold text-lg">
-                            <Phone size={18} className="mr-2" />(123) 456-7890
-                          </a>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-400 mb-1">Support</p>
-                          <a href="tel:+18001234567" className="flex items-center text-brand-gold text-lg">
-                            <Phone size={18} className="mr-2" />(800) 123-4567
-                          </a>
-                        </div>
-                        <div className="pt-2">
-                          <p className="text-center text-sm text-gray-400 mb-3">
-                            Our team is available Monday-Friday, 9am-5pm EST
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </DrawerContent>
-                </Drawer>
+                <div className="flex gap-2">
+                  <a href="tel:+11234567890" className="flex items-center justify-center gap-2 flex-1 py-3 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
+                    <Phone size={18} />
+                    <span className="font-medium">(123) 456-7890</span>
+                  </a>
+                </div>
               </div>
-            </div>
-            
-            <nav className="px-6 pb-6 flex-grow overflow-y-auto">
-              <div className="space-y-5 py-5">
+              
+              <nav className="space-y-5">
                 {/* Home Link */}
                 <MobileNavLink 
                   key={navLinks[0].name}
@@ -161,15 +127,15 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                     onClose={onClose}
                   />
                 ))}
-              </div>
-            </nav>
+              </nav>
+            </div>
             
-            {/* Social links section at bottom */}
+            {/* Social links section - replaces trusted leaders section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.6 }}
-              className="py-6 px-6 border-t border-gray-800"
+              className="py-6 space-y-4"
             >
               <div className="text-sm text-center">
                 <p className="text-gray-400 mb-4">Connect with us</p>
