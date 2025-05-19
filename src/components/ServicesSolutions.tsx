@@ -66,7 +66,7 @@ const services: Record<string, Service[]> = {
   ],
 };
 
-const AstronomyFacts = () => {
+const ServicesSolutions = () => {
   const [activeCategory, setActiveCategory] = useState<string>('advertising');
 
   return (
@@ -124,4 +124,4 @@ const AstronomyFacts = () => {
   );
 };
 
-export default AstronomyFacts;
+export default ServicesSolutions;

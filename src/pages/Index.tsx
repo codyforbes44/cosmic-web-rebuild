@@ -3,7 +3,7 @@ import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import AstronomyFacts from "@/components/AstronomyFacts";
+import ServicesSolutions from "@/components/ServicesSolutions";
 import BusinessCaseStudy from "@/components/BusinessCaseStudy";
 import Newsletter from "@/components/Newsletter";
 import SEO from "@/components/SEO";
@@ -26,7 +26,7 @@ const Index = () => {
         <HeroSection />
         <ClientLogoBanner />
         <Testimonials />
-        <AstronomyFacts />
+        <ServicesSolutions />
         <BusinessCaseStudy />
         <CTASection />
         <Newsletter />

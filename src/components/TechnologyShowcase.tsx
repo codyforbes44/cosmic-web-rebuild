@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 
-interface APOD {
+interface TechnologyShowcase {
   title: string;
   date: string;
   explanation: string;
@@ -14,19 +14,19 @@ interface APOD {
   media_type: string;
 }
 
-const AstronomyImageOfDay = () => {
-  const [apod, setApod] = useState<APOD | null>(null);
+const TechnologyShowcase = () => {
+  const [showcase, setShowcase] = useState<TechnologyShowcase | null>(null);
   const [loading, setLoading] = useState(true);
   const [date, setDate] = useState<Date>(new Date());
 
-  // For demo purposes, we'll use a fixed APOD rather than making a real API call
+  // For demo purposes, we'll use a fixed showcase rather than making a real API call
   useEffect(() => {
     // Simulate API fetch delay
     const timer = setTimeout(() => {
-      setApod({
-        title: "Pillars of Creation (2023)",
+      setShowcase({
+        title: "AI-Powered Business Analytics",
         date: format(date, 'yyyy-MM-dd'),
-        explanation: "The Pillars of Creation are a stellar nursery located within the Eagle Nebula, approximately 6,500-7,000 light-years from Earth. This striking image captures towering structures of gas and dust that are in the process of creating new stars. First captured by the Hubble Space Telescope in 1995, this updated image provides unprecedented clarity of this cosmic wonder, showing intricate details of the ongoing star formation process.",
+        explanation: "Our cutting-edge AI business analytics platform transforms raw data into actionable insights. This powerful solution combines machine learning algorithms with intuitive visualization tools to help businesses identify trends, predict market changes, and optimize their operations for maximum efficiency and growth.",
         url: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
         media_type: "image"
       });
@@ -47,9 +47,9 @@ const AstronomyImageOfDay = () => {
     <section className="py-24 bg-space-deep-blue">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="section-heading">Astronomy Picture of the Day</h2>
+          <h2 className="section-heading">Technology Showcase</h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-            Explore cosmic wonders captured in stunning detail, with a new celestial image featured each day
+            Explore our innovative technology solutions designed to transform your business operations and drive growth
           </p>
         </div>
 
@@ -86,9 +86,9 @@ const AstronomyImageOfDay = () => {
               </div>
             ) : (
               <>
-                <h3 className="text-2xl font-bold mb-4 text-white">{apod?.title}</h3>
-                <p className="text-gray-300 mb-6">{apod?.explanation}</p>
-                <p className="text-sm text-gray-400">Date: {apod?.date}</p>
+                <h3 className="text-2xl font-bold mb-4 text-white">{showcase?.title}</h3>
+                <p className="text-gray-300 mb-6">{showcase?.explanation}</p>
+                <p className="text-sm text-gray-400">Date: {showcase?.date}</p>
               </>
             )}
           </div>
@@ -100,8 +100,8 @@ const AstronomyImageOfDay = () => {
               </div>
             ) : (
               <img 
-                src={apod?.url} 
-                alt={apod?.title} 
+                src={showcase?.url} 
+                alt={showcase?.title} 
                 className="w-full h-96 object-cover"
               />
             )}
@@ -112,4 +112,4 @@ const AstronomyImageOfDay = () => {
   );
 };
 
-export default AstronomyImageOfDay;
+export default TechnologyShowcase;
