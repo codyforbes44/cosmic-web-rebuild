@@ -60,8 +60,8 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               </Link>
             </div>
             
-            {/* Main navigation area with scrolling */}
-            <nav className="flex-1 px-6 py-5 space-y-4 overflow-y-auto">
+            {/* Main navigation area with scrolling - Added mt-4 for margin between header and nav */}
+            <nav className="flex-1 px-6 py-5 space-y-4 overflow-y-auto mt-4">
               {/* Home Link */}
               <MobileNavLink 
                 key={navLinks[0].name}
