@@ -19,7 +19,7 @@ interface ServicesWidgetProps {
 
 const ServicesWidget = ({ serviceGroups, className = "" }: ServicesWidgetProps) => {
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-4 rounded-lg border border-brand-gold/20 ${className}`}>
+    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-4 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
       <h3 className="text-lg font-medium mb-4 text-white">Our Services</h3>
       <Accordion type="single" collapsible={false} defaultValue="marketing" className="w-full">
         {serviceGroups.map((group) => (

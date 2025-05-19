@@ -39,7 +39,7 @@ const SocialLinksWidget = ({
   className = ""
 }: SocialLinksWidgetProps) => {
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-4 rounded-lg border border-brand-gold/20 ${className}`}>
+    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-4 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
       <h3 className="text-xl font-bold mb-4 text-white">
         <Link to="/" className="flex items-center">
           <img 
