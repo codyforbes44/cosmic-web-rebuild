@@ -1,6 +1,6 @@
 
 import { ChatMessage } from '../types';
-import { findRelevantResponse } from '../chatbotKnowledge';
+import { findRelevantResponse, getSuggestedQuestions } from '../chatbotKnowledge';
 import { useZapierChat } from './useZapierChat';
 import { getRandomDelay, calculateTypingDuration } from './chatUtils';
 import { THINKING_DELAY, TYPING_SPEED } from './chatStateTypes';
@@ -17,6 +17,11 @@ export const useBotResponses = (
     setIsThinking,
     setIsTyping
   );
+
+  // Get suggestions for quick responses from knowledge base
+  const getSuggestions = (): string[] => {
+    return getSuggestedQuestions();
+  };
 
   const generateBotResponse = (userMessage: string) => {
     // First check if this is a Zapier command
@@ -63,5 +68,5 @@ export const useBotResponses = (
     }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
   };
 
-  return { generateBotResponse };
+  return { generateBotResponse, getSuggestions };
 };

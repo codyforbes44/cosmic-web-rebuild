@@ -11,6 +11,7 @@ interface ChatContainerProps {
   message: string;
   isTyping: boolean;
   isThinking: boolean;
+  suggestedQuestions?: string[];
   onMessageChange: (message: string) => void;
   onSendMessage: () => void;
   chatContainerRef: React.RefObject<HTMLDivElement>;
@@ -22,6 +23,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   message,
   isTyping,
   isThinking,
+  suggestedQuestions = [],
   onMessageChange,
   onSendMessage,
   chatContainerRef,
@@ -36,6 +38,11 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   
   const [showRating, setShowRating] = React.useState<string | null>(null);
 
+  // Use suggested questions from knowledge base, or fall back to defaults
+  const quickResponses = suggestedQuestions?.length ? 
+    suggestedQuestions : 
+    ["Tell me about your services", "What makes ƷBI different?", "How can I get started?"];
+
   return (
     <>
       {/* Chat Messages */}
@@ -49,7 +56,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
       {/* Quick responses - show only at the beginning */}
       {shouldShowQuickResponses && (
         <QuickResponses 
-          responses={["Tell me about your services", "What makes ƷBI different?", "How can I get started?"]}
+          responses={quickResponses}
           onSelectResponse={onQuickResponseSelect}
         />
       )}

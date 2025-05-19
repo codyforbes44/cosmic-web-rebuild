@@ -17,6 +17,7 @@ const LiveChat = () => {
     isPinned,
     showZapierManager,
     chatContainerRef,
+    suggestedQuestions,
     setMessage,
     toggleChat,
     togglePin,
@@ -35,6 +36,7 @@ const LiveChat = () => {
             isTyping={isTyping}
             isThinking={isThinking}
             showZapierManager={showZapierManager}
+            suggestedQuestions={suggestedQuestions}
             onMessageChange={setMessage}
             onSendMessage={handleSendMessage}
             onToggleChat={toggleChat}

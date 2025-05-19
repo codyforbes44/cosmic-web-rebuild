@@ -23,12 +23,15 @@ export const useChatState = () => {
   // For now, defaulting to false as most chat visitors are anonymous
   const isAuthenticated = false;
 
-  const { generateBotResponse } = useBotResponses(
+  const { generateBotResponse, getSuggestions } = useBotResponses(
     setMessages, 
     setIsThinking, 
     setIsTyping, 
     isAuthenticated
   );
+
+  // Get suggested questions from knowledge base
+  const suggestedQuestions = getSuggestions();
 
   useEffect(() => {
     // Update unread count if chat is not open
@@ -132,6 +135,7 @@ export const useChatState = () => {
     isSendingFirstMessage,
     showZapierManager,
     chatContainerRef,
+    suggestedQuestions,
     setMessage,
     toggleChat,
     togglePin,

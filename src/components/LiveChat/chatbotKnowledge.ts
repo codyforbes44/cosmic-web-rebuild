@@ -10,7 +10,8 @@ import { productCategories, products } from "@/components/navbar/constants";
 export interface KnowledgeItem {
   keywords: string[];
   response: string;
-  restricted?: boolean; // New property to mark restricted information
+  restricted?: boolean; // Property to mark restricted information
+  isCommonQuestion?: boolean; // New property to identify items that are good for quick suggestions
 }
 
 // Create service knowledge entries
@@ -54,28 +55,31 @@ const productKnowledge: KnowledgeItem[] = [
   }))
 ];
 
-// FAQ knowledge entries
+// FAQ knowledge entries - Now tagged with isCommonQuestion for those that should be suggested
 const faqKnowledge: KnowledgeItem[] = [
   {
     keywords: ["contact", "reach", "email", "phone", "get in touch"],
     response: `
       You can contact ƷBI through our contact form on the website, or by emailing info@3bi.ai.
       Our team typically responds within 24-48 business hours.
-    `
+    `,
+    isCommonQuestion: true
   },
   {
     keywords: ["quote", "pricing", "cost", "price", "estimate"],
     response: `
       To get a customized quote for our services or products, please fill out our quote request form.
       Pricing varies based on your specific needs and requirements.
-    `
+    `,
+    isCommonQuestion: true
   },
   {
     keywords: ["demo", "trial", "demonstration", "see it in action"],
     response: `
       We'd be happy to provide a demonstration of our products. You can request a demo through our product pages,
       and one of our representatives will reach out to schedule a convenient time.
-    `
+    `,
+    isCommonQuestion: true
   },
   {
     keywords: ["trucking", "logistics", "transportation", "drivers", "fleet"],
@@ -83,7 +87,8 @@ const faqKnowledge: KnowledgeItem[] = [
       ƷBI specializes in solutions for the trucking and logistics industry. Our products and services
       are designed specifically to address the unique challenges of transportation companies, with a focus
       on driver recruitment, retention, and operational efficiency.
-    `
+    `,
+    isCommonQuestion: true
   },
   {
     keywords: ["different", "unique", "special", "stand out", "what makes", "why choose"],
@@ -99,7 +104,40 @@ const faqKnowledge: KnowledgeItem[] = [
       4. End-to-End Support: Our team provides comprehensive support from initial consultation through implementation and ongoing maintenance.
       
       5. Client Partnership: We see ourselves as partners in your success, not just a service provider, with a proven track record of helping transportation businesses improve operations and profitability.
-    `
+    `,
+    isCommonQuestion: true
+  },
+  {
+    keywords: ["services", "service offerings", "what do you offer", "what services", "tell me about your services"],
+    response: `
+      ƷBI offers a comprehensive range of services designed for the transportation and logistics industry, including:
+      
+      - Digital Marketing Strategies
+      - Custom Software Development
+      - Driver Recruitment Solutions
+      - Analytics and Performance Tracking
+      - Social Media Management
+      - Web Development and Design
+      - AI-powered Automation Tools
+      
+      Each service is tailored to address the unique challenges faced by transportation companies. Would you like more specific information about any of these services?
+    `,
+    isCommonQuestion: true
+  },
+  {
+    keywords: ["get started", "begin", "first steps", "how to start", "initial consultation"],
+    response: `
+      Getting started with ƷBI is simple! Here's how:
+      
+      1. Schedule an initial consultation through our contact form or by calling us directly
+      2. Our team will conduct a needs assessment to understand your specific business challenges
+      3. We'll develop a customized proposal outlining recommended solutions and implementation timeline
+      4. Once approved, our team will begin implementation with regular progress updates
+      5. After launch, we provide ongoing support and optimization
+      
+      Ready to get started? Contact us today for your free initial consultation!
+    `,
+    isCommonQuestion: true
   }
 ];
 
@@ -183,4 +221,33 @@ export function findRelevantResponse(userInput: string, isAuthenticated: boolean
   
   // Fall back to a default response
   return null;
+}
+
+/**
+ * Returns an array of suggested questions based on common questions in the knowledge base
+ */
+export function getSuggestedQuestions(): string[] {
+  // Filter knowledge items that are marked as common questions
+  const commonQuestions = chatbotKnowledge
+    .filter(item => item.isCommonQuestion && !item.restricted)
+    .map(item => {
+      // For each item, find a representative question based on keywords
+      const mainKeyword = item.keywords[0];
+      
+      // Format into a question
+      if (mainKeyword.includes("what")) return mainKeyword.charAt(0).toUpperCase() + mainKeyword.slice(1) + "?";
+      if (mainKeyword.includes("how")) return mainKeyword.charAt(0).toUpperCase() + mainKeyword.slice(1) + "?";
+      if (mainKeyword === "different") return "What makes ƷBI different?";
+      if (mainKeyword === "services") return "Tell me about your services";
+      if (mainKeyword === "get started") return "How can I get started?";
+      if (mainKeyword === "contact") return "How can I contact you?";
+      if (mainKeyword === "quote") return "How do I get a quote?";
+      if (mainKeyword === "demo") return "Can I see a demo?";
+      
+      // Default to a generic format
+      return `Tell me about ${mainKeyword}`;
+    });
+  
+  // Return a limited number of suggestions (3-5 is usually a good number for UI)
+  return commonQuestions.slice(0, 5);
 }

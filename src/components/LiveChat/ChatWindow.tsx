@@ -11,6 +11,7 @@ interface ChatWindowProps {
   isTyping: boolean;
   isThinking?: boolean;
   showZapierManager?: boolean;
+  suggestedQuestions?: string[];
   onMessageChange: (message: string) => void;
   onSendMessage: () => void;
   onToggleChat: () => void;
@@ -24,6 +25,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   isTyping,
   isThinking = false,
   showZapierManager = false,
+  suggestedQuestions = [],
   onMessageChange,
   onSendMessage,
   onToggleChat,
@@ -50,6 +52,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
           message={message}
           isTyping={isTyping}
           isThinking={isThinking}
+          suggestedQuestions={suggestedQuestions}
           onMessageChange={onMessageChange}
           onSendMessage={onSendMessage}
           chatContainerRef={chatContainerRef}
