@@ -10,6 +10,7 @@ import { productCategories, products } from "@/components/navbar/constants";
 export interface KnowledgeItem {
   keywords: string[];
   response: string;
+  restricted?: boolean; // New property to mark restricted information
 }
 
 // Create service knowledge entries
@@ -86,60 +87,31 @@ const faqKnowledge: KnowledgeItem[] = [
   }
 ];
 
-// Zapier integration knowledge
+// Zapier integration knowledge - Now marked as restricted
 const zapierKnowledge: KnowledgeItem[] = [
   {
     keywords: ["zapier", "zap", "automation", "webhook", "integration", "automate"],
     response: `
-      You can integrate our chat with Zapier to automate tasks. Here's how to use Zapier with our chat:
-      
-      1. Add your Zapier webhooks by clicking the settings icon in the chat and selecting "Manage Zapier Integrations"
-      2. To trigger a Zap, type "zap [category] with [data]" (e.g., "zap lead with name: John Doe, email: john@example.com")
-      3. You can also just type "zap [category]" for simpler triggers
-      
-      For help setting up Zapier webhooks, click the settings icon and select "Manage Zapier Integrations".
-    `
+      Zapier integration features are only available to authenticated users. 
+      Please sign in to your account to access Zapier integration functionality.
+    `,
+    restricted: true
   },
   {
     keywords: ["how to use zapier", "zapier commands", "zapier help", "zapier tutorial"],
     response: `
-      Zapier Commands Tutorial:
-      
-      Basic syntax: "zap [category] with [parameters]"
-      
-      Examples:
-      - "zap task with title: Finish proposal, due: tomorrow"
-      - "zap contact with name: Sarah Smith, phone: 555-1234"
-      - "zap reminder with message: Call client at 3pm"
-      
-      To set up new Zapier integrations:
-      1. Click the settings icon in the chat
-      2. Select "Manage Zapier Integrations"
-      3. Add your webhook URL from Zapier
-      4. Assign a category name that you'll use to trigger it
-      
-      Need help setting up webhooks in Zapier? Type "zapier webhook setup" for instructions.
-    `
+      Zapier integration help and tutorials are only available to authenticated users.
+      Please sign in to your account to access Zapier integration documentation.
+    `,
+    restricted: true
   },
   {
     keywords: ["zapier webhook setup", "create zapier webhook", "zapier tutorial", "webhook instructions"],
     response: `
-      How to create a Zapier webhook:
-      
-      1. Go to Zapier.com and create a new Zap
-      2. Choose "Webhook by Zapier" as the trigger app
-      3. Select "Catch Hook" as the trigger event
-      4. Copy the webhook URL provided by Zapier
-      5. Come back here and click the settings icon in the chat
-      6. Select "Manage Zapier Integrations"
-      7. Add a new webhook with:
-         - Name: A memorable name for your webhook
-         - Category: The command word you'll use to trigger it (e.g., "task")
-         - URL: Paste the webhook URL from Zapier
-      8. In Zapier, set up the action steps that should happen when the webhook is triggered
-      
-      That's it! Now you can trigger this Zap by typing "zap [category]" in the chat.
-    `
+      Zapier webhook setup instructions are only available to authenticated users.
+      Please sign in to your account to access Zapier webhook configuration guides.
+    `,
+    restricted: true
   }
 ];
 
@@ -153,12 +125,16 @@ export const chatbotKnowledge: KnowledgeItem[] = [
 
 /**
  * Function to find the most relevant knowledge item based on user input
+ * Now includes user authentication check for restricted content
  */
-export function findRelevantResponse(userInput: string): string | null {
+export function findRelevantResponse(userInput: string, isAuthenticated: boolean = false): string | null {
   const normalizedInput = userInput.toLowerCase();
   
   // Try to find a direct match first
   for (const item of chatbotKnowledge) {
+    // Skip restricted content for unauthenticated users
+    if (item.restricted && !isAuthenticated) continue;
+    
     for (const keyword of item.keywords) {
       if (normalizedInput.includes(keyword)) {
         return item.response.trim();
@@ -168,6 +144,8 @@ export function findRelevantResponse(userInput: string): string | null {
   
   // If no direct match, try to find partial matches
   const partialMatches = chatbotKnowledge.filter(item => 
+    // Skip restricted content for unauthenticated users
+    (!item.restricted || isAuthenticated) &&
     item.keywords.some(keyword => 
       keyword.length > 5 && normalizedInput.includes(keyword.substring(0, 5))
     )
@@ -175,6 +153,12 @@ export function findRelevantResponse(userInput: string): string | null {
   
   if (partialMatches.length > 0) {
     return partialMatches[0].response.trim();
+  }
+  
+  // Special case for Zapier-related queries from unauthenticated users
+  if (normalizedInput.includes("zapier") || normalizedInput.includes("zap") || 
+      normalizedInput.includes("webhook") || normalizedInput.includes("integration")) {
+    return "I'm sorry, Zapier integration features are only available to authenticated users. Please sign in to access this functionality.";
   }
   
   // Fall back to a default response

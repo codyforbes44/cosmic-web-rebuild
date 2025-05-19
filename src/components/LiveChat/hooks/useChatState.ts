@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { findRelevantResponse } from "../chatbotKnowledge";
@@ -22,6 +21,10 @@ export const useChatState = () => {
   const [showZapierManager, setShowZapierManager] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  // Check if user is authenticated (could connect to your auth system)
+  // For now, defaulting to false as most chat visitors are anonymous
+  const isAuthenticated = false;
 
   // Animation timing constants for more realistic typing
   const THINKING_DELAY = { min: 300, max: 800 };
@@ -49,7 +52,7 @@ export const useChatState = () => {
         setIsThinking(false);
         setIsTyping(true);
         
-        const welcomeText = "👋 Welcome to ƷBI! How can I help you today? You can also use Zapier integrations by typing 'zapier help'.";
+        const welcomeText = "👋 Welcome to ƷBI! How can I help you today?";
         const typingDuration = Math.min(welcomeText.length * TYPING_SPEED.min, 2000);
         
         setTimeout(() => {
@@ -97,11 +100,49 @@ export const useChatState = () => {
   };
 
   const toggleZapierManager = () => {
+    // Only allow authenticated users to access Zapier Manager
+    if (!isAuthenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "You need to sign in to access Zapier integrations.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+    
     setShowZapierManager(prev => !prev);
   };
 
   // Handle Zapier command processing
   const handleZapierCommand = async (userMessage: string) => {
+    // Block Zapier commands for unauthenticated users
+    if (!isAuthenticated) {
+      setIsThinking(true);
+      setTimeout(() => {
+        setIsThinking(false);
+        setIsTyping(true);
+        
+        const authRequiredText = "I'm sorry, Zapier integration features are only available to authenticated users. Please sign in to access this functionality.";
+        const typingDuration = calculateTypingDuration(authRequiredText);
+        
+        setTimeout(() => {
+          setIsTyping(false);
+          
+          const botResponse: ChatMessage = {
+            id: Date.now().toString(),
+            text: authRequiredText,
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+          
+          setMessages(prev => [...prev, botResponse]);
+        }, typingDuration);
+      }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
+      
+      return true;
+    }
+
     const { isCommand, webhookCategory, payload } = processZapierCommand(userMessage);
     
     if (!isCommand || !webhookCategory) return false;
@@ -210,7 +251,8 @@ export const useChatState = () => {
       setIsTyping(true);
       
       // First try to find a relevant response from our knowledge base
-      const knowledgeResponse = findRelevantResponse(userMessage);
+      // Pass authentication status to the findRelevantResponse function
+      const knowledgeResponse = findRelevantResponse(userMessage, isAuthenticated);
       
       // If we have a knowledge-based response, use it
       const botResponse = knowledgeResponse || 
