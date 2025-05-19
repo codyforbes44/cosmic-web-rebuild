@@ -2,14 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { findRelevantResponse } from "../chatbotKnowledge";
-
-const chatResponses = [
-  "Hello! How can I assist you today?",
-  "Thank you for reaching out!",
-  "We appreciate your interest!",
-  "Please provide more details so I can assist you better.",
-  "Our team will get back to you shortly."
-];
+import { useToast } from '@/components/ui/use-toast';
 
 export const useChatState = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,27 +11,52 @@ export const useChatState = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [unreadMessages, setUnreadMessages] = useState(0);
   const [isPinned, setIsPinned] = useState(false);
+  const [isSendingFirstMessage, setIsSendingFirstMessage] = useState(true);
+  const [isThinking, setIsThinking] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+
+  // Animation timing constants for more realistic typing
+  const THINKING_DELAY = { min: 300, max: 800 };
+  const TYPING_SPEED = { min: 30, max: 70 }; // ms per character
 
   useEffect(() => {
     // Update unread count if chat is not open
     if (!isOpen && messages.length > 0 && messages[messages.length - 1].sender === 'bot') {
       setUnreadMessages(prev => prev + 1);
+      
+      // Show a toast notification when new message arrives and chat is closed
+      toast({
+        title: "New message from ƷBI Assistant",
+        description: messages[messages.length - 1].text.substring(0, 60) + (messages[messages.length - 1].text.length > 60 ? '...' : ''),
+        duration: 5000,
+      });
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, toast]);
 
   useEffect(() => {
     // Show welcome message when chat is first opened
     if (isOpen && messages.length === 0) {
+      setIsThinking(true);
       setTimeout(() => {
-        const welcomeMessage: ChatMessage = {
-          id: Date.now().toString(),
-          text: "👋 Welcome to ƷBI! How can I help you today?",
-          sender: 'bot',
-          timestamp: new Date(),
-        };
-        setMessages([welcomeMessage]);
-      }, 500);
+        setIsThinking(false);
+        setIsTyping(true);
+        
+        const welcomeText = "👋 Welcome to ƷBI! How can I help you today?";
+        const typingDuration = Math.min(welcomeText.length * TYPING_SPEED.min, 2000);
+        
+        setTimeout(() => {
+          setIsTyping(false);
+          const welcomeMessage: ChatMessage = {
+            id: Date.now().toString(),
+            text: welcomeText,
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+          setMessages([welcomeMessage]);
+          setIsSendingFirstMessage(false);
+        }, typingDuration);
+      }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
     }
     
     // Reset unread count when opening the chat
@@ -46,6 +64,17 @@ export const useChatState = () => {
       setUnreadMessages(0);
     }
   }, [isOpen]);
+
+  const getRandomDelay = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  const calculateTypingDuration = (text: string) => {
+    // Calculate a realistic typing duration based on text length
+    const baseDelay = 500; // base delay in milliseconds
+    const charsPerSecond = getRandomDelay(TYPING_SPEED.min, TYPING_SPEED.max);
+    return baseDelay + (text.length / charsPerSecond) * 1000;
+  };
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -58,6 +87,40 @@ export const useChatState = () => {
     if (!isOpen) {
       setIsOpen(true);
     }
+  };
+
+  const generateBotResponse = (userMessage: string) => {
+    setIsThinking(true);
+    
+    // Thinking delay to make it feel more human-like
+    setTimeout(() => {
+      setIsThinking(false);
+      setIsTyping(true);
+      
+      // First try to find a relevant response from our knowledge base
+      const knowledgeResponse = findRelevantResponse(userMessage);
+      
+      // If we have a knowledge-based response, use it
+      const botResponse = knowledgeResponse || 
+        "I don't have specific information about that. Could you provide more details or ask about our services, products, or company information?";
+      
+      // Calculate typing duration based on response length
+      const typingDuration = calculateTypingDuration(botResponse);
+      
+      // Show bot response after a realistic typing delay
+      setTimeout(() => {
+        setIsTyping(false);
+        
+        const newBotMessage: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          text: botResponse,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        
+        setMessages(prev => [...prev, newBotMessage]);
+      }, typingDuration);
+    }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
   };
 
   const handleSendMessage = () => {
@@ -74,39 +137,8 @@ export const useChatState = () => {
     setMessages(prev => [...prev, newUserMessage]);
     setMessage('');
     
-    // Show typing indicator
-    setIsTyping(true);
-    
     // Generate AI response with a realistic delay
-    setTimeout(() => {
-      setIsTyping(false);
-      
-      // First try to find a relevant response from our knowledge base
-      const knowledgeResponse = findRelevantResponse(message);
-      
-      // If we have a knowledge-based response, use it
-      if (knowledgeResponse) {
-        const newBotMessage: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          text: knowledgeResponse,
-          sender: 'bot',
-          timestamp: new Date(),
-        };
-        setMessages(prev => [...prev, newBotMessage]);
-      } else {
-        // Fall back to predefined responses
-        const responseIndex = Math.floor(Math.random() * chatResponses.length);
-        const botResponse = chatResponses[responseIndex];
-        
-        const newBotMessage: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          text: botResponse,
-          sender: 'bot',
-          timestamp: new Date(),
-        };
-        setMessages(prev => [...prev, newBotMessage]);
-      }
-    }, Math.random() * 1000 + 1000); // Random delay between 1-2 seconds for realism
+    generateBotResponse(message);
   };
 
   return {
@@ -114,8 +146,10 @@ export const useChatState = () => {
     messages,
     message,
     isTyping,
+    isThinking,
     unreadMessages,
     isPinned,
+    isSendingFirstMessage,
     chatContainerRef,
     setMessage,
     toggleChat,

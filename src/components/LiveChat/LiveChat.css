@@ -1,159 +1,88 @@
 
-/* LiveChat.css - Custom animations and effects */
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInChat {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes slideInFromRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.05); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.8; }
-}
-
-@keyframes blink {
-  0% { opacity: 0.4; }
-  50% { opacity: 1; }
-  100% { opacity: 0.4; }
-}
-
-/* Chat container positioning */
+/* Base styles */
 .chat-container {
   position: fixed;
+  bottom: 2rem;
+  right: 2rem;
   z-index: 50;
-  transition: all 0.3s ease-out;
-}
-
-/* Floating chat (default position) */
-.chat-floating {
-  bottom: 1.5rem;
-  right: 1.5rem;
-}
-
-/* Pinned chat (sidebar position) */
-.chat-pinned {
-  top: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: center;
 }
 
-/* Chat window wrapper for pinned mode */
+/* Chat window styles */
 .chat-window-wrapper {
   position: relative;
+  transition: all 0.3s ease;
 }
 
-/* Pin/unpin button */
+.chat-window {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Pin button */
 .pin-button {
   position: absolute;
-  top: 4.5rem;
-  right: -10px;
-  width: 24px;
-  height: 24px;
+  top: 0.5rem;
+  right: -2rem;
+  background-color: white;
   border-radius: 50%;
-  background-color: hsl(222, 47%, 15%);
-  color: white;
+  width: 1.75rem;
+  height: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
-  z-index: 60;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  color: #9b87f5;
+  border: 1px solid rgba(155, 135, 245, 0.2);
 }
 
 .pin-button:hover {
-  transform: scale(1.1);
-  background-color: hsl(258, 80%, 65%);
+  background-color: #9b87f5;
+  color: white;
+  transform: scale(1.05);
 }
 
-/* Adjust chat window for pinned mode */
+/* Chat position variants */
+.chat-floating {
+  transition: all 0.3s ease;
+}
+
+.chat-pinned {
+  bottom: 0;
+  right: 0;
+  transition: all 0.3s ease;
+}
+
 .chat-pinned .chat-window {
-  height: 95vh;
-  animation: slideInFromRight 0.3s ease-out;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 0;
+  height: 100vh !important;
+  width: 380px !important;
 }
 
-/* Chat window effects */
-.chat-window {
-  animation: fadeInChat 0.3s ease-out;
-  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.3), 0 10px 20px -5px rgba(0, 0, 0, 0.2);
-}
-
-/* Dark mode styles for chat window */
-.dark .chat-window {
-  background-color: hsl(222, 47%, 11%);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.5), 0 10px 20px -5px rgba(0, 0, 0, 0.4);
-}
-
-/* Chat button effects */
-.chat-button {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.chat-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(155, 135, 245, 0.4);
-}
-
-.dark .chat-button {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.dark .chat-button:hover {
-  box-shadow: 0 8px 24px rgba(155, 135, 245, 0.3);
-}
-
-/* Glass effect */
-.glass-effect {
-  backdrop-filter: blur(10px);
-}
-
-/* Message animations */
+/* Message bubbles */
 .message {
-  animation: fadeIn 0.3s ease-out;
+  transition: all 0.3s ease;
 }
 
-.user-message .message-bubble {
-  box-shadow: 0 2px 8px rgba(155, 135, 245, 0.3);
+.message-bubble {
+  position: relative;
+  transition: transform 0.2s ease;
 }
 
-.agent-message .message-bubble {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.user-message {
+  background-image: linear-gradient(to right, #9b87f5, #8a70e8);
 }
 
-/* Dark mode message bubbles */
-.dark .user-message .message-bubble {
-  box-shadow: 0 2px 8px rgba(155, 135, 245, 0.2);
+.message-bubble:hover {
+  transform: translateY(-2px);
 }
 
-.dark .agent-message .message-bubble {
-  background-color: hsl(222, 47%, 15%);
-  border-color: hsl(223, 47%, 20%);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Typing indicator animation */
+/* Typing animation */
 .typing-indicator .dot {
-  animation: blink 1.5s infinite;
+  animation: bounce 1.4s infinite;
 }
 
 .typing-indicator .dot:nth-child(2) {
@@ -164,92 +93,58 @@
   animation-delay: 0.4s;
 }
 
-/* Dark mode typing indicator */
-.dark .typing-indicator {
-  background-color: hsl(222, 47%, 15%);
-  border-color: hsl(223, 47%, 20%);
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
 }
 
-/* Unread badge pulse effect */
-.unread-badge {
-  animation: pulse 2s infinite;
+/* Fade-in animation */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
-/* Form input focus effects */
-input:focus {
-  box-shadow: 0 0 0 2px rgba(155, 135, 245, 0.3);
-  transition: box-shadow 0.2s;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Dark mode input styles */
-.dark input {
-  background-color: hsl(222, 47%, 15%);
-  border-color: hsl(223, 47%, 20%);
-  color: white;
+/* Dark mode adjustments */
+.dark .pin-button {
+  background-color: #1e293b;
+  color: #9b87f5;
+  border-color: rgba(155, 135, 245, 0.3);
 }
 
-.dark input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+.dark .pin-button:hover {
+  background-color: #9b87f5;
+  color: #1e293b;
 }
 
-.dark input:focus {
-  box-shadow: 0 0 0 2px rgba(155, 135, 245, 0.2);
-  border-color: rgba(155, 135, 245, 0.4);
-}
-
-/* Button hover effects */
-button[type="submit"] {
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-button[type="submit"]:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(155, 135, 245, 0.3);
-}
-
-button[type="submit"]:active {
-  transform: translateY(0);
-}
-
-/* Dark mode chat header */
-.dark .chat-window .bg-gradient-to-r {
-  background: linear-gradient(to right, hsl(258, 80%, 65%), hsl(258, 80%, 60%));
-}
-
-/* Dark mode message list background */
-.dark .chat-window .bg-slate-50 {
-  background-color: hsl(222, 47%, 11%);
-}
-
-/* Dark mode scrollbar customization */
-.dark ::-webkit-scrollbar {
-  width: 8px;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* Dark mode chat input area */
-.dark .chat-window .border-t.border-slate-200.bg-white {
-  background-color: hsl(222, 47%, 13%);
-  border-color: hsl(223, 47%, 20%);
-}
-
-/* Chat window transitions for theme changes */
-.chat-window,
-.message-bubble,
-input,
-button {
-  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .chat-container {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .chat-pinned {
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+  
+  .chat-pinned .chat-window {
+    width: 100% !important;
+    border-radius: 0;
+  }
 }

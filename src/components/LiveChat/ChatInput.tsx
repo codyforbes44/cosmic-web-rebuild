@@ -1,42 +1,50 @@
 
-import React from 'react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import React, { KeyboardEvent } from 'react';
 import { Send } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 interface ChatInputProps {
   message: string;
   onMessageChange: (message: string) => void;
   onSendMessage: () => void;
+  isDisabled?: boolean;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ 
   message, 
   onMessageChange, 
-  onSendMessage 
+  onSendMessage,
+  isDisabled = false
 }) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!isDisabled && message.trim()) {
+        onSendMessage();
+      }
+    }
+  };
+
   return (
-    <div className="p-4 border-t border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-700">
-      <div className="flex items-center space-x-2">
-        <Input
-          type="text"
-          placeholder="Type your message..."
-          value={message}
-          onChange={(e) => onMessageChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              onSendMessage();
-            }
-          }}
-          className="flex-1 rounded-full dark:bg-slate-800 dark:border-slate-700 dark:text-white"
-        />
-        <Button 
-          onClick={onSendMessage}
-          className="bg-brand-gold hover:bg-brand-gold/80 text-white rounded-full aspect-square p-0 w-10 h-10 flex items-center justify-center"
-        >
-          <Send className="h-4 w-4"/>
-        </Button>
-      </div>
+    <div className={`p-3 border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-900 flex items-end gap-2 ${isDisabled ? 'opacity-70' : ''}`}>
+      <Textarea
+        value={message}
+        onChange={(e) => onMessageChange(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder={isDisabled ? "Please wait..." : "Type your message..."}
+        className="min-h-[40px] max-h-[120px] focus-visible:ring-1 focus-visible:ring-brand-gold focus-visible:ring-offset-0 resize-none"
+        disabled={isDisabled}
+      />
+      <button
+        onClick={onSendMessage}
+        disabled={isDisabled || !message.trim()}
+        className={`p-2 rounded-full bg-brand-gold text-white 
+                   ${(!message.trim() || isDisabled) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-gold/80'} 
+                   flex-shrink-0 transition-colors`}
+        aria-label="Send message"
+      >
+        <Send size={18} />
+      </button>
     </div>
   );
 };

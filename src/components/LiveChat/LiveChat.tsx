@@ -12,6 +12,7 @@ const LiveChat = () => {
     messages,
     message,
     isTyping,
+    isThinking,
     unreadMessages,
     isPinned,
     chatContainerRef,
@@ -30,6 +31,7 @@ const LiveChat = () => {
             messages={messages}
             message={message}
             isTyping={isTyping}
+            isThinking={isThinking}
             onMessageChange={setMessage}
             onSendMessage={handleSendMessage}
             onToggleChat={toggleChat}
