@@ -34,7 +34,10 @@ const Products = () => {
   }, [location.search]);
 
   const handleTabChange = (value: string) => {
-    navigate(`/products?product=${value}`);
+    // Instead of updating the URL query parameter, we'll navigate to the product page directly
+    // This function now serves as a callback for the tabs component but actual navigation
+    // happens in the Link component within ProductTabs
+    setSelectedProductId(value);
   };
 
   return (
@@ -67,7 +70,7 @@ const Products = () => {
           
           {/* Product Content */}
           <Tabs value={selectedProductId} className="mb-16">
-            {productCategories.map((product, index) => (
+            {productCategories.map((product) => (
               <TabsContent key={product.href} value={product.href} className="mt-0 animate-in fade-in-50">
                 <ProductCard product={product} index={0} />
               </TabsContent>

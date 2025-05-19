@@ -2,6 +2,7 @@
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProductCategory } from '@/components/navbar/constants';
+import { Link } from 'react-router-dom';
 
 interface ProductTabsProps {
   products: ProductCategory[];
@@ -20,17 +21,18 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ products, selectedProductId, 
     >
       <TabsList className="bg-gray-800/60 flex flex-wrap justify-center p-2 rounded-xl max-w-full overflow-hidden">
         {products.map((product) => (
-          <TabsTrigger 
-            key={product.href} 
-            value={product.href}
-            className="data-[state=active]:text-white text-sm px-4 py-2 m-1 rounded-md transition-colors duration-200"
-            style={{ 
-              borderBottom: selectedProduct.href === product.href ? `2px solid ${product.color}` : 'none',
-              color: selectedProduct.href === product.href ? product.color : 'inherit'
-            }}
-          >
-            {product.title}
-          </TabsTrigger>
+          <Link to={product.href} key={product.href}>
+            <TabsTrigger 
+              value={product.href}
+              className="data-[state=active]:text-white text-sm px-4 py-2 m-1 rounded-md transition-colors duration-200"
+              style={{ 
+                borderBottom: selectedProduct.href === product.href ? `2px solid ${product.color}` : 'none',
+                color: selectedProduct.href === product.href ? product.color : 'inherit'
+              }}
+            >
+              {product.title}
+            </TabsTrigger>
+          </Link>
         ))}
       </TabsList>
     </Tabs>
