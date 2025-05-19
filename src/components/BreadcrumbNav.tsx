@@ -73,10 +73,12 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({
           
           {/* Current page */}
           {displayPageName && (
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{displayPageName}</BreadcrumbPage>
-            </BreadcrumbItem>
+            <React.Fragment>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{displayPageName}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </React.Fragment>
           )}
         </BreadcrumbList>
       </Breadcrumb>
