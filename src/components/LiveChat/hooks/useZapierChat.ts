@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ChatMessage } from '../types';
 import { useToast } from '@/hooks/use-toast';
@@ -27,7 +26,7 @@ export const useZapierChat = (
         setIsThinking(false);
         setIsTyping(true);
         
-        const authRequiredText = "I'm sorry, Zapier integration features are only available to authenticated users. Please sign in to access this functionality.";
+        const authRequiredText = "I'm sorry, Third Party integration features are only available to authenticated users. Please sign in to access this functionality.";
         const typingDuration = calculateTypingDuration(authRequiredText, TYPING_SPEED);
         
         setTimeout(() => {
