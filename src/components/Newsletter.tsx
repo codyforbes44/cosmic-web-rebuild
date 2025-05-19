@@ -41,10 +41,10 @@ const Newsletter = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Stay Updated with Cosmic Discoveries
+            Stay Informed with Industry Insights
           </h2>
           <p className="text-gray-300 mb-8 text-lg">
-            Subscribe to our newsletter to receive the latest astronomical news, events, and breathtaking images 
+            Subscribe to our newsletter to receive the latest technology trends, business insights, and exclusive offers 
             directly to your inbox.
           </p>
           
