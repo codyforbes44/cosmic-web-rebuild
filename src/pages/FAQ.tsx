@@ -6,6 +6,16 @@ import SEO from '@/components/SEO';
 import LiveChat from '@/components/LiveChat/LiveChat';
 import StarBackground from "@/components/StarBackground";
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { HomeIcon } from 'lucide-react';
+import { 
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage
+} from "@/components/ui/breadcrumb";
 
 // Import refactored components
 import FAQCategories from '@/components/FAQ/FAQCategories';
@@ -29,6 +39,26 @@ const FAQ = () => {
       <div className="bg-space-dark-blue min-h-screen relative overflow-hidden">
         <StarBackground />
         <div className="container mx-auto px-4 py-24 relative z-10">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/" className="flex items-center">
+                      <HomeIcon className="h-4 w-4 mr-1" />
+                      <span>Home</span>
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>FAQ</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

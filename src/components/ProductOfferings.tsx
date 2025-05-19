@@ -53,7 +53,7 @@ const ProductOfferings = () => {
                   </p>
                   
                   <div className="flex justify-between items-center">
-                    <Link to={product.href}>
+                    <Link to={`/products?product=${product.href}`}>
                       <Button 
                         variant="ghost" 
                         className="p-0 h-auto flex items-center gap-1 group hover:bg-transparent"

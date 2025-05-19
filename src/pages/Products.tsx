@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import StarBackground from "@/components/StarBackground";
@@ -13,6 +13,15 @@ import ProductsCTA from '@/components/products/ProductsCTA';
 import ProductTabs from '@/components/products/ProductTabs';
 import { productCategories } from "@/components/navbar/constants";
 import ProductCard from '@/components/products/ProductCard';
+import { 
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage
+} from "@/components/ui/breadcrumb";
+import { HomeIcon } from 'lucide-react';
 
 const Products = () => {
   const location = useLocation();
@@ -32,11 +41,11 @@ const Products = () => {
   }, [location.search]);
 
   const handleTabChange = (value: string) => {
-    // Instead of updating the URL query parameter, we'll navigate to the product page directly
-    // This function now serves as a callback for the tabs component but actual navigation
-    // happens in the Link component within ProductTabs
     setSelectedProductId(value);
   };
+
+  // Find the current selected product for breadcrumb title
+  const selectedProduct = productCategories.find(product => product.href === selectedProductId);
 
   return (
     <>
@@ -51,6 +60,26 @@ const Products = () => {
         <StarBackground />
         
         <div className="container mx-auto px-4 max-w-7xl">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/" className="flex items-center">
+                      <HomeIcon className="h-4 w-4 mr-1" />
+                      <span>Home</span>
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Products</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          
           {/* Header Section */}
           <ProductsHeader />
 
