@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -17,17 +16,33 @@ const HeroSection = () => {
   
   return (
     <section className="relative min-h-[90vh] md:min-h-screen overflow-hidden flex items-center justify-center pt-16">
-      {/* Circuit board background */}
+      {/* Circuit board background with animation */}
       <div 
-        className="absolute inset-0 z-0" 
+        className="absolute inset-0 z-0 animate-float" 
         style={{
           backgroundImage: "url('/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           opacity: 0.4,
+          animation: "pulse 15s ease-in-out infinite alternate",
         }}
       />
+      
+      {/* Pulse animation keyframes */}
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            transform: scale(1) rotate(0deg);
+          }
+          50% {
+            transform: scale(1.02) rotate(0.3deg);
+          }
+          100% {
+            transform: scale(1) rotate(0deg);
+          }
+        }
+      `}</style>
       
       {/* Gradient overlay */}
       <div 
