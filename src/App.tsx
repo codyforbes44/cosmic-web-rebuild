@@ -26,6 +26,7 @@ const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const RecruitmentMarketing = lazy(() => import("./pages/RecruitmentMarketing"));
+const DriversMatter = lazy(() => import("./pages/DriversMatter"));
 
 // New Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -88,6 +89,7 @@ const AppRoutes = () => {
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
       <Route path="/accessibility" element={<Accessibility />} />
+      <Route path="/drivers-matter" element={<DriversMatter />} />
       
       {/* Product routes */}
       <Route path="/products" element={<Products />} />

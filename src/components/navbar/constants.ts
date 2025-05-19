@@ -1,3 +1,4 @@
+
 import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon, Users } from "lucide-react";
 
 export interface NavLink {
@@ -104,6 +105,13 @@ export const productCategories: ProductCategory[] = [
     description: "Digital onboarding solution for truck drivers",
     color: "#06B6D4",
     image: "/lovable-uploads/dbd9cb45-ab91-470f-8a3e-4640e6b5539c.png"
+  },
+  {
+    title: "Drivers Matter",
+    href: "/products?product=drivers-matter",
+    description: "Advocating for commercial drivers' rights and improved working conditions",
+    color: "#ea384c",
+    image: "/lovable-uploads/229a0194-f31b-490f-ba2c-e7666f2614fa.png"
   }
 ];
 

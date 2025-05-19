@@ -18,15 +18,8 @@ const ProductOfferings = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {productCategories.map((product, index) => {
-            // Map product titles to their respective uploaded image paths
-            const imagePath = product.title === '3BI Connect' 
-              ? '/lovable-uploads/e3113b32-9c5a-4411-93bd-66a08ea62185.png' 
-              : product.title === 'Carrier Partner Network'
-              ? '/lovable-uploads/b6488acc-bc3b-49ce-a399-f736207129fe.png'
-              : '/lovable-uploads/dbd9cb45-ab91-470f-8a3e-4640e6b5539c.png';
-            
             return (
               <motion.div
                 key={index}
@@ -38,7 +31,7 @@ const ProductOfferings = () => {
               >
                 <AspectRatio ratio={16/9}>
                   <img 
-                    src={imagePath} 
+                    src={product.image} 
                     alt={product.title} 
                     className="w-full h-full object-cover"
                   />
@@ -53,7 +46,7 @@ const ProductOfferings = () => {
                   </p>
                   
                   <div className="flex justify-between items-center">
-                    <Link to={`/products?product=${product.href}`}>
+                    <Link to={`/products?product=${product.href.split('=')[1]}`}>
                       <Button 
                         variant="ghost" 
                         className="p-0 h-auto flex items-center gap-1 group hover:bg-transparent"
