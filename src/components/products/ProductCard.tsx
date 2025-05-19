@@ -18,6 +18,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
     show: { y: 0, opacity: 1 }
   };
 
+  // Map product titles to their respective uploaded image paths
+  const getProductImage = (title: string) => {
+    switch (title) {
+      case '3BI Connect':
+        return '/lovable-uploads/e3113b32-9c5a-4411-93bd-66a08ea62185.png';
+      case 'Carrier Partner Network':
+        return '/lovable-uploads/b6488acc-bc3b-49ce-a399-f736207129fe.png';
+      case 'TruckOnboard':
+        return '/lovable-uploads/dbd9cb45-ab91-470f-8a3e-4640e6b5539c.png';
+      default:
+        return product.image;
+    }
+  };
+
   return (
     <motion.div 
       variants={item}
@@ -27,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
         <div className="rounded-lg shadow-xl border border-gray-800 overflow-hidden">
           <AspectRatio ratio={16/9}>
             <img 
-              src={product.image} 
+              src={getProductImage(product.title)} 
               alt={product.title} 
               className="w-full h-full object-cover"
             />
