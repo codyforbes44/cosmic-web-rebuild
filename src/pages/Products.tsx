@@ -7,7 +7,6 @@ import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import ProductComparison from '@/components/ProductComparison';
 import ProductsHeader from '@/components/products/ProductsHeader';
 import ProductsTestimonials from '@/components/products/ProductsTestimonials';
 import ProductsCTA from '@/components/products/ProductsCTA';
@@ -72,9 +71,6 @@ const Products = () => {
               </TabsContent>
             ))}
           </Tabs>
-
-          {/* Product Comparison Section */}
-          <ProductComparison />
           
           {/* Testimonials Section */}
           <ProductsTestimonials />
