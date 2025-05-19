@@ -9,7 +9,6 @@ import Newsletter from "@/components/Newsletter";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
 import CTASection from "@/components/CTASection";
-import ClientLogoBanner from "@/components/ClientLogoBanner";
 
 const Index = () => {
   return (
@@ -24,7 +23,6 @@ const Index = () => {
       <main className="overflow-x-hidden">
         <StarBackground />
         <HeroSection />
-        <ClientLogoBanner />
         <Testimonials />
         <ServicesSolutions />
         <BusinessCaseStudy />
