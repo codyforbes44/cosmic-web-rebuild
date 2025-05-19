@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Cloud, CloudSun, Sun, CloudRain, CloudSnow, Wind, Thermometer, Droplets, WifiOff, Signal } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface WeatherData {
   location: string;
@@ -9,6 +10,7 @@ interface WeatherData {
   condition: string;
   humidity: number;
   windSpeed: number;
+  timestamp?: number;
 }
 
 interface WeatherWidgetProps {
@@ -16,6 +18,8 @@ interface WeatherWidgetProps {
   title?: string;
   units?: 'imperial' | 'metric';
 }
+
+const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes in milliseconds
 
 const WeatherWidget = ({ 
   className = "",
@@ -28,6 +32,79 @@ const WeatherWidget = ({
 
   useEffect(() => {
     const fetchWeatherData = async () => {
+      try {
+        // Check for cached weather data first
+        const cachedData = getCachedWeather();
+        if (cachedData) {
+          console.log('Using cached weather data');
+          setWeatherData(cachedData);
+          setLoading(false);
+          
+          // If the cache is recent (within 30 minutes), we'll use it
+          // But still fetch in the background for freshness
+          if (Date.now() - (cachedData.timestamp || 0) < CACHE_EXPIRY) {
+            return;
+          }
+        }
+        
+        // Try to get location using Browser Geolocation API
+        await navigator.geolocation.getCurrentPosition(
+          // Success callback - we got precise location
+          async (position) => {
+            try {
+              const { latitude, longitude } = position.coords;
+              
+              // Fetch weather using coordinates (most accurate)
+              const weatherResponse = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=9de243494c0b295cca9337e1e96b00e2`
+              );
+              
+              if (!weatherResponse.ok) {
+                throw new Error(`Weather API error: ${weatherResponse.status}`);
+              }
+              
+              const weatherResult = await weatherResponse.json();
+              
+              const newWeatherData: WeatherData = {
+                location: weatherResult.name,
+                temperature: Math.round(weatherResult.main.temp),
+                condition: weatherResult.weather[0].main,
+                humidity: weatherResult.main.humidity,
+                windSpeed: Math.round(weatherResult.wind.speed),
+                timestamp: Date.now(),
+              };
+              
+              // Save to cache and update state
+              cacheWeatherData(newWeatherData);
+              setWeatherData(newWeatherData);
+              setLoading(false);
+            } catch (err) {
+              console.error('Weather fetch error with geolocation:', err);
+              // Fall back to IP-based methods
+              await fetchByIpLocation();
+            }
+          },
+          // Error callback - permission denied or unavailable
+          async () => {
+            console.log('Geolocation permission denied or unavailable');
+            // Fall back to IP-based location methods
+            await fetchByIpLocation();
+          },
+          // Options
+          { 
+            timeout: 7000,
+            enableHighAccuracy: false,
+            maximumAge: 60 * 60 * 1000 // 1 hour
+          }
+        );
+      } catch (err) {
+        console.error('Initial weather fetch error:', err);
+        // When all else fails, try IP-based geolocation
+        await fetchByIpLocation();
+      }
+    };
+
+    const fetchByIpLocation = async () => {
       try {
         // Try multiple geo-location services
         let userLocation: string | null = null;
@@ -73,29 +150,65 @@ const WeatherWidget = ({
         
         const weatherResult = await weatherResponse.json();
         
-        setWeatherData({
+        const newWeatherData: WeatherData = {
           location: userLocation,
           temperature: Math.round(weatherResult.main.temp),
           condition: weatherResult.weather[0].main,
           humidity: weatherResult.main.humidity,
           windSpeed: Math.round(weatherResult.wind.speed),
-        });
+          timestamp: Date.now(),
+        };
         
+        // Cache the weather data and update state
+        cacheWeatherData(newWeatherData);
+        setWeatherData(newWeatherData);
         setLoading(false);
       } catch (err) {
         console.error('Weather fetch error:', err);
         
         // Provide demo data as fallback when all API calls fail
-        setWeatherData({
+        const fallbackData: WeatherData = {
           location: 'Demo City',
           temperature: units === 'imperial' ? 72 : 22,
           condition: 'Clouds',
           humidity: 45,
           windSpeed: units === 'imperial' ? 5 : 8,
-        });
+          timestamp: Date.now(),
+        };
         
+        setWeatherData(fallbackData);
         setError('Unable to fetch local weather - showing demo data');
         setLoading(false);
+      }
+    };
+
+    // Function to get cached weather data
+    const getCachedWeather = (): WeatherData | null => {
+      try {
+        const cachedDataString = localStorage.getItem(`weather_data_${units}`);
+        if (!cachedDataString) return null;
+        
+        const cachedData: WeatherData = JSON.parse(cachedDataString);
+        
+        // Return null if the cache is old (older than 30 minutes)
+        if (!cachedData.timestamp || Date.now() - cachedData.timestamp > CACHE_EXPIRY) {
+          console.log('Cached weather data expired');
+          return null;
+        }
+        
+        return cachedData;
+      } catch (err) {
+        console.error('Error retrieving cached weather:', err);
+        return null;
+      }
+    };
+
+    // Function to cache weather data
+    const cacheWeatherData = (data: WeatherData) => {
+      try {
+        localStorage.setItem(`weather_data_${units}`, JSON.stringify(data));
+      } catch (err) {
+        console.error('Error caching weather data:', err);
       }
     };
 
@@ -120,7 +233,7 @@ const WeatherWidget = ({
 
   if (loading) {
     return (
-      <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
+      <div className={cn(`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col`, className)}>
         {title && <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>}
         <div className="text-gray-400 animate-pulse flex-grow flex items-center justify-center">
           Detecting your location...
@@ -130,7 +243,7 @@ const WeatherWidget = ({
   }
 
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 flex flex-col ${!title ? 'min-h-[180px]' : 'min-h-[320px]'} ${className}`}>
+    <div className={cn(`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 flex flex-col ${!title ? 'min-h-[180px]' : 'min-h-[320px]'}`, className)}>
       {title && <h3 className="text-xl font-semibold mb-5 text-white">{title}</h3>}
       
       {weatherData && (
