@@ -1,3 +1,4 @@
+
 import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon, Users } from "lucide-react";
 
 export interface NavLink {
@@ -86,7 +87,7 @@ export interface ProductCategory {
 export const productCategories: ProductCategory[] = [
   {
     title: "3BI Connect",
-    href: "/products/3bi-connect",
+    href: "/products?product=3bi-connect",
     description: "Comprehensive platform for driver management and retention",
     color: "#2563EB",
     image: "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
