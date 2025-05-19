@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -30,7 +31,7 @@ const HeroSection = () => {
       />
       
       {/* Pulse animation keyframes */}
-      <style jsx>{`
+      <style>{`
         @keyframes pulse {
           0% {
             transform: scale(1) rotate(0deg);
