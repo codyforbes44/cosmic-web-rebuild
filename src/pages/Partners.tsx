@@ -2,11 +2,13 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 import PartnerShowcase from "@/components/partners/PartnerShowcase";
 import PartnersHero from "@/components/partners/PartnersHero";
 import PartnerBenefits from "@/components/partners/PartnerBenefits";
 import BecomePartner from "@/components/partners/BecomePartner";
 import SEO from "@/components/SEO";
+import StarBackground from "@/components/StarBackground";
 
 const Partners: React.FC = () => {
   return (
@@ -17,18 +19,22 @@ const Partners: React.FC = () => {
         image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
       />
       
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        
-        <main className="flex-grow pt-24">
+      <Navbar />
+      <StarBackground />
+      
+      <main className="flex-grow pt-24 pb-16">
+        <div className="container mx-auto px-4 max-w-7xl">
+          {/* Breadcrumb navigation */}
+          <BreadcrumbNav currentPageLabel="Partners" />
+          
           <PartnersHero />
           <PartnerShowcase />
           <PartnerBenefits />
           <BecomePartner />
-        </main>
+        </div>
+      </main>
 
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 };

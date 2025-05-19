@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import SEO from "@/components/SEO";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 import QuoteHeader from "@/components/quote/QuoteHeader";
 import QuoteForm from "@/components/quote/QuoteForm";
 import ServicesList from "@/components/quote/ServicesList";
@@ -23,6 +24,9 @@ const GetQuote = () => {
       <main className="min-h-screen pt-20 pb-24">
         <section className="py-20">
           <div className="container mx-auto px-4">
+            {/* Breadcrumb navigation */}
+            <BreadcrumbNav currentPageLabel="Get a Quote" />
+            
             <QuoteHeader />
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl mx-auto">

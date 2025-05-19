@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { productCategories } from "@/components/navbar/constants";
 import ProductHero from '@/components/products/ProductHero';
 import ProductFeatures from '@/components/products/ProductFeatures';
@@ -26,6 +27,10 @@ const ProductDetail = () => {
   if (!product) {
     return <Navigate to="/products" replace />;
   }
+
+  const breadcrumbItems = [
+    { label: 'Products', path: '/products' }
+  ];
   
   return (
     <>
@@ -40,6 +45,12 @@ const ProductDetail = () => {
         <StarBackground />
         
         <div className="container mx-auto px-4 max-w-7xl">
+          {/* Breadcrumb navigation */}
+          <BreadcrumbNav 
+            items={breadcrumbItems} 
+            currentPageLabel={product.title} 
+          />
+          
           {/* Hero Section */}
           <ProductHero 
             product={product} 

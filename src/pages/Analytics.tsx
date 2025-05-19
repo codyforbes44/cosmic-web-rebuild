@@ -3,6 +3,7 @@ import React from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAnalytics } from "@/hooks/use-analytics";
 import OverviewCards from "@/components/analytics/OverviewCards";
@@ -21,6 +22,9 @@ const Analytics: React.FC = () => {
       <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-space-dark-blue to-space-deep-blue py-24 px-4">
         <div className="container mx-auto max-w-6xl">
+          {/* Breadcrumb navigation */}
+          <BreadcrumbNav currentPageLabel="Analytics Dashboard" />
+          
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Analytics Dashboard</h1>
             <p className="text-gray-400">Visitor insights and website performance metrics</p>

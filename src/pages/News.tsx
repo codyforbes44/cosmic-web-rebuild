@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import SEO from "@/components/SEO";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { businessArticles, categories } from "@/data/newsData";
 import ArticleList from "@/components/news/ArticleList";
 import ArticleModal from "@/components/news/ArticleModal";
@@ -39,6 +40,9 @@ const News = () => {
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">
         <div className="container mx-auto px-4 max-w-6xl">
+          {/* Breadcrumb navigation */}
+          <BreadcrumbNav currentPageLabel="Business Insights" />
+          
           <div className="space-card p-8 rounded-xl mb-12">
             <div className="text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">

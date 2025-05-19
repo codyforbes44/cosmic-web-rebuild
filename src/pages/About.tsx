@@ -1,7 +1,8 @@
-
+import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -12,6 +13,9 @@ const About = () => {
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">
         <div className="container mx-auto px-4 max-w-6xl">
+          {/* Breadcrumb navigation */}
+          <BreadcrumbNav currentPageLabel="About" />
+          
           <div className="space-card p-8 rounded-xl mb-12">
             <div className="max-w-3xl mx-auto text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">

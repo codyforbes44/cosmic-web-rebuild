@@ -1,11 +1,12 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StarBackground from "@/components/StarBackground";
 
 const PrivacyPolicy = () => {
   return (
@@ -15,15 +16,14 @@ const PrivacyPolicy = () => {
         description="Privacy policy for ƷBI - learn how we collect, use, and protect your personal information."
       />
       <Navbar />
+      <StarBackground />
       
-      <div className="bg-space-deep-blue min-h-screen">
+      <div className="bg-transparent min-h-screen">
         <div className="container mx-auto px-4 py-12">
+          {/* Breadcrumb navigation */}
+          <BreadcrumbNav currentPageLabel="Privacy Policy" />
+          
           <div className="mb-8">
-            <div className="flex items-center text-gray-400 text-sm mb-4">
-              <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <ChevronRight size={14} className="mx-2" />
-              <span className="text-white">Privacy Policy</span>
-            </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">Privacy Policy</h1>
             <div className="h-1 w-20 bg-accent mb-8"></div>
           </div>

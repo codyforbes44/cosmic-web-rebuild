@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import Navbar from "@/components/Navbar";
@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
 import ClientLogoBanner from "@/components/ClientLogoBanner";
 import ServiceCaseStudy from "@/components/ServiceCaseStudy";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 
 import ServiceImage from "@/components/services/ServiceImage";
 import ServiceInfo from "@/components/services/ServiceInfo";
@@ -46,6 +47,9 @@ const Services = () => {
       <StarBackground />
       <main className="min-h-screen pt-24 pb-24">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+          {/* Breadcrumb navigation */}
+          <BreadcrumbNav currentPageLabel="Services" />
+          
           {/* Header with tabs */}
           <ServicesHeader 
             services={services} 
