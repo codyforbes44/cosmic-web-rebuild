@@ -14,12 +14,14 @@ interface WeatherWidgetProps {
   className?: string;
   title?: string;
   units?: 'imperial' | 'metric';
+  minimized?: boolean;
 }
 
 const WeatherWidget = ({ 
   className = "",
   title = "Your Local Weather",
-  units = 'imperial'
+  units = 'imperial',
+  minimized = false
 }: WeatherWidgetProps) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -72,18 +74,28 @@ const WeatherWidget = ({
   const getWeatherIcon = (condition: string) => {
     switch (condition.toLowerCase()) {
       case 'clear':
-        return <Sun size={24} className="text-yellow-400" />;
+        return <Sun size={minimized ? 16 : 24} className="text-yellow-400" />;
       case 'clouds':
-        return <Cloud size={24} className="text-gray-400" />;
+        return <Cloud size={minimized ? 16 : 24} className="text-gray-400" />;
       case 'rain':
       case 'drizzle':
-        return <CloudRain size={24} className="text-blue-400" />;
+        return <CloudRain size={minimized ? 16 : 24} className="text-blue-400" />;
       case 'snow':
-        return <CloudSnow size={24} className="text-blue-200" />;
+        return <CloudSnow size={minimized ? 16 : 24} className="text-blue-200" />;
       default:
-        return <CloudSun size={24} className="text-yellow-300" />;
+        return <CloudSun size={minimized ? 16 : 24} className="text-yellow-300" />;
     }
   };
+
+  if (minimized && weatherData) {
+    return (
+      <div className={`flex items-center gap-2 text-xs text-white py-1 px-2 rounded bg-space-deep-blue/60 ${className}`}>
+        {getWeatherIcon(weatherData.condition)}
+        <span className="font-semibold">{weatherData.temperature}°{units === 'imperial' ? 'F' : 'C'}</span>
+        <span className="text-gray-300 text-xs truncate max-w-[80px]">{weatherData.location.split(',')[0]}</span>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

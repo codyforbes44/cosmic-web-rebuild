@@ -21,6 +21,19 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Weather widget in chat */
+.chat-weather-wrapper {
+  position: absolute;
+  top: -24px;
+  left: 10px;
+  z-index: 5;
+}
+
+.chat-weather-widget {
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 /* Pin button */
 .pin-button {
   position: absolute;
@@ -146,5 +159,10 @@
   .chat-pinned .chat-window {
     width: 100% !important;
     border-radius: 0;
+  }
+
+  .chat-weather-wrapper {
+    top: -24px;
+    left: 5px;
   }
 }

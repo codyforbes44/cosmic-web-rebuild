@@ -4,6 +4,7 @@ import { useChatState } from './hooks/useChatState';
 import ChatWindow from './ChatWindow';
 import ChatToggleButton from './ChatToggleButton';
 import { Pin, PinOff } from 'lucide-react';
+import WeatherWidget from '../footer/WeatherWidget';
 import './LiveChat.css';
 
 const LiveChat = () => {
@@ -29,6 +30,9 @@ const LiveChat = () => {
       {/* Chat Window */}
       {isOpen && (
         <div className="chat-window-wrapper">
+          <div className="chat-weather-wrapper">
+            <WeatherWidget minimized={true} className="chat-weather-widget" units="imperial" />
+          </div>
           <ChatWindow
             messages={messages}
             message={message}
