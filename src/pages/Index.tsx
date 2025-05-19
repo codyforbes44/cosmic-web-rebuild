@@ -4,11 +4,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import ServicesSolutions from "@/components/ServicesSolutions";
-import BusinessCaseStudy from "@/components/BusinessCaseStudy";
 import Newsletter from "@/components/Newsletter";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
 import CTASection from "@/components/CTASection";
+import ProductOfferings from "@/components/ProductOfferings";
 
 const Index = () => {
   return (
@@ -25,7 +25,7 @@ const Index = () => {
         <HeroSection />
         <Testimonials />
         <ServicesSolutions />
-        <BusinessCaseStudy />
+        <ProductOfferings />
         <CTASection />
         <Newsletter />
       </main>
