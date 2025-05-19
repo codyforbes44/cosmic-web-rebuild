@@ -16,24 +16,22 @@ const ServiceTabs: React.FC<ServiceTabsProps> = ({ services, selectedServiceId, 
     <Tabs 
       value={selectedService.id} 
       onValueChange={onTabChange}
-      className="justify-center"
+      className="justify-center w-full"
     >
-      <TabsList className="bg-gray-800/60 inline-flex flex-nowrap overflow-x-auto p-2 rounded-xl">
-        <div className="flex flex-nowrap gap-2">
-          {services.map((service) => (
-            <TabsTrigger 
-              key={service.id} 
-              value={service.id}
-              className="data-[state=active]:text-white text-sm px-4 py-2 rounded-md transition-colors duration-200 whitespace-nowrap"
-              style={{ 
-                borderBottom: selectedService.id === service.id ? `2px solid ${service.color}` : 'none',
-                color: selectedService.id === service.id ? service.color : 'inherit'
-              }}
-            >
-              {service.title || service.name}
-            </TabsTrigger>
-          ))}
-        </div>
+      <TabsList className="bg-gray-800/60 flex flex-wrap justify-center p-2 rounded-xl max-w-full overflow-hidden">
+        {services.map((service) => (
+          <TabsTrigger 
+            key={service.id} 
+            value={service.id}
+            className="data-[state=active]:text-white text-sm px-4 py-2 m-1 rounded-md transition-colors duration-200"
+            style={{ 
+              borderBottom: selectedService.id === service.id ? `2px solid ${service.color}` : 'none',
+              color: selectedService.id === service.id ? service.color : 'inherit'
+            }}
+          >
+            {service.title || service.name}
+          </TabsTrigger>
+        ))}
       </TabsList>
     </Tabs>
   );
