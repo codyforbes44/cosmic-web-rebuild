@@ -9,6 +9,7 @@ import MobileServicesMenu from './MobileServicesMenu';
 import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
 import { Phone } from 'lucide-react';
+import WeatherWidget from '../footer/WeatherWidget';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -43,6 +44,15 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
         >
           <div className="h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
             <div>
+              {/* Weather Widget Added at the Top */}
+              <div className="mb-5">
+                <WeatherWidget 
+                  className="py-2" 
+                  title="Current Weather" 
+                  units="imperial" 
+                />
+              </div>
+              
               <div className="mb-8 pb-4 border-b border-gray-700">
                 <Link to="/get-quote" onClick={onClose} className="block mb-4">
                   <Button className="w-full bg-accent hover:bg-accent/80 text-white py-5 font-semibold text-base">
