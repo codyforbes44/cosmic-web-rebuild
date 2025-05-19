@@ -1,12 +1,9 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ChatMessage } from './types';
-import MessageList from './MessageList';
-import ChatInput from './ChatInput';
 import ZapierManager from './ZapierManager';
 import ChatHeader from './components/ChatHeader';
-import QuickResponses from './components/QuickResponses';
-import MessageActions from './components/MessageActions';
+import ChatContainer from './components/ChatContainer';
 
 interface ChatWindowProps {
   messages: ChatMessage[];
@@ -21,13 +18,6 @@ interface ChatWindowProps {
   chatContainerRef: React.RefObject<HTMLDivElement>;
 }
 
-const QUICK_RESPONSES = [
-  "Tell me about your services",
-  "What makes ƷBI different?",
-  "How can I get started?",
-  "Zapier help"
-];
-
 const ChatWindow: React.FC<ChatWindowProps> = ({
   messages,
   message,
@@ -40,18 +30,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   onToggleZapierManager = () => {},
   chatContainerRef
 }) => {
-  const [showRating, setShowRating] = useState<string | null>(null);
-  
   const handleQuickResponse = (response: string) => {
     onMessageChange(response);
     onSendMessage();
   };
-  
-  const shouldShowQuickResponses = messages.length <= 1 && !isTyping && !isThinking;
-  const shouldShowMessageActions = messages.length > 0 && messages.some(msg => msg.sender === 'bot');
-  const lastBotMessage = messages.length > 0 ? 
-    messages.filter(msg => msg.sender === 'bot').pop() : 
-    null;
 
   return (
     <>
@@ -62,38 +44,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
           onToggleZapierManager={onToggleZapierManager}
         />
 
-        {/* Chat Messages */}
-        <MessageList 
-          messages={messages} 
-          isTyping={isTyping}
-          isThinking={isThinking} 
-          chatContainerRef={chatContainerRef} 
-        />
-        
-        {/* Quick responses - show only at the beginning */}
-        {shouldShowQuickResponses && (
-          <QuickResponses 
-            responses={QUICK_RESPONSES}
-            onSelectResponse={handleQuickResponse}
-          />
-        )}
-
-        {/* Message actions - for bot messages only */}
-        {shouldShowMessageActions && lastBotMessage && (
-          <MessageActions 
-            lastMessageId={lastBotMessage.id} 
-            lastMessageText={lastBotMessage.text}
-            showRating={showRating}
-            setShowRating={setShowRating}
-          />
-        )}
-
-        {/* Chat Input */}
-        <ChatInput 
+        {/* Chat Container with all messaging components */}
+        <ChatContainer
+          messages={messages}
           message={message}
+          isTyping={isTyping}
+          isThinking={isThinking}
           onMessageChange={onMessageChange}
           onSendMessage={onSendMessage}
-          isDisabled={isTyping || isThinking}
+          chatContainerRef={chatContainerRef}
+          onQuickResponseSelect={handleQuickResponse}
         />
       </div>
       
