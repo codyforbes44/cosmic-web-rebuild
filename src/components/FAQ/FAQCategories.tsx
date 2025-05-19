@@ -45,6 +45,22 @@ export const faqCategories = [
       {
         question: "How does Ʒʙɪ integrate AI into business processes?",
         answer: "We implement AI technologies across multiple business areas including customer segmentation, predictive analytics, automated content personalization, and interactive chatbots to enhance customer engagement and optimize operational efficiency."
+      },
+      {
+        question: "What industries benefit most from your digital marketing services?",
+        answer: "While our services benefit businesses across all sectors, we've seen particularly strong results in technology, healthcare, finance, logistics, e-commerce, and professional services industries. We customize our approach based on your specific industry challenges and opportunities."
+      },
+      {
+        question: "How do you measure the success of your marketing strategies?",
+        answer: "We establish clear KPIs aligned with your business objectives and use advanced analytics to track performance. Regular reporting includes metrics like ROI, conversion rates, engagement levels, customer acquisition costs, and lifetime value. We continuously optimize campaigns based on these insights."
+      },
+      {
+        question: "Can Ʒʙɪ help with our SEO strategy?",
+        answer: "Absolutely. Our comprehensive SEO services include technical SEO audits, keyword research, content optimization, backlink strategy, local SEO, and regular monitoring of search rankings. We focus on sustainable practices that drive organic traffic growth and improve search visibility."
+      },
+      {
+        question: "What makes your workflow optimization services different?",
+        answer: "Our workflow optimization approach begins with a thorough analysis of your current processes, identifying bottlenecks and inefficiencies. We then implement customized automation solutions and streamlined workflows that integrate with your existing systems, resulting in increased productivity and reduced operational costs."
       }
     ]
   },
