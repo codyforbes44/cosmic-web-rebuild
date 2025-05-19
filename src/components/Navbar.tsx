@@ -65,12 +65,12 @@ const Navbar = () => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[9990] transition-all duration-300 ${
         isScrolled ? 'bg-space-dark-blue/90 backdrop-blur-md py-2 shadow-lg' : 'py-4'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2 z-20">
+        <Link to="/" className="flex items-center space-x-2 z-[9991]">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,7 +93,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation Toggle */}
         <button 
-          className="md:hidden text-white p-1 z-20" 
+          className="md:hidden text-white p-1 z-[9992]" 
           onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
           aria-label={isMobileNavOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileNavOpen}
