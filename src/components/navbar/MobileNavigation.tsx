@@ -8,8 +8,9 @@ import MobileNavLink from './MobileNavLink';
 import MobileServicesMenu from './MobileServicesMenu';
 import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
-import { Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, X } from 'lucide-react';
 import WeatherWidget from '../footer/WeatherWidget';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
   const location = useLocation();
   const [showServices, setShowServices] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
+  const isMobile = useIsMobile();
   
   const toggleServices = () => {
     setShowServices(!showServices);
@@ -125,6 +127,17 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                 transition={{ duration: 0.3, delay: 0.6 }}
                 className="space-y-4"
               >
+                <div className="text-center mb-4">
+                  <Button 
+                    variant="outline" 
+                    className="border-brand-gold/30 hover:bg-brand-gold/10 text-brand-gold"
+                    onClick={onClose}
+                  >
+                    <X size={18} className="mr-2" />
+                    Close Menu
+                  </Button>
+                </div>
+                
                 <div className="text-sm text-center">
                   <p className="text-gray-400 mb-4">Connect with us</p>
                   <div className="flex justify-center space-x-5">
