@@ -1,3 +1,4 @@
+
 import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon, Users } from "lucide-react";
 
 export interface NavLink {
@@ -110,7 +111,7 @@ export const productCategories: ProductCategory[] = [
     href: "/products?product=drivers-matter",
     description: "Advocating for commercial drivers' rights and improved working conditions",
     color: "#ea384c",
-    image: "/lovable-uploads/1141a74c-1568-4bb7-b836-c7e5112efacf.png"
+    image: "/lovable-uploads/229a0194-f31b-490f-ba2c-e7666f2614fa.png"
   }
 ];
 

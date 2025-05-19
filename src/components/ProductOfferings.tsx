@@ -22,7 +22,7 @@ const ProductOfferings = () => {
           {productCategories.map((product, index) => {
             // Use the new image for Drivers Matter product
             const productImage = product.title === "Drivers Matter" 
-              ? "/lovable-uploads/1141a74c-1568-4bb7-b836-c7e5112efacf.png" 
+              ? "/lovable-uploads/f2add7c3-2fca-4014-bb4d-991fa05f7668.png" 
               : product.image;
               
             return (

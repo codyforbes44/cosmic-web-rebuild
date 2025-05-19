@@ -21,8 +21,6 @@ const getProductImage = (title: string) => {
       return '/lovable-uploads/b6488acc-bc3b-49ce-a399-f736207129fe.png';
     case 'TruckOnboard':
       return '/lovable-uploads/dbd9cb45-ab91-470f-8a3e-4640e6b5539c.png';
-    case 'Drivers Matter':
-      return '/lovable-uploads/1141a74c-1568-4bb7-b836-c7e5112efacf.png';
     default:
       return '/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png';
   }
