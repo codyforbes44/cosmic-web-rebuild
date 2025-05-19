@@ -94,14 +94,14 @@ export const productCategories: ProductCategory[] = [
   },
   {
     title: "Carrier Partner Network",
-    href: "/products/carrier-partner-network",
+    href: "/products?product=carrier-partner-network",
     description: "Connect with qualified drivers and streamline hiring",
     color: "#10B981",
     image: "/lovable-uploads/1e9d8177-66c6-4b9f-b830-04c0e28d026e.png"
   },
   {
     title: "TruckOnboard",
-    href: "/products/truck-onboard",
+    href: "/products?product=truckonboard",
     description: "Digital onboarding solution for truck drivers",
     color: "#06B6D4",
     image: "/lovable-uploads/7f21da0a-fd77-43ea-a7af-3b11648397c0.png"
