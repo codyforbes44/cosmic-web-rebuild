@@ -16,6 +16,8 @@ interface ChatWindowProps {
   onSendMessage: () => void;
   onToggleChat: () => void;
   onToggleZapierManager?: () => void;
+  onTogglePin?: () => void;
+  isPinned?: boolean;
   chatContainerRef: React.RefObject<HTMLDivElement>;
 }
 
@@ -30,6 +32,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   onSendMessage,
   onToggleChat,
   onToggleZapierManager = () => {},
+  onTogglePin,
+  isPinned = false,
   chatContainerRef
 }) => {
   const handleQuickResponse = (response: string) => {
@@ -44,6 +48,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         <ChatHeader 
           onToggleChat={onToggleChat}
           onToggleZapierManager={onToggleZapierManager}
+          onTogglePin={onTogglePin}
+          isPinned={isPinned}
         />
 
         {/* Chat Container with all messaging components */}

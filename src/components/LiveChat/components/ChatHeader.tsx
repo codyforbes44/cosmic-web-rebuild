@@ -2,16 +2,20 @@
 import React from 'react';
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import { X } from 'lucide-react';
+import { Pin, X } from 'lucide-react';
 
 interface ChatHeaderProps {
   onToggleChat: () => void;
   onToggleZapierManager: () => void;
+  isPinned?: boolean;
+  onTogglePin?: () => void;
 }
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({
   onToggleChat,
-  onToggleZapierManager
+  onToggleZapierManager,
+  isPinned = false,
+  onTogglePin
 }) => {
   return (
     <div className="bg-gradient-to-r from-brand-gold to-brand-gold/80 p-4 flex justify-between items-center">
@@ -25,6 +29,16 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         </div>
       </div>
       <div className="flex items-center">
+        {onTogglePin && (
+          <button 
+            onClick={onTogglePin} 
+            className="text-white hover:bg-white/10 p-2 rounded-full transition-colors mr-1"
+            aria-label={isPinned ? "Unpin chat" : "Pin chat"}
+            title={isPinned ? "Unpin chat" : "Pin chat"}
+          >
+            <Pin size={18} />
+          </button>
+        )}
         <button 
           onClick={onToggleChat} 
           className="text-white hover:bg-white/10 p-2 rounded-full transition-colors"

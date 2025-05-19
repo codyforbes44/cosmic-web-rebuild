@@ -3,7 +3,6 @@ import React from 'react';
 import { useChatState } from './hooks/useChatState';
 import ChatWindow from './ChatWindow';
 import ChatToggleButton from './ChatToggleButton';
-import { Pin, PinOff } from 'lucide-react';
 import './LiveChat.css';
 
 const LiveChat = () => {
@@ -41,16 +40,10 @@ const LiveChat = () => {
             onSendMessage={handleSendMessage}
             onToggleChat={toggleChat}
             onToggleZapierManager={toggleZapierManager}
+            onTogglePin={togglePin}
+            isPinned={isPinned}
             chatContainerRef={chatContainerRef}
           />
-          <button 
-            onClick={togglePin} 
-            className="pin-button"
-            aria-label={isPinned ? "Unpin chat" : "Pin chat"}
-            title={isPinned ? "Unpin chat" : "Pin chat"}
-          >
-            {isPinned ? <PinOff size={16} /> : <Pin size={16} />}
-          </button>
         </div>
       )}
 
