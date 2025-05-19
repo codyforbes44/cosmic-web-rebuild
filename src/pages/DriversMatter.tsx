@@ -1,4 +1,3 @@
-
 import React from 'react';
 import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
@@ -16,7 +15,7 @@ const DriversMatter = () => {
         title="Drivers Matter | Advocating for Commercial Drivers' Rights" 
         description="Supporting the backbone of America's economy through advocacy, resources, and community for commercial truck drivers."
         keywords="drivers matter, truck drivers, commercial drivers, drivers rights, trucking advocacy, driver support"
-        image="/lovable-uploads/229a0194-f31b-490f-ba2c-e7666f2614fa.png"
+        image="/lovable-uploads/1141a74c-1568-4bb7-b836-c7e5112efacf.png"
       />
       <Navbar />
       <main className="relative overflow-hidden">
@@ -24,7 +23,7 @@ const DriversMatter = () => {
         <section className="relative min-h-[80vh] flex items-center">
           <div className="absolute inset-0 z-0">
             <img 
-              src="/lovable-uploads/229a0194-f31b-490f-ba2c-e7666f2614fa.png" 
+              src="/lovable-uploads/1141a74c-1568-4bb7-b836-c7e5112efacf.png" 
               alt="Commercial truck on highway" 
               className="w-full h-full object-cover"
             />
