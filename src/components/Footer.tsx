@@ -39,24 +39,24 @@ const Footer = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Column 1: Logo and Social Links */}
+          {/* Column 1: Logo and Social Links (No change) */}
           <div>
             <SocialLinksWidget />
           </div>
           
-          {/* Column 2: Weather Widget */}
-          <div>
-            <WeatherWidget />
-          </div>
-          
-          {/* Column 3: Services */}
+          {/* Column 2: Services */}
           <div>
             <ServicesWidget serviceGroups={serviceGroups} />
           </div>
           
-          {/* Column 4: Contact Info */}
+          {/* Column 3: Contact Info */}
           <div>
             <ContactWidget />
+          </div>
+          
+          {/* Column 4: Weather Widget */}
+          <div>
+            <WeatherWidget />
           </div>
         </div>
         
