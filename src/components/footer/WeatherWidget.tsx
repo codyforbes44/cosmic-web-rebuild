@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Cloud, CloudSun, Sun, CloudRain, CloudSnow, Wind, Thermometer, Droplets } from 'lucide-react';
+import { Cloud, CloudSun, Sun, CloudRain, CloudSnow, Wind, Thermometer, Droplets, WifiOff } from 'lucide-react';
 
 interface WeatherData {
   location: string;
@@ -28,17 +28,37 @@ const WeatherWidget = ({
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        // Get user's location from IP
-        const geoResponse = await fetch('https://ipapi.co/json/');
-        if (!geoResponse.ok) {
-          throw new Error('Unable to determine your location');
+        // Try multiple geo-location services
+        let userLocation: string | null = null;
+        
+        // First attempt: ipapi.co
+        try {
+          const geoResponse = await fetch('https://ipapi.co/json/');
+          if (geoResponse.ok) {
+            const geoData = await geoResponse.json();
+            userLocation = geoData.city;
+          }
+        } catch (err) {
+          console.log('Primary location service failed:', err);
+        }
+
+        // Second attempt: alternative geo API if first one fails
+        if (!userLocation) {
+          try {
+            const backupGeoResponse = await fetch('https://geolocation-db.com/json/');
+            if (backupGeoResponse.ok) {
+              const backupGeoData = await backupGeoResponse.json();
+              userLocation = backupGeoData.city;
+            }
+          } catch (err) {
+            console.log('Secondary location service failed:', err);
+          }
         }
         
-        const geoData = await geoResponse.json();
-        const userLocation = geoData.city;
-        
+        // If both attempts fail, use a default city
         if (!userLocation) {
-          throw new Error('Location not available');
+          userLocation = 'New York';
+          console.log('Using default location');
         }
         
         // Fetch weather data using OpenWeatherMap API
@@ -63,7 +83,17 @@ const WeatherWidget = ({
         setLoading(false);
       } catch (err) {
         console.error('Weather fetch error:', err);
-        setError('Unable to fetch local weather');
+        
+        // Provide demo data as fallback when all API calls fail
+        setWeatherData({
+          location: 'Demo City',
+          temperature: units === 'imperial' ? 72 : 22,
+          condition: 'Clouds',
+          humidity: 45,
+          windSpeed: units === 'imperial' ? 5 : 8,
+        });
+        
+        setError('Unable to fetch local weather - showing demo data');
         setLoading(false);
       }
     };
@@ -98,17 +128,6 @@ const WeatherWidget = ({
     );
   }
 
-  if (error && !weatherData) {
-    return (
-      <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
-        {title && <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>}
-        <div className="text-amber-400 flex-grow flex items-center justify-center text-center">
-          {error}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 flex flex-col ${!title ? 'min-h-[180px]' : 'min-h-[320px]'} ${className}`}>
       {title && <h3 className="text-xl font-semibold mb-5 text-white">{title}</h3>}
@@ -117,7 +136,11 @@ const WeatherWidget = ({
         <div className="text-gray-200 flex-grow flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <span className="font-medium text-white">{weatherData.location}</span>
-            {getWeatherIcon(weatherData.condition)}
+            {error ? (
+              <WifiOff size={24} className="text-amber-400" />
+            ) : (
+              getWeatherIcon(weatherData.condition)
+            )}
           </div>
           
           <div className={`mt-2 ${!title ? 'mb-2' : 'mb-4'}`}>
@@ -145,6 +168,12 @@ const WeatherWidget = ({
               <span className="text-lg font-medium ml-6">{weatherData.windSpeed} {units === 'imperial' ? 'mph' : 'm/s'}</span>
             </div>
           </div>
+          
+          {error && (
+            <div className="mt-3 text-xs text-amber-400 text-center">
+              {error}
+            </div>
+          )}
         </div>
       )}
     </div>
