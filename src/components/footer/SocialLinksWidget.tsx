@@ -39,27 +39,25 @@ const SocialLinksWidget = ({
   className = ""
 }: SocialLinksWidgetProps) => {
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-4 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
-      <h3 className="text-xl font-bold mb-4 text-white">
-        <Link to="/" className="flex items-center">
-          <img 
-            src={logo} 
-            alt="Company Logo" 
-            className="h-12" 
-          />
-        </Link>
-      </h3>
-      <p className="text-gray-400 mb-4">
+    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
+      <Link to="/" className="flex items-center mb-4">
+        <img 
+          src={logo} 
+          alt="Company Logo" 
+          className="h-12" 
+        />
+      </Link>
+      <p className="text-gray-400 mb-6 flex-grow">
         {description}
       </p>
-      <div className="flex space-x-4">
+      <div className="flex space-x-5 mt-auto">
         {socialLinks.map((link, index) => (
           <a 
             key={index}
             href={link.href} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="footer-link" 
+            className="footer-link hover:text-brand-gold bg-space-deep-blue/60 p-3 rounded-full transition-all hover:bg-space-deep-blue" 
             aria-label={link.label}
           >
             {link.icon}
