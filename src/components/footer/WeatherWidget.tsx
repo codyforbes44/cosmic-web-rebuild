@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Cloud, CloudSun, Sun, CloudRain, CloudSnow, Wind, Thermometer, Droplets } from 'lucide-react';
 
@@ -88,7 +87,7 @@ const WeatherWidget = ({
   if (loading) {
     return (
       <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
-        <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>
+        {title && <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>}
         <div className="text-gray-400 animate-pulse flex-grow flex items-center justify-center">
           Loading weather data...
         </div>
@@ -99,7 +98,7 @@ const WeatherWidget = ({
   if (error) {
     return (
       <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
-        <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>
+        {title && <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>}
         <div className="text-gray-400 flex-grow flex items-center justify-center">
           {error}
         </div>
@@ -108,8 +107,9 @@ const WeatherWidget = ({
   }
 
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
-      <h3 className="text-xl font-semibold mb-5 text-white">{title}</h3>
+    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 flex flex-col ${!title ? 'min-h-[180px]' : 'min-h-[320px]'} ${className}`}>
+      {title && <h3 className="text-xl font-semibold mb-5 text-white">{title}</h3>}
+      
       {weatherData && (
         <div className="text-gray-200 flex-grow flex flex-col">
           <div className="flex items-center justify-between mb-4">
@@ -117,7 +117,7 @@ const WeatherWidget = ({
             {getWeatherIcon(weatherData.condition)}
           </div>
           
-          <div className="mt-2 mb-4">
+          <div className={`mt-2 ${!title ? 'mb-2' : 'mb-4'}`}>
             <div className="flex items-center mb-2">
               <Thermometer size={18} className="mr-2 text-brand-gold" />
               <span className="text-gray-400">Temperature</span>
