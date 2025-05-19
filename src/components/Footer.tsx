@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import WeatherWidget from './footer/WeatherWidget';
 
 const Footer = () => {
   // Group service categories by type for better organization
@@ -55,36 +56,12 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Column 2: Quick Links - SWAPPED POSITION */}
+          {/* Column 2: Weather Widget - REPLACED QUICK LINKS */}
           <div>
-            <h3 className="text-lg font-medium mb-4 text-white">Quick Links</h3>
-            <ul className="space-y-2">
-              {navLinks.map((link) => (
-                <li key={link.path}>
-                  <Link to={link.path} className="footer-link">
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link to="/products" className="footer-link">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="footer-link">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/partners" className="footer-link">
-                  Partners
-                </Link>
-              </li>
-            </ul>
+            <WeatherWidget />
           </div>
           
-          {/* Column 3: Services - SWAPPED POSITION */}
+          {/* Column 3: Services */}
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Our Services</h3>
             <Accordion type="single" collapsible={false} defaultValue="marketing" className="w-full">
