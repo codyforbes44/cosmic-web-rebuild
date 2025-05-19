@@ -41,12 +41,6 @@ const ProductHero: React.FC<ProductHeroProps> = ({ product, openDemoModal }) => 
               </Button>
             </Link>
           </div>
-          
-          <div className="flex items-center space-x-1 text-sm text-gray-400">
-            <span>Trusted by</span>
-            <span className="font-medium">200+</span>
-            <span>trucking companies</span>
-          </div>
         </motion.div>
         
         <motion.div
