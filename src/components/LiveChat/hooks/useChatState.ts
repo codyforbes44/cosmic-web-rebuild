@@ -2,7 +2,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { findRelevantResponse } from "../chatbotKnowledge";
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
+import { 
+  processZapierCommand, 
+  findWebhookByCategory, 
+  triggerZapierWebhook,
+  parseZapierResponse,
+} from '../zapierIntegration';
 
 export const useChatState = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +19,7 @@ export const useChatState = () => {
   const [isPinned, setIsPinned] = useState(false);
   const [isSendingFirstMessage, setIsSendingFirstMessage] = useState(true);
   const [isThinking, setIsThinking] = useState(false);
+  const [showZapierManager, setShowZapierManager] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -42,7 +49,7 @@ export const useChatState = () => {
         setIsThinking(false);
         setIsTyping(true);
         
-        const welcomeText = "👋 Welcome to ƷBI! How can I help you today?";
+        const welcomeText = "👋 Welcome to ƷBI! How can I help you today? You can also use Zapier integrations by typing 'zapier help'.";
         const typingDuration = Math.min(welcomeText.length * TYPING_SPEED.min, 2000);
         
         setTimeout(() => {
@@ -89,7 +96,112 @@ export const useChatState = () => {
     }
   };
 
+  const toggleZapierManager = () => {
+    setShowZapierManager(prev => !prev);
+  };
+
+  // Handle Zapier command processing
+  const handleZapierCommand = async (userMessage: string) => {
+    const { isCommand, webhookCategory, payload } = processZapierCommand(userMessage);
+    
+    if (!isCommand || !webhookCategory) return false;
+    
+    // Find the webhook by category
+    const webhook = findWebhookByCategory(webhookCategory);
+    
+    if (!webhook) {
+      // Webhook not found response
+      setIsThinking(true);
+      setTimeout(() => {
+        setIsThinking(false);
+        setIsTyping(true);
+        
+        const notFoundText = `I couldn't find a Zapier webhook for "${webhookCategory}". Please add this webhook in the Zapier Manager or check the category name.`;
+        const typingDuration = calculateTypingDuration(notFoundText);
+        
+        setTimeout(() => {
+          setIsTyping(false);
+          
+          const botResponse: ChatMessage = {
+            id: Date.now().toString(),
+            text: notFoundText,
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+          
+          setMessages(prev => [...prev, botResponse]);
+        }, typingDuration);
+      }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
+      
+      return true;
+    }
+    
+    // Webhook found, trigger it
+    setIsThinking(true);
+    const processingText = `Processing your request with ${webhook.name}...`;
+    
+    setTimeout(() => {
+      setIsThinking(false);
+      setIsTyping(true);
+      
+      const typingDuration = calculateTypingDuration(processingText);
+      
+      setTimeout(() => {
+        setIsTyping(false);
+        
+        const processingMessage: ChatMessage = {
+          id: Date.now().toString(),
+          text: processingText,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        
+        setMessages(prev => [...prev, processingMessage]);
+        
+        // Now trigger the webhook
+        triggerZapierWebhook(webhook, payload || {})
+          .then(response => {
+            setIsTyping(true);
+            
+            let resultText;
+            if (response.success) {
+              resultText = `✅ Successfully triggered "${webhook.name}"! ${response.data ? '\n\n' + parseZapierResponse(response.data) : ''}`;
+            } else {
+              resultText = `❌ Failed to trigger "${webhook.name}". ${response.error || ''}`;
+            }
+            
+            const resultTypingDuration = calculateTypingDuration(resultText);
+            
+            setTimeout(() => {
+              setIsTyping(false);
+              
+              const resultMessage: ChatMessage = {
+                id: (Date.now() + 1).toString(),
+                text: resultText,
+                sender: 'bot',
+                timestamp: new Date(),
+              };
+              
+              setMessages(prev => [...prev, resultMessage]);
+            }, resultTypingDuration);
+          });
+      }, typingDuration);
+    }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
+    
+    return true;
+  };
+
   const generateBotResponse = (userMessage: string) => {
+    // First check if this is a Zapier command
+    if (userMessage.toLowerCase().startsWith('zap') || 
+        userMessage.toLowerCase().startsWith('zapier') || 
+        userMessage.toLowerCase().startsWith('trigger')) {
+      // Try to process as a Zapier command first
+      const isZapierCommand = handleZapierCommand(userMessage);
+      if (isZapierCommand) return;
+    }
+    
+    // Regular chatbot response flow
     setIsThinking(true);
     
     // Thinking delay to make it feel more human-like
@@ -150,10 +262,12 @@ export const useChatState = () => {
     unreadMessages,
     isPinned,
     isSendingFirstMessage,
+    showZapierManager,
     chatContainerRef,
     setMessage,
     toggleChat,
     togglePin,
+    toggleZapierManager,
     handleSendMessage,
   };
 };

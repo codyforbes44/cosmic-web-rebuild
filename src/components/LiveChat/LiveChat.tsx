@@ -15,10 +15,12 @@ const LiveChat = () => {
     isThinking,
     unreadMessages,
     isPinned,
+    showZapierManager,
     chatContainerRef,
     setMessage,
     toggleChat,
     togglePin,
+    toggleZapierManager,
     handleSendMessage,
   } = useChatState();
 
@@ -32,9 +34,11 @@ const LiveChat = () => {
             message={message}
             isTyping={isTyping}
             isThinking={isThinking}
+            showZapierManager={showZapierManager}
             onMessageChange={setMessage}
             onSendMessage={handleSendMessage}
             onToggleChat={toggleChat}
+            onToggleZapierManager={toggleZapierManager}
             chatContainerRef={chatContainerRef}
           />
           <button 

@@ -86,11 +86,69 @@ const faqKnowledge: KnowledgeItem[] = [
   }
 ];
 
+// Zapier integration knowledge
+const zapierKnowledge: KnowledgeItem[] = [
+  {
+    keywords: ["zapier", "zap", "automation", "webhook", "integration", "automate"],
+    response: `
+      You can integrate our chat with Zapier to automate tasks. Here's how to use Zapier with our chat:
+      
+      1. Add your Zapier webhooks by clicking the settings icon in the chat and selecting "Manage Zapier Integrations"
+      2. To trigger a Zap, type "zap [category] with [data]" (e.g., "zap lead with name: John Doe, email: john@example.com")
+      3. You can also just type "zap [category]" for simpler triggers
+      
+      For help setting up Zapier webhooks, click the settings icon and select "Manage Zapier Integrations".
+    `
+  },
+  {
+    keywords: ["how to use zapier", "zapier commands", "zapier help", "zapier tutorial"],
+    response: `
+      Zapier Commands Tutorial:
+      
+      Basic syntax: "zap [category] with [parameters]"
+      
+      Examples:
+      - "zap task with title: Finish proposal, due: tomorrow"
+      - "zap contact with name: Sarah Smith, phone: 555-1234"
+      - "zap reminder with message: Call client at 3pm"
+      
+      To set up new Zapier integrations:
+      1. Click the settings icon in the chat
+      2. Select "Manage Zapier Integrations"
+      3. Add your webhook URL from Zapier
+      4. Assign a category name that you'll use to trigger it
+      
+      Need help setting up webhooks in Zapier? Type "zapier webhook setup" for instructions.
+    `
+  },
+  {
+    keywords: ["zapier webhook setup", "create zapier webhook", "zapier tutorial", "webhook instructions"],
+    response: `
+      How to create a Zapier webhook:
+      
+      1. Go to Zapier.com and create a new Zap
+      2. Choose "Webhook by Zapier" as the trigger app
+      3. Select "Catch Hook" as the trigger event
+      4. Copy the webhook URL provided by Zapier
+      5. Come back here and click the settings icon in the chat
+      6. Select "Manage Zapier Integrations"
+      7. Add a new webhook with:
+         - Name: A memorable name for your webhook
+         - Category: The command word you'll use to trigger it (e.g., "task")
+         - URL: Paste the webhook URL from Zapier
+      8. In Zapier, set up the action steps that should happen when the webhook is triggered
+      
+      That's it! Now you can trigger this Zap by typing "zap [category]" in the chat.
+    `
+  }
+];
+
 // Combine all knowledge entries
 export const chatbotKnowledge: KnowledgeItem[] = [
   ...serviceKnowledge,
   ...productKnowledge,
-  ...faqKnowledge
+  ...faqKnowledge,
+  ...zapierKnowledge
 ];
 
 /**

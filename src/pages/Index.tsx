@@ -9,6 +9,7 @@ import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
 import CTASection from "@/components/CTASection";
 import ProductOfferings from "@/components/ProductOfferings";
+import LiveChat from "@/components/LiveChat/LiveChat";
 
 const Index = () => {
   return (
@@ -30,6 +31,7 @@ const Index = () => {
         <Newsletter />
       </main>
       <Footer />
+      <LiveChat />
     </>
   );
 };
