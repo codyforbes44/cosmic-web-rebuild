@@ -54,7 +54,7 @@ const queryClient = new QueryClient({
 });
 
 // PageTracker component to track visitor metadata on each route change
-const PageTracker: React.FC = () => {
+const PageTracker = () => {
   const location = useLocation();
   
   useEffect(() => {
@@ -71,37 +71,32 @@ const PageTracker: React.FC = () => {
   return null;
 };
 
-const AppRoutes: React.FC = () => {
+const AppRoutes = () => {
   return (
-    <>
-      <PageTracker />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/recruitment-marketing" element={<RecruitmentMarketing />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/case-study/:id" element={<CaseStudy />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/get-quote" element={<GetQuote />} />
-          <Route path="/partners" element={<Partners />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/accessibility" element={<Accessibility />} />
-          
-          {/* Product routes */}
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:productId" element={<ProductDetail />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/recruitment-marketing" element={<RecruitmentMarketing />} />
+      <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/case-study/:id" element={<CaseStudy />} />
+      <Route path="/news" element={<News />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/get-quote" element={<GetQuote />} />
+      <Route path="/partners" element={<Partners />} />
+      <Route path="/analytics" element={<Analytics />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
+      <Route path="/accessibility" element={<Accessibility />} />
+      
+      {/* Product routes */}
+      <Route path="/products" element={<Products />} />
+      <Route path="/products/:productId" element={<ProductDetail />} />
+      
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
@@ -114,7 +109,10 @@ const App: React.FC = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <AppRoutes />
+              <Suspense fallback={<PageLoader />}>
+                <AppRoutes />
+                <PageTracker />
+              </Suspense>
               <CookieConsent />
               <LiveChat />
             </BrowserRouter>
