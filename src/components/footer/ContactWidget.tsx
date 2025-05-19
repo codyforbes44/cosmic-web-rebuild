@@ -16,7 +16,7 @@ const ContactWidget = ({
   className = ""
 }: ContactWidgetProps) => {
   return (
-    <div className={`bg-transparent backdrop-blur-sm p-4 rounded-lg ${className}`}>
+    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-4 rounded-lg border border-brand-gold/20 ${className}`}>
       <h3 className="text-lg font-medium mb-4 text-white">Contact Us</h3>
       <ul className="space-y-4">
         <li>
