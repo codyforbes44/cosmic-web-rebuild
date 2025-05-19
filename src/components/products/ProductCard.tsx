@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -180,13 +179,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
           </div>
         </div>
 
-        {/* Call to action buttons */}
+        {/* Call to action buttons - removed "Try Demo" button */}
         <div className="flex flex-wrap gap-4">
-          <Link to={`${product.href}/demo`}>
-            <Button className="bg-gray-800 hover:bg-gray-700 text-white">
-              Try Demo
-            </Button>
-          </Link>
           <Link to="/get-quote">
             <Button className="bg-accent/80 hover:bg-accent text-white flex items-center gap-2">
               Get Pricing <ArrowRight size={16} />
