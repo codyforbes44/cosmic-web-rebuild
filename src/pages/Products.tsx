@@ -7,7 +7,6 @@ import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import ClientLogoBanner from '@/components/ClientLogoBanner';
 import ProductComparison from '@/components/ProductComparison';
 import ProductsHeader from '@/components/products/ProductsHeader';
 import ProductsTestimonials from '@/components/products/ProductsTestimonials';
@@ -64,9 +63,6 @@ const Products = () => {
               onTabChange={handleTabChange}
             />
           </div>
-
-          {/* Client Logo Banner for social proof */}
-          <ClientLogoBanner />
           
           {/* Product Content */}
           <Tabs value={selectedProductId} className="mb-16">
