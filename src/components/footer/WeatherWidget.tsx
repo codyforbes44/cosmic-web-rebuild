@@ -10,7 +10,17 @@ interface WeatherData {
   windSpeed: number;
 }
 
-const WeatherWidget = () => {
+interface WeatherWidgetProps {
+  className?: string;
+  title?: string;
+  units?: 'imperial' | 'metric';
+}
+
+const WeatherWidget = ({ 
+  className = "",
+  title = "Your Local Weather",
+  units = 'imperial'
+}: WeatherWidgetProps) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +38,7 @@ const WeatherWidget = () => {
         
         // Now fetch weather data using the OpenWeatherMap API
         const weatherResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${geoData.city}&units=imperial&appid=9de243494c0b295cca9337e1e96b00e2`
+          `https://api.openweathermap.org/data/2.5/weather?q=${geoData.city}&units=${units}&appid=9de243494c0b295cca9337e1e96b00e2`
         );
         
         if (!weatherResponse.ok) {
@@ -57,7 +67,7 @@ const WeatherWidget = () => {
     };
 
     fetchWeatherData();
-  }, []);
+  }, [units]);
 
   const getWeatherIcon = (condition: string) => {
     switch (condition.toLowerCase()) {
@@ -77,8 +87,8 @@ const WeatherWidget = () => {
 
   if (loading) {
     return (
-      <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg">
-        <h3 className="text-lg font-medium mb-2 text-white">Your Local Weather</h3>
+      <div className={`bg-transparent backdrop-blur-sm p-4 rounded-lg ${className}`}>
+        <h3 className="text-lg font-medium mb-2 text-white">{title}</h3>
         <div className="text-gray-400 animate-pulse">Loading weather data...</div>
       </div>
     );
@@ -86,16 +96,16 @@ const WeatherWidget = () => {
 
   if (error) {
     return (
-      <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg">
-        <h3 className="text-lg font-medium mb-2 text-white">Your Local Weather</h3>
+      <div className={`bg-transparent backdrop-blur-sm p-4 rounded-lg ${className}`}>
+        <h3 className="text-lg font-medium mb-2 text-white">{title}</h3>
         <div className="text-gray-400">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg">
-      <h3 className="text-lg font-medium mb-3 text-white">Your Local Weather</h3>
+    <div className={`bg-transparent backdrop-blur-sm p-4 rounded-lg ${className}`}>
+      <h3 className="text-lg font-medium mb-3 text-white">{title}</h3>
       {weatherData && (
         <div className="text-gray-200">
           <div className="flex items-center justify-between mb-2">
@@ -106,7 +116,7 @@ const WeatherWidget = () => {
           <div className="grid grid-cols-2 gap-2 text-sm">
             <div className="flex flex-col">
               <span className="text-gray-400">Temperature</span>
-              <span className="text-2xl font-bold text-white">{weatherData.temperature}°F</span>
+              <span className="text-2xl font-bold text-white">{weatherData.temperature}°{units === 'imperial' ? 'F' : 'C'}</span>
             </div>
             
             <div className="flex flex-col">
@@ -123,7 +133,7 @@ const WeatherWidget = () => {
               <span className="text-gray-400">Wind</span>
               <div className="flex items-center">
                 <Wind size={14} className="mr-1" />
-                <span>{weatherData.windSpeed} mph</span>
+                <span>{weatherData.windSpeed} {units === 'imperial' ? 'mph' : 'm/s'}</span>
               </div>
             </div>
           </div>
