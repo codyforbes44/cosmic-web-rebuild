@@ -9,10 +9,25 @@ import DemoRequestModal from "./products/DemoRequestModal";
 const HeroSection = () => {
   const [visible, setVisible] = useState(false);
   const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [showSparks, setShowSparks] = useState(false);
   const isMobile = useIsMobile();
   
   useEffect(() => {
     setVisible(true);
+    
+    // Check if user has seen the spark animation in this session
+    const hasSeenSparks = sessionStorage.getItem('hasSeenSparks');
+    if (!hasSeenSparks) {
+      setShowSparks(true);
+      sessionStorage.setItem('hasSeenSparks', 'true');
+      
+      // Auto-hide sparks after animation completes
+      const timer = setTimeout(() => {
+        setShowSparks(false);
+      }, 6000); // Animation is 5s, give 1s extra
+      
+      return () => clearTimeout(timer);
+    }
   }, []);
   
   return (
@@ -29,10 +44,118 @@ const HeroSection = () => {
         }}
       />
       
+      {/* Sparks animation overlay */}
+      {showSparks && (
+        <div className="absolute inset-0 z-1 pointer-events-none">
+          <div className="spark spark-1"></div>
+          <div className="spark spark-2"></div>
+          <div className="spark spark-3"></div>
+          <div className="spark spark-4"></div>
+          <div className="spark spark-5"></div>
+        </div>
+      )}
+      
       {/* Gradient overlay */}
       <div 
         className="absolute inset-0 z-0 bg-gradient-to-b from-space-dark-blue/60 to-space-deep-blue/70"
       />
+
+      {/* CSS for spark animations */}
+      <style>
+        {`
+          .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #8B5CF6;
+            box-shadow: 0 0 10px 2px rgba(139, 92, 246, 0.7),
+                        0 0 20px 5px rgba(139, 92, 246, 0.4);
+            opacity: 0;
+            z-index: 5;
+          }
+          
+          .spark::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(to right, rgba(139, 92, 246, 0.9), rgba(139, 92, 246, 0));
+            transform: translateX(-100%) translateY(-50%);
+          }
+          
+          .spark-1 {
+            top: 20%;
+            left: -5%;
+            animation: sparkMove1 5s linear forwards;
+          }
+          
+          .spark-2 {
+            top: 50%;
+            left: -5%;
+            animation: sparkMove2 5s linear forwards;
+            animation-delay: 0.5s;
+          }
+          
+          .spark-3 {
+            top: 70%;
+            left: -5%;
+            animation: sparkMove3 5s linear forwards;
+            animation-delay: 1s;
+          }
+          
+          .spark-4 {
+            top: 35%;
+            left: -5%;
+            animation: sparkMove4 5s linear forwards;
+            animation-delay: 1.5s;
+          }
+          
+          .spark-5 {
+            top: 85%;
+            left: -5%;
+            animation: sparkMove5 5s linear forwards;
+            animation-delay: 0.8s;
+          }
+          
+          @keyframes sparkMove1 {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(105vw) translateY(30vh); opacity: 0; }
+          }
+          
+          @keyframes sparkMove2 {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(105vw) translateY(-20vh); opacity: 0; }
+          }
+          
+          @keyframes sparkMove3 {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(105vw) translateY(10vh); opacity: 0; }
+          }
+          
+          @keyframes sparkMove4 {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(105vw) translateY(-10vh); opacity: 0; }
+          }
+          
+          @keyframes sparkMove5 {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(105vw) translateY(-40vh); opacity: 0; }
+          }
+        `}
+      </style>
 
       <DemoRequestModal 
         isOpen={demoModalOpen} 
