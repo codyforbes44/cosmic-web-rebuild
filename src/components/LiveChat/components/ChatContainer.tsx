@@ -49,7 +49,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
       {/* Quick responses - show only at the beginning */}
       {shouldShowQuickResponses && (
         <QuickResponses 
-          responses={["Tell me about your services", "What makes ƷBI different?", "How can I get started?", "Zapier help"]}
+          responses={["Tell me about your services", "What makes ƷBI different?", "How can I get started?"]}
           onSelectResponse={onQuickResponseSelect}
         />
       )}
