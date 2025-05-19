@@ -9,25 +9,33 @@ interface MobileProductsMenuProps {
 
 const MobileProductsMenu = ({ onClose }: MobileProductsMenuProps) => {
   return (
-    <div className="pb-2 space-y-2 flex flex-col items-center">
-      {productCategories.map((product, index) => (
-        <motion.div
-          key={product.href}
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.2, delay: 0.1 * index }}
-          className="text-center"
-        >
-          <Link 
-            to={product.href} 
-            className="block text-lg py-1 text-gray-300 hover:text-white"
-            onClick={onClose}
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      transition={{ duration: 0.3 }}
+      className="overflow-hidden"
+    >
+      <div className="ml-4 mt-1 mb-3 pl-3 border-l-2 border-gray-700 space-y-2">
+        {productCategories.map((product, index) => (
+          <motion.div
+            key={product.href}
+            initial={{ opacity: 0, x: -5 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2, delay: 0.05 * index }}
+            className="py-1"
           >
-            {product.title}
-          </Link>
-        </motion.div>
-      ))}
-    </div>
+            <Link 
+              to={product.href} 
+              className="block text-center text-base hover:text-white py-1"
+              onClick={onClose}
+              style={{ color: product.color }}
+            >
+              {product.title}
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
   );
 };
 

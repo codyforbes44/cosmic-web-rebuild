@@ -10,22 +10,29 @@ interface MobileServicesMenuProps {
 const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.3, delay: 0.1 }}
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      transition={{ duration: 0.3 }}
+      className="overflow-hidden"
     >
-      <div className="nav-link text-xl text-center">Services</div>
-      <div className="mt-2 space-y-2 flex flex-col items-center">
-        {serviceCategories.map((service) => (
-          <Link 
+      <div className="ml-4 mt-1 mb-3 pl-3 border-l-2 border-gray-700 space-y-2">
+        {serviceCategories.map((service, index) => (
+          <motion.div
             key={service.href}
-            to={service.href} 
-            className="block text-gray-300 hover:text-white py-1 text-center"
-            onClick={onClose}
-            style={{ color: service.color }}
+            initial={{ opacity: 0, x: -5 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2, delay: 0.05 * index }}
+            className="py-1"
           >
-            {service.title}
-          </Link>
+            <Link 
+              to={service.href} 
+              className="block text-center text-base hover:text-white py-1"
+              onClick={onClose}
+              style={{ color: service.color }}
+            >
+              {service.title}
+            </Link>
+          </motion.div>
         ))}
       </div>
     </motion.div>

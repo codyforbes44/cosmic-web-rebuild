@@ -19,14 +19,14 @@ const MobileNavLink = ({ link, isActive, index, onClose }: MobileNavLinkProps) =
       transition={{ duration: 0.3, delay: index * 0.1 }}
     >
       {link.disabled ? (
-        <span className="nav-link text-xl text-gray-500 cursor-not-allowed flex items-center">
+        <span className="nav-link text-xl text-gray-500 cursor-not-allowed flex items-center py-2">
           {link.name}
           <Ban size={18} className="ml-2 opacity-70" />
         </span>
       ) : (
         <Link 
           to={link.path} 
-          className={`nav-link text-xl ${isActive ? 'active' : ''}`}
+          className={`nav-link text-xl block py-2 ${isActive ? 'active' : ''}`}
           onClick={onClose}
           aria-current={isActive ? 'page' : undefined}
         >

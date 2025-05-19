@@ -42,134 +42,136 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-10 bg-space-dark-blue/95 backdrop-blur-sm md:hidden"
         >
-          <div className="h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
-            <div>
-              {/* Compact Weather Widget at the top */}
-              <div className="mb-5">
+          <div className="h-full flex flex-col justify-between py-6 overflow-y-auto">
+            {/* Top action area with fixed position */}
+            <div className="sticky top-0 z-20 px-6 pb-4 pt-2 bg-space-dark-blue/90 backdrop-blur-md border-b border-gray-800">
+              <div className="flex items-center justify-between mb-3">
                 <WeatherWidget 
-                  className="py-1 px-3 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg shadow-lg" 
+                  className="py-1 px-2 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg flex-1 mr-2" 
                   title="" 
                   units="imperial"
                 />
+                <a 
+                  href="tel:+11234567890" 
+                  className="flex items-center justify-center gap-1 py-2 px-3 text-white bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg hover:bg-space-deep-blue transition-colors"
+                >
+                  <Phone size={16} />
+                  <span className="text-sm font-medium">(123) 456-7890</span>
+                </a>
               </div>
               
-              <div className="mb-8 pb-4 border-b border-gray-700">
-                <Link to="/get-quote" onClick={onClose} className="block mb-4">
-                  <Button className="w-full bg-accent hover:bg-accent/80 text-white py-5 font-semibold text-base">
-                    Get a Free Quote
-                  </Button>
-                </Link>
-                <div className="flex gap-2">
-                  <a href="tel:+11234567890" className="flex items-center justify-center gap-2 flex-1 py-3 text-white bg-transparent border border-gray-600 rounded-md hover:bg-gray-800 transition-colors">
-                    <Phone size={18} />
-                    <span className="font-medium">(123) 456-7890</span>
-                  </a>
-                </div>
-              </div>
-              
-              <nav className="space-y-5">
-                {/* Home Link */}
-                <MobileNavLink 
-                  key={navLinks[0].name}
-                  link={navLinks[0]} 
-                  isActive={isActive(navLinks[0].path) === 'active'} 
-                  index={0}
-                  onClose={onClose}
-                />
-                
-                {/* Services Link/Submenu */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                >
-                  <button 
-                    className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full`}
-                    onClick={toggleServices}
-                    aria-expanded={showServices}
-                  >
-                    <span>Services</span>
-                    <span className="ml-2 text-2xl font-light">{showServices ? '−' : '+'}</span>
-                  </button>
-                  
-                  {showServices && (
-                    <MobileServicesMenu onClose={onClose} />
-                  )}
-                </motion.div>
-
-                {/* Products Link/Submenu */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  <button 
-                    className={`nav-link text-xl ${location.pathname.startsWith('/products') ? 'active' : ''} flex items-center justify-between w-full`}
-                    onClick={toggleProducts}
-                    aria-expanded={showProducts}
-                  >
-                    <span>Products</span>
-                    <span className="ml-2 text-2xl font-light">{showProducts ? '−' : '+'}</span>
-                  </button>
-                  
-                  {showProducts && (
-                    <MobileProductsMenu onClose={onClose} />
-                  )}
-                </motion.div>
-                
-                {/* Remaining Links */}
-                {navLinks.slice(1).map((link, index) => (
-                  <MobileNavLink 
-                    key={link.name}
-                    link={link} 
-                    isActive={isActive(link.path) === 'active'} 
-                    index={index + 1}
-                    onClose={onClose}
-                  />
-                ))}
-              </nav>
+              <Link to="/get-quote" onClick={onClose} className="block w-full">
+                <Button className="w-full bg-accent hover:bg-accent/80 text-white py-5 font-semibold text-base">
+                  Get a Free Quote
+                </Button>
+              </Link>
             </div>
             
-            {/* Social links section - replaces trusted leaders section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.6 }}
-              className="py-6 space-y-4"
-            >
-              <div className="text-sm text-center">
-                <p className="text-gray-400 mb-4">Connect with us</p>
-                <div className="flex justify-center space-x-5">
-                  <a 
-                    href="https://www.facebook.com/3bi.io" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
-                    aria-label="Facebook"
-                  >
-                    <Facebook size={20} />
-                  </a>
-                  <a 
-                    href="https://x.com/3bi_io" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
-                    aria-label="Twitter"
-                  >
-                    <Twitter size={20} />
-                  </a>
-                  <a 
-                    href="https://www.linkedin.com/company/3biio" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin size={20} />
-                  </a>
+            {/* Main navigation area with scrolling */}
+            <nav className="flex-1 px-6 py-5 space-y-4 overflow-y-auto">
+              {/* Home Link */}
+              <MobileNavLink 
+                key={navLinks[0].name}
+                link={navLinks[0]} 
+                isActive={isActive(navLinks[0].path) === 'active'} 
+                index={0}
+                onClose={onClose}
+              />
+              
+              {/* Services Link/Submenu */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+              >
+                <button 
+                  className={`nav-link text-xl ${location.pathname === '/services' ? 'active' : ''} flex items-center justify-between w-full py-2`}
+                  onClick={toggleServices}
+                  aria-expanded={showServices}
+                >
+                  <span>Services</span>
+                  <span className="ml-2 text-xl leading-none">{showServices ? '−' : '+'}</span>
+                </button>
+                
+                {showServices && (
+                  <MobileServicesMenu onClose={onClose} />
+                )}
+              </motion.div>
+
+              {/* Products Link/Submenu */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+              >
+                <button 
+                  className={`nav-link text-xl ${location.pathname.startsWith('/products') ? 'active' : ''} flex items-center justify-between w-full py-2`}
+                  onClick={toggleProducts}
+                  aria-expanded={showProducts}
+                >
+                  <span>Products</span>
+                  <span className="ml-2 text-xl leading-none">{showProducts ? '−' : '+'}</span>
+                </button>
+                
+                {showProducts && (
+                  <MobileProductsMenu onClose={onClose} />
+                )}
+              </motion.div>
+              
+              {/* Remaining Links */}
+              {navLinks.slice(1).map((link, index) => (
+                <MobileNavLink 
+                  key={link.name}
+                  link={link} 
+                  isActive={isActive(link.path) === 'active'} 
+                  index={index + 1}
+                  onClose={onClose}
+                />
+              ))}
+            </nav>
+            
+            {/* Social links section - fixed at bottom */}
+            <div className="px-6 pt-4 pb-6 border-t border-gray-800 bg-space-dark-blue/90 backdrop-blur-md">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.6 }}
+                className="space-y-4"
+              >
+                <div className="text-sm text-center">
+                  <p className="text-gray-400 mb-4">Connect with us</p>
+                  <div className="flex justify-center space-x-5">
+                    <a 
+                      href="https://www.facebook.com/3bi.io" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
+                      aria-label="Facebook"
+                    >
+                      <Facebook size={20} />
+                    </a>
+                    <a 
+                      href="https://x.com/3bi_io" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
+                      aria-label="Twitter"
+                    >
+                      <Twitter size={20} />
+                    </a>
+                    <a 
+                      href="https://www.linkedin.com/company/3biio" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="bg-space-deep-blue/60 p-3 rounded-full hover:bg-space-deep-blue hover:text-brand-gold transition-all"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin size={20} />
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       )}
