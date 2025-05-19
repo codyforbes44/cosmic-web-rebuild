@@ -80,17 +80,19 @@ const AstronomyFacts = () => {
         </div>
 
         <Tabs defaultValue="advertising" value={activeCategory} onValueChange={setActiveCategory} className="w-full">
-          <div className="flex justify-center mb-8">
-            <TabsList className="bg-gray-800 p-1">
-              <TabsTrigger value="advertising" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Advertising
-              </TabsTrigger>
-              <TabsTrigger value="development" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Development
-              </TabsTrigger>
-              <TabsTrigger value="innovation" className="data-[state=active]:bg-accent data-[state=active]:text-white">
-                Innovation
-              </TabsTrigger>
+          <div className="flex justify-center mb-8 overflow-x-auto">
+            <TabsList className="bg-gray-800 p-1 flex-nowrap">
+              <div className="flex flex-nowrap">
+                <TabsTrigger value="advertising" className="data-[state=active]:bg-accent data-[state=active]:text-white whitespace-nowrap">
+                  Advertising
+                </TabsTrigger>
+                <TabsTrigger value="development" className="data-[state=active]:bg-accent data-[state=active]:text-white whitespace-nowrap">
+                  Development
+                </TabsTrigger>
+                <TabsTrigger value="innovation" className="data-[state=active]:bg-accent data-[state=active]:text-white whitespace-nowrap">
+                  Innovation
+                </TabsTrigger>
+              </div>
             </TabsList>
           </div>
 

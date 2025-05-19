@@ -129,17 +129,19 @@ const FAQ = () => {
               onValueChange={setActiveTab}
               className="mb-8"
             >
-              <TabsList className="grid grid-cols-3 mb-8 bg-space-deep-blue/50">
-                {faqCategories.map((category) => (
-                  <TabsTrigger 
-                    key={category.id} 
-                    value={category.id}
-                    className="text-base py-3 data-[state=active]:bg-accent/10 data-[state=active]:text-accent"
-                  >
-                    <span className="mr-2">{category.icon}</span>
-                    {category.name}
-                  </TabsTrigger>
-                ))}
+              <TabsList className="flex w-full overflow-x-auto mb-8 bg-space-deep-blue/50">
+                <div className="flex flex-nowrap">
+                  {faqCategories.map((category) => (
+                    <TabsTrigger 
+                      key={category.id} 
+                      value={category.id}
+                      className="text-base py-3 data-[state=active]:bg-accent/10 data-[state=active]:text-accent whitespace-nowrap"
+                    >
+                      <span className="mr-2">{category.icon}</span>
+                      {category.name}
+                    </TabsTrigger>
+                  ))}
+                </div>
               </TabsList>
               
               {faqCategories.map((category) => (

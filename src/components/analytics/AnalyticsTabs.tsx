@@ -22,12 +22,14 @@ const AnalyticsTabs: React.FC<AnalyticsTabsProps> = ({ analyticsData, loading })
 
   return (
     <Tabs defaultValue="overview" className="w-full">
-      <TabsList className="bg-card/20 backdrop-blur-sm border-white/10 mb-6">
-        <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="visitors">Visitors</TabsTrigger>
-        <TabsTrigger value="geography">Geography</TabsTrigger>
-        <TabsTrigger value="sources">Sources</TabsTrigger>
-        <TabsTrigger value="data">Raw Data</TabsTrigger>
+      <TabsList className="bg-card/20 backdrop-blur-sm border-white/10 mb-6 flex-nowrap overflow-x-auto">
+        <div className="flex flex-nowrap">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="visitors">Visitors</TabsTrigger>
+          <TabsTrigger value="geography">Geography</TabsTrigger>
+          <TabsTrigger value="sources">Sources</TabsTrigger>
+          <TabsTrigger value="data">Raw Data</TabsTrigger>
+        </div>
       </TabsList>
       
       <TabsContent value="overview">
