@@ -12,6 +12,7 @@ export const navLinks: NavLink[] = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'News', path: '/news' },
+  { name: 'FAQ', path: '/faq' },
   { name: 'Contact', path: '/contact' },
 ];
 
