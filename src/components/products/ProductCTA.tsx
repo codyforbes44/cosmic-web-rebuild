@@ -11,7 +11,7 @@ interface ProductCTAProps {
 
 const ProductCTA: React.FC<ProductCTAProps> = ({ product, openDemoModal }) => {
   return (
-    <section className="container mx-auto px-4 relative z-10">
+    <section className="relative z-10">
       <div className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-gray-700 rounded-xl p-8 md:p-12">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to get started?</h2>

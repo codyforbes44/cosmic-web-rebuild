@@ -23,7 +23,7 @@ const ClientLogoBanner: React.FC<ClientLogoBannerProps> = ({
 }) => {
   return (
     <section className="py-12 bg-space-deep-blue/30">
-      <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         {(title || subtitle) && (
           <div className="text-center mb-10">
             {title && <h2 className="text-2xl font-bold text-white mb-2">{title}</h2>}

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Check } from 'lucide-react';
 import { ProductCategory } from '@/components/navbar/constants';
@@ -13,7 +12,7 @@ const ProductFeatures: React.FC<ProductFeaturesProps> = ({ product, productId })
   if (productId === '3bi-connect') {
     return (
       <>
-        <section className="container mx-auto px-4 mb-16 relative z-10">
+        <section className="mb-16 relative z-10">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Why Choose 3BI Connect?</h2>
             <p className="text-gray-300 mb-8">
@@ -38,7 +37,7 @@ const ProductFeatures: React.FC<ProductFeaturesProps> = ({ product, productId })
           </div>
         </section>
         
-        <section className="container mx-auto px-4 mb-16 relative z-10">
+        <section className="mb-16 relative z-10">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Key Features</h2>
             

@@ -39,23 +39,25 @@ const ProductDetail = () => {
       <main className="pt-24 pb-16 relative overflow-hidden">
         <StarBackground />
         
-        {/* Hero Section */}
-        <ProductHero 
-          product={product} 
-          openDemoModal={() => setIsDemoModalOpen(true)} 
-        />
-        
-        {/* Product-specific content */}
-        <ProductFeatures product={product} productId={productId || ''} />
-        
-        {/* Testimonial Section */}
-        <ProductTestimonial product={product} />
-        
-        {/* Pricing CTA */}
-        <ProductCTA 
-          product={product} 
-          openDemoModal={() => setIsDemoModalOpen(true)} 
-        />
+        <div className="container mx-auto px-4 max-w-7xl">
+          {/* Hero Section */}
+          <ProductHero 
+            product={product} 
+            openDemoModal={() => setIsDemoModalOpen(true)} 
+          />
+          
+          {/* Product-specific content */}
+          <ProductFeatures product={product} productId={productId || ''} />
+          
+          {/* Testimonial Section */}
+          <ProductTestimonial product={product} />
+          
+          {/* Pricing CTA */}
+          <ProductCTA 
+            product={product} 
+            openDemoModal={() => setIsDemoModalOpen(true)} 
+          />
+        </div>
         
         {/* Demo Request Modal */}
         <DemoRequestModal 

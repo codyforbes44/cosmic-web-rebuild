@@ -25,23 +25,25 @@ const Products = () => {
       <main className="pt-24 pb-16 relative overflow-hidden">
         <StarBackground />
         
-        {/* Header Section */}
-        <ProductsHeader />
+        <div className="container mx-auto px-4 max-w-7xl">
+          {/* Header Section */}
+          <ProductsHeader />
 
-        {/* Client Logo Banner for social proof */}
-        <ClientLogoBanner />
-        
-        {/* Product Showcase */}
-        <ProductShowcase />
+          {/* Client Logo Banner for social proof */}
+          <ClientLogoBanner />
+          
+          {/* Product Showcase */}
+          <ProductShowcase />
 
-        {/* Product Comparison Section */}
-        <ProductComparison />
-        
-        {/* Testimonials Section */}
-        <ProductsTestimonials />
+          {/* Product Comparison Section */}
+          <ProductComparison />
+          
+          {/* Testimonials Section */}
+          <ProductsTestimonials />
 
-        {/* CTA Section */}
-        <ProductsCTA />
+          {/* CTA Section */}
+          <ProductsCTA />
+        </div>
       </main>
       <Footer />
     </>

@@ -8,7 +8,7 @@ interface ProductTestimonialProps {
 
 const ProductTestimonial: React.FC<ProductTestimonialProps> = ({ product }) => {
   return (
-    <section className="container mx-auto px-4 mb-16 relative z-10">
+    <section className="mb-16 relative z-10">
       <div className="max-w-3xl mx-auto text-center">
         <blockquote className="text-xl md:text-2xl italic text-gray-300 mb-6">
           "Implementing {product.title} completely transformed our driver onboarding process. 

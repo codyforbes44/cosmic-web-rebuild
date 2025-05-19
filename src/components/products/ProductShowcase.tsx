@@ -16,7 +16,7 @@ const ProductShowcase = () => {
   };
 
   return (
-    <section className="container mx-auto px-4 py-16 relative z-10">
+    <section className="py-16 relative z-10">
       <motion.div
         variants={container}
         initial="hidden"

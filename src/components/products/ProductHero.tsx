@@ -13,7 +13,7 @@ interface ProductHeroProps {
 
 const ProductHero: React.FC<ProductHeroProps> = ({ product, openDemoModal }) => {
   return (
-    <section className="container mx-auto px-4 mb-20 relative z-10">
+    <section className="mb-20 relative z-10">
       <div className="grid md:grid-cols-2 gap-8 items-center">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
