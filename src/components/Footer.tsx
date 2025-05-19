@@ -1,9 +1,8 @@
 
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useState } from 'react';
 
 const Footer = () => {
   // Group service categories by type for better organization
@@ -28,7 +27,8 @@ const Footer = () => {
       <div className="absolute inset-0 bg-black opacity-40 pointer-events-none"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          {/* Column 1: Logo and Social Links */}
           <div>
             <h3 className="text-xl font-bold mb-4 text-white">
               <Link to="/" className="flex items-center">
@@ -55,7 +55,8 @@ const Footer = () => {
             </div>
           </div>
           
-          <div className="col-span-1 md:col-span-2">
+          {/* Column 2: Services */}
+          <div>
             <h3 className="text-lg font-medium mb-4 text-white">Our Services</h3>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="marketing" className="border-gray-700">
@@ -117,6 +118,36 @@ const Footer = () => {
             </Accordion>
           </div>
           
+          {/* Column 3: Quick Links */}
+          <div>
+            <h3 className="text-lg font-medium mb-4 text-white">Quick Links</h3>
+            <ul className="space-y-2">
+              {navLinks.map((link) => (
+                <li key={link.path}>
+                  <Link to={link.path} className="footer-link">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link to="/products" className="footer-link">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="footer-link">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/partners" className="footer-link">
+                  Partners
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          {/* Column 4: Contact Info */}
           <div>
             <h3 className="text-lg font-medium mb-4 text-white">Contact Us</h3>
             <ul className="space-y-4">
@@ -148,17 +179,6 @@ const Footer = () => {
                 </div>
               </li>
             </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-white">Stay Updated</h3>
-            <p className="text-gray-400 mb-4">Subscribe to our newsletter for the latest industry trends and company updates.</p>
-            <form className="flex flex-col space-y-2">
-              <input type="email" placeholder="Your email address" className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-accent" />
-              <button type="submit" className="bg-accent hover:bg-accent/80 text-white px-4 py-2 rounded-md transition-colors">
-                Subscribe
-              </button>
-            </form>
           </div>
         </div>
         
