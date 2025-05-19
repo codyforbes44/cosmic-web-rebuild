@@ -1,7 +1,9 @@
 
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 import { serviceCategories, navLinks } from './navbar/constants';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useState } from 'react';
 
 const Footer = () => {
   // Group service categories by type for better organization
@@ -11,13 +13,14 @@ const Footer = () => {
     technology: serviceCategories.filter(service => 
       service.title.includes("Development") || 
       service.title.includes("Web") || 
-      service.title.includes("Custom"))
+      service.title.includes("Custom")),
+    strategic: serviceCategories.filter(service => 
+      !service.title.includes("Marketing") && 
+      !service.title.includes("Recruitment") &&
+      !service.title.includes("Development") && 
+      !service.title.includes("Web") && 
+      !service.title.includes("Custom"))
   };
-  
-  // Get remaining services that don't fit into the above categories
-  const otherServices = serviceCategories.filter(service => 
-    !serviceGroups.marketing.includes(service) && 
-    !serviceGroups.technology.includes(service));
 
   return (
     <footer className="relative bg-space-deep-blue pt-16 pb-8 border-t border-gray-800">
@@ -52,49 +55,66 @@ const Footer = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 col-span-1 md:col-span-2">
-            <div className="mb-6 md:mb-0">
-              <h3 className="text-lg font-medium mb-4 text-white">Marketing Services</h3>
-              <ul className="space-y-2">
-                {serviceGroups.marketing.map(service => (
-                  <li key={service.href}>
-                    <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
-                      "--color": service.color
-                    } as React.CSSProperties}>
-                      {service.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          <div className="col-span-1 md:col-span-2">
+            <h3 className="text-lg font-medium mb-4 text-white">Our Services</h3>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="marketing" className="border-gray-700">
+                <AccordionTrigger className="py-2 text-white hover:no-underline">
+                  Marketing Services
+                </AccordionTrigger>
+                <AccordionContent className="pt-1">
+                  <ul className="space-y-2">
+                    {serviceGroups.marketing.map(service => (
+                      <li key={service.href}>
+                        <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
+                          "--color": service.color
+                        } as React.CSSProperties}>
+                          {service.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
 
-              <h3 className="text-lg font-medium mb-4 mt-6 text-white">Technology Services</h3>
-              <ul className="space-y-2">
-                {serviceGroups.technology.map(service => (
-                  <li key={service.href}>
-                    <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
-                      "--color": service.color
-                    } as React.CSSProperties}>
-                      {service.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <AccordionItem value="technology" className="border-gray-700">
+                <AccordionTrigger className="py-2 text-white hover:no-underline">
+                  Technology Services
+                </AccordionTrigger>
+                <AccordionContent className="pt-1">
+                  <ul className="space-y-2">
+                    {serviceGroups.technology.map(service => (
+                      <li key={service.href}>
+                        <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
+                          "--color": service.color
+                        } as React.CSSProperties}>
+                          {service.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
 
-            <div>
-              <h3 className="text-lg font-medium mb-4 text-white">Strategic Services</h3>
-              <ul className="space-y-2">
-                {otherServices.map(service => (
-                  <li key={service.href}>
-                    <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
-                      "--color": service.color
-                    } as React.CSSProperties}>
-                      {service.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <AccordionItem value="strategic" className="border-gray-700">
+                <AccordionTrigger className="py-2 text-white hover:no-underline">
+                  Strategic Services
+                </AccordionTrigger>
+                <AccordionContent className="pt-1">
+                  <ul className="space-y-2">
+                    {serviceGroups.strategic.map(service => (
+                      <li key={service.href}>
+                        <Link to={service.href} className="footer-link hover:text-[color:var(--color)]" style={{
+                          "--color": service.color
+                        } as React.CSSProperties}>
+                          {service.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
           
           <div>
@@ -156,4 +176,5 @@ const Footer = () => {
     </footer>
   );
 };
+
 export default Footer;
