@@ -44,10 +44,10 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
         >
           <div className="h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
             <div>
-              {/* Weather Widget Added at the Top */}
+              {/* Weather Widget Added at the Top with background and border */}
               <div className="mb-5">
                 <WeatherWidget 
-                  className="py-2" 
+                  className="py-2 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg shadow-lg" 
                   title="Current Weather" 
                   units="imperial" 
                 />
