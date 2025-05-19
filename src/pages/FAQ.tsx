@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
-import { Helmet } from 'react-helmet-async';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LiveChat from '@/components/LiveChat/LiveChat';
@@ -11,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Card, CardContent } from "@/components/ui/card";
 
 // Organized FAQ items by category
 const faqCategories = [
@@ -98,26 +98,25 @@ const FAQ = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Frequently Asked Questions | Ʒʙɪ</title>
-        <meta name="description" content="Find answers to commonly asked questions about Ʒʙɪ's services, products, and expertise in digital marketing and technology solutions." />
-      </Helmet>
       <SEO
         title="Frequently Asked Questions | Ʒʙɪ"
         description="Find answers to commonly asked questions about Ʒʙɪ's services, products, and expertise in digital marketing and technology solutions."
         url="/faq"
+        keywords="FAQ, frequently asked questions, business technology, digital marketing, Ʒʙɪ, technology solutions"
+        image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
       />
       <Navbar />
-      <div className="bg-space-dark-blue min-h-screen py-20">
-        <div className="container mx-auto px-4">
+      
+      <div className="bg-space-dark-blue min-h-screen">
+        <div className="container mx-auto px-4 py-24">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center"
+            className="text-center max-w-3xl mx-auto mb-16"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">Frequently Asked Questions</h1>
-            <p className="text-xl text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Frequently Asked Questions</h1>
+            <p className="text-xl text-gray-300">
               Get answers to common questions about our services, products, and how we can help your business succeed
             </p>
           </motion.div>
@@ -127,21 +126,19 @@ const FAQ = () => {
               defaultValue="general" 
               value={activeTab}
               onValueChange={setActiveTab}
-              className="mb-8"
+              className="mb-12"
             >
-              <TabsList className="flex w-full overflow-x-auto mb-8 bg-space-deep-blue/50">
-                <div className="flex flex-nowrap">
-                  {faqCategories.map((category) => (
-                    <TabsTrigger 
-                      key={category.id} 
-                      value={category.id}
-                      className="text-base py-3 data-[state=active]:bg-accent/10 data-[state=active]:text-accent whitespace-nowrap"
-                    >
-                      <span className="mr-2">{category.icon}</span>
-                      {category.name}
-                    </TabsTrigger>
-                  ))}
-                </div>
+              <TabsList className="w-full mb-8 bg-space-deep-blue/50 overflow-x-auto flex">
+                {faqCategories.map((category) => (
+                  <TabsTrigger 
+                    key={category.id} 
+                    value={category.id}
+                    className="text-base py-3 flex-1 data-[state=active]:bg-accent/10 data-[state=active]:text-accent"
+                  >
+                    <span className="mr-2">{category.icon}</span>
+                    {category.name}
+                  </TabsTrigger>
+                ))}
               </TabsList>
               
               {faqCategories.map((category) => (
@@ -150,14 +147,14 @@ const FAQ = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-space-deep-blue p-6 rounded-xl border border-gray-700 shadow-xl"
+                    className="bg-space-deep-blue/60 p-6 rounded-xl border border-gray-700 shadow-xl"
                   >
                     <Accordion type="single" collapsible className="w-full space-y-4">
                       {category.items.map((faq, index) => (
                         <AccordionItem 
                           key={index} 
                           value={`${category.id}-item-${index}`} 
-                          className="border border-gray-700 rounded-lg overflow-hidden mb-4 bg-space-dark-blue/50 shadow-md hover:border-accent/30 transition-colors duration-300"
+                          className="border border-gray-700 rounded-lg overflow-hidden mb-4 bg-space-dark-blue/60 shadow-md hover:border-accent/30 transition-colors duration-300"
                         >
                           <AccordionTrigger className="px-6 py-4 text-white hover:text-accent text-lg font-medium">
                             {faq.question}
@@ -180,25 +177,28 @@ const FAQ = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-16 mb-12"
             >
-              <h2 className="text-2xl font-bold text-white mb-6 text-center">What Our Clients Say</h2>
+              <h2 className="text-2xl font-bold text-white mb-8 text-center">What Our Clients Say</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {successStories.map((story, index) => (
-                  <div key={index} className="bg-space-deep-blue/60 p-6 rounded-xl border border-gray-700 shadow-xl">
-                    <div className="flex mb-4">
-                      {[...Array(story.stars)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-brand-gold text-brand-gold" />
-                      ))}
-                    </div>
-                    <p className="text-gray-300 italic mb-4">"{story.quote}"</p>
-                    <div>
-                      <p className="font-medium text-white">{story.author}</p>
-                      <p className="text-sm text-gray-400">{story.position}</p>
-                    </div>
-                  </div>
+                  <Card key={index} className="bg-space-deep-blue/60 border-gray-700 shadow-xl overflow-hidden">
+                    <CardContent className="p-6">
+                      <div className="flex mb-4">
+                        {[...Array(story.stars)].map((_, i) => (
+                          <Star key={i} className="h-5 w-5 fill-brand-gold text-brand-gold" />
+                        ))}
+                      </div>
+                      <p className="text-gray-300 italic mb-4">"{story.quote}"</p>
+                      <div>
+                        <p className="font-medium text-white">{story.author}</p>
+                        <p className="text-sm text-gray-400">{story.position}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </motion.div>
 
+            {/* CTA Section */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -213,7 +213,7 @@ const FAQ = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/contact">
                     <Button 
-                      className="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-md font-medium transition-all shadow-lg hover:shadow-accent/20 hover:-translate-y-1 flex items-center"
+                      className="bg-accent hover:bg-accent/90 text-white px-8 py-6 h-auto rounded-md font-medium transition-all shadow-lg hover:shadow-accent/20 hover:-translate-y-1 flex items-center"
                     >
                       Contact Us
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -222,7 +222,7 @@ const FAQ = () => {
                   <Link to="/get-quote">
                     <Button 
                       variant="outline"
-                      className="border-accent/50 hover:bg-accent/10 text-white px-8 py-3 rounded-md font-medium transition-all shadow-lg hover:shadow-accent/20 hover:-translate-y-1 flex items-center"
+                      className="border-accent/50 hover:bg-accent/10 text-white px-8 py-6 h-auto rounded-md font-medium transition-all shadow-lg hover:shadow-accent/20 hover:-translate-y-1 flex items-center"
                     >
                       Get a Quote
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -232,8 +232,8 @@ const FAQ = () => {
               </div>
               
               <div className="mt-12 border-t border-gray-700 pt-8">
-                <h3 className="text-xl font-bold text-white mb-4">Why Choose Ʒʙɪ?</h3>
-                <div className="grid md:grid-cols-3 gap-4">
+                <h3 className="text-xl font-bold text-white mb-6">Why Choose Ʒʙɪ?</h3>
+                <div className="grid md:grid-cols-3 gap-6">
                   {[
                     { title: "Industry Expertise", description: "Domain knowledge across multiple sectors" },
                     { title: "Custom Solutions", description: "Tailored to your specific business needs" },
@@ -255,6 +255,7 @@ const FAQ = () => {
           </div>
         </div>
       </div>
+      
       <LiveChat />
       <Footer />
     </>
