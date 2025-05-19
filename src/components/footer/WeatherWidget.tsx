@@ -77,7 +77,7 @@ const WeatherWidget = () => {
 
   if (loading) {
     return (
-      <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg border border-gray-700/30">
+      <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg">
         <h3 className="text-lg font-medium mb-2 text-white">Your Local Weather</h3>
         <div className="text-gray-400 animate-pulse">Loading weather data...</div>
       </div>
@@ -86,7 +86,7 @@ const WeatherWidget = () => {
 
   if (error) {
     return (
-      <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg border border-gray-700/30">
+      <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg">
         <h3 className="text-lg font-medium mb-2 text-white">Your Local Weather</h3>
         <div className="text-gray-400">{error}</div>
       </div>
@@ -94,7 +94,7 @@ const WeatherWidget = () => {
   }
 
   return (
-    <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg border border-gray-700/30">
+    <div className="bg-transparent backdrop-blur-sm p-4 rounded-lg">
       <h3 className="text-lg font-medium mb-3 text-white">Your Local Weather</h3>
       {weatherData && (
         <div className="text-gray-200">
