@@ -8,7 +8,7 @@ import MobileNavLink from './MobileNavLink';
 import MobileServicesMenu from './MobileServicesMenu';
 import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
-import { Phone, BarChart2 } from 'lucide-react';
+import { Phone } from 'lucide-react';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -54,15 +54,6 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                     <Phone size={18} />
                     <span className="font-medium">(123) 456-7890</span>
                   </a>
-                  
-                  <Link 
-                    to="/analytics" 
-                    onClick={onClose}
-                    className="flex items-center justify-center gap-2 px-4 py-3 text-white bg-accent/20 border border-accent/30 rounded-md hover:bg-accent/30 transition-colors"
-                  >
-                    <BarChart2 size={18} />
-                    <span className="font-medium">Analytics</span>
-                  </Link>
                 </div>
               </div>
               

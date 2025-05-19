@@ -6,7 +6,6 @@ import { navLinks } from './constants';
 import DesktopNavLink from './DesktopNavLink';
 import ServiceDropdown from './ServiceDropdown';
 import ProductDropdown from './ProductDropdown';
-import AdminNavLink from '@/components/AdminNavLink';
 
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
@@ -40,8 +39,6 @@ const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: Des
           index={index + 1}
         />
       ))}
-      
-      <AdminNavLink />
       
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
