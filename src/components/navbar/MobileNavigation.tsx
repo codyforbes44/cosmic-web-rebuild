@@ -8,7 +8,7 @@ import MobileNavLink from './MobileNavLink';
 import MobileServicesMenu from './MobileServicesMenu';
 import MobileProductsMenu from './MobileProductsMenu';
 import { navLinks } from './constants';
-import { Phone, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Linkedin } from 'lucide-react';
 import WeatherWidget from '../footer/WeatherWidget';
 
 interface MobileNavigationProps {
@@ -47,20 +47,11 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
             <div className="sticky top-0 z-20 px-6 pb-4 pt-2 bg-space-dark-blue/90 backdrop-blur-md border-b border-gray-800">
               <div className="flex items-center justify-between mb-3">
                 <WeatherWidget 
-                  className="py-1 px-2 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg flex-1 mr-2" 
+                  className="py-1 px-2 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg flex-1" 
                   title="" 
                   units="imperial"
                 />
               </div>
-              
-              {/* Phone number button */}
-              <a 
-                href="tel:+18177572828" 
-                className="flex items-center justify-center gap-2 py-3 px-4 mb-3 text-white bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg hover:bg-space-deep-blue transition-colors w-full"
-              >
-                <Phone size={18} />
-                <span className="text-base font-medium">(817) 757-2828</span>
-              </a>
             </div>
             
             {/* Main navigation area with scrolling - Added mt-4 for margin between header and nav */}
@@ -134,13 +125,6 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
                 transition={{ duration: 0.3, delay: 0.6 }}
                 className="space-y-4"
               >
-                {/* Get a Quote button moved here, directly above social icons */}
-                <Link to="/get-quote" onClick={onClose} className="block w-full mb-4">
-                  <Button className="w-full bg-accent hover:bg-accent/80 text-white py-5 font-semibold text-base">
-                    Get a Free Quote
-                  </Button>
-                </Link>
-                
                 <div className="text-sm text-center">
                   <p className="text-gray-400 mb-4">Connect with us</p>
                   <div className="flex justify-center space-x-5">
