@@ -32,7 +32,7 @@ const HeroSection = () => {
         className="absolute inset-0 z-0 bg-gradient-to-b from-space-dark-blue/60 to-space-deep-blue/70"
       />
 
-      <div className={`container mx-auto px-4 py-12 md:py-20 z-10 text-center md:text-left max-w-6xl transition-all duration-1000 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+      <div className="container max-w-6xl mx-auto px-4 py-12 md:py-20 z-10 text-center md:text-left transition-all duration-1000 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
             <span className="inline-block text-accent mb-4 text-sm md:text-lg tracking-wider font-medium px-3 py-1 bg-accent/10 rounded-full">TRUSTED BY INDUSTRY LEADERS</span>
