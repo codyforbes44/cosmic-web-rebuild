@@ -2,7 +2,7 @@
 import React from 'react';
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import { Settings, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 interface ChatHeaderProps {
   onToggleChat: () => void;
@@ -25,14 +25,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         </div>
       </div>
       <div className="flex items-center">
-        <button 
-          onClick={onToggleZapierManager} 
-          className="text-white hover:bg-white/10 p-2 rounded-full transition-colors mr-1"
-          aria-label="Zapier settings"
-          title="Manage Zapier integrations"
-        >
-          <Settings size={18} />
-        </button>
         <button 
           onClick={onToggleChat} 
           className="text-white hover:bg-white/10 p-2 rounded-full transition-colors"
