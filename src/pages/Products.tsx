@@ -1,5 +1,8 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+
 import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,12 +10,33 @@ import SEO from "@/components/SEO";
 import ClientLogoBanner from '@/components/ClientLogoBanner';
 import ProductComparison from '@/components/ProductComparison';
 import ProductsHeader from '@/components/products/ProductsHeader';
-import ProductShowcase from '@/components/products/ProductShowcase';
 import ProductsTestimonials from '@/components/products/ProductsTestimonials';
 import ProductsCTA from '@/components/products/ProductsCTA';
+import ProductTabs from '@/components/products/ProductTabs';
 import { productCategories } from "@/components/navbar/constants";
+import ProductCard from '@/components/products/ProductCard';
 
 const Products = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [selectedProductId, setSelectedProductId] = useState(productCategories[0].href);
+  
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const productParam = searchParams.get('product');
+    
+    if (productParam) {
+      const foundProduct = productCategories.find(product => product.href === productParam);
+      if (foundProduct) {
+        setSelectedProductId(foundProduct.href);
+      }
+    }
+  }, [location.search]);
+
+  const handleTabChange = (value: string) => {
+    navigate(`/products?product=${value}`);
+  };
+
   return (
     <>
       <SEO 
@@ -29,11 +53,26 @@ const Products = () => {
           {/* Header Section */}
           <ProductsHeader />
 
+          {/* Product Tabs */}
+          <div className="mb-8">
+            <ProductTabs 
+              products={productCategories}
+              selectedProductId={selectedProductId}
+              onTabChange={handleTabChange}
+            />
+          </div>
+
           {/* Client Logo Banner for social proof */}
           <ClientLogoBanner />
           
-          {/* Product Showcase */}
-          <ProductShowcase />
+          {/* Product Content */}
+          <Tabs value={selectedProductId} className="mb-16">
+            {productCategories.map((product, index) => (
+              <TabsContent key={product.href} value={product.href} className="mt-0 animate-in fade-in-50">
+                <ProductCard product={product} index={0} />
+              </TabsContent>
+            ))}
+          </Tabs>
 
           {/* Product Comparison Section */}
           <ProductComparison />

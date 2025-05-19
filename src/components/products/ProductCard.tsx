@@ -20,16 +20,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index }) => {
   return (
     <motion.div 
       variants={item}
-      className={`grid md:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
+      className="grid md:grid-cols-2 gap-8 items-center"
     >
-      <div className={`order-2 ${index % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
+      <div className="order-2 md:order-2">
         <img 
           src={product.image} 
           alt={product.title} 
           className="w-full h-auto rounded-lg shadow-xl border border-gray-800"
         />
       </div>
-      <div className={`${index % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
+      <div className="md:order-1">
         <div className="mb-4">
           <span className="inline-block px-3 py-1 bg-opacity-20 rounded-full text-sm font-medium" style={{ 
             backgroundColor: `${product.color}30`,
