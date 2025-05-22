@@ -98,6 +98,7 @@ const Navbar = () => {
           aria-label={isMobileNavOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileNavOpen}
           aria-controls="mobile-menu"
+          style={{ position: 'relative' }}
         >
           {isMobileNavOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

@@ -103,4 +103,11 @@
   .footer-link {
     @apply text-gray-400 hover:text-brand-gold transition-colors duration-300;
   }
+  
+  /* Mobile menu fix for z-index stacking */
+  .mobile-menu-open {
+    position: relative;
+    z-index: 9999;
+  }
 }
+

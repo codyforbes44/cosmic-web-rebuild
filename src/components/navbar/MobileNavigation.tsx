@@ -43,6 +43,7 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[9999] bg-space-dark-blue/95 backdrop-blur-sm md:hidden"
+          style={{ isolation: 'isolate' }}
         >
           <div className="h-full flex flex-col justify-between py-6 overflow-y-auto">
             {/* Top action area with fixed position */}
