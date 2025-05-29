@@ -1,6 +1,5 @@
-
 import { Service } from '@/types/services';
-import { Megaphone, Users, Award } from 'lucide-react';
+import { Megaphone, Users, Award, Truck } from 'lucide-react';
 
 export const recruitmentService: Service = {
   id: 'recruitment',
@@ -24,6 +23,11 @@ export const recruitmentService: Service = {
       title: 'Conversion Optimization',
       description: 'High-converting landing pages and application processes',
       icon: Award
+    },
+    {
+      title: 'Truck Driver Recruiting',
+      description: 'Specialized recruiting campaigns for CDL drivers and commercial vehicle operators',
+      icon: Truck
     }
   ],
   pain_points: [

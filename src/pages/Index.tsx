@@ -9,6 +9,7 @@ import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
 import CTASection from "@/components/CTASection";
 import ProductOfferings from "@/components/ProductOfferings";
+import TruckDriverRecruitingFeature from "@/components/hero/TruckDriverRecruitingFeature";
 
 const Index = () => {
   return (
@@ -23,6 +24,7 @@ const Index = () => {
       <main className="overflow-x-hidden">
         <StarBackground />
         <HeroSection />
+        <TruckDriverRecruitingFeature />
         <Testimonials />
         <ServicesSolutions />
         <ProductOfferings />
