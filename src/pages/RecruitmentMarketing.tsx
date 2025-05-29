@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
@@ -8,7 +7,6 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
-import ClientLogoBanner from "@/components/ClientLogoBanner";
 import ServiceCaseStudy from "@/components/ServiceCaseStudy";
 import SEO from "@/components/SEO";
 import { recruitmentService } from "@/data/services/recruitmentService";
@@ -207,12 +205,6 @@ const RecruitmentMarketing: React.FC = () => {
               color={service.color}
             />
           </section>
-          
-          {/* Client Logos */}
-          <ClientLogoBanner 
-            title="Trusted By Leading Trucking Companies" 
-            subtitle="Join hundreds of transportation businesses that rely on our recruitment expertise" 
-          />
           
           {/* CTA Section */}
           <section className="mt-20">
