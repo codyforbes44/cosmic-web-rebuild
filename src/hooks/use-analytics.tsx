@@ -46,26 +46,40 @@ export const useAnalytics = () => {
         setLoading(true);
         setError(null);
         
-        console.log('Fetching analytics data from Supabase...');
+        console.log('Fetching ALL historical analytics data from Supabase...');
         
-        // Fetch all visitor data with error handling
+        // First, let's check if the table exists and get a count
+        const { count, error: countError } = await supabase
+          .from('visitor_metadata')
+          .select('*', { count: 'exact', head: true });
+        
+        if (countError) {
+          console.error('Error checking table:', countError);
+          throw new Error(`Database error: ${countError.message}`);
+        }
+        
+        console.log('Total records in visitor_metadata table:', count);
+        
+        // Fetch all visitor data without date restrictions to get historical data
         const { data: visitorData, error: fetchError } = await supabase
           .from('visitor_metadata')
           .select('*')
-          .order('visit_timestamp', { ascending: false });
+          .order('visit_timestamp', { ascending: false })
+          .limit(1000); // Limit to last 1000 records for performance
         
         if (fetchError) {
           console.error('Supabase fetch error:', fetchError);
           throw new Error(`Database error: ${fetchError.message}`);
         }
         
-        console.log('Raw visitor data:', visitorData);
+        console.log('Fetched visitor data:', visitorData?.length || 0, 'records');
+        console.log('Sample data:', visitorData?.slice(0, 3));
         
         // Handle empty data gracefully
         const visitors = visitorData || [];
         
         if (visitors.length === 0) {
-          console.log('No visitor data found');
+          console.log('No historical visitor data found');
           setData({
             visitorData: [],
             dailyVisitors: generateEmptyDailyData(),
@@ -80,8 +94,8 @@ export const useAnalytics = () => {
           return;
         }
         
-        // Process daily visitors (last 7 days)
-        const dailyData = processDailyVisitors(visitors);
+        // Process daily visitors (last 30 days instead of 7 for more historical data)
+        const dailyData = processDailyVisitors(visitors, 30);
         
         // Process device data
         const deviceData = processDeviceData(visitors);
@@ -106,7 +120,11 @@ export const useAnalytics = () => {
           dailyData: dailyData.length,
           deviceData: deviceData.length,
           countryData: countryData.length,
-          sourceData: sourceData.length
+          sourceData: sourceData.length,
+          dateRange: visitors.length > 0 ? {
+            earliest: visitors[visitors.length - 1]?.visit_timestamp,
+            latest: visitors[0]?.visit_timestamp
+          } : null
         });
 
         // Set the full analytics data
@@ -126,9 +144,11 @@ export const useAnalytics = () => {
         console.error('Error fetching analytics data:', err);
         const errorMessage = err instanceof Error ? err.message : 'Failed to load analytics data';
         setError(errorMessage);
+        
+        // Show a more informative toast
         toast({
-          title: 'Analytics Error',
-          description: errorMessage,
+          title: 'Analytics Data Error',
+          description: `${errorMessage}. Check console for details.`,
           variant: 'destructive',
         });
       } finally {
@@ -143,11 +163,11 @@ export const useAnalytics = () => {
 };
 
 // Helper functions for data processing
-function generateEmptyDailyData(): VisitorCount[] {
+function generateEmptyDailyData(days: number = 7): VisitorCount[] {
   const dailyData: VisitorCount[] = [];
   const now = new Date();
   
-  for (let i = 6; i >= 0; i--) {
+  for (let i = days - 1; i >= 0; i--) {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
@@ -157,11 +177,11 @@ function generateEmptyDailyData(): VisitorCount[] {
   return dailyData;
 }
 
-function processDailyVisitors(visitors: any[]): VisitorCount[] {
+function processDailyVisitors(visitors: any[], days: number = 7): VisitorCount[] {
   const now = new Date();
   const dailyData: VisitorCount[] = [];
   
-  for (let i = 6; i >= 0; i--) {
+  for (let i = days - 1; i >= 0; i--) {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
