@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { TablesInsert } from "@/integrations/supabase/types";
 import { toast } from "@/hooks/use-toast";
@@ -8,7 +7,7 @@ interface VisitorMetadata extends Omit<TablesInsert<'visitor_metadata'>, 'id' | 
 }
 
 const EDGE_FUNCTION_URL = '/functions/v1/visitor-metadata';
-const DEBUG_MODE = false; // Set to true to enable debug logs
+const DEBUG_MODE = true; // Enable debug logs for better tracking
 
 // Helper to log messages only in debug mode
 function debugLog(...args: any[]): void {
@@ -19,6 +18,8 @@ function debugLog(...args: any[]): void {
 
 export async function trackVisitor(): Promise<void> {
   try {
+    debugLog('Starting visitor tracking...');
+    
     // Check if tracking is disabled by user preference
     if (localStorage.getItem('cookieConsent') === 'limited') {
       debugLog('Tracking limited by user consent');
@@ -58,7 +59,7 @@ export async function trackVisitor(): Promise<void> {
     try {
       debugLog('Sending data to edge function');
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
       
       const response = await fetch(EDGE_FUNCTION_URL, {
         method: 'POST',
@@ -80,20 +81,18 @@ export async function trackVisitor(): Promise<void> {
       const data = await response.json();
       debugLog('Edge function success:', data);
       
-      // If this is a returning visitor with location data, display welcome back toast
-      const isReturningVisitor = localStorage.getItem('returningVisitor');
-      if (isReturningVisitor && data.location && data.location.city) {
+      // Show success toast for first-time visitors
+      const isFirstVisit = !localStorage.getItem('hasVisited');
+      if (isFirstVisit && data.location && data.location.city) {
         setTimeout(() => {
           toast({
-            title: "Welcome back!",
-            description: `We see you're visiting us from ${data.location.city || data.location.region || data.location.country}.`,
-            duration: 5000,
+            title: "Welcome!",
+            description: `Thanks for visiting us from ${data.location.city || data.location.region || data.location.country}!`,
+            duration: 4000,
           });
         }, 2000);
+        localStorage.setItem('hasVisited', 'true');
       }
-      
-      // Mark as returning visitor for future visits
-      localStorage.setItem('returningVisitor', 'true');
       
     } catch (fetchError) {
       // Handle network errors by falling back to direct database insert
@@ -105,13 +104,11 @@ export async function trackVisitor(): Promise<void> {
         throw error;
       }
       
-      // Mark as returning visitor for future visits
-      localStorage.setItem('returningVisitor', 'true');
+      debugLog('Fallback insert successful');
     }
   } catch (err) {
     debugLog('Failed to track visitor metadata:', err);
     // Silently fail - we don't want to interrupt the user experience
-    // But log the error for debugging purposes
   }
 }
 
@@ -151,6 +148,7 @@ let isTracked = false;
 export function trackPageTime(): () => void {
   pageLoadTime = Date.now();
   isTracked = false;
+  debugLog('Started tracking page time');
   
   // Return a cleanup function to track time when leaving the page
   return async () => {
@@ -165,9 +163,9 @@ export function trackPageTime(): () => void {
     const timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // Time in seconds
     isTracked = true;
     
-    // Only track if the user spent at least 5 seconds on the page
+    // Only track if the user spent at least 3 seconds on the page
     // to avoid recording bounces or accidental clicks
-    if (timeOnPage < 5) {
+    if (timeOnPage < 3) {
       debugLog('Time on page too short, not tracking', timeOnPage);
       return;
     }
@@ -185,6 +183,8 @@ export function trackPageTime(): () => void {
       
       if (error) {
         debugLog('Error tracking page time:', error);
+      } else {
+        debugLog('Successfully tracked page time');
       }
     } catch (err) {
       debugLog('Failed to track page time:', err);
@@ -210,6 +210,8 @@ export function trackEvent(eventName: string, eventProperties?: Record<string, a
     }).then(({ error }) => {
       if (error) {
         debugLog('Error tracking event:', error);
+      } else {
+        debugLog('Successfully tracked event:', eventName);
       }
     });
   } catch (err) {

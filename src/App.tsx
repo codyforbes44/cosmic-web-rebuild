@@ -8,6 +8,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { trackVisitor, trackPageTime } from "./utils/visitorTracking";
 import CookieConsent from "./components/CookieConsent";
 import LiveChat from "./components/LiveChat/LiveChat";
+import VisitorTracker from "./components/VisitorTracker";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -53,12 +54,14 @@ const queryClient = new QueryClient({
   },
 });
 
-// PageTracker component to track visitor metadata on each route change
+// Enhanced PageTracker component to track visitor metadata on each route change
 const PageTracker = () => {
   const location = useLocation();
   
   useEffect(() => {
-    // Track visitor when page loads
+    console.log('PageTracker: Route changed to', location.pathname);
+    
+    // Track visitor when page loads or route changes
     trackVisitor();
     
     // Setup tracking for time on page
@@ -113,6 +116,7 @@ const App: React.FC = () => {
               <Suspense fallback={<PageLoader />}>
                 <AppRoutes />
                 <PageTracker />
+                <VisitorTracker />
               </Suspense>
               <LiveChat />
               <CookieConsent />
