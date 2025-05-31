@@ -1,11 +1,11 @@
-import React, { lazy, Suspense, useEffect } from "react";
+
+import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
-import { trackVisitor, trackPageTime } from "./utils/visitorTracking";
 import CookieConsent from "./components/CookieConsent";
 import LiveChat from "./components/LiveChat/LiveChat";
 import VisitorTracker from "./components/VisitorTracker";
@@ -54,26 +54,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Enhanced PageTracker component to track visitor metadata on each route change
-const PageTracker = () => {
-  const location = useLocation();
-  
-  useEffect(() => {
-    console.log('PageTracker: Route changed to', location.pathname);
-    
-    // Track visitor when page loads or route changes
-    trackVisitor();
-    
-    // Setup tracking for time on page
-    const cleanup = trackPageTime();
-    
-    // Cleanup when navigating away
-    return cleanup;
-  }, [location.pathname]);
-  
-  return null;
-};
-
 const AppRoutes = () => {
   return (
     <Routes>
@@ -115,7 +95,6 @@ const App: React.FC = () => {
             <BrowserRouter>
               <Suspense fallback={<PageLoader />}>
                 <AppRoutes />
-                <PageTracker />
                 <VisitorTracker />
               </Suspense>
               <LiveChat />

@@ -1,12 +1,20 @@
 
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { trackVisitor, trackPageTime } from '@/utils/visitorTracking';
 
 const VisitorTracker = () => {
+  const location = useLocation();
+
   useEffect(() => {
-    // Track visitor immediately when component mounts
-    console.log('VisitorTracker: Initializing visitor tracking');
-    trackVisitor();
+    // Track visitor when component mounts or route changes
+    console.log('VisitorTracker: Route changed to', location.pathname);
+    
+    // Add a small delay to ensure the page is fully loaded
+    const timeoutId = setTimeout(() => {
+      console.log('VisitorTracker: Initializing visitor tracking for', location.pathname);
+      trackVisitor();
+    }, 500);
     
     // Setup page time tracking
     const cleanup = trackPageTime();
@@ -29,11 +37,12 @@ const VisitorTracker = () => {
     window.addEventListener('beforeunload', handleBeforeUnload);
     
     return () => {
+      clearTimeout(timeoutId);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
       cleanup();
     };
-  }, []);
+  }, [location.pathname]); // Re-run when route changes
 
   return null; // This component doesn't render anything
 };

@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { TablesInsert } from "@/integrations/supabase/types";
 import { toast } from "@/hooks/use-toast";
@@ -20,9 +21,9 @@ export async function trackVisitor(): Promise<void> {
   try {
     debugLog('Starting visitor tracking...');
     
-    // Check if tracking is disabled by user preference
-    if (localStorage.getItem('cookieConsent') === 'limited') {
-      debugLog('Tracking limited by user consent');
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined') {
+      debugLog('Not in browser environment, skipping tracking');
       return;
     }
 
@@ -53,61 +54,73 @@ export async function trackVisitor(): Promise<void> {
       operating_system: detectOS(userAgent),
     };
 
-    debugLog('Collecting visitor metadata:', metadata);
+    debugLog('Visitor metadata to be stored:', metadata);
     
-    // Try the edge function first, with fallback to direct database insert
+    // Try direct database insert first for simplicity
     try {
-      debugLog('Sending data to edge function');
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      debugLog('Attempting direct database insert...');
+      const { data, error } = await supabase
+        .from('visitor_metadata')
+        .insert(metadata)
+        .select('*')
+        .single();
       
-      const response = await fetch(EDGE_FUNCTION_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(metadata),
-        signal: controller.signal
-      });
-      
-      clearTimeout(timeoutId);
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        debugLog('Edge function error:', response.status, errorData);
-        throw new Error(`Edge function returned ${response.status}`);
-      }
-      
-      const data = await response.json();
-      debugLog('Edge function success:', data);
-      
-      // Show success toast for first-time visitors
-      const isFirstVisit = !localStorage.getItem('hasVisited');
-      if (isFirstVisit && data.location && data.location.city) {
-        setTimeout(() => {
-          toast({
-            title: "Welcome!",
-            description: `Thanks for visiting us from ${data.location.city || data.location.region || data.location.country}!`,
-            duration: 4000,
-          });
-        }, 2000);
-        localStorage.setItem('hasVisited', 'true');
-      }
-      
-    } catch (fetchError) {
-      // Handle network errors by falling back to direct database insert
-      debugLog('Edge function failed, using fallback:', fetchError);
-      
-      const { error } = await supabase.from('visitor_metadata').insert(metadata);
       if (error) {
-        debugLog('Fallback error:', error);
+        debugLog('Direct database insert error:', error);
         throw error;
       }
       
-      debugLog('Fallback insert successful');
+      debugLog('Direct database insert successful:', data);
+      
+      // Show welcome toast for new visitors occasionally
+      const isFirstVisit = !localStorage.getItem('hasVisited');
+      if (isFirstVisit && Math.random() > 0.7) { // 30% chance to show welcome
+        setTimeout(() => {
+          toast({
+            title: "Welcome!",
+            description: "Thanks for visiting ƷBI! Your visit has been recorded for analytics.",
+            duration: 3000,
+          });
+        }, 1000);
+        localStorage.setItem('hasVisited', 'true');
+      }
+      
+    } catch (dbError) {
+      debugLog('Database insert failed, trying edge function fallback:', dbError);
+      
+      // Fallback to edge function
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+        
+        const response = await fetch(EDGE_FUNCTION_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(metadata),
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          debugLog('Edge function error:', response.status, errorData);
+          throw new Error(`Edge function returned ${response.status}`);
+        }
+        
+        const data = await response.json();
+        debugLog('Edge function success:', data);
+        
+      } catch (fetchError) {
+        debugLog('Both database and edge function failed:', fetchError);
+        // Continue silently - don't interrupt user experience
+      }
     }
+    
   } catch (err) {
-    debugLog('Failed to track visitor metadata:', err);
+    debugLog('Overall tracking failed:', err);
     // Silently fail - we don't want to interrupt the user experience
   }
 }
@@ -154,18 +167,12 @@ export function trackPageTime(): () => void {
   return async () => {
     if (isTracked) return;
     
-    // Check if tracking is disabled by user preference
-    if (localStorage.getItem('cookieConsent') === 'limited') {
-      debugLog('Time tracking limited by user consent');
-      return;
-    }
-    
     const timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // Time in seconds
     isTracked = true;
     
-    // Only track if the user spent at least 3 seconds on the page
+    // Only track if the user spent at least 5 seconds on the page
     // to avoid recording bounces or accidental clicks
-    if (timeOnPage < 3) {
+    if (timeOnPage < 5) {
       debugLog('Time on page too short, not tracking', timeOnPage);
       return;
     }
@@ -194,19 +201,15 @@ export function trackPageTime(): () => void {
 
 // Export a function to track specific events
 export function trackEvent(eventName: string, eventProperties?: Record<string, any>): void {
-  // Check if tracking is disabled by user preference
-  if (localStorage.getItem('cookieConsent') === 'limited') {
-    debugLog('Event tracking limited by user consent');
-    return;
-  }
-  
   debugLog('Tracking event:', eventName, eventProperties);
   
   try {
     supabase.from('visitor_metadata').insert({
       page_url: window.location.href,
-      event_name: eventName,
-      event_properties: eventProperties
+      // Note: the visitor_metadata table doesn't have event_name/event_properties columns
+      // This would need additional columns or a separate events table
+      user_agent: `Event: ${eventName}`,
+      referrer: eventProperties ? JSON.stringify(eventProperties) : null
     }).then(({ error }) => {
       if (error) {
         debugLog('Error tracking event:', error);

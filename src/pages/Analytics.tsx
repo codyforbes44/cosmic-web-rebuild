@@ -6,10 +6,12 @@ import Footer from "@/components/Footer";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, TestTube } from "lucide-react";
 import { useAnalytics } from "@/hooks/use-analytics";
 import OverviewCards from "@/components/analytics/OverviewCards";
 import AnalyticsTabs from "@/components/analytics/AnalyticsTabs";
+import { trackVisitor } from "@/utils/visitorTracking";
+import { toast } from "@/hooks/use-toast";
 
 const Analytics: React.FC = () => {
   const { data, loading, error } = useAnalytics();
@@ -18,6 +20,16 @@ const Analytics: React.FC = () => {
   
   const handleRefresh = () => {
     window.location.reload();
+  };
+  
+  const handleTestTracking = async () => {
+    console.log('Manual tracking test initiated');
+    await trackVisitor();
+    toast({
+      title: "Tracking Test",
+      description: "Manual visitor tracking triggered. Check console for details.",
+      duration: 3000,
+    });
   };
   
   return (
@@ -38,16 +50,27 @@ const Analytics: React.FC = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Analytics Dashboard</h1>
               <p className="text-gray-400">Historical visitor insights and website performance metrics</p>
             </div>
-            <Button 
-              onClick={handleRefresh}
-              variant="outline"
-              size="sm"
-              className="bg-transparent border-white/20 text-white hover:bg-white/10"
-              disabled={loading}
-            >
-              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-              Refresh Data
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                onClick={handleTestTracking}
+                variant="outline"
+                size="sm"
+                className="bg-transparent border-accent/50 text-accent hover:bg-accent/10"
+              >
+                <TestTube className="w-4 h-4 mr-2" />
+                Test Tracking
+              </Button>
+              <Button 
+                onClick={handleRefresh}
+                variant="outline"
+                size="sm"
+                className="bg-transparent border-white/20 text-white hover:bg-white/10"
+                disabled={loading}
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                Refresh Data
+              </Button>
+            </div>
           </div>
           
           {loading ? (
@@ -98,9 +121,18 @@ const Analytics: React.FC = () => {
                       <p className="text-yellow-300 mb-2">
                         No visitor data has been collected yet.
                       </p>
-                      <p className="text-gray-400 text-sm">
-                        Visit different pages of your website to start collecting analytics data, or check if the visitor tracking is properly configured.
+                      <p className="text-gray-400 text-sm mb-4">
+                        Visit different pages of your website to start collecting analytics data, or use the "Test Tracking" button above to manually trigger tracking.
                       </p>
+                      <Button 
+                        onClick={handleTestTracking}
+                        variant="outline"
+                        size="sm"
+                        className="bg-transparent border-yellow-500/50 text-yellow-300 hover:bg-yellow-500/10"
+                      >
+                        <TestTube className="w-4 h-4 mr-2" />
+                        Test Visitor Tracking
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
