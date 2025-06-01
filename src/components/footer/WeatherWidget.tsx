@@ -47,56 +47,9 @@ const WeatherWidget = ({
           }
         }
         
-        // Try to get location using Browser Geolocation API
-        await navigator.geolocation.getCurrentPosition(
-          // Success callback - we got precise location
-          async (position) => {
-            try {
-              const { latitude, longitude } = position.coords;
-              
-              // Fetch weather using coordinates (most accurate)
-              const weatherResponse = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=9de243494c0b295cca9337e1e96b00e2`
-              );
-              
-              if (!weatherResponse.ok) {
-                throw new Error(`Weather API error: ${weatherResponse.status}`);
-              }
-              
-              const weatherResult = await weatherResponse.json();
-              
-              const newWeatherData: WeatherData = {
-                location: weatherResult.name,
-                temperature: Math.round(weatherResult.main.temp),
-                condition: weatherResult.weather[0].main,
-                humidity: weatherResult.main.humidity,
-                windSpeed: Math.round(weatherResult.wind.speed),
-                timestamp: Date.now(),
-              };
-              
-              // Save to cache and update state
-              cacheWeatherData(newWeatherData);
-              setWeatherData(newWeatherData);
-              setLoading(false);
-            } catch (err) {
-              console.error('Weather fetch error with geolocation:', err);
-              // Fall back to IP-based methods
-              await fetchByIpLocation();
-            }
-          },
-          // Error callback - permission denied or unavailable
-          async () => {
-            console.log('Geolocation permission denied or unavailable');
-            // Fall back to IP-based location methods
-            await fetchByIpLocation();
-          },
-          // Options
-          { 
-            timeout: 7000,
-            enableHighAccuracy: false,
-            maximumAge: 60 * 60 * 1000 // 1 hour
-          }
-        );
+        // Skip geolocation permission and go directly to IP-based location
+        await fetchByIpLocation();
+        
       } catch (err) {
         console.error('Initial weather fetch error:', err);
         // When all else fails, try IP-based geolocation
