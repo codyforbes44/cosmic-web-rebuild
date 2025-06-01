@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, TestTube } from "lucide-react";
+import { RefreshCw, TestTube, Calendar } from "lucide-react";
 import { useAnalytics } from "@/hooks/use-analytics";
 import OverviewCards from "@/components/analytics/OverviewCards";
 import AnalyticsTabs from "@/components/analytics/AnalyticsTabs";
@@ -36,7 +36,7 @@ const Analytics: React.FC = () => {
     <>
       <SEO
         title="Analytics Dashboard | ƷBI"
-        description="Visitor analytics and insights for ƷBI website"
+        description="6-month visitor analytics and insights for ƷBI website"
         keywords="analytics, visitor data, website metrics, ƷBI"
       />
       <Navbar />
@@ -48,7 +48,10 @@ const Analytics: React.FC = () => {
           <div className="mb-8 flex justify-between items-center">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Analytics Dashboard</h1>
-              <p className="text-gray-400">Historical visitor insights and website performance metrics</p>
+              <p className="text-gray-400 flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                6-month historical visitor insights and website performance metrics (up to 10,000 records)
+              </p>
             </div>
             <div className="flex gap-2">
               <Button 
@@ -76,7 +79,7 @@ const Analytics: React.FC = () => {
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
-              <p className="ml-4 text-white">Loading historical analytics data...</p>
+              <p className="ml-4 text-white">Loading 6 months of analytics data...</p>
             </div>
           ) : error ? (
             <Card className="bg-card/20 backdrop-blur-sm border-red-500/50">
@@ -119,7 +122,7 @@ const Analytics: React.FC = () => {
                     <div className="text-center">
                       <h3 className="text-lg font-semibold text-yellow-400 mb-2">No Historical Data Found</h3>
                       <p className="text-yellow-300 mb-2">
-                        No visitor data has been collected yet.
+                        No visitor data has been collected in the last 6 months.
                       </p>
                       <p className="text-gray-400 text-sm mb-4">
                         Visit different pages of your website to start collecting analytics data, or use the "Test Tracking" button above to manually trigger tracking.
@@ -142,7 +145,7 @@ const Analytics: React.FC = () => {
             <Card className="bg-card/20 backdrop-blur-sm border-white/10">
               <CardContent className="pt-6">
                 <div className="text-center">
-                  <p className="text-gray-400">No historical analytics data available</p>
+                  <p className="text-gray-400">No 6-month analytics data available</p>
                   <Button 
                     onClick={handleRefresh}
                     variant="outline"

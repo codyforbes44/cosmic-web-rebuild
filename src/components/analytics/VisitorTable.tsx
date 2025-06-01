@@ -6,11 +6,12 @@ import {
 } from "@/components/ui/table";
 import { 
   Pagination, PaginationContent, PaginationItem, 
-  PaginationLink, PaginationNext, PaginationPrevious 
+  PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis
 } from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Globe, MonitorSmartphone, Clock, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface VisitorTableProps {
   visitorData: any[];
@@ -26,7 +27,7 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState<string>("visit_timestamp");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(25); // Increased default from 10 to 25
   
   // Sort and pagination logic
   const handleSort = (field: string) => {
@@ -36,6 +37,7 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
       setSortField(field);
       setSortDirection("desc");
     }
+    setCurrentPage(1); // Reset to first page when sorting
   };
   
   // Sort data
@@ -59,67 +61,87 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
     currentPage * itemsPerPage
   );
   
-  // Generate page numbers for pagination
+  // Generate page numbers for pagination with better handling for large datasets
   const generatePaginationItems = () => {
     let items = [];
+    const maxVisiblePages = 7;
+    const sidePages = 2;
     
-    // Always show first page
-    items.push(
-      <PaginationItem key="first">
-        <PaginationLink 
-          onClick={() => setCurrentPage(1)} 
-          isActive={currentPage === 1}
-        >
-          1
-        </PaginationLink>
-      </PaginationItem>
-    );
-    
-    // If we're beyond page 3, show ellipsis
-    if (currentPage > 3) {
+    if (totalPages <= maxVisiblePages) {
+      // Show all pages if total is small
+      for (let i = 1; i <= totalPages; i++) {
+        items.push(
+          <PaginationItem key={i}>
+            <PaginationLink 
+              onClick={() => setCurrentPage(i)} 
+              isActive={currentPage === i}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+    } else {
+      // Always show first page
       items.push(
-        <PaginationItem key="ellipsis1">
-          <PaginationLink>...</PaginationLink>
-        </PaginationItem>
-      );
-    }
-    
-    // Show current page and surrounding pages
-    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-      if (i <= 1 || i >= totalPages) continue;
-      items.push(
-        <PaginationItem key={i}>
+        <PaginationItem key="first">
           <PaginationLink 
-            onClick={() => setCurrentPage(i)} 
-            isActive={currentPage === i}
+            onClick={() => setCurrentPage(1)} 
+            isActive={currentPage === 1}
           >
-            {i}
+            1
           </PaginationLink>
         </PaginationItem>
       );
-    }
-    
-    // If not close to last page, show ellipsis
-    if (currentPage < totalPages - 2) {
-      items.push(
-        <PaginationItem key="ellipsis2">
-          <PaginationLink>...</PaginationLink>
-        </PaginationItem>
-      );
-    }
-    
-    // Always show last page if there is more than one page
-    if (totalPages > 1) {
-      items.push(
-        <PaginationItem key="last">
-          <PaginationLink 
-            onClick={() => setCurrentPage(totalPages)} 
-            isActive={currentPage === totalPages}
-          >
-            {totalPages}
-          </PaginationLink>
-        </PaginationItem>
-      );
+      
+      // Add ellipsis if needed
+      if (currentPage > sidePages + 2) {
+        items.push(
+          <PaginationItem key="ellipsis1">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+      
+      // Show pages around current page
+      const startPage = Math.max(2, currentPage - sidePages);
+      const endPage = Math.min(totalPages - 1, currentPage + sidePages);
+      
+      for (let i = startPage; i <= endPage; i++) {
+        items.push(
+          <PaginationItem key={i}>
+            <PaginationLink 
+              onClick={() => setCurrentPage(i)} 
+              isActive={currentPage === i}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+      
+      // Add ellipsis if needed
+      if (currentPage < totalPages - sidePages - 1) {
+        items.push(
+          <PaginationItem key="ellipsis2">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+      
+      // Always show last page
+      if (totalPages > 1) {
+        items.push(
+          <PaginationItem key="last">
+            <PaginationLink 
+              onClick={() => setCurrentPage(totalPages)} 
+              isActive={currentPage === totalPages}
+            >
+              {totalPages}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
     }
     
     return items;
@@ -150,59 +172,96 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
 
   // For simplified table (visitors tab)
   if (simplified) {
+    const simplifiedPageSize = 50; // Increased for simplified view
+    const simplifiedTotalPages = Math.ceil(visitorData.length / simplifiedPageSize);
+    const simplifiedPaginatedData = visitorData.slice(
+      (currentPage - 1) * simplifiedPageSize,
+      currentPage * simplifiedPageSize
+    );
+
     return (
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-700">
-              <th className="text-left py-3 px-4 text-gray-400">Time</th>
-              <th className="text-left py-3 px-4 text-gray-400">Page</th>
-              <th className="text-left py-3 px-4 text-gray-400">Location</th>
-              <th className="text-left py-3 px-4 text-gray-400">Device</th>
-              <th className="text-left py-3 px-4 text-gray-400">Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {visitorData.length > 0 ? (
-              visitorData.map((visitor, index) => {
-                const visitUrl = visitor.page_url ? new URL(visitor.page_url) : null;
-                const visitPath = visitUrl ? visitUrl.pathname : 'Unknown';
-                const visitTime = visitor.visit_timestamp ? new Date(visitor.visit_timestamp).toLocaleString() : 'Unknown';
-                const location = visitor.country ? `${visitor.city ? visitor.city + ', ' : ''}${visitor.country}` : 'Unknown';
-                const source = visitor.utm_source || (visitor.referrer ? 'Referral' : 'Direct');
-                
-                return (
-                  <tr key={index} className="border-b border-gray-800">
-                    <td className="py-3 px-4 text-sm text-gray-300">{visitTime}</td>
-                    <td className="py-3 px-4 text-sm text-gray-300">
-                      <span className="truncate block max-w-[140px]" title={visitPath}>
-                        {visitPath}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4 text-sm text-gray-300">{location}</td>
-                    <td className="py-3 px-4 text-sm text-gray-300">
-                      <div className="flex items-center">
-                        <MonitorSmartphone size={14} className="mr-1" />
-                        <span>{visitor.device_type || 'Unknown'}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <Badge variant="outline" className="bg-white/5">
-                        {source}
-                      </Badge>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan={5} className="text-center py-8 text-gray-400">
-                  No visitor data available
-                </td>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <p className="text-sm text-gray-400">
+            Showing {((currentPage - 1) * simplifiedPageSize) + 1}-{Math.min(currentPage * simplifiedPageSize, visitorData.length)} of {visitorData.length} visitors
+          </p>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-700">
+                <th className="text-left py-3 px-4 text-gray-400">Time</th>
+                <th className="text-left py-3 px-4 text-gray-400">Page</th>
+                <th className="text-left py-3 px-4 text-gray-400">Location</th>
+                <th className="text-left py-3 px-4 text-gray-400">Device</th>
+                <th className="text-left py-3 px-4 text-gray-400">Source</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {simplifiedPaginatedData.length > 0 ? (
+                simplifiedPaginatedData.map((visitor, index) => {
+                  const visitUrl = visitor.page_url ? new URL(visitor.page_url) : null;
+                  const visitPath = visitUrl ? visitUrl.pathname : 'Unknown';
+                  const visitTime = visitor.visit_timestamp ? new Date(visitor.visit_timestamp).toLocaleString() : 'Unknown';
+                  const location = visitor.country ? `${visitor.city ? visitor.city + ', ' : ''}${visitor.country}` : 'Unknown';
+                  const source = visitor.utm_source || (visitor.referrer ? 'Referral' : 'Direct');
+                  
+                  return (
+                    <tr key={index} className="border-b border-gray-800">
+                      <td className="py-3 px-4 text-sm text-gray-300">{visitTime}</td>
+                      <td className="py-3 px-4 text-sm text-gray-300">
+                        <span className="truncate block max-w-[140px]" title={visitPath}>
+                          {visitPath}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-sm text-gray-300">{location}</td>
+                      <td className="py-3 px-4 text-sm text-gray-300">
+                        <div className="flex items-center">
+                          <MonitorSmartphone size={14} className="mr-1" />
+                          <span>{visitor.device_type || 'Unknown'}</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <Badge variant="outline" className="bg-white/5">
+                          {source}
+                        </Badge>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={5} className="text-center py-8 text-gray-400">
+                    No visitor data available
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+        
+        {simplifiedTotalPages > 1 && (
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious 
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                />
+              </PaginationItem>
+              
+              {generatePaginationItems()}
+              
+              <PaginationItem>
+                <PaginationNext 
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, simplifiedTotalPages))}
+                  className={currentPage === simplifiedTotalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
       </div>
     );
   }
@@ -210,9 +269,36 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
   // Full featured table for the data tab
   return (
     <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-400">Show:</span>
+            <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+              setItemsPerPage(Number(value));
+              setCurrentPage(1);
+            }}>
+              <SelectTrigger className="w-20 bg-card/20 border-white/10">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="25">25</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+                <SelectItem value="250">250</SelectItem>
+              </SelectContent>
+            </Select>
+            <span className="text-sm text-gray-400">per page</span>
+          </div>
+        </div>
+        
+        <p className="text-sm text-gray-400">
+          Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, sortedData.length)} of {sortedData.length} visitors
+        </p>
+      </div>
+      
       <div className="overflow-x-auto rounded-lg border border-white/10 backdrop-blur-sm">
         <Table>
-          <TableCaption>Full visitor data collected from tracking</TableCaption>
+          <TableCaption>Visitor data from the last 6 months (up to 10,000 records)</TableCaption>
           <TableHeader className="bg-black/20">
             <TableRow>
               {renderSortableHeader("visit_timestamp", "Date & Time", <Calendar size={14} />)}
@@ -277,8 +363,7 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
             <PaginationItem>
               <PaginationPrevious 
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                aria-disabled={currentPage === 1}
-                className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
               />
             </PaginationItem>
             
@@ -287,8 +372,7 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
             <PaginationItem>
               <PaginationNext 
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                aria-disabled={currentPage === totalPages}
-                className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
               />
             </PaginationItem>
           </PaginationContent>

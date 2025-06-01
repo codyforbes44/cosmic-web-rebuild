@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -46,9 +45,15 @@ export const useAnalytics = () => {
         setLoading(true);
         setError(null);
         
-        console.log('Fetching ALL historical analytics data from Supabase...');
+        console.log('Fetching 6 months of historical analytics data from Supabase...');
         
-        // First, let's check if the table exists and get a count
+        // Calculate date 6 months ago
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        
+        console.log('Fetching data from:', sixMonthsAgo.toISOString());
+        
+        // First, let's check total count
         const { count, error: countError } = await supabase
           .from('visitor_metadata')
           .select('*', { count: 'exact', head: true });
@@ -60,29 +65,30 @@ export const useAnalytics = () => {
         
         console.log('Total records in visitor_metadata table:', count);
         
-        // Fetch all visitor data without date restrictions to get historical data
+        // Fetch visitor data from the last 6 months, increased to 10,000 records
         const { data: visitorData, error: fetchError } = await supabase
           .from('visitor_metadata')
           .select('*')
+          .gte('visit_timestamp', sixMonthsAgo.toISOString())
           .order('visit_timestamp', { ascending: false })
-          .limit(1000); // Limit to last 1000 records for performance
+          .limit(10000); // Increased from 1000 to 10,000 records
         
         if (fetchError) {
           console.error('Supabase fetch error:', fetchError);
           throw new Error(`Database error: ${fetchError.message}`);
         }
         
-        console.log('Fetched visitor data:', visitorData?.length || 0, 'records');
+        console.log('Fetched visitor data:', visitorData?.length || 0, 'records from last 6 months');
         console.log('Sample data:', visitorData?.slice(0, 3));
         
         // Handle empty data gracefully
         const visitors = visitorData || [];
         
         if (visitors.length === 0) {
-          console.log('No historical visitor data found');
+          console.log('No visitor data found in the last 6 months');
           setData({
             visitorData: [],
-            dailyVisitors: generateEmptyDailyData(),
+            dailyVisitors: generateEmptyDailyData(180), // 6 months ≈ 180 days
             deviceData: [],
             countryData: [],
             sourceData: [],
@@ -94,8 +100,8 @@ export const useAnalytics = () => {
           return;
         }
         
-        // Process daily visitors (last 30 days instead of 7 for more historical data)
-        const dailyData = processDailyVisitors(visitors, 30);
+        // Process daily visitors for 6 months (180 days) instead of 30
+        const dailyData = processDailyVisitors(visitors, 180);
         
         // Process device data
         const deviceData = processDeviceData(visitors);
@@ -112,7 +118,7 @@ export const useAnalytics = () => {
         const avgTimeOnPage = calculateAverageTimeOnPage(visitors);
         const topPage = findMostPopularPage(visitors);
 
-        console.log('Processed analytics data:', {
+        console.log('Processed 6-month analytics data:', {
           totalVisitors,
           totalCountries,
           avgTimeOnPage,
@@ -163,7 +169,7 @@ export const useAnalytics = () => {
 };
 
 // Helper functions for data processing
-function generateEmptyDailyData(days: number = 7): VisitorCount[] {
+function generateEmptyDailyData(days: number = 180): VisitorCount[] {
   const dailyData: VisitorCount[] = [];
   const now = new Date();
   
@@ -177,7 +183,7 @@ function generateEmptyDailyData(days: number = 7): VisitorCount[] {
   return dailyData;
 }
 
-function processDailyVisitors(visitors: any[], days: number = 7): VisitorCount[] {
+function processDailyVisitors(visitors: any[], days: number = 180): VisitorCount[] {
   const now = new Date();
   const dailyData: VisitorCount[] = [];
   
