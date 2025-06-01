@@ -36,7 +36,7 @@ const Analytics: React.FC = () => {
     <>
       <SEO
         title="Analytics Dashboard | ƷBI"
-        description="6-month visitor analytics and insights for ƷBI website"
+        description="90-day visitor analytics and insights for ƷBI website"
         keywords="analytics, visitor data, website metrics, ƷBI"
       />
       <Navbar />
@@ -50,7 +50,7 @@ const Analytics: React.FC = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Analytics Dashboard</h1>
               <p className="text-gray-400 flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                6-month historical visitor insights and website performance metrics (up to 10,000 records)
+                90-day historical visitor insights and website performance metrics (up to 10,000 records)
               </p>
             </div>
             <div className="flex gap-2">
@@ -79,7 +79,7 @@ const Analytics: React.FC = () => {
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
-              <p className="ml-4 text-white">Loading 6 months of analytics data...</p>
+              <p className="ml-4 text-white">Loading 90 days of analytics data...</p>
             </div>
           ) : error ? (
             <Card className="bg-card/20 backdrop-blur-sm border-red-500/50">
@@ -122,7 +122,7 @@ const Analytics: React.FC = () => {
                     <div className="text-center">
                       <h3 className="text-lg font-semibold text-yellow-400 mb-2">No Historical Data Found</h3>
                       <p className="text-yellow-300 mb-2">
-                        No visitor data has been collected in the last 6 months.
+                        No visitor data has been collected in the last 90 days.
                       </p>
                       <p className="text-gray-400 text-sm mb-4">
                         Visit different pages of your website to start collecting analytics data, or use the "Test Tracking" button above to manually trigger tracking.
@@ -145,7 +145,7 @@ const Analytics: React.FC = () => {
             <Card className="bg-card/20 backdrop-blur-sm border-white/10">
               <CardContent className="pt-6">
                 <div className="text-center">
-                  <p className="text-gray-400">No 6-month analytics data available</p>
+                  <p className="text-gray-400">No 90-day analytics data available</p>
                   <Button 
                     onClick={handleRefresh}
                     variant="outline"

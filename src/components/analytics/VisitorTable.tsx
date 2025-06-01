@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { 
   Table, TableHeader, TableBody, TableHead, 
@@ -298,7 +297,7 @@ const VisitorTable: React.FC<VisitorTableProps> = ({
       
       <div className="overflow-x-auto rounded-lg border border-white/10 backdrop-blur-sm">
         <Table>
-          <TableCaption>Visitor data from the last 6 months (up to 10,000 records)</TableCaption>
+          <TableCaption>Visitor data from the last 90 days (up to 10,000 records)</TableCaption>
           <TableHeader className="bg-black/20">
             <TableRow>
               {renderSortableHeader("visit_timestamp", "Date & Time", <Calendar size={14} />)}

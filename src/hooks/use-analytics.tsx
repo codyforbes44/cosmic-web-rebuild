@@ -45,13 +45,13 @@ export const useAnalytics = () => {
         setLoading(true);
         setError(null);
         
-        console.log('Fetching 6 months of historical analytics data from Supabase...');
+        console.log('Fetching 90 days of historical analytics data from Supabase...');
         
-        // Calculate date 6 months ago
-        const sixMonthsAgo = new Date();
-        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        // Calculate date 90 days ago
+        const ninetyDaysAgo = new Date();
+        ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
         
-        console.log('Fetching data from:', sixMonthsAgo.toISOString());
+        console.log('Fetching data from:', ninetyDaysAgo.toISOString());
         
         // First, let's check total count
         const { count, error: countError } = await supabase
@@ -65,30 +65,30 @@ export const useAnalytics = () => {
         
         console.log('Total records in visitor_metadata table:', count);
         
-        // Fetch visitor data from the last 6 months, increased to 10,000 records
+        // Fetch visitor data from the last 90 days, up to 10,000 records
         const { data: visitorData, error: fetchError } = await supabase
           .from('visitor_metadata')
           .select('*')
-          .gte('visit_timestamp', sixMonthsAgo.toISOString())
+          .gte('visit_timestamp', ninetyDaysAgo.toISOString())
           .order('visit_timestamp', { ascending: false })
-          .limit(10000); // Increased from 1000 to 10,000 records
+          .limit(10000);
         
         if (fetchError) {
           console.error('Supabase fetch error:', fetchError);
           throw new Error(`Database error: ${fetchError.message}`);
         }
         
-        console.log('Fetched visitor data:', visitorData?.length || 0, 'records from last 6 months');
+        console.log('Fetched visitor data:', visitorData?.length || 0, 'records from last 90 days');
         console.log('Sample data:', visitorData?.slice(0, 3));
         
         // Handle empty data gracefully
         const visitors = visitorData || [];
         
         if (visitors.length === 0) {
-          console.log('No visitor data found in the last 6 months');
+          console.log('No visitor data found in the last 90 days');
           setData({
             visitorData: [],
-            dailyVisitors: generateEmptyDailyData(180), // 6 months ≈ 180 days
+            dailyVisitors: generateEmptyDailyData(90),
             deviceData: [],
             countryData: [],
             sourceData: [],
@@ -100,8 +100,8 @@ export const useAnalytics = () => {
           return;
         }
         
-        // Process daily visitors for 6 months (180 days) instead of 30
-        const dailyData = processDailyVisitors(visitors, 180);
+        // Process daily visitors for 90 days
+        const dailyData = processDailyVisitors(visitors, 90);
         
         // Process device data
         const deviceData = processDeviceData(visitors);
@@ -112,13 +112,13 @@ export const useAnalytics = () => {
         // Process source data (UTM and referrer)
         const sourceData = processSourceData(visitors);
         
-        // Calculate aggregated metrics
+        // Calculate aggregated metrics - use actual fetched data length
         const totalVisitors = visitors.length;
         const totalCountries = calculateUniqueCountries(visitors);
         const avgTimeOnPage = calculateAverageTimeOnPage(visitors);
         const topPage = findMostPopularPage(visitors);
 
-        console.log('Processed 6-month analytics data:', {
+        console.log('Processed 90-day analytics data:', {
           totalVisitors,
           totalCountries,
           avgTimeOnPage,
@@ -169,7 +169,7 @@ export const useAnalytics = () => {
 };
 
 // Helper functions for data processing
-function generateEmptyDailyData(days: number = 180): VisitorCount[] {
+function generateEmptyDailyData(days: number = 90): VisitorCount[] {
   const dailyData: VisitorCount[] = [];
   const now = new Date();
   
@@ -183,7 +183,7 @@ function generateEmptyDailyData(days: number = 180): VisitorCount[] {
   return dailyData;
 }
 
-function processDailyVisitors(visitors: any[], days: number = 180): VisitorCount[] {
+function processDailyVisitors(visitors: any[], days: number = 90): VisitorCount[] {
   const now = new Date();
   const dailyData: VisitorCount[] = [];
   
