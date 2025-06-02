@@ -60,7 +60,6 @@ const MobileNavigation = ({ isOpen, isActive, onClose }: MobileNavigationProps) 
               <div className="flex items-center justify-between mb-3">
                 <WeatherWidget 
                   className="py-1 px-2 bg-space-deep-blue/70 border border-brand-gold/30 rounded-lg flex-1" 
-                  title="" 
                   units="imperial"
                 />
               </div>
