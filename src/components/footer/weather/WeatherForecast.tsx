@@ -10,7 +10,6 @@ interface WeatherForecastProps {
 const WeatherForecast = ({ forecast, units }: WeatherForecastProps) => {
   return (
     <div className="border-t border-gray-700 pt-3">
-      <h4 className="text-sm font-medium text-gray-400 mb-3">7-Day Forecast</h4>
       <div className="grid grid-cols-7 gap-1 text-center">
         {forecast.map((day, index) => (
           <div key={index} className="flex flex-col items-center p-1">
