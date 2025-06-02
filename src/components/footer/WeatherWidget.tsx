@@ -8,13 +8,11 @@ import WeatherError from './weather/WeatherError';
 
 interface WeatherWidgetProps {
   className?: string;
-  title?: string;
   units?: 'imperial' | 'metric';
 }
 
 const WeatherWidget = ({ 
   className = "",
-  title = "Local Weather",
   units = 'imperial'
 }: WeatherWidgetProps) => {
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
@@ -49,8 +47,7 @@ const WeatherWidget = ({
 
   if (loading) {
     return (
-      <div className={cn(`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[420px] flex flex-col`, className)}>
-        {title && <h3 className="text-xl font-semibold mb-4 text-white">{title}</h3>}
+      <div className={cn(`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 h-full flex flex-col`, className)}>
         <div className="text-gray-400 animate-pulse flex-grow flex items-center justify-center">
           Detecting your location...
         </div>
@@ -59,11 +56,10 @@ const WeatherWidget = ({
   }
 
   return (
-    <div className={cn(`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 flex flex-col ${!title ? 'min-h-[280px]' : 'min-h-[420px]'}`, className)}>
-      {title && (
-        <div className="flex items-center justify-between mb-5">
-          <h3 className="text-xl font-semibold text-white">{title}</h3>
-          {error && <WeatherError error={error} />}
+    <div className={cn(`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 h-full flex flex-col`, className)}>
+      {error && (
+        <div className="flex justify-end mb-2">
+          <WeatherError error={error} />
         </div>
       )}
       
@@ -72,7 +68,7 @@ const WeatherWidget = ({
           <CurrentWeather 
             weatherData={weatherData.current} 
             units={units} 
-            hasTitle={!!title}
+            hasTitle={false}
           />
           
           <WeatherForecast 
