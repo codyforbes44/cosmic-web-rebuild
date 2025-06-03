@@ -31,7 +31,7 @@ const DemoRequestModal: React.FC<DemoRequestModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className={`sm:max-w-[800px] ${isMobile ? 'h-[90vh]' : 'h-[700px]'} p-0 overflow-hidden`}>
         <DialogHeader className="p-6 pb-0">
-          <DialogTitle className="text-xl">Schedule a Demo of {productTitle}</DialogTitle>
+          <DialogTitle className="text-xl">Schedule a Call with ƷBI</DialogTitle>
         </DialogHeader>
         <div className="calendly-container h-full w-full">
           <iframe
@@ -39,7 +39,7 @@ const DemoRequestModal: React.FC<DemoRequestModalProps> = ({
             width="100%"
             height="100%"
             frameBorder="0"
-            title="Schedule a demo with 3BI"
+            title="Schedule a Call with ƷBI"
             className="min-h-[580px]"
             style={{ 
               width: '100%', 
