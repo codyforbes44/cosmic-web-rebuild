@@ -9,14 +9,14 @@ const testimonials = [
     id: 1,
     name: "Sarah Johnson",
     position: "CTO",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80",
+    image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png",
     content: "ƷBI transformed our outdated systems into a modern digital platform that increased our operational efficiency by 40%. Their team's expertise and dedication to our success exceeded our expectations.",
     rating: 5
   },
   {
     id: 2,
     name: "Michael Chen",
-    position: "CEO, InnovateNow",
+    position: "CEO",
     image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png",
     content: "Working with ƷBI was a game-changer for our business. Their strategic insights and custom software solutions helped us capture new market opportunities and increase revenue by 35% in just six months.",
     rating: 5
@@ -24,8 +24,8 @@ const testimonials = [
   {
     id: 3,
     name: "Priya Patel",
-    position: "COO, Global Logistics Partners",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80",
+    position: "COO",
+    image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png",
     content: "ƷBI's data analytics solutions gave us unprecedented visibility into our operations. Their team worked closely with us to implement solutions that reduced costs and improved service delivery across our global network.",
     rating: 5
   }
