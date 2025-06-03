@@ -17,7 +17,7 @@ const testimonials = [
     id: 2,
     name: "Michael Chen",
     position: "CEO, InnovateNow",
-    image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80",
+    image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png",
     content: "Working with ƷBI was a game-changer for our business. Their strategic insights and custom software solutions helped us capture new market opportunities and increase revenue by 35% in just six months.",
     rating: 5
   },
