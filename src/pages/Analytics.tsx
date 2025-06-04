@@ -10,6 +10,7 @@ import { RefreshCw, TestTube, Calendar } from "lucide-react";
 import { useAnalytics } from "@/hooks/use-analytics";
 import OverviewCards from "@/components/analytics/OverviewCards";
 import AnalyticsTabs from "@/components/analytics/AnalyticsTabs";
+import FormSubmissionsCard from "@/components/analytics/FormSubmissionsCard";
 import { trackVisitor } from "@/utils/visitorTracking";
 import { toast } from "@/hooks/use-toast";
 
@@ -110,6 +111,11 @@ const Analytics: React.FC = () => {
                 avgTimeOnPage={data.avgTimeOnPage} 
                 topPage={data.topPage} 
               />
+              
+              {/* Form Submissions Section */}
+              <div className="mb-8">
+                <FormSubmissionsCard />
+              </div>
               
               <AnalyticsTabs 
                 analyticsData={data} 
