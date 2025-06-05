@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   X, Clock, MapPin, Car, Bike, FootprintsIcon as Walking,
-  ArrowRight, TurnRight, TurnLeft, Straight, Navigation,
+  ArrowRight, ChevronRight, ChevronLeft, ArrowUp, Navigation,
   Info, AlertTriangle, Phone, Share
 } from 'lucide-react';
 
@@ -25,11 +25,11 @@ const DirectionsPanel = ({ origin, destination, onClose }: DirectionsPanelProps)
   ];
 
   const directions = [
-    { icon: Straight, instruction: 'Head north on Main St', distance: '0.3 mi', time: '1 min' },
-    { icon: TurnRight, instruction: 'Turn right onto Broadway Ave', distance: '1.2 mi', time: '3 min' },
-    { icon: TurnLeft, instruction: 'Turn left onto 5th Street', distance: '0.8 mi', time: '2 min' },
-    { icon: Straight, instruction: 'Continue straight for 2 miles', distance: '2.1 mi', time: '4 min' },
-    { icon: TurnRight, instruction: 'Turn right onto Destination Blvd', distance: '0.5 mi', time: '1 min' },
+    { icon: ArrowUp, instruction: 'Head north on Main St', distance: '0.3 mi', time: '1 min' },
+    { icon: ChevronRight, instruction: 'Turn right onto Broadway Ave', distance: '1.2 mi', time: '3 min' },
+    { icon: ChevronLeft, instruction: 'Turn left onto 5th Street', distance: '0.8 mi', time: '2 min' },
+    { icon: ArrowUp, instruction: 'Continue straight for 2 miles', distance: '2.1 mi', time: '4 min' },
+    { icon: ChevronRight, instruction: 'Turn right onto Destination Blvd', distance: '0.5 mi', time: '1 min' },
     { icon: MapPin, instruction: 'Arrive at destination', distance: '0 mi', time: '0 min' }
   ];
 
