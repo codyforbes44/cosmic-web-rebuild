@@ -28,6 +28,7 @@ const Analytics = lazy(() => import("./pages/Analytics"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const RecruitmentMarketing = lazy(() => import("./pages/RecruitmentMarketing"));
 const DriversMatter = lazy(() => import("./pages/DriversMatter"));
+const Weather = lazy(() => import("./pages/Weather"));
 
 // New Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -68,6 +69,7 @@ const AppRoutes = () => {
       <Route path="/get-quote" element={<GetQuote />} />
       <Route path="/partners" element={<Partners />} />
       <Route path="/analytics" element={<Analytics />} />
+      <Route path="/weather" element={<Weather />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
