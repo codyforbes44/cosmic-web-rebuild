@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Layers, Compass, ZoomIn, ZoomOut, RotateCcw, 
   Satellite, Map, Mountain, Navigation, Plus, Minus,
-  Settings, Eye, EyeOff
+  Settings, Eye, EyeOff, Globe
 } from 'lucide-react';
 
 interface MapControlsProps {
@@ -25,7 +25,7 @@ const MapControls = ({ mapType, onMapTypeChange, userLocation }: MapControlsProp
   });
 
   const mapTypes = [
-    { id: 'roadmap', icon: Map, label: 'Map' },
+    { id: 'roadmap', icon: Map, label: 'Street' },
     { id: 'satellite', icon: Satellite, label: 'Satellite' },
     { id: 'hybrid', icon: Layers, label: 'Hybrid' },
     { id: 'terrain', icon: Mountain, label: 'Terrain' }
@@ -41,7 +41,7 @@ const MapControls = ({ mapType, onMapTypeChange, userLocation }: MapControlsProp
   const handleCenterOnLocation = () => {
     if (userLocation) {
       console.log('Centering on user location:', userLocation);
-      // In a real implementation, this would center the map on user location
+      // The map will handle centering through the MapInterface component
     }
   };
 
@@ -57,29 +57,7 @@ const MapControls = ({ mapType, onMapTypeChange, userLocation }: MapControlsProp
         <Settings className="w-4 h-4" />
       </Button>
 
-      {/* Zoom Controls */}
-      <Card className="bg-black/50 backdrop-blur-sm border-white/20">
-        <CardContent className="p-2">
-          <div className="flex flex-col gap-1">
-            <Button
-              size="sm"
-              variant="ghost"
-              className="text-white hover:bg-white/20 h-8 w-8 p-0"
-            >
-              <ZoomIn className="w-4 h-4" />
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="text-white hover:bg-white/20 h-8 w-8 p-0"
-            >
-              <ZoomOut className="w-4 h-4" />
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Navigation Controls */}
+      {/* Quick Actions */}
       <Card className="bg-black/50 backdrop-blur-sm border-white/20">
         <CardContent className="p-2">
           <div className="flex flex-col gap-1">
@@ -89,6 +67,7 @@ const MapControls = ({ mapType, onMapTypeChange, userLocation }: MapControlsProp
               onClick={handleCenterOnLocation}
               disabled={!userLocation}
               className="text-white hover:bg-white/20 h-8 w-8 p-0"
+              title="Center on location"
             >
               <Navigation className="w-4 h-4" />
             </Button>
@@ -96,15 +75,9 @@ const MapControls = ({ mapType, onMapTypeChange, userLocation }: MapControlsProp
               size="sm"
               variant="ghost"
               className="text-white hover:bg-white/20 h-8 w-8 p-0"
+              title="Compass"
             >
               <Compass className="w-4 h-4" />
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="text-white hover:bg-white/20 h-8 w-8 p-0"
-            >
-              <RotateCcw className="w-4 h-4" />
             </Button>
           </div>
         </CardContent>
@@ -116,8 +89,8 @@ const MapControls = ({ mapType, onMapTypeChange, userLocation }: MapControlsProp
           <CardContent className="p-4">
             <Tabs defaultValue="layers">
               <TabsList className="grid w-full grid-cols-2 bg-space-deep-blue/50">
-                <TabsTrigger value="layers">Layers</TabsTrigger>
-                <TabsTrigger value="overlays">Overlays</TabsTrigger>
+                <TabsTrigger value="layers">Map Style</TabsTrigger>
+                <TabsTrigger value="info">Map Info</TabsTrigger>
               </TabsList>
 
               <TabsContent value="layers" className="mt-4">
@@ -144,27 +117,32 @@ const MapControls = ({ mapType, onMapTypeChange, userLocation }: MapControlsProp
                 </div>
               </TabsContent>
 
-              <TabsContent value="overlays" className="mt-4">
+              <TabsContent value="info" className="mt-4">
                 <div className="space-y-3">
-                  <h4 className="text-white font-medium text-sm">Map Overlays</h4>
+                  <h4 className="text-white font-medium text-sm">Map Information</h4>
                   
-                  {Object.entries(overlays).map(([key, enabled]) => (
-                    <div key={key} className="flex items-center justify-between">
-                      <span className="text-gray-300 text-sm capitalize">{key}</span>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => toggleOverlay(key as keyof typeof overlays)}
-                        className="text-white hover:bg-white/20 h-6 w-6 p-0"
-                      >
-                        {enabled ? (
-                          <Eye className="w-3 h-3 text-green-400" />
-                        ) : (
-                          <EyeOff className="w-3 h-3 text-gray-500" />
-                        )}
-                      </Button>
+                  <div className="text-sm text-gray-300 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4 text-blue-400" />
+                      <span>OpenStreetMap Data</span>
                     </div>
-                  ))}
+                    
+                    <div className="text-xs text-gray-400">
+                      <p>• Interactive pan and zoom</p>
+                      <p>• Real-time location tracking</p>
+                      <p>• Multiple map styles</p>
+                      <p>• Free and open source</p>
+                    </div>
+
+                    {userLocation && (
+                      <div className="mt-3 p-2 bg-blue-500/20 rounded">
+                        <p className="text-xs text-blue-200">Current Location:</p>
+                        <p className="text-xs font-mono text-blue-100">
+                          {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </TabsContent>
             </Tabs>

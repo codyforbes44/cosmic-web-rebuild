@@ -1,51 +1,36 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
-    --card: 222 47% 11%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
-    --popover: 222 47% 11%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 199 76% 49%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 84% 4.9%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 258 80% 75%;
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
     --radius: 0.5rem;
-
-    --sidebar-background: 222 47% 11%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 217.2 91.2% 59.8%;
-    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -53,61 +38,36 @@
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-space-dark-blue text-foreground font-inter;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-space-grotesk;
-  }
-  
-  a {
-    @apply text-brand-gold hover:text-brand-gold/80 transition-colors duration-300;
+    @apply bg-background text-foreground;
   }
 }
 
-@layer components {
-  .star {
-    @apply bg-white rounded-full absolute;
-    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.4);
-  }
-
-  .space-card {
-    @apply bg-opacity-20 backdrop-blur-lg bg-space-deep-blue border border-opacity-20 border-white rounded-xl;
-  }
-
-  .nav-link {
-    @apply text-gray-200 hover:text-white transition-colors duration-300 relative flex items-center justify-center;
-  }
-
-  .nav-link.active {
-    @apply text-brand-blue font-medium;
-  }
-
-  .btn-primary {
-    @apply bg-brand-blue hover:bg-brand-blue/80 text-white font-medium py-2 px-6 rounded-md transition-colors;
-  }
-
-  .section-heading {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white relative inline-block;
-  }
-
-  .section-heading::after {
-    content: "";
-    @apply block w-full h-1 bg-brand-gold mt-2;
-  }
-  
-  .footer-link {
-    @apply text-gray-400 hover:text-brand-gold transition-colors duration-300;
-  }
-  
-  /* Mobile menu fix for z-index stacking */
-  .mobile-menu-open {
-    position: relative;
-    z-index: 9999;
-  }
+/* Custom styles for Leaflet map markers */
+.custom-div-icon {
+  background: transparent !important;
+  border: none !important;
 }
 
+.leaflet-container {
+  background: #1a1a2e !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+  border-radius: 8px !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: white !important;
+}
+
+.leaflet-control-attribution a {
+  color: #60a5fa !important;
+}
