@@ -1,9 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Map, Satellite, Zap, Cloud } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { Map, Satellite, Zap, Cloud, MapPin } from 'lucide-react';
+
+// Fix for default markers in react-leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 interface WeatherMapsProps {
   location: string;
@@ -11,6 +22,9 @@ interface WeatherMapsProps {
 
 const WeatherMaps = ({ location }: WeatherMapsProps) => {
   const [activeMap, setActiveMap] = useState('radar');
+  const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [mapCenter, setMapCenter] = useState<[number, number]>([39.8283, -98.5795]);
+  const [mapZoom, setMapZoom] = useState(4);
 
   const mapTypes = [
     { id: 'radar', label: 'Radar', icon: Cloud },
@@ -19,11 +33,104 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
     { id: 'precipitation', label: 'Precipitation', icon: Zap },
   ];
 
+  // Custom location icon
+  const locationIcon = new L.DivIcon({
+    html: `<div class="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>`,
+    className: 'custom-div-icon',
+    iconSize: [16, 16],
+    iconAnchor: [8, 8]
+  });
+
+  // Get tile layer URL based on active map type
+  const getTileLayerUrl = () => {
+    switch (activeMap) {
+      case 'satellite':
+        return 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+      case 'radar':
+        // Using OpenWeatherMap's precipitation layer
+        return 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=demo';
+      case 'temperature':
+        // Using OpenWeatherMap's temperature layer
+        return 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=demo';
+      case 'precipitation':
+        return 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=demo';
+      default:
+        return 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    }
+  };
+
+  // Get base map layer (always show streets as base)
+  const getBaseMapUrl = () => {
+    if (activeMap === 'satellite') {
+      return 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+    }
+    return 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  };
+
+  // Geocode location to get coordinates
+  const geocodeLocation = async (locationName: string) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationName)}&limit=1`
+      );
+      const data = await response.json();
+      if (data.length > 0) {
+        return {
+          lat: parseFloat(data[0].lat),
+          lng: parseFloat(data[0].lon)
+        };
+      }
+    } catch (error) {
+      console.error('Geocoding error:', error);
+    }
+    return null;
+  };
+
+  // Get user's current location on component mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          setCurrentLocation(coords);
+          setMapCenter([coords.lat, coords.lng]);
+          setMapZoom(10);
+        },
+        (error) => {
+          console.log('Geolocation error:', error);
+          // Try to geocode the provided location
+          if (location && location !== 'Demo City') {
+            geocodeLocation(location).then(coords => {
+              if (coords) {
+                setCurrentLocation(coords);
+                setMapCenter([coords.lat, coords.lng]);
+                setMapZoom(10);
+              }
+            });
+          }
+        }
+      );
+    } else if (location && location !== 'Demo City') {
+      // Fallback to geocoding if geolocation not available
+      geocodeLocation(location).then(coords => {
+        if (coords) {
+          setCurrentLocation(coords);
+          setMapCenter([coords.lat, coords.lng]);
+          setMapZoom(10);
+        }
+      });
+    }
+  }, [location]);
+
   return (
     <div className="space-y-6">
       <Card className="bg-card/20 backdrop-blur-sm border-white/10">
         <CardHeader>
-          <CardTitle className="text-white">Weather Maps</CardTitle>
+          <CardTitle className="text-white">Interactive Weather Maps</CardTitle>
+          <p className="text-gray-400">Real-time weather data visualization for {location}</p>
         </CardHeader>
         <CardContent>
           <Tabs value={activeMap} onValueChange={setActiveMap}>
@@ -42,14 +149,47 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
 
             {mapTypes.map((type) => (
               <TabsContent key={type.id} value={type.id} className="mt-6">
-                <div className="relative bg-gradient-to-br from-blue-900/30 to-green-900/30 rounded-lg border border-gray-700 h-96 flex items-center justify-center">
-                  <div className="text-center text-gray-300">
-                    <type.icon className="w-16 h-16 mx-auto mb-4 text-gray-500" />
-                    <h3 className="text-xl font-semibold mb-2">{type.label} Map</h3>
-                    <p className="text-sm">Interactive {type.label.toLowerCase()} map for {location}</p>
-                    <p className="text-xs text-gray-400 mt-2">
-                      Live weather map integration would be displayed here
-                    </p>
+                <div className="relative rounded-lg border border-gray-700 h-96 overflow-hidden">
+                  <MapContainer
+                    center={mapCenter}
+                    zoom={mapZoom}
+                    className="h-full w-full"
+                    zoomControl={true}
+                  >
+                    {/* Base map layer */}
+                    <TileLayer
+                      url={getBaseMapUrl()}
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    
+                    {/* Weather overlay layer for non-satellite maps */}
+                    {activeMap !== 'satellite' && (
+                      <TileLayer
+                        url={getTileLayerUrl()}
+                        opacity={0.6}
+                        attribution='Weather data &copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>'
+                      />
+                    )}
+                    
+                    {/* Location marker */}
+                    {currentLocation && (
+                      <Marker
+                        position={[currentLocation.lat, currentLocation.lng]}
+                        icon={locationIcon}
+                      >
+                        <Popup>
+                          <div className="text-black">
+                            <strong>{location}</strong><br />
+                            {currentLocation.lat.toFixed(4)}, {currentLocation.lng.toFixed(4)}
+                          </div>
+                        </Popup>
+                      </Marker>
+                    )}
+                  </MapContainer>
+                  
+                  {/* Map type indicator */}
+                  <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg">
+                    <span className="text-sm">{type.label} View</span>
                   </div>
                 </div>
               </TabsContent>
@@ -64,14 +204,24 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
             <CardTitle className="text-white text-lg">Map Controls</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full justify-start bg-transparent border-white/20 text-white hover:bg-white/10">
-              <Map className="w-4 h-4 mr-2" />
-              View Full Screen
+            <Button 
+              variant="outline" 
+              className="w-full justify-start bg-transparent border-white/20 text-white hover:bg-white/10"
+              onClick={() => {
+                if (currentLocation) {
+                  setMapCenter([currentLocation.lat, currentLocation.lng]);
+                  setMapZoom(10);
+                }
+              }}
+            >
+              <MapPin className="w-4 h-4 mr-2" />
+              Center on Location
             </Button>
-            <Button variant="outline" className="w-full justify-start bg-transparent border-white/20 text-white hover:bg-white/10">
-              <Zap className="w-4 h-4 mr-2" />
-              Animation Controls
-            </Button>
+            <div className="text-sm text-gray-300">
+              <p>• Pan and zoom to explore</p>
+              <p>• Switch between weather layers</p>
+              <p>• Real-time weather overlays</p>
+            </div>
           </CardContent>
         </Card>
 
@@ -81,22 +231,43 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
           </CardHeader>
           <CardContent>
             <div className="space-y-2 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                <span className="text-gray-300">Light Rain</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-yellow-500 rounded"></div>
-                <span className="text-gray-300">Moderate Rain</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-red-500 rounded"></div>
-                <span className="text-gray-300">Heavy Rain</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-purple-500 rounded"></div>
-                <span className="text-gray-300">Severe Weather</span>
-              </div>
+              {activeMap === 'radar' && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                    <span className="text-gray-300">Light Precipitation</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-yellow-500 rounded"></div>
+                    <span className="text-gray-300">Moderate Precipitation</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-red-500 rounded"></div>
+                    <span className="text-gray-300">Heavy Precipitation</span>
+                  </div>
+                </>
+              )}
+              {activeMap === 'temperature' && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-blue-600 rounded"></div>
+                    <span className="text-gray-300">Cold</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-500 rounded"></div>
+                    <span className="text-gray-300">Moderate</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-red-600 rounded"></div>
+                    <span className="text-gray-300">Hot</span>
+                  </div>
+                </>
+              )}
+              {(activeMap === 'precipitation' || activeMap === 'satellite') && (
+                <div className="text-gray-300">
+                  Interactive weather visualization for {location}
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
