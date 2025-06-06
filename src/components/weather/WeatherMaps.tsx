@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Map, Satellite, Zap, Cloud, MapPin } from 'lucide-react';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Fix for default markers in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -25,12 +25,13 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [mapCenter, setMapCenter] = useState<[number, number]>([39.8283, -98.5795]);
   const [mapZoom, setMapZoom] = useState(4);
+  const isMobile = useIsMobile();
 
   const mapTypes = [
     { id: 'radar', label: 'Radar', icon: Cloud },
     { id: 'satellite', label: 'Satellite', icon: Satellite },
-    { id: 'temperature', label: 'Temperature', icon: Map },
-    { id: 'precipitation', label: 'Precipitation', icon: Zap },
+    { id: 'temperature', label: 'Temp', icon: Map },
+    { id: 'precipitation', label: 'Rain', icon: Zap },
   ];
 
   // Custom location icon
@@ -126,35 +127,65 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
   }, [location]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <Card className="bg-card/20 backdrop-blur-sm border-white/10">
         <CardHeader>
-          <CardTitle className="text-white">Interactive Weather Maps</CardTitle>
-          <p className="text-gray-400">Real-time weather data visualization for {location}</p>
+          <CardTitle className={`text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>Interactive Weather Maps</CardTitle>
+          <p className={`text-gray-400 ${isMobile ? 'text-sm' : ''}`}>Real-time weather data visualization for {location}</p>
         </CardHeader>
         <CardContent>
           <Tabs value={activeMap} onValueChange={setActiveMap}>
-            <TabsList className="grid w-full grid-cols-4 bg-space-deep-blue/50 border border-white/10">
+            <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2' : 'grid-cols-4'} bg-space-deep-blue/50 border border-white/10`}>
               {mapTypes.map((type) => (
                 <TabsTrigger 
                   key={type.id} 
                   value={type.id}
-                  className="data-[state=active]:bg-brand-gold data-[state=active]:text-black"
+                  className={`data-[state=active]:bg-brand-gold data-[state=active]:text-black ${isMobile ? 'text-xs' : 'text-sm'}`}
                 >
-                  <type.icon className="w-4 h-4 mr-2" />
+                  <type.icon className="w-4 h-4 mr-1 md:mr-2" />
                   {type.label}
                 </TabsTrigger>
               ))}
             </TabsList>
 
+            {/* Mobile: Show only 2 tabs at a time with secondary navigation */}
+            {isMobile && (
+              <div className="grid grid-cols-2 gap-2 mt-3">
+                <Button
+                  variant={activeMap === 'temperature' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveMap('temperature')}
+                  className={activeMap === 'temperature' 
+                    ? 'bg-brand-gold text-black' 
+                    : 'bg-transparent border-white/20 text-white hover:bg-white/10'
+                  }
+                >
+                  <Map className="w-4 h-4 mr-1" />
+                  Temp
+                </Button>
+                <Button
+                  variant={activeMap === 'precipitation' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveMap('precipitation')}
+                  className={activeMap === 'precipitation' 
+                    ? 'bg-brand-gold text-black' 
+                    : 'bg-transparent border-white/20 text-white hover:bg-white/10'
+                  }
+                >
+                  <Zap className="w-4 h-4 mr-1" />
+                  Rain
+                </Button>
+              </div>
+            )}
+
             {mapTypes.map((type) => (
-              <TabsContent key={type.id} value={type.id} className="mt-6">
-                <div className="relative rounded-lg border border-gray-700 h-96 overflow-hidden">
+              <TabsContent key={type.id} value={type.id} className={`${isMobile ? 'mt-4' : 'mt-6'}`}>
+                <div className={`relative rounded-lg border border-gray-700 ${isMobile ? 'h-64' : 'h-96'} overflow-hidden`}>
                   <MapContainer
                     center={mapCenter}
                     zoom={mapZoom}
                     className="h-full w-full"
-                    zoomControl={true}
+                    zoomControl={!isMobile}
                   >
                     {/* Base map layer */}
                     <TileLayer
@@ -188,8 +219,8 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
                   </MapContainer>
                   
                   {/* Map type indicator */}
-                  <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg">
-                    <span className="text-sm">{type.label} View</span>
+                  <div className={`absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    <span>{type.label} View</span>
                   </div>
                 </div>
               </TabsContent>
@@ -198,15 +229,15 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className={`grid grid-cols-1 ${isMobile ? 'gap-4' : 'md:grid-cols-2 gap-6'}`}>
         <Card className="bg-card/20 backdrop-blur-sm border-white/10">
           <CardHeader>
-            <CardTitle className="text-white text-lg">Map Controls</CardTitle>
+            <CardTitle className={`text-white ${isMobile ? 'text-base' : 'text-lg'}`}>Map Controls</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button 
               variant="outline" 
-              className="w-full justify-start bg-transparent border-white/20 text-white hover:bg-white/10"
+              className={`w-full justify-start bg-transparent border-white/20 text-white hover:bg-white/10 ${isMobile ? 'text-sm' : ''}`}
               onClick={() => {
                 if (currentLocation) {
                   setMapCenter([currentLocation.lat, currentLocation.lng]);
@@ -217,8 +248,8 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
               <MapPin className="w-4 h-4 mr-2" />
               Center on Location
             </Button>
-            <div className="text-sm text-gray-300">
-              <p>• Pan and zoom to explore</p>
+            <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-300`}>
+              <p>• {isMobile ? 'Pinch to zoom' : 'Pan and zoom to explore'}</p>
               <p>• Switch between weather layers</p>
               <p>• Real-time weather overlays</p>
             </div>
@@ -227,22 +258,22 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
 
         <Card className="bg-card/20 backdrop-blur-sm border-white/10">
           <CardHeader>
-            <CardTitle className="text-white text-lg">Map Legend</CardTitle>
+            <CardTitle className={`text-white ${isMobile ? 'text-base' : 'text-lg'}`}>Map Legend</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 text-sm">
+            <div className={`space-y-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>
               {activeMap === 'radar' && (
                 <>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-blue-500 rounded"></div>
                     <span className="text-gray-300">Light Precipitation</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-yellow-500 rounded"></div>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-yellow-500 rounded"></div>
                     <span className="text-gray-300">Moderate Precipitation</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-red-500 rounded"></div>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-red-500 rounded"></div>
                     <span className="text-gray-300">Heavy Precipitation</span>
                   </div>
                 </>
@@ -250,15 +281,15 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
               {activeMap === 'temperature' && (
                 <>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-blue-600 rounded"></div>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-blue-600 rounded"></div>
                     <span className="text-gray-300">Cold</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-500 rounded"></div>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded"></div>
                     <span className="text-gray-300">Moderate</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-red-600 rounded"></div>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded"></div>
                     <span className="text-gray-300">Hot</span>
                   </div>
                 </>

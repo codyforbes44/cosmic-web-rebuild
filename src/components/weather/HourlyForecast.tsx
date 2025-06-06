@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import WeatherIcon from '@/components/footer/weather/WeatherIcon';
 import { Droplets } from 'lucide-react';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HourlyForecastProps {
   units: 'imperial' | 'metric';
@@ -10,6 +11,8 @@ interface HourlyForecastProps {
 }
 
 const HourlyForecast = ({ units, location }: HourlyForecastProps) => {
+  const isMobile = useIsMobile();
+
   // Generate mock hourly data for the next 24 hours
   const generateHourlyData = () => {
     const hours = [];
@@ -41,27 +44,27 @@ const HourlyForecast = ({ units, location }: HourlyForecastProps) => {
   return (
     <Card className="bg-card/20 backdrop-blur-sm border-white/10">
       <CardHeader>
-        <CardTitle className="text-white">24-Hour Forecast</CardTitle>
+        <CardTitle className={`text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>24-Hour Forecast</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <div className="flex gap-4 pb-4" style={{ minWidth: '1200px' }}>
+          <div className={`flex gap-3 pb-4 ${isMobile ? 'min-w-max' : ''}`} style={{ minWidth: isMobile ? '800px' : '1200px' }}>
             {hourlyData.map((hour, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center p-3 bg-space-deep-blue/50 rounded-lg border border-gray-700 min-w-[100px]"
+                className={`flex flex-col items-center ${isMobile ? 'p-2 min-w-[80px]' : 'p-3 min-w-[100px]'} bg-space-deep-blue/50 rounded-lg border border-gray-700`}
               >
-                <div className="text-sm text-gray-300 mb-2">
+                <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-300 mb-2`}>
                   {index === 0 ? 'Now' : hour.time}
                 </div>
                 
-                <WeatherIcon condition={hour.condition} size={20} />
+                <WeatherIcon condition={hour.condition} size={isMobile ? 16 : 20} />
                 
-                <div className="text-lg font-semibold text-white my-2">
+                <div className={`${isMobile ? 'text-base' : 'text-lg'} font-semibold text-white my-2`}>
                   {hour.temperature}°
                 </div>
                 
-                <div className="flex items-center gap-1 mb-2">
+                <div className="flex items-center gap-1 mb-1">
                   <Droplets className="w-3 h-3 text-blue-400" />
                   <span className="text-xs text-gray-400">{hour.humidity}%</span>
                 </div>
@@ -75,6 +78,12 @@ const HourlyForecast = ({ units, location }: HourlyForecastProps) => {
             ))}
           </div>
         </div>
+        
+        {isMobile && (
+          <div className="mt-3 text-xs text-gray-400 text-center">
+            Swipe horizontally to see more hours
+          </div>
+        )}
       </CardContent>
     </Card>
   );
