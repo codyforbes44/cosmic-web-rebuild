@@ -15,7 +15,6 @@ const Weather: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<'imperial' | 'metric'>('imperial');
-  const [refreshing, setRefreshing] = useState(false);
 
   const loadWeatherData = async () => {
     try {
@@ -35,18 +34,12 @@ const Weather: React.FC = () => {
       setError('Failed to load weather data');
     } finally {
       setLoading(false);
-      setRefreshing(false);
     }
   };
 
   useEffect(() => {
     loadWeatherData();
   }, [units]);
-
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    await loadWeatherData();
-  };
 
   const handleUnitsChange = (newUnits: 'imperial' | 'metric') => {
     setUnits(newUnits);
@@ -66,10 +59,7 @@ const Weather: React.FC = () => {
       <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-space-dark-blue to-space-deep-blue py-16 md:py-24 px-4">
         <div className="container mx-auto max-w-6xl">
-          <WeatherPageHeader 
-            onRefresh={handleRefresh}
-            refreshing={refreshing}
-          />
+          <WeatherPageHeader />
 
           {error && <WeatherErrorCard error={error} />}
 
