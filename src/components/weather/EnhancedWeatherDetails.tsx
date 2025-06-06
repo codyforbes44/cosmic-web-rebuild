@@ -33,6 +33,17 @@ const EnhancedWeatherDetails = ({ weatherData, units }: EnhancedWeatherDetailsPr
     }
   };
 
+  const getDaysToFullMoon = () => {
+    if (!weatherData.moonPhase?.nextFullMoon) return null;
+    
+    const nextFullMoon = new Date(weatherData.moonPhase.nextFullMoon);
+    const today = new Date();
+    const diffTime = nextFullMoon.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    return diffDays;
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {/* Pressure Trends */}
@@ -66,7 +77,14 @@ const EnhancedWeatherDetails = ({ weatherData, units }: EnhancedWeatherDetailsPr
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <div className="text-lg font-semibold text-white">{weatherData.moonPhase.phase}</div>
+              <div className="flex items-center justify-between">
+                <div className="text-lg font-semibold text-white">{weatherData.moonPhase.phase}</div>
+                {getDaysToFullMoon() !== null && (
+                  <div className="text-sm text-brand-gold font-medium">
+                    {getDaysToFullMoon()} days to full moon
+                  </div>
+                )}
+              </div>
               <div className="text-sm text-gray-300">{weatherData.moonPhase.illumination}% illuminated</div>
               {weatherData.moonPhase.moonrise && weatherData.moonPhase.moonset && (
                 <div className="text-xs text-gray-400">
