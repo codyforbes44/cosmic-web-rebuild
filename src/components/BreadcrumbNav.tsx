@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { HomeIcon } from 'lucide-react';
 import { 
   Breadcrumb,
@@ -10,6 +10,7 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage
 } from "@/components/ui/breadcrumb";
+import ScrollToTopLink from './ScrollToTopLink';
 
 type BreadcrumbItem = {
   label: string;
@@ -48,10 +49,10 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to="/" className="flex items-center">
+              <ScrollToTopLink to="/" className="flex items-center">
                 <HomeIcon className="h-4 w-4 mr-1" />
                 <span>Home</span>
-              </Link>
+              </ScrollToTopLink>
             </BreadcrumbLink>
           </BreadcrumbItem>
           
@@ -62,7 +63,7 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({
               <BreadcrumbItem>
                 {item.path ? (
                   <BreadcrumbLink asChild>
-                    <Link to={item.path}>{item.label}</Link>
+                    <ScrollToTopLink to={item.path}>{item.label}</ScrollToTopLink>
                   </BreadcrumbLink>
                 ) : (
                   <span>{item.label}</span>

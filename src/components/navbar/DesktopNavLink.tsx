@@ -4,6 +4,7 @@ import { Ban } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { NavLink } from './constants';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import ScrollToTopLink from '../ScrollToTopLink';
 
 interface DesktopNavLinkProps {
   link: NavLink;
@@ -35,7 +36,7 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
           </Tooltip>
         </TooltipProvider>
       ) : (
-        <Link 
+        <ScrollToTopLink 
           to={link.path} 
           className={`nav-link flex items-center h-10 px-3 py-2 ${isActive ? 'active' : ''}`}
           aria-current={isActive ? 'page' : undefined}
@@ -47,7 +48,7 @@ const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
               layoutId="navbar-indicator"
             />
           )}
-        </Link>
+        </ScrollToTopLink>
       )}
     </motion.div>
   );

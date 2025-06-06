@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -60,6 +60,31 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+// Scroll to top on route change
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+  
+  useEffect(() => {
+    // If hash is present, let the browser handle the scroll
+    if (hash) {
+      // Use a small timeout to ensure DOM is ready
+      setTimeout(() => {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        } else if (hash === '#top') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 0);
+    } else {
+      // No hash, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [pathname, hash]);
+  
+  return null;
+};
 
 const AppRoutes = () => {
   return (
@@ -130,6 +155,7 @@ const App: React.FC = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <Suspense fallback={<PageLoader />}>
                 <AppRoutes />
                 <VisitorTracker />

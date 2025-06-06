@@ -1,8 +1,8 @@
 
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Ban } from 'lucide-react';
 import { NavLink } from './constants';
+import ScrollToTopLink from '../ScrollToTopLink';
 
 interface MobileNavLinkProps {
   link: NavLink;
@@ -24,14 +24,14 @@ const MobileNavLink = ({ link, isActive, index, onClose }: MobileNavLinkProps) =
           <Ban size={18} className="ml-2 opacity-70" />
         </span>
       ) : (
-        <Link 
+        <ScrollToTopLink 
           to={link.path} 
           className={`nav-link text-xl block py-2 ${isActive ? 'active' : ''}`}
           onClick={onClose}
           aria-current={isActive ? 'page' : undefined}
         >
           {link.name}
-        </Link>
+        </ScrollToTopLink>
       )}
     </motion.div>
   );

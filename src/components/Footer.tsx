@@ -1,10 +1,10 @@
 
-import { Link } from 'react-router-dom';
 import { serviceCategories, navLinks } from './navbar/constants';
 import WeatherWidget from './footer/WeatherWidget';
 import ContactWidget from './footer/ContactWidget';
 import SocialLinksWidget from './footer/SocialLinksWidget';
 import ServicesWidget from './footer/ServicesWidget';
+import ScrollToTopLink from './ScrollToTopLink';
 
 const Footer = () => {
   // Group service categories by type for better organization
@@ -64,9 +64,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ƷBI. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Privacy Policy</Link>
-              <Link to="/terms" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Terms of Service</Link>
-              <Link to="/accessibility" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Accessibility</Link>
+              <ScrollToTopLink to="/privacy" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Privacy Policy</ScrollToTopLink>
+              <ScrollToTopLink to="/terms" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Terms of Service</ScrollToTopLink>
+              <ScrollToTopLink to="/accessibility" className="text-gray-500 hover:text-brand-gold transition-colors text-sm">Accessibility</ScrollToTopLink>
             </div>
           </div>
         </div>

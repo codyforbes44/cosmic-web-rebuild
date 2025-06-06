@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BarChart2 } from 'lucide-react';
+import ScrollToTopLink from './ScrollToTopLink';
 
 interface AdminNavLinkProps {
   className?: string;
@@ -15,13 +15,13 @@ const AdminNavLink: React.FC<AdminNavLinkProps> = ({ className }) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.2 }}
     >
-      <Link 
+      <ScrollToTopLink 
         to="/analytics" 
         className={`flex items-center text-sm px-4 py-2 bg-accent/20 text-white rounded-md hover:bg-accent/30 transition-all ${className}`}
       >
         <BarChart2 size={16} className="mr-2" />
         <span>Analytics</span>
-      </Link>
+      </ScrollToTopLink>
     </motion.div>
   );
 };

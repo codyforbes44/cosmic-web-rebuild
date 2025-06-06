@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import ScrollToTopLink from '../ScrollToTopLink';
 
 interface ServiceGroup {
   title: string;
@@ -31,7 +31,7 @@ const ServicesWidget = ({ serviceGroups, className = "" }: ServicesWidgetProps) 
               <ul className="space-y-2.5 pl-2">
                 {group.items.map((service) => (
                   <li key={service.href}>
-                    <Link 
+                    <ScrollToTopLink 
                       to={service.href} 
                       className="footer-link hover:text-[color:var(--color)] flex items-center" 
                       style={{
@@ -40,7 +40,7 @@ const ServicesWidget = ({ serviceGroups, className = "" }: ServicesWidgetProps) 
                     >
                       <span className="w-1.5 h-1.5 bg-brand-gold/70 rounded-full mr-2"></span>
                       {service.title}
-                    </Link>
+                    </ScrollToTopLink>
                   </li>
                 ))}
               </ul>

@@ -65,12 +65,13 @@ const Navbar = () => {
 
   return (
     <header 
+      id="top"
       className={`fixed top-0 left-0 right-0 z-[9990] transition-all duration-300 ${
         isScrolled ? 'bg-space-dark-blue/90 backdrop-blur-md py-2 shadow-lg' : 'py-4'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2 z-[9991]">
+        <Link to="/#top" className="flex items-center space-x-2 z-[9991]">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}

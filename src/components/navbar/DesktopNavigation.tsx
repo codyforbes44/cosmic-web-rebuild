@@ -1,11 +1,11 @@
 
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { navLinks } from './constants';
 import DesktopNavLink from './DesktopNavLink';
 import ServiceDropdown from './ServiceDropdown';
 import ProductDropdown from './ProductDropdown';
+import ScrollToTopLink from '../ScrollToTopLink';
 
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
@@ -45,9 +45,9 @@ const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: Des
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, delay: 0.6 }}
       >
-        <Link to="/get-quote">
+        <ScrollToTopLink to="/get-quote">
           <Button className="bg-accent hover:bg-accent/80 text-white">Get a Quote</Button>
-        </Link>
+        </ScrollToTopLink>
       </motion.div>
     </nav>
   );
