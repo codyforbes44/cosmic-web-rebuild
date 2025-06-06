@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -43,7 +42,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
   };
 
   return (
-    <div className="md:hidden bg-space-dark-blue backdrop-blur-sm border-t border-white/10">
+    <div className="md:hidden bg-space-dark-blue border-t border-white/10">
       <div className="px-2 pt-2 pb-3 space-y-1">
         {/* User section */}
         {user ? (
