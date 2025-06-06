@@ -48,7 +48,7 @@ const MapInterface = ({
   });
 
   return (
-    <div className="h-full w-full relative">
+    <div className="h-full w-full relative p-4">
       <MapContainer
         center={mapCenter}
         zoom={mapZoom}
