@@ -24,29 +24,64 @@ export interface ForecastDay {
   humidity: number;
 }
 
+export interface AirQualityData {
+  aqi: number;
+  level: string;
+  pollutants: {
+    pm25: number;
+    pm10: number;
+    o3: number;
+    no2: number;
+    so2?: number;
+    co?: number;
+  };
+  healthRecommendations: string[];
+}
+
+export interface WeatherAlert {
+  id: string;
+  title: string;
+  description: string;
+  severity: 'minor' | 'moderate' | 'severe' | 'extreme';
+  expires: string;
+}
+
+export interface MoonPhase {
+  phase: string;
+  illumination: number;
+  nextFullMoon: string;
+}
+
+export interface TideData {
+  nextHigh: string;
+  nextLow: string;
+  height: number;
+}
+
+export interface HistoricalWeather {
+  date: string;
+  tempMax: number;
+  tempMin: number;
+  condition: string;
+}
+
 export interface WeatherResponse {
   current: WeatherData;
   forecast: ForecastDay[];
-  airQuality?: AirQualityData;
-  alerts?: WeatherAlert[];
-  moonPhase?: MoonPhase;
-  tides?: TideData;
-  history?: HistoricalWeather[];
+  airQuality?: AirQualityData | null;
+  alerts?: WeatherAlert[] | null;
+  moonPhase?: MoonPhase | null;
+  tides?: TideData | null;
+  history?: HistoricalWeather[] | null;
   pollen?: {
     overall: number;
     grass: number;
     weeds: number;
     trees: number;
-  };
+  } | null;
   fireWeather?: {
     index: number;
     risk: string;
     recommendations: string[];
-  };
+  } | null;
 }
-
-import { AirQualityData } from './AirQualityService';
-import { WeatherAlert } from './WeatherAlertsService';
-import { MoonPhase } from './MoonPhaseService';
-import { TideData } from './TidesService';
-import { HistoricalWeather } from './HistoricalWeatherService';

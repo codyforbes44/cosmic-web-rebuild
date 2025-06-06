@@ -1,12 +1,7 @@
 
 import { WeatherResponse, ForecastDay } from './types';
-import { generateDemoAirQuality } from './AirQualityService';
-import { generateDemoAlerts } from './WeatherAlertsService';
-import { generateDemoMoonPhase } from './MoonPhaseService';
-import { generateDemoTides } from './TidesService';
-import { generateDemoHistory } from './HistoricalWeatherService';
-import { generateDemoPollen, generateDemoFireWeather } from './EnvironmentalDataService';
 
+// This file now only serves as an absolute fallback when all APIs fail
 export const generateDemoForecast = (units: 'imperial' | 'metric'): ForecastDay[] => {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const conditions = ['clear sky', 'few clouds', 'light rain', 'clear sky', 'scattered clouds', 'clear sky', 'moderate rain'];
@@ -21,6 +16,8 @@ export const generateDemoForecast = (units: 'imperial' | 'metric'): ForecastDay[
 };
 
 export const generateFallbackWeatherData = (units: 'imperial' | 'metric'): WeatherResponse => {
+  console.warn('Using fallback demo data - all weather APIs failed');
+  
   return {
     current: {
       location: 'Demo City',
@@ -39,12 +36,12 @@ export const generateFallbackWeatherData = (units: 'imperial' | 'metric'): Weath
       sunset: '7:20 PM',
     },
     forecast: generateDemoForecast(units),
-    airQuality: generateDemoAirQuality(),
-    alerts: generateDemoAlerts(),
-    moonPhase: generateDemoMoonPhase(),
-    tides: generateDemoTides(),
-    history: generateDemoHistory(units),
-    pollen: generateDemoPollen(),
-    fireWeather: generateDemoFireWeather()
+    airQuality: null,
+    alerts: [],
+    moonPhase: null,
+    tides: null,
+    history: null,
+    pollen: null,
+    fireWeather: null
   };
 };

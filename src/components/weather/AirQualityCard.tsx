@@ -1,14 +1,32 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AirQualityData } from '@/components/footer/weather/AirQualityService';
+import { AirQualityData } from '@/components/footer/weather/types';
 import { Wind, AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface AirQualityCardProps {
-  airQuality: AirQualityData;
+  airQuality: AirQualityData | null;
 }
 
 const AirQualityCard = ({ airQuality }: AirQualityCardProps) => {
+  if (!airQuality) {
+    return (
+      <Card className="bg-card/20 backdrop-blur-sm border-white/10">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Wind className="w-5 h-5" />
+            Air Quality Index
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="text-center py-4 text-gray-400">
+            <p className="text-sm">Air quality data unavailable</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const getAQIColor = (aqi: number) => {
     if (aqi <= 50) return 'text-green-400';
     if (aqi <= 100) return 'text-yellow-400';

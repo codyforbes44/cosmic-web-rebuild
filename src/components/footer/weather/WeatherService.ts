@@ -1,6 +1,6 @@
 
 import { WeatherResponse } from './types';
-import { getCachedWeather, cacheWeatherData, isCacheExpired } from './CacheService';
+import { getCachedWeather, cacheWeatherData } from './CacheService';
 import { fetchLocation } from './LocationService';
 import { fetchWeatherByLocation } from './WeatherApiService';
 import { generateFallbackWeatherData } from './DemoDataService';
@@ -31,7 +31,8 @@ export const fetchWeatherData = async (units: 'imperial' | 'metric'): Promise<We
   } catch (err) {
     console.error('Weather fetch error:', err);
     
-    // Provide demo data as fallback
+    // Only use demo data as absolute last resort
+    console.warn('Falling back to demo data - API services unavailable');
     const fallbackData = generateFallbackWeatherData(units);
     return fallbackData;
   }

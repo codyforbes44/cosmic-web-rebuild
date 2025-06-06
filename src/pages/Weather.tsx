@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -51,8 +52,9 @@ const Weather: React.FC = () => {
       if (data) {
         setWeatherData(data);
         setCurrentLocation(data.current.location);
+        // Only show demo warning if this is actually demo data
         if (data.current.location === 'Demo City') {
-          setError('Unable to fetch local weather - showing demo data');
+          setError('Unable to fetch real weather data - showing demo data');
         }
       }
     } catch (err) {
@@ -138,15 +140,13 @@ const Weather: React.FC = () => {
               <div className="mt-8 space-y-6">
                 <h2 className="text-2xl font-semibold text-white">Additional Information</h2>
                 
-                {/* Air Quality */}
-                {weatherData.airQuality && (
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <AirQualityCard airQuality={weatherData.airQuality} />
-                    <div className="lg:col-span-2">
-                      <EnhancedWeatherDetails weatherData={weatherData} units={units} />
-                    </div>
+                {/* Air Quality and Enhanced Details */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <AirQualityCard airQuality={weatherData.airQuality} />
+                  <div className="lg:col-span-2">
+                    <EnhancedWeatherDetails weatherData={weatherData} units={units} />
                   </div>
-                )}
+                </div>
 
                 {/* Weather Alerts */}
                 {weatherData.alerts && weatherData.alerts.length > 0 && (
