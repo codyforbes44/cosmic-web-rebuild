@@ -36,6 +36,36 @@ export type Database = {
         }
         Relationships: []
       }
+      favorite_locations: {
+        Row: {
+          country: string | null
+          created_at: string
+          id: string
+          latitude: number | null
+          location_name: string
+          longitude: number | null
+          user_id: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          location_name: string
+          longitude?: number | null
+          user_id: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          location_name?: string
+          longitude?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       quote_requests: {
         Row: {
           budget: string | null

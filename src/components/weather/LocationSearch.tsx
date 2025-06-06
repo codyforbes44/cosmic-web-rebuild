@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, Navigation } from 'lucide-react';
 import { useIsMobile } from "@/hooks/use-mobile";
+import AddToFavorites from './AddToFavorites';
 
 interface LocationSearchProps {
   onLocationChange: (location: string) => void;
@@ -76,12 +77,14 @@ const LocationSearch = ({ onLocationChange, currentLocation }: LocationSearchPro
           </Button>
         </div>
         
-        {currentLocation && (
-          <div className={`flex items-center ${isMobile ? 'gap-1 mt-2' : 'gap-2 mt-3'} text-gray-400`}>
+        <div className={`flex items-center justify-between ${isMobile ? 'gap-1 mt-2' : 'gap-2 mt-3'}`}>
+          <div className={`flex items-center ${isMobile ? 'gap-1' : 'gap-2'} text-gray-400`}>
             <MapPin className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
             <span className={`${isMobile ? 'text-xs' : 'text-sm'} truncate`}>Current: {currentLocation}</span>
           </div>
-        )}
+          
+          <AddToFavorites location={currentLocation} />
+        </div>
       </CardContent>
     </Card>
   );

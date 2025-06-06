@@ -12,8 +12,10 @@ import WeatherErrorCard from "./WeatherErrorCard";
 import WeatherAlerts from "./WeatherAlerts";
 import LocationSearch from "./LocationSearch";
 import WeatherAdditionalInfo from "./WeatherAdditionalInfo";
+import { Toaster } from "@/components/ui/toaster";
 import { useWeatherPage } from './WeatherPageProvider';
 import { useIsMobile } from "@/hooks/use-mobile";
+import FavoriteLocations from './FavoriteLocations';
 import "@/components/weather/WeatherBackground.css";
 
 const WeatherPageLayout = () => {
@@ -68,23 +70,37 @@ const WeatherPageLayout = () => {
 
           {error && <WeatherErrorCard error={error} />}
 
-          {/* Location Search - Mobile Optimized */}
-          <div className={`${isMobile ? 'mb-4' : 'mb-6'}`}>
-            <LocationSearch 
-              onLocationChange={handleLocationChange}
-              currentLocation={currentLocation}
-            />
+          <div className={`${isMobile ? 'grid grid-cols-1 gap-4' : 'grid md:grid-cols-3 gap-6'}`}>
+            {/* Location Search - Mobile Optimized */}
+            <div className={`${isMobile ? '' : 'md:col-span-2'}`}>
+              <LocationSearch 
+                onLocationChange={handleLocationChange}
+                currentLocation={currentLocation}
+              />
+            </div>
+            
+            {/* Favorite Locations - Desktop Only in Main View */}
+            {!isMobile && (
+              <div>
+                <FavoriteLocations 
+                  onLocationSelect={handleLocationChange}
+                  currentLocation={currentLocation}
+                />
+              </div>
+            )}
           </div>
 
           {weatherData && (
             <>
-              <WeatherPageTabs onTabChange={handleTabChange}>
-                <WeatherPageContent
-                  weatherData={weatherData}
-                  units={units}
-                  onUnitsChange={handleUnitsChange}
-                />
-              </WeatherPageTabs>
+              <div className={`${isMobile ? 'mt-4' : 'mt-6'}`}>
+                <WeatherPageTabs onTabChange={handleTabChange}>
+                  <WeatherPageContent
+                    weatherData={weatherData}
+                    units={units}
+                    onUnitsChange={handleUnitsChange}
+                  />
+                </WeatherPageTabs>
+              </div>
 
               {/* Only show Additional Information on Current tab */}
               {currentTab === "current" && <WeatherAdditionalInfo />}
@@ -94,6 +110,9 @@ const WeatherPageLayout = () => {
           <WeatherAlerts />
         </div>
       </main>
+      
+      {/* Toast notifications */}
+      <Toaster />
     </>
   );
 };

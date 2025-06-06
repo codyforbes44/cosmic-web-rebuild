@@ -3,20 +3,28 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Thermometer, MapPin, Bell, RefreshCw } from 'lucide-react';
+import { Thermometer, MapPin, Bell, RefreshCw, Star } from 'lucide-react';
 import { useIsMobile } from "@/hooks/use-mobile";
+import FavoriteLocationsPanel from './FavoriteLocationsPanel';
+
 interface WeatherSettingsProps {
   currentUnits: 'imperial' | 'metric';
   onUnitsChange: (units: 'imperial' | 'metric') => void;
   location: string;
 }
+
 const WeatherSettings = ({
   currentUnits,
   onUnitsChange,
   location
 }: WeatherSettingsProps) => {
   const isMobile = useIsMobile();
+  
   return <div className={`grid grid-cols-1 ${isMobile ? 'gap-4' : 'md:grid-cols-2 gap-6'}`}>
+      {/* Favorite Locations Card (First position) */}
+      <FavoriteLocationsPanel />
+
+      {/* Temperature Units Card */}
       <Card className="bg-card/20 backdrop-blur-sm border-white/10">
         <CardHeader>
           <CardTitle className={`text-white flex items-center gap-2 ${isMobile ? 'text-base' : 'text-lg'}`}>
@@ -39,6 +47,7 @@ const WeatherSettings = ({
         </CardContent>
       </Card>
 
+      {/* Keep existing cards */}
       <Card className="bg-card/20 backdrop-blur-sm border-white/10">
         <CardHeader>
           <CardTitle className={`text-white flex items-center gap-2 ${isMobile ? 'text-base' : 'text-lg'}`}>
@@ -94,9 +103,9 @@ const WeatherSettings = ({
         <CardContent className={`space-y-2 ${isMobile ? 'text-xs' : 'text-sm'} text-gray-300`}>
           <p>Weather data is provided by OpenWeatherMap API and updated every 30 minutes.</p>
           <p>Location detection uses IP geolocation services for accuracy.</p>
-          
         </CardContent>
       </Card>
     </div>;
 };
+
 export default WeatherSettings;

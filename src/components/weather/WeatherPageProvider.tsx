@@ -1,6 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { fetchWeatherData, WeatherResponse } from "@/components/footer/weather/WeatherService";
+import { supabase } from "@/integrations/supabase/client";
 
 interface WeatherPageContextType {
   weatherData: WeatherResponse | null;
@@ -12,6 +13,7 @@ interface WeatherPageContextType {
   handleLocationChange: (newLocation: string) => void;
   loadWeatherData: (location?: string, forceRefresh?: boolean) => Promise<void>;
   isDay: boolean;
+  user: any | null;
 }
 
 const WeatherPageContext = createContext<WeatherPageContextType | undefined>(undefined);
@@ -34,6 +36,7 @@ export const WeatherPageProvider = ({ children }: WeatherPageProviderProps) => {
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<'imperial' | 'metric'>('imperial');
   const [currentLocation, setCurrentLocation] = useState<string>('');
+  const [user, setUser] = useState<any | null>(null);
 
   // Helper function to determine if it's day or night
   const isDay = (sunrise: string, sunset: string): boolean => {
@@ -46,6 +49,24 @@ export const WeatherPageProvider = ({ children }: WeatherPageProviderProps) => {
     
     return currentHour >= sunriseHour && currentHour < sunsetHour;
   };
+
+  // Check for authentication
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await supabase.auth.getSession();
+      setUser(data.session?.user || null);
+    };
+    
+    fetchUser();
+    
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+    
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   const loadWeatherData = async (location?: string, forceRefresh = false) => {
     try {
@@ -110,7 +131,8 @@ export const WeatherPageProvider = ({ children }: WeatherPageProviderProps) => {
     handleUnitsChange,
     handleLocationChange,
     loadWeatherData,
-    isDay: isDayTime
+    isDay: isDayTime,
+    user
   };
 
   return (
