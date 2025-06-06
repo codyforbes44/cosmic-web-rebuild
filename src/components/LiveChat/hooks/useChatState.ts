@@ -1,7 +1,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
-import { useToast } from '@/hooks/use-toast';
 import { useBotResponses } from './useBotResponses';
 import { useZephelState } from './useZephelState';
 import { calculateTypingDuration } from './chatUtils';
@@ -18,7 +17,6 @@ export const useChatState = () => {
   const [isThinking, setIsThinking] = useState<boolean>(false);
   const [showZapierManager, setShowZapierManager] = useState<boolean>(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   // ZEPHEL Integration
   const { zephelState, activateZephel, deactivateZephel, checkActivationCode } = useZephelState();
@@ -43,14 +41,9 @@ export const useChatState = () => {
     if (!isOpen && messages.length > 0 && messages[messages.length - 1].sender === 'bot') {
       setUnreadMessages(prev => prev + 1);
       
-      // Show a toast notification when new message arrives and chat is closed
-      toast({
-        title: "New message from ƷBI Assistant",
-        description: messages[messages.length - 1].text.substring(0, 60) + (messages[messages.length - 1].text.length > 60 ? '...' : ''),
-        duration: 5000,
-      });
+      // Removed toast notification when new message arrives and chat is closed
     }
-  }, [messages, isOpen, toast]);
+  }, [messages, isOpen]);
 
   useEffect(() => {
     // Show simple welcome message when chat is first opened
@@ -95,12 +88,7 @@ export const useChatState = () => {
   const toggleZapierManager = () => {
     // Only allow authenticated users to access Zapier Manager
     if (!isAuthenticated) {
-      toast({
-        title: "Authentication Required",
-        description: "You need to sign in to access Zapier integrations.",
-        variant: "destructive",
-        duration: 3000,
-      });
+      // Removed toast notification for authentication requirement
       return;
     }
     
