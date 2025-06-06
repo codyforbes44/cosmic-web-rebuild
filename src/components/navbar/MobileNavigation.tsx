@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import MobileServicesMenu from "./MobileServicesMenu";
 import MobileProductsMenu from "./MobileProductsMenu";
-import { serviceCategories, productCategories } from "./constants";
+import { serviceCategories, productCategories, navLinks } from "./constants";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 interface MobileNavigationProps {
@@ -106,13 +106,14 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
           </div>
         )}
 
-        {/* Navigation Links */}
+        {/* Navigation Links - Using navLinks from constants */}
+        {/* Home Link */}
         <Link
-          to="/"
+          to={navLinks[0].path}
           className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
           onClick={onClose}
         >
-          Home
+          {navLinks[0].name}
         </Link>
 
         <Collapsible open={servicesOpen} onOpenChange={setServicesOpen}>
@@ -135,37 +136,28 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
           </CollapsibleContent>
         </Collapsible>
 
-        <Link
-          to="/portfolio"
-          className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
-          onClick={onClose}
-        >
-          Portfolio
-        </Link>
-        
-        <Link
-          to="/news"
-          className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
-          onClick={onClose}
-        >
-          News
-        </Link>
-        
-        <Link
-          to="/about"
-          className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
-          onClick={onClose}
-        >
-          About
-        </Link>
-        
-        <Link
-          to="/contact"
-          className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
-          onClick={onClose}
-        >
-          Contact
-        </Link>
+        {/* Remaining navigation links from navLinks array (skipping Home which is first) */}
+        {navLinks.slice(1).map((link) => (
+          <Link
+            key={link.name}
+            to={link.path}
+            className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
+            onClick={onClose}
+          >
+            {link.name}
+          </Link>
+        ))}
+
+        {/* Get Quote Button */}
+        <div className="px-3 py-2">
+          <Link
+            to="/get-quote"
+            onClick={onClose}
+            className="flex items-center justify-center px-4 py-2 bg-accent hover:bg-accent/80 text-white rounded-md font-medium"
+          >
+            Get a Quote
+          </Link>
+        </div>
       </div>
     </div>
   );
