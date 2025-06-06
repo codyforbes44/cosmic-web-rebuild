@@ -7,18 +7,20 @@ import { Link, LinkProps } from 'react-router-dom';
  */
 const ScrollToTopLink: React.FC<LinkProps> = ({ to, children, ...props }) => {
   // Create the URL with #top appended, preserving query parameters
-  const createTopLink = (destination: string | { pathname: string; search?: string; hash?: string }) => {
+  const createTopLink = (destination: LinkProps['to']) => {
     if (typeof destination === 'string') {
       // For string destinations, check if it already has a hash
       const hasHash = destination.includes('#');
       return hasHash ? destination : `${destination}#top`;
-    } else {
-      // For object destinations, set the hash property
+    } else if (typeof destination === 'object' && destination !== null) {
+      // For object destinations, safely set the hash property
       return {
         ...destination,
         hash: destination.hash || 'top'
       };
     }
+    // For function destinations (or any other type), return as is
+    return destination;
   };
 
   return (
