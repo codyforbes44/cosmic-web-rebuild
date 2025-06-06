@@ -1,5 +1,6 @@
 
 import React, { useEffect } from 'react';
+import StarBackground from '@/components/StarBackground';
 
 declare global {
   namespace JSX {
@@ -29,8 +30,11 @@ const ElevenLabs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <elevenlabs-convai agent-id="agent_01jwedntnjf7tt0qma00a2276r"></elevenlabs-convai>
+    <div className="min-h-screen relative">
+      <StarBackground />
+      <div className="relative z-10">
+        <elevenlabs-convai agent-id="agent_01jwedntnjf7tt0qma00a2276r"></elevenlabs-convai>
+      </div>
     </div>
   );
 };
