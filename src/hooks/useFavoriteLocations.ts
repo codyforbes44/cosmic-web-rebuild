@@ -30,15 +30,27 @@ export const useFavoriteLocations = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching favorites:', error);
+        if (error.message.includes('violates row-level security')) {
+          toast({
+            title: "Authentication Required",
+            description: "Please log in to view your favorite locations",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to load favorite locations",
+            variant: "destructive",
+          });
+        }
+        throw error;
+      }
       setFavorites(data || []);
     } catch (error) {
       console.error('Error fetching favorites:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load favorite locations",
-        variant: "destructive",
-      });
+      setFavorites([]);
     } finally {
       setLoading(false);
     }
@@ -66,7 +78,29 @@ export const useFavoriteLocations = () => {
           country,
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error adding favorite:', error);
+        if (error.code === '23505') {
+          toast({
+            title: "Already Favorited",
+            description: "This location is already in your favorites",
+            variant: "destructive",
+          });
+        } else if (error.message.includes('violates row-level security')) {
+          toast({
+            title: "Permission Denied",
+            description: "You do not have permission to add this location",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to add location to favorites",
+            variant: "destructive",
+          });
+        }
+        throw error;
+      }
 
       toast({
         title: "Success",
@@ -77,19 +111,6 @@ export const useFavoriteLocations = () => {
       return true;
     } catch (error: any) {
       console.error('Error adding favorite:', error);
-      if (error.code === '23505') {
-        toast({
-          title: "Already Favorited",
-          description: "This location is already in your favorites",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: "Failed to add location to favorites",
-          variant: "destructive",
-        });
-      }
       return false;
     }
   };
@@ -101,7 +122,23 @@ export const useFavoriteLocations = () => {
         .delete()
         .eq('id', id);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error removing favorite:', error);
+        if (error.message.includes('violates row-level security')) {
+          toast({
+            title: "Permission Denied",
+            description: "You do not have permission to remove this location",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to remove location from favorites",
+            variant: "destructive",
+          });
+        }
+        throw error;
+      }
 
       toast({
         title: "Success",
@@ -112,11 +149,6 @@ export const useFavoriteLocations = () => {
       return true;
     } catch (error) {
       console.error('Error removing favorite:', error);
-      toast({
-        title: "Error",
-        description: "Failed to remove location from favorites",
-        variant: "destructive",
-      });
       return false;
     }
   };
