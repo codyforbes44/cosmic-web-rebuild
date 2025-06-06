@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, Star, Clock } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast";
+import { Search, MapPin, Navigation } from 'lucide-react';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LocationSearchProps {
   onLocationChange: (location: string) => void;
@@ -12,132 +12,74 @@ interface LocationSearchProps {
 }
 
 const LocationSearch = ({ onLocationChange, currentLocation }: LocationSearchProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    const saved = localStorage.getItem('weather_favorites');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [recentSearches, setRecentSearches] = useState<string[]>(() => {
-    const saved = localStorage.getItem('weather_recent');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const { toast } = useToast();
+  const [searchValue, setSearchValue] = useState('');
+  const isMobile = useIsMobile();
 
   const handleSearch = () => {
-    if (searchQuery.trim()) {
-      onLocationChange(searchQuery.trim());
-      
-      // Add to recent searches
-      const updated = [searchQuery.trim(), ...recentSearches.filter(s => s !== searchQuery.trim())].slice(0, 5);
-      setRecentSearches(updated);
-      localStorage.setItem('weather_recent', JSON.stringify(updated));
-      
-      setSearchQuery('');
-      toast({
-        title: "Location updated",
-        description: `Showing weather for ${searchQuery.trim()}`,
-      });
+    if (searchValue.trim()) {
+      onLocationChange(searchValue);
+      setSearchValue('');
     }
   };
 
-  const addToFavorites = () => {
-    if (!favorites.includes(currentLocation)) {
-      const updated = [...favorites, currentLocation];
-      setFavorites(updated);
-      localStorage.setItem('weather_favorites', JSON.stringify(updated));
-      toast({
-        title: "Added to favorites",
-        description: `${currentLocation} has been saved to your favorites.`,
-      });
+  const handleUseCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          onLocationChange(`${latitude},${longitude}`);
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
     }
   };
 
-  const removeFromFavorites = (location: string) => {
-    const updated = favorites.filter(fav => fav !== location);
-    setFavorites(updated);
-    localStorage.setItem('weather_favorites', JSON.stringify(updated));
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
     <Card className="bg-card/20 backdrop-blur-sm border-white/10">
-      <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
-          <Search className="w-5 h-5" />
-          Search Locations
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex gap-2">
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Enter city name..."
-            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-          />
-          <Button onClick={handleSearch} size="icon" variant="outline">
-            <Search className="w-4 h-4" />
-          </Button>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <MapPin className="w-4 h-4 text-gray-400" />
-          <span className="text-white text-sm">{currentLocation}</span>
-          <Button
-            onClick={addToFavorites}
-            size="sm"
-            variant="ghost"
-            className="text-yellow-400 hover:text-yellow-300"
-            disabled={favorites.includes(currentLocation)}
-          >
-            <Star className={`w-4 h-4 ${favorites.includes(currentLocation) ? 'fill-current' : ''}`} />
-          </Button>
-        </div>
-
-        {favorites.length > 0 && (
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Star className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm text-gray-300">Favorites</span>
-            </div>
-            <div className="space-y-1">
-              {favorites.map((location, index) => (
-                <div key={index} className="flex items-center justify-between bg-white/10 p-2 rounded">
-                  <button
-                    onClick={() => onLocationChange(location)}
-                    className="text-white text-sm hover:text-brand-gold"
-                  >
-                    {location}
-                  </button>
-                  <button
-                    onClick={() => removeFromFavorites(location)}
-                    className="text-red-400 hover:text-red-300"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
+      <CardContent className={isMobile ? 'p-3' : 'p-4'}>
+        <div className={`flex items-center ${isMobile ? 'gap-2' : 'gap-3'}`}>
+          <div className="flex-1 relative">
+            <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 ${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} />
+            <Input
+              placeholder="Search for a city or location..."
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className={`${isMobile ? 'pl-9 text-sm h-10' : 'pl-12 h-12'} bg-space-deep-blue/50 border-gray-600 text-white placeholder-gray-400 focus:border-brand-gold touch-manipulation`}
+            />
           </div>
-        )}
-
-        {recentSearches.length > 0 && (
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Clock className="w-4 h-4 text-gray-400" />
-              <span className="text-sm text-gray-300">Recent</span>
-            </div>
-            <div className="space-y-1">
-              {recentSearches.map((location, index) => (
-                <button
-                  key={index}
-                  onClick={() => onLocationChange(location)}
-                  className="block w-full text-left text-white text-sm hover:text-brand-gold bg-white/10 p-2 rounded"
-                >
-                  {location}
-                </button>
-              ))}
-            </div>
+          
+          <Button
+            onClick={handleSearch}
+            disabled={!searchValue.trim()}
+            className={`${isMobile ? 'px-3 h-10' : 'px-4 h-12'} bg-brand-gold text-black hover:bg-brand-gold/90 disabled:opacity-50 touch-manipulation`}
+          >
+            <Search className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} />
+            {!isMobile && <span className="ml-2">Search</span>}
+          </Button>
+          
+          <Button
+            onClick={handleUseCurrentLocation}
+            variant="outline"
+            className={`${isMobile ? 'px-3 h-10' : 'px-4 h-12'} bg-transparent border-white/20 text-white hover:bg-white/10 touch-manipulation`}
+          >
+            <Navigation className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} />
+            {!isMobile && <span className="ml-2">Use Location</span>}
+          </Button>
+        </div>
+        
+        {currentLocation && (
+          <div className={`flex items-center ${isMobile ? 'gap-1 mt-2' : 'gap-2 mt-3'} text-gray-400`}>
+            <MapPin className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
+            <span className={`${isMobile ? 'text-xs' : 'text-sm'} truncate`}>Current: {currentLocation}</span>
           </div>
         )}
       </CardContent>

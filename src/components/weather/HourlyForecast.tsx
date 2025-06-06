@@ -43,34 +43,39 @@ const HourlyForecast = ({ units, location }: HourlyForecastProps) => {
 
   return (
     <Card className="bg-card/20 backdrop-blur-sm border-white/10">
-      <CardHeader>
+      <CardHeader className={isMobile ? 'pb-3' : ''}>
         <CardTitle className={`text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>24-Hour Forecast</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className={isMobile ? 'pt-0' : ''}>
         <div className="overflow-x-auto">
-          <div className={`flex gap-3 pb-4 ${isMobile ? 'min-w-max' : ''}`} style={{ minWidth: isMobile ? '800px' : '1200px' }}>
+          <div 
+            className={`flex gap-2 pb-4 ${isMobile ? 'min-w-max' : ''}`} 
+            style={{ minWidth: isMobile ? '600px' : '1200px' }}
+          >
             {hourlyData.map((hour, index) => (
               <div
                 key={index}
-                className={`flex flex-col items-center ${isMobile ? 'p-2 min-w-[80px]' : 'p-3 min-w-[100px]'} bg-space-deep-blue/50 rounded-lg border border-gray-700`}
+                className={`flex flex-col items-center ${
+                  isMobile ? 'p-2 min-w-[70px]' : 'p-3 min-w-[100px]'
+                } bg-space-deep-blue/50 rounded-lg border border-gray-700 touch-manipulation`}
               >
-                <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-300 mb-2`}>
+                <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-300 mb-2 text-center`}>
                   {index === 0 ? 'Now' : hour.time}
                 </div>
                 
-                <WeatherIcon condition={hour.condition} size={isMobile ? 16 : 20} />
+                <WeatherIcon condition={hour.condition} size={isMobile ? 14 : 20} />
                 
-                <div className={`${isMobile ? 'text-base' : 'text-lg'} font-semibold text-white my-2`}>
+                <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold text-white my-2`}>
                   {hour.temperature}°
                 </div>
                 
                 <div className="flex items-center gap-1 mb-1">
                   <Droplets className="w-3 h-3 text-blue-400" />
-                  <span className="text-xs text-gray-400">{hour.humidity}%</span>
+                  <span className={`${isMobile ? 'text-xs' : 'text-xs'} text-gray-400`}>{hour.humidity}%</span>
                 </div>
                 
                 {hour.precipitation > 0 && (
-                  <div className="text-xs text-blue-300">
+                  <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-blue-300`}>
                     {hour.precipitation}%
                   </div>
                 )}

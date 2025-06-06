@@ -1,19 +1,25 @@
 
 import React from 'react';
-import { MapPin } from "lucide-react";
+import { Cloud } from 'lucide-react';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const WeatherPageHeader = () => {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="mb-6 md:mb-8">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2">Ʒʙɪ Weather Center</h1>
-          <p className="text-gray-400 flex items-center gap-2 text-sm md:text-base">
-            <MapPin className="w-4 h-4 flex-shrink-0" />
-            Complete weather information for your location
-          </p>
-        </div>
+    <div className={`text-center ${isMobile ? 'mb-6' : 'mb-8'}`}>
+      <div className="flex items-center justify-center gap-3 mb-4">
+        <Cloud className={`${isMobile ? 'w-8 h-8' : 'w-12 h-12'} text-brand-gold`} />
+        <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl md:text-5xl'} font-bold text-white`}>
+          Weather Center
+        </h1>
       </div>
+      <p className={`${isMobile ? 'text-sm' : 'text-lg md:text-xl'} text-gray-300 max-w-2xl mx-auto px-4`}>
+        {isMobile 
+          ? "Real-time weather data and forecasts"
+          : "Comprehensive weather information, forecasts, and interactive maps for your location"
+        }
+      </p>
     </div>
   );
 };

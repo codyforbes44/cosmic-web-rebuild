@@ -13,6 +13,7 @@ import WeatherAlerts from "./WeatherAlerts";
 import LocationSearch from "./LocationSearch";
 import WeatherAdditionalInfo from "./WeatherAdditionalInfo";
 import { useWeatherPage } from './WeatherPageProvider';
+import { useIsMobile } from "@/hooks/use-mobile";
 import "@/components/weather/WeatherBackground.css";
 
 const WeatherPageLayout = () => {
@@ -26,6 +27,8 @@ const WeatherPageLayout = () => {
     handleLocationChange,
     isDay 
   } = useWeatherPage();
+  
+  const isMobile = useIsMobile();
 
   if (loading) {
     return <WeatherLoadingState />;
@@ -54,14 +57,14 @@ const WeatherPageLayout = () => {
       {/* Star Background Overlay */}
       <StarBackground />
       
-      <main className="min-h-screen py-16 md:py-24 px-4 relative">
-        <div className="container mx-auto max-w-7xl relative z-10">
+      <main className={`min-h-screen ${isMobile ? 'py-20 px-3' : 'py-16 md:py-24 px-4'} relative`}>
+        <div className={`container mx-auto ${isMobile ? 'max-w-full' : 'max-w-7xl'} relative z-10`}>
           <WeatherPageHeader />
 
           {error && <WeatherErrorCard error={error} />}
 
-          {/* Location Search */}
-          <div className="mb-6">
+          {/* Location Search - Mobile Optimized */}
+          <div className={`${isMobile ? 'mb-4' : 'mb-6'}`}>
             <LocationSearch 
               onLocationChange={handleLocationChange}
               currentLocation={currentLocation}
