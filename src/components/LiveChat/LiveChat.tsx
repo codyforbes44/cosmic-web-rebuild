@@ -18,6 +18,8 @@ const LiveChat = () => {
     showZapierManager,
     chatContainerRef,
     suggestedQuestions,
+    zephelState,
+    deactivateZephel,
     setMessage,
     toggleChat,
     togglePin,
@@ -63,6 +65,8 @@ const LiveChat = () => {
             isDraggable={isPinned}
             dragRef={isPinned ? dragRef : undefined}
             onMouseDown={isPinned ? handleMouseDown : undefined}
+            zephelState={zephelState}
+            onDeactivateZephel={deactivateZephel}
           />
         </div>
       )}

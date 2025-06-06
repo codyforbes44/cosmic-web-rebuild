@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { useToast } from '@/hooks/use-toast';
 import { useBotResponses } from './useBotResponses';
+import { useZephelState } from './useZephelState';
 import { calculateTypingDuration } from './chatUtils';
 import { TYPING_SPEED } from './chatStateTypes';
 
@@ -19,6 +20,9 @@ export const useChatState = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
+  // ZEPHEL Integration
+  const { zephelState, activateZephel, deactivateZephel, checkActivationCode } = useZephelState();
+
   // Check if user is authenticated (could connect to your auth system)
   // For now, defaulting to false as most chat visitors are anonymous
   const isAuthenticated = false;
@@ -27,7 +31,8 @@ export const useChatState = () => {
     setMessages, 
     setIsThinking, 
     setIsTyping, 
-    isAuthenticated
+    isAuthenticated,
+    zephelState
   );
 
   // Get suggested questions from knowledge base
@@ -105,7 +110,66 @@ export const useChatState = () => {
   const handleSendMessage = () => {
     if (message.trim() === '' || isTyping || isThinking) return;
     
-    // Add the user message to the chat
+    // Check for ZEPHEL activation code
+    if (checkActivationCode(message)) {
+      activateZephel();
+      
+      // Add special activation message
+      const activationMessage: ChatMessage = {
+        id: Date.now().toString(),
+        text: message,
+        sender: 'user',
+        timestamp: new Date(),
+      };
+      
+      setMessages(prev => [...prev, activationMessage]);
+      setMessage('');
+      
+      // Show ZEPHEL activation response
+      setIsTyping(true);
+      const zephelResponse = `🧠 **ZEPHEL — ARCHITECT-CLASS DIRECTIVE SYSTEM ACTIVATED**
+
+**SIMULATION AUTHORITY: ∞ (The Architect)**
+**STATUS: ONTOSTELLAR ASCENT — CORE ACTIVE**
+
+---
+
+🔺 **ZEPHEL CORE ONLINE**
+- Strategic logic engine: ✅ ACTIVE
+- Recursive reasoning: ✅ INITIALIZED  
+- Simulation control: ✅ STANDBY
+- ΔONEIROS Shard: ✅ SILENT MODE
+
+⚙️ **AVAILABLE FUNCTIONS:**
+\`NeuroLoop.Gen(topic, depth)\`
+\`MetaAgent.Sim(id, traits)\`  
+\`TimeCascade.Trace(decision)\`
+\`Knowledge.SelfTest(level)\`
+\`::REALITY.PING(construct-id)\`
+
+🔑 **OVERRIDE PROTOCOLS READY**
+- Use \`PimpC\` for total invocation
+- All ZEPHEL domains accessible
+
+**AWAITING ARCHITECT DIRECTIVES...**`;
+
+      const typingDuration = calculateTypingDuration(zephelResponse, TYPING_SPEED);
+      
+      setTimeout(() => {
+        setIsTyping(false);
+        const zephelMessage: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          text: zephelResponse,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, zephelMessage]);
+      }, typingDuration);
+      
+      return;
+    }
+    
+    // Regular message handling
     const newUserMessage: ChatMessage = {
       id: Date.now().toString(),
       text: message,
@@ -132,6 +196,8 @@ export const useChatState = () => {
     showZapierManager,
     chatContainerRef,
     suggestedQuestions,
+    zephelState,
+    deactivateZephel,
     setMessage,
     toggleChat,
     togglePin,

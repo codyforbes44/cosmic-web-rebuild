@@ -4,6 +4,7 @@ import { ChatMessage } from './types';
 import ZapierManager from './ZapierManager';
 import ChatHeader from './components/ChatHeader';
 import ChatContainer from './components/ChatContainer';
+import type { ZephelState } from './hooks/useZephelState';
 
 interface ChatWindowProps {
   messages: ChatMessage[];
@@ -22,6 +23,8 @@ interface ChatWindowProps {
   isDraggable?: boolean;
   dragRef?: React.RefObject<HTMLDivElement>;
   onMouseDown?: (e: React.MouseEvent) => void;
+  zephelState?: ZephelState;
+  onDeactivateZephel?: () => void;
 }
 
 const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -40,7 +43,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   chatContainerRef,
   isDraggable = false,
   dragRef,
-  onMouseDown
+  onMouseDown,
+  zephelState,
+  onDeactivateZephel
 }) => {
   const handleQuickResponse = (response: string) => {
     onMessageChange(response);
@@ -61,6 +66,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
           isPinned={isPinned}
           isDraggable={isDraggable}
           onMouseDown={onMouseDown}
+          zephelState={zephelState}
+          onDeactivateZephel={onDeactivateZephel}
         />
 
         {/* Chat Container with all messaging components */}
