@@ -51,7 +51,16 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="text-2xl font-bold text-accent">
-            ZepTech
+            <img 
+              src="/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png" 
+              alt="ZepTech" 
+              className="h-8"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = '/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png';
+              }}
+            />
           </Link>
 
           {/* Desktop Navigation */}

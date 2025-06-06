@@ -44,7 +44,12 @@ const SocialLinksWidget = ({
         <img 
           src={logo} 
           alt="Company Logo" 
-          className="h-12" 
+          className="h-12"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.onerror = null; // Prevent infinite loops
+            target.src = '/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png'; // Fallback image
+          }}
         />
       </Link>
       <p className="text-gray-400 mb-6 flex-grow">
