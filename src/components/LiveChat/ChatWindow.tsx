@@ -19,6 +19,9 @@ interface ChatWindowProps {
   onTogglePin?: () => void;
   isPinned?: boolean;
   chatContainerRef: React.RefObject<HTMLDivElement>;
+  isDraggable?: boolean;
+  dragRef?: React.RefObject<HTMLDivElement>;
+  onMouseDown?: (e: React.MouseEvent) => void;
 }
 
 const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -34,7 +37,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   onToggleZapierManager = () => {},
   onTogglePin,
   isPinned = false,
-  chatContainerRef
+  chatContainerRef,
+  isDraggable = false,
+  dragRef,
+  onMouseDown
 }) => {
   const handleQuickResponse = (response: string) => {
     onMessageChange(response);
@@ -43,13 +49,18 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
   return (
     <>
-      <div className="w-[350px] h-[500px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col chat-window dark:bg-slate-900 dark:border dark:border-slate-700">
+      <div 
+        ref={dragRef}
+        className="w-[350px] h-[500px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col chat-window dark:bg-slate-900 dark:border dark:border-slate-700"
+      >
         {/* Chat Header */}
         <ChatHeader 
           onToggleChat={onToggleChat}
           onToggleZapierManager={onToggleZapierManager}
           onTogglePin={onTogglePin}
           isPinned={isPinned}
+          isDraggable={isDraggable}
+          onMouseDown={onMouseDown}
         />
 
         {/* Chat Container with all messaging components */}

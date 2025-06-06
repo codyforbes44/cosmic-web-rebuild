@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useChatState } from './hooks/useChatState';
+import { useDragWindow } from './hooks/useDragWindow';
 import ChatWindow from './ChatWindow';
 import ChatToggleButton from './ChatToggleButton';
 import './LiveChat.css';
@@ -24,11 +25,27 @@ const LiveChat = () => {
     handleSendMessage,
   } = useChatState();
 
+  const { position, isDragging, dragRef, handleMouseDown } = useDragWindow();
+
   return (
     <div className={`chat-container dark ${isPinned ? 'chat-pinned' : 'chat-floating'}`}>
       {/* Chat Window */}
       {isOpen && (
-        <div className="chat-window-wrapper">
+        <div 
+          className="chat-window-wrapper"
+          style={
+            isPinned 
+              ? { 
+                  position: 'fixed',
+                  left: `${position.x}px`,
+                  top: `${position.y}px`,
+                  bottom: 'auto',
+                  right: 'auto',
+                  zIndex: 1000
+                } 
+              : {}
+          }
+        >
           <ChatWindow
             messages={messages}
             message={message}
@@ -43,6 +60,9 @@ const LiveChat = () => {
             onTogglePin={togglePin}
             isPinned={isPinned}
             chatContainerRef={chatContainerRef}
+            isDraggable={isPinned}
+            dragRef={dragRef}
+            onMouseDown={handleMouseDown}
           />
         </div>
       )}

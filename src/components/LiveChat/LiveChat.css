@@ -7,8 +7,7 @@
 
 /* Pinned chat positioning */
 .chat-pinned {
-  bottom: 20px;
-  right: 20px;
+  /* Position will be controlled by inline styles when draggable */
 }
 
 /* Floating chat positioning */
@@ -168,4 +167,15 @@
 /* Window wrapper */
 .chat-window-wrapper {
   position: relative;
+}
+
+/* Draggable cursor */
+.cursor-move {
+  cursor: move;
+  user-select: none;
+}
+
+/* Prevent text selection during drag */
+.cursor-move * {
+  user-select: none;
 }
