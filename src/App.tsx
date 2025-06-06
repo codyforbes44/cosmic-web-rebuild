@@ -1,9 +1,10 @@
+
 import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import CookieConsent from "./components/CookieConsent";
 import LiveChat from "./components/LiveChat/LiveChat";
@@ -91,6 +92,17 @@ const AppRoutes = () => {
   );
 };
 
+const ConditionalLiveChat = () => {
+  const location = useLocation();
+  
+  // Don't show LiveChat on the /11l route
+  if (location.pathname === '/11l') {
+    return null;
+  }
+  
+  return <LiveChat />;
+};
+
 const App: React.FC = () => {
   return (
     <React.StrictMode>
@@ -104,7 +116,7 @@ const App: React.FC = () => {
                 <AppRoutes />
                 <VisitorTracker />
               </Suspense>
-              <LiveChat />
+              <ConditionalLiveChat />
               <CookieConsent />
             </BrowserRouter>
           </TooltipProvider>
