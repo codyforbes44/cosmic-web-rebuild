@@ -43,11 +43,11 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
   };
 
   return (
-    <div className="md:hidden bg-space-dark-blue/98 backdrop-blur-sm border-t border-white/10">
+    <div className="md:hidden bg-space-dark-blue backdrop-blur-sm border-t border-white/10">
       <div className="px-2 pt-2 pb-3 space-y-1">
         {/* User section */}
         {user ? (
-          <div className="px-3 py-4 border-b border-white/10 mb-4">
+          <div className="px-3 py-4 border-b border-white/10 mb-4 bg-space-deep-blue/50 rounded-lg">
             <div className="flex items-center gap-3 mb-3">
               <Avatar className="h-10 w-10">
                 <AvatarImage src="" alt={user.email || ''} />
@@ -94,7 +94,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
             </div>
           </div>
         ) : (
-          <div className="px-3 py-4 border-b border-white/10 mb-4">
+          <div className="px-3 py-4 border-b border-white/10 mb-4 bg-space-deep-blue/50 rounded-lg">
             <Link
               to="/auth"
               onClick={onClose}
