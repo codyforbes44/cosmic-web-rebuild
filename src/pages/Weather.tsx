@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -23,6 +22,18 @@ const Weather: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [units, setUnits] = useState<'imperial' | 'metric'>('imperial');
   const [currentLocation, setCurrentLocation] = useState<string>('');
+
+  // Helper function to determine if it's day or night
+  const isDay = (sunrise: string, sunset: string): boolean => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    
+    // Parse sunrise and sunset times (assuming format like "6:45 AM")
+    const sunriseHour = parseInt(sunrise.split(':')[0]) + (sunrise.includes('PM') && !sunrise.startsWith('12') ? 12 : 0);
+    const sunsetHour = parseInt(sunset.split(':')[0]) + (sunset.includes('PM') && !sunset.startsWith('12') ? 12 : 0);
+    
+    return currentHour >= sunriseHour && currentHour < sunsetHour;
+  };
 
   const loadWeatherData = async (location?: string, forceRefresh = false) => {
     try {
@@ -91,6 +102,7 @@ const Weather: React.FC = () => {
       {weatherData && (
         <WeatherBackground 
           condition={weatherData.current.condition}
+          isDay={isDay(weatherData.current.sunrise || '6:00 AM', weatherData.current.sunset || '6:00 PM')}
           className="z-0"
         />
       )}

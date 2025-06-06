@@ -84,7 +84,7 @@ export const fetchWeatherData = async (units: 'imperial' | 'metric'): Promise<We
       current: {
         location: 'Demo City',
         temperature: units === 'imperial' ? 72 : 22,
-        condition: 'Clouds',
+        condition: 'Few clouds',
         humidity: 45,
         windSpeed: units === 'imperial' ? 5 : 8,
         timestamp: Date.now(),
@@ -174,10 +174,13 @@ const fetchWeatherByLocation = async (location: string, units: 'imperial' | 'met
   const sunriseTime = new Date(currentWeatherResult.sys.sunrise * 1000);
   const sunsetTime = new Date(currentWeatherResult.sys.sunset * 1000);
   
+  // Get the exact weather condition description from API
+  const weatherCondition = currentWeatherResult.weather[0].description;
+  
   const current: WeatherData = {
     location: location,
     temperature: Math.round(currentWeatherResult.main.temp),
-    condition: currentWeatherResult.weather[0].main,
+    condition: weatherCondition,
     humidity: currentWeatherResult.main.humidity,
     windSpeed: Math.round(currentWeatherResult.wind.speed),
     timestamp: Date.now(),
@@ -226,13 +229,14 @@ const processForecastData = (forecastList: any[]): ForecastDay[] => {
     .map(([date, forecasts]) => {
       const temps = forecasts.map(f => f.main.temp);
       const humidities = forecasts.map(f => f.main.humidity);
-      const conditions = forecasts.map(f => f.weather[0].main);
+      // Use the description from the API for accuracy
+      const condition = forecasts[0].weather[0].description;
       
       return {
         date: new Date(date).toLocaleDateString('en-US', { weekday: 'short' }),
         temp_max: Math.round(Math.max(...temps)),
         temp_min: Math.round(Math.min(...temps)),
-        condition: conditions[0],
+        condition: condition,
         humidity: Math.round(humidities.reduce((a, b) => a + b, 0) / humidities.length)
       };
     });
@@ -240,7 +244,7 @@ const processForecastData = (forecastList: any[]): ForecastDay[] => {
 
 const generateDemoForecast = (units: 'imperial' | 'metric'): ForecastDay[] => {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const conditions = ['Clear', 'Clouds', 'Rain', 'Clear', 'Clouds', 'Clear', 'Rain'];
+  const conditions = ['clear sky', 'few clouds', 'light rain', 'clear sky', 'scattered clouds', 'clear sky', 'moderate rain'];
   
   return days.map((day, index) => ({
     date: day,

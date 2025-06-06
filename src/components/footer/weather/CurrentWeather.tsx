@@ -10,11 +10,24 @@ interface CurrentWeatherProps {
 }
 
 const CurrentWeather = ({ weatherData, units, hasTitle }: CurrentWeatherProps) => {
+  // Helper function to determine if it's day or night
+  const isDay = (sunrise: string, sunset: string): boolean => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    
+    const sunriseHour = parseInt(sunrise.split(':')[0]) + (sunrise.includes('PM') && !sunrise.startsWith('12') ? 12 : 0);
+    const sunsetHour = parseInt(sunset.split(':')[0]) + (sunset.includes('PM') && !sunset.startsWith('12') ? 12 : 0);
+    
+    return currentHour >= sunriseHour && currentHour < sunsetHour;
+  };
+
+  const dayTime = isDay(weatherData.sunrise || '6:00 AM', weatherData.sunset || '6:00 PM');
+
   return (
     <div className="text-gray-200 flex-grow flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <span className="font-medium text-white">{weatherData.location}</span>
-        <WeatherIcon condition={weatherData.condition} />
+        <WeatherIcon condition={weatherData.condition} isDay={dayTime} />
       </div>
       
       <div className={`mt-2 ${!hasTitle ? 'mb-2' : 'mb-4'} flex items-center gap-4`}>
