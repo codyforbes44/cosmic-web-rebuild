@@ -29,11 +29,15 @@ interface AIProviderProps {
 }
 
 export const AIProvider = ({ children }: AIProviderProps) => {
-  const [currentModel, setCurrentModel] = useState(OPENAI_CONFIG.models.fast);
+  const [currentModel, setCurrentModelState] = useState(OPENAI_CONFIG.models.fast);
   const [apiUsage, setApiUsage] = useState({
     requestsToday: 0,
     tokensUsed: 0
   });
+
+  const setCurrentModel = (model: string) => {
+    setCurrentModelState(model);
+  };
 
   const incrementUsage = (tokens: number) => {
     setApiUsage(prev => ({
