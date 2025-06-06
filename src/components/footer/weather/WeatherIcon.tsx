@@ -10,7 +10,8 @@ import {
   CloudFog,
   Wind,
   Snowflake,
-  CloudHail
+  CloudHail,
+  Moon
 } from 'lucide-react';
 
 interface WeatherIconProps {
@@ -27,19 +28,23 @@ const WeatherIcon = ({ condition, size = 28, isDay = true }: WeatherIconProps) =
     // Clear sky - handle both "clear" and "clear sky"
     case 'clear':
     case 'clear sky':
-      return <Sun size={size} className="text-yellow-400" />;
+      return isDay ? 
+        <Sun size={size} className="text-yellow-400" /> :
+        <Moon size={size} className="text-blue-200" />;
     
     // Few clouds (11-25%)
     case 'few clouds':
       return isDay ? 
         <CloudSun size={size} className="text-yellow-300" /> : 
-        <CloudSun size={size} className="text-blue-300" />;
+        <Cloud size={size} className="text-blue-300" />;
     
     // Scattered clouds (25-50%) or broken clouds (51-84%)
     case 'scattered clouds':
     case 'broken clouds':
     case 'clouds':
-      return <Cloud size={size} className="text-gray-400" />;
+      return isDay ? 
+        <Cloud size={size} className="text-gray-400" /> :
+        <Cloud size={size} className="text-gray-300" />;
     
     // Overcast clouds (85-100%)
     case 'overcast clouds':
