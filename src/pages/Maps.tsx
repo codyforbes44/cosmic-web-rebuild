@@ -5,18 +5,24 @@ import MapInterface from '@/components/maps/MapInterface';
 import DirectionsPanel from '@/components/maps/DirectionsPanel';
 import LocationSearch from '@/components/maps/LocationSearch';
 import MapControls from '@/components/maps/MapControls';
-import { MapPin, Navigation, Route, Layers } from 'lucide-react';
+import TrafficPanel from '@/components/maps/TrafficPanel';
+import POIPanel from '@/components/maps/POIPanel';
+import { MapPin, Navigation, Route, Layers, Car, MapIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Maps = () => {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [mapType, setMapType] = useState<'roadmap' | 'satellite' | 'hybrid' | 'terrain'>('roadmap');
   const [showDirections, setShowDirections] = useState(false);
+  const [showTrafficPanel, setShowTrafficPanel] = useState(false);
+  const [showPOIPanel, setShowPOIPanel] = useState(false);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
 
   const handleGetDirections = () => {
     if (origin && destination) {
       setShowDirections(true);
+      setShowTrafficPanel(true);
     }
   };
 
@@ -45,11 +51,37 @@ const Maps = () => {
               onGetDirections={handleGetDirections}
               userLocation={userLocation}
             />
+
+            {/* Quick Action Buttons */}
+            <div className="flex gap-2 mt-3">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setShowTrafficPanel(!showTrafficPanel)}
+                className={`bg-transparent border-white/20 text-white hover:bg-white/10 ${
+                  showTrafficPanel ? 'border-brand-gold text-brand-gold' : ''
+                }`}
+              >
+                <Car className="w-4 h-4 mr-2" />
+                Traffic & Routes
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setShowPOIPanel(!showPOIPanel)}
+                className={`bg-transparent border-white/20 text-white hover:bg-white/10 ${
+                  showPOIPanel ? 'border-brand-gold text-brand-gold' : ''
+                }`}
+              >
+                <MapIcon className="w-4 h-4 mr-2" />
+                Nearby Places
+              </Button>
+            </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex h-[calc(100vh-140px)]">
+        <div className="flex h-[calc(100vh-180px)]">
           {/* Map Interface */}
           <div className="flex-1 relative">
             <MapInterface
@@ -61,13 +93,28 @@ const Maps = () => {
             />
             
             {/* Map Controls Overlay */}
-            <div className="absolute top-4 right-4 z-10">
+            <div className="absolute bottom-4 right-4 z-10">
               <MapControls
                 mapType={mapType}
                 onMapTypeChange={setMapType}
                 userLocation={userLocation}
               />
             </div>
+
+            {/* Traffic Panel */}
+            <TrafficPanel
+              isOpen={showTrafficPanel}
+              onClose={() => setShowTrafficPanel(false)}
+              origin={origin}
+              destination={destination}
+            />
+
+            {/* POI Panel */}
+            <POIPanel
+              isOpen={showPOIPanel}
+              onClose={() => setShowPOIPanel(false)}
+              userLocation={userLocation}
+            />
           </div>
 
           {/* Directions Panel */}

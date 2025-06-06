@@ -8,6 +8,7 @@ import MapTileLayers from './components/MapTileLayers';
 import MapMarkers from './components/MapMarkers';
 import MapRoute from './components/MapRoute';
 import MapOverlays from './components/MapOverlays';
+import MapHazards from './components/MapHazards';
 import { useMapLocations } from './hooks/useMapLocations';
 
 // Fix for default markers in react-leaflet
@@ -68,6 +69,8 @@ const MapInterface = ({
         />
         
         <MapRoute routeCoords={routeCoords} />
+        
+        <MapHazards />
       </MapContainer>
 
       <MapOverlays mapType={mapType} currentLocation={currentLocation} />
