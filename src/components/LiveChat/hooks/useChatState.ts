@@ -1,10 +1,11 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { useToast } from '@/hooks/use-toast';
 import { useBotResponses } from './useBotResponses';
 import { getRandomDelay, calculateTypingDuration } from './chatUtils';
 import { THINKING_DELAY, TYPING_SPEED, ChatState } from './chatStateTypes';
+import { useOpenAI } from '@/hooks/useOpenAI';
+import { buildOpenAIRequest, formatAIResponse } from '@/utils/aiUtils';
 
 export const useChatState = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -30,6 +31,71 @@ export const useChatState = () => {
     isAuthenticated
   );
 
+  // OpenAI hook for welcome message
+  const { invoke: invokeWelcomeAI } = useOpenAI({
+    functionName: 'openai-chat',
+    onSuccess: (data) => {
+      setIsThinking(false);
+      setIsTyping(true);
+      
+      try {
+        const welcomeText = formatAIResponse(data);
+        const typingDuration = Math.min(welcomeText.length * TYPING_SPEED.min, 2000);
+        
+        setTimeout(() => {
+          setIsTyping(false);
+          const welcomeMessage: ChatMessage = {
+            id: Date.now().toString(),
+            text: welcomeText,
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+          setMessages([welcomeMessage]);
+          setIsSendingFirstMessage(false);
+        }, typingDuration);
+      } catch (error) {
+        // Fallback to default welcome message
+        setIsThinking(false);
+        setIsTyping(true);
+        
+        const defaultWelcome = "👋 Welcome to ƷBI! How can I help you today?";
+        const typingDuration = Math.min(defaultWelcome.length * TYPING_SPEED.min, 2000);
+        
+        setTimeout(() => {
+          setIsTyping(false);
+          const welcomeMessage: ChatMessage = {
+            id: Date.now().toString(),
+            text: defaultWelcome,
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+          setMessages([welcomeMessage]);
+          setIsSendingFirstMessage(false);
+        }, typingDuration);
+      }
+    },
+    onError: () => {
+      // Fallback to default welcome message
+      setIsThinking(false);
+      setIsTyping(true);
+      
+      const defaultWelcome = "👋 Welcome to ƷBI! How can I help you today?";
+      const typingDuration = Math.min(defaultWelcome.length * TYPING_SPEED.min, 2000);
+      
+      setTimeout(() => {
+        setIsTyping(false);
+        const welcomeMessage: ChatMessage = {
+          id: Date.now().toString(),
+          text: defaultWelcome,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages([welcomeMessage]);
+        setIsSendingFirstMessage(false);
+      }, typingDuration);
+    }
+  });
+
   // Get suggested questions from knowledge base
   const suggestedQuestions = getSuggestions();
 
@@ -48,35 +114,32 @@ export const useChatState = () => {
   }, [messages, isOpen, toast]);
 
   useEffect(() => {
-    // Show welcome message when chat is first opened
+    // Show AI-generated welcome message when chat is first opened
     if (isOpen && messages.length === 0) {
       setIsThinking(true);
-      setTimeout(() => {
-        setIsThinking(false);
-        setIsTyping(true);
-        
-        const welcomeText = "👋 Welcome to ƷBI! How can I help you today?";
-        const typingDuration = Math.min(welcomeText.length * TYPING_SPEED.min, 2000);
-        
-        setTimeout(() => {
-          setIsTyping(false);
-          const welcomeMessage: ChatMessage = {
-            id: Date.now().toString(),
-            text: welcomeText,
-            sender: 'bot',
-            timestamp: new Date(),
-          };
-          setMessages([welcomeMessage]);
-          setIsSendingFirstMessage(false);
-        }, typingDuration);
-      }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
+      
+      const welcomeRequest = buildOpenAIRequest(
+        "Generate a brief, friendly welcome message for ƷBI's website chat. Keep it under 20 words.",
+        {
+          model: 'fast',
+          systemPrompt: 'You are ƷBI\'s AI assistant. Generate a warm, professional welcome message.',
+          maxTokens: 50
+        }
+      );
+      
+      try {
+        invokeWelcomeAI(welcomeRequest);
+      } catch (error) {
+        console.error('Failed to generate welcome message:', error);
+        // Fallback handled in onError
+      }
     }
     
     // Reset unread count when opening the chat
     if (isOpen) {
       setUnreadMessages(0);
     }
-  }, [isOpen]);
+  }, [isOpen, invokeWelcomeAI]);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -120,7 +183,7 @@ export const useChatState = () => {
     setMessages(prev => [...prev, newUserMessage]);
     setMessage('');
     
-    // Generate AI response with a realistic delay
+    // Generate AI response
     generateBotResponse(message);
   };
 
