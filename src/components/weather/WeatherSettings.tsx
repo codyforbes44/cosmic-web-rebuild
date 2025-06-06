@@ -77,12 +77,7 @@ const WeatherSettings = ({
             </Label>
             <Switch id="weather-alerts" defaultChecked />
           </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="daily-forecast" className={`text-gray-300 ${isMobile ? 'text-sm' : ''}`}>
-              Daily forecast
-            </Label>
-            <Switch id="daily-forecast" />
-          </div>
+          
           <div className="flex items-center justify-between">
             <Label htmlFor="severe-weather" className={`text-gray-300 ${isMobile ? 'text-sm' : ''}`}>
               Severe weather warnings
