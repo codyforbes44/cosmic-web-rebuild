@@ -19,8 +19,8 @@ const WeatherMaps = ({ location }: WeatherMapsProps) => {
     <div className="space-y-4 md:space-y-6">
       <Card className="bg-card/20 backdrop-blur-sm border-white/10">
         <CardHeader>
-          <CardTitle className={`text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>Interactive Weather Maps</CardTitle>
-          <p className={`text-gray-400 ${isMobile ? 'text-sm' : ''}`}>Real-time weather data visualization for {location}</p>
+          <CardTitle className={`text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>Weather Radar & Layers</CardTitle>
+          <p className={`text-gray-400 ${isMobile ? 'text-sm' : ''}`}>Real-time radar, temperature, and wind data for {location}</p>
         </CardHeader>
         <CardContent>
           <WeatherMapTabs

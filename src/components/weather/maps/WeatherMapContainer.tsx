@@ -31,28 +31,33 @@ const WeatherMapContainer = ({ activeMap, location, isMobile }: WeatherMapContai
     iconAnchor: [8, 8]
   });
 
-  // Get tile layer URL based on active map type
-  const getTileLayerUrl = () => {
+  // Get weather overlay URL based on active map type
+  const getWeatherOverlayUrl = () => {
+    const baseUrl = 'https://tile.openweathermap.org/map';
     switch (activeMap) {
-      case 'satellite':
-        return 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
       case 'radar':
-        return 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=demo';
+        return `${baseUrl}/precipitation_new/{z}/{x}/{y}.png?appid=demo`;
       case 'temperature':
-        return 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=demo';
-      case 'precipitation':
-        return 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=demo';
+        return `${baseUrl}/temp_new/{z}/{x}/{y}.png?appid=demo`;
+      case 'wind':
+        return `${baseUrl}/wind_new/{z}/{x}/{y}.png?appid=demo`;
       default:
-        return 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        return `${baseUrl}/precipitation_new/{z}/{x}/{y}.png?appid=demo`;
     }
   };
 
-  // Get base map layer (always show streets as base)
-  const getBaseMapUrl = () => {
-    if (activeMap === 'satellite') {
-      return 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+  // Get layer description for display
+  const getLayerDescription = () => {
+    switch (activeMap) {
+      case 'radar':
+        return 'Precipitation & Storm Activity';
+      case 'temperature':
+        return 'Surface Temperature';
+      case 'wind':
+        return 'Wind Speed & Direction';
+      default:
+        return 'Weather Data';
     }
-    return 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   };
 
   // Geocode location to get coordinates
@@ -123,18 +128,16 @@ const WeatherMapContainer = ({ activeMap, location, isMobile }: WeatherMapContai
       >
         {/* Base map layer */}
         <TileLayer
-          url={getBaseMapUrl()}
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         
-        {/* Weather overlay layer for non-satellite maps */}
-        {activeMap !== 'satellite' && (
-          <TileLayer
-            url={getTileLayerUrl()}
-            opacity={0.6}
-            attribution='Weather data &copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>'
-          />
-        )}
+        {/* Weather overlay layer */}
+        <TileLayer
+          url={getWeatherOverlayUrl()}
+          opacity={0.6}
+          attribution='Weather data &copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>'
+        />
         
         {/* Location marker */}
         {currentLocation && (
@@ -152,9 +155,19 @@ const WeatherMapContainer = ({ activeMap, location, isMobile }: WeatherMapContai
         )}
       </MapContainer>
       
-      {/* Map type indicator */}
+      {/* Layer type indicator */}
       <div className={`absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg ${isMobile ? 'text-xs' : 'text-sm'}`}>
-        <span>{activeMap.charAt(0).toUpperCase() + activeMap.slice(1)} View</span>
+        <div className="flex items-center gap-2">
+          {activeMap === 'radar' && <Radar className="w-4 h-4" />}
+          {activeMap === 'temperature' && <Thermometer className="w-4 h-4" />}
+          {activeMap === 'wind' && <Wind className="w-4 h-4" />}
+          <span>{getLayerDescription()}</span>
+        </div>
+      </div>
+
+      {/* Layer opacity control */}
+      <div className={`absolute top-4 right-4 bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg ${isMobile ? 'text-xs' : 'text-sm'}`}>
+        <span>Weather Layer Active</span>
       </div>
     </div>
   );
