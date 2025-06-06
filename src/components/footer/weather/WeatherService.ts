@@ -24,48 +24,6 @@ interface ForecastDay {
   humidity: number;
 }
 
-interface AirQualityData {
-  aqi: number;
-  level: string;
-  pollutants: {
-    pm25: number;
-    pm10: number;
-    o3: number;
-    no2: number;
-    so2: number;
-    co: number;
-  };
-  healthRecommendations: string[];
-}
-
-interface WeatherAlert {
-  id: string;
-  title: string;
-  description: string;
-  severity: 'minor' | 'moderate' | 'severe' | 'extreme';
-  expires: string;
-  areas: string[];
-}
-
-interface MoonPhase {
-  phase: string;
-  illumination: number;
-  moonrise: string;
-  moonset: string;
-}
-
-interface TideData {
-  high: { time: string; height: number }[];
-  low: { time: string; height: number }[];
-}
-
-interface HistoricalWeather {
-  date: string;
-  temperature: number;
-  condition: string;
-  comparison: string;
-}
-
 interface WeatherResponse {
   current: WeatherData;
   forecast: ForecastDay[];
@@ -86,6 +44,13 @@ interface WeatherResponse {
     recommendations: string[];
   };
 }
+
+import { AirQualityData, generateDemoAirQuality } from './AirQualityService';
+import { WeatherAlert, generateDemoAlerts } from './WeatherAlertsService';
+import { MoonPhase, generateDemoMoonPhase } from './MoonPhaseService';
+import { TideData, generateDemoTides } from './TidesService';
+import { HistoricalWeather, generateDemoHistory } from './HistoricalWeatherService';
+import { generateDemoPollen, generateDemoFireWeather } from './EnvironmentalDataService';
 
 const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes in milliseconds
 
@@ -277,83 +242,6 @@ const generateDemoForecast = (units: 'imperial' | 'metric'): ForecastDay[] => {
   }));
 };
 
-const generateDemoAirQuality = (): AirQualityData => ({
-  aqi: 42,
-  level: 'Good',
-  pollutants: {
-    pm25: 8.5,
-    pm10: 15.2,
-    o3: 65.1,
-    no2: 12.3,
-    so2: 2.1,
-    co: 0.8
-  },
-  healthRecommendations: [
-    'Air quality is good - ideal for outdoor activities',
-    'No health precautions necessary'
-  ]
-});
-
-const generateDemoAlerts = (): WeatherAlert[] => ([
-  {
-    id: '1',
-    title: 'Heat Advisory',
-    description: 'Hot temperatures and high humidity may cause heat illnesses.',
-    severity: 'moderate',
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toLocaleString(),
-    areas: ['County Area', 'Metropolitan Region']
-  }
-]);
-
-const generateDemoMoonPhase = (): MoonPhase => ({
-  phase: 'Waxing Crescent',
-  illumination: 25,
-  moonrise: '2:45 PM',
-  moonset: '11:30 PM'
-});
-
-const generateDemoTides = (): TideData => ({
-  high: [
-    { time: '6:24 AM', height: 4.2 },
-    { time: '6:48 PM', height: 4.8 }
-  ],
-  low: [
-    { time: '12:15 PM', height: 0.8 },
-    { time: '12:42 AM', height: 0.3 }
-  ]
-});
-
-const generateDemoHistory = (units: 'imperial' | 'metric'): HistoricalWeather[] => ([
-  {
-    date: '1 year ago',
-    temperature: units === 'imperial' ? 68 : 20,
-    condition: 'Sunny',
-    comparison: '4° warmer than today'
-  },
-  {
-    date: '5 years ago',
-    temperature: units === 'imperial' ? 74 : 23,
-    condition: 'Partly Cloudy',
-    comparison: '2° cooler than today'
-  }
-]);
-
-const generateDemoPollen = () => ({
-  overall: 3,
-  grass: 2,
-  weeds: 4,
-  trees: 3
-});
-
-const generateDemoFireWeather = () => ({
-  index: 15,
-  risk: 'Low',
-  recommendations: [
-    'Normal fire precautions',
-    'Monitor local fire restrictions'
-  ]
-});
-
 const getCachedWeather = (units: 'imperial' | 'metric'): WeatherResponse | null => {
   try {
     const cachedDataString = localStorage.getItem(`weather_data_${units}`);
@@ -382,4 +270,4 @@ const cacheWeatherData = (data: WeatherResponse, units: 'imperial' | 'metric') =
   }
 };
 
-export type { WeatherData, ForecastDay, WeatherResponse, AirQualityData, WeatherAlert, MoonPhase, TideData, HistoricalWeather };
+export type { WeatherData, ForecastDay, WeatherResponse };

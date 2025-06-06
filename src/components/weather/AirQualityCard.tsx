@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AirQualityData } from '@/components/footer/weather/WeatherService';
+import { AirQualityData } from '@/components/footer/weather/AirQualityService';
 import { Wind, AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface AirQualityCardProps {
