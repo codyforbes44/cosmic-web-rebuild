@@ -103,6 +103,17 @@ const ConditionalLiveChat = () => {
   return <LiveChat />;
 };
 
+const ConditionalCookieConsent = () => {
+  const location = useLocation();
+  
+  // Don't show CookieConsent on the /11l route
+  if (location.pathname === '/11l') {
+    return null;
+  }
+  
+  return <CookieConsent />;
+};
+
 const App: React.FC = () => {
   return (
     <React.StrictMode>
@@ -117,7 +128,7 @@ const App: React.FC = () => {
                 <VisitorTracker />
               </Suspense>
               <ConditionalLiveChat />
-              <CookieConsent />
+              <ConditionalCookieConsent />
             </BrowserRouter>
           </TooltipProvider>
         </QueryClientProvider>
