@@ -31,6 +31,7 @@ const DriversMatter = lazy(() => import("./pages/DriversMatter"));
 const Weather = lazy(() => import("./pages/Weather"));
 const Maps = lazy(() => import("./pages/Maps"));
 const MedicalDiagnosis = lazy(() => import("./pages/MedicalDiagnosis"));
+const ScientificCalculator = lazy(() => import("./pages/ScientificCalculator"));
 
 // Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -77,6 +78,7 @@ const AppRoutes = () => {
       <Route path="/weather" element={<Weather />} />
       <Route path="/maps" element={<Maps />} />
       <Route path="/medical-diagnosis" element={<MedicalDiagnosis />} />
+      <Route path="/calculator" element={<ScientificCalculator />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
