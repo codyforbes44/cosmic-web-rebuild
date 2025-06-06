@@ -52,9 +52,11 @@ const Weather: React.FC = () => {
   return (
     <>
       <SEO
-        title="Weather | ƷBI"
-        description="Comprehensive weather information and forecasts for your location"
-        keywords="weather, forecast, current conditions, temperature, humidity, wind"
+        title="Ʒʙɪ Weather Center"
+        description="Comprehensive weather information and forecasts for your location. Real-time conditions, hourly forecasts, and interactive weather maps."
+        keywords="weather, forecast, current conditions, temperature, humidity, wind, weather maps, Ʒʙɪ weather"
+        image="/lovable-uploads/934f1150-c3bd-4fb4-9445-ec288ccb6c47.png"
+        type="website"
       />
       <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-space-dark-blue to-space-deep-blue py-16 md:py-24 px-4">
