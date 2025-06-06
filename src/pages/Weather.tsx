@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -78,7 +77,6 @@ const Weather: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
@@ -230,7 +228,6 @@ const Weather: React.FC = () => {
           <WeatherAlerts />
         </div>
       </main>
-      <Footer />
     </>
   );
 };
