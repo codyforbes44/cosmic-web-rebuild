@@ -30,6 +30,7 @@ const RecruitmentMarketing = lazy(() => import("./pages/RecruitmentMarketing"));
 const DriversMatter = lazy(() => import("./pages/DriversMatter"));
 const Weather = lazy(() => import("./pages/Weather"));
 const Maps = lazy(() => import("./pages/Maps"));
+const MedicalDiagnosis = lazy(() => import("./pages/MedicalDiagnosis"));
 
 // Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -75,6 +76,7 @@ const AppRoutes = () => {
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/weather" element={<Weather />} />
       <Route path="/maps" element={<Maps />} />
+      <Route path="/medical-diagnosis" element={<MedicalDiagnosis />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
