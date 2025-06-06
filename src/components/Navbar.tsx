@@ -1,117 +1,79 @@
 
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import { motion } from 'framer-motion';
-import DesktopNavigation from './navbar/DesktopNavigation';
-import MobileNavigation from './navbar/MobileNavigation';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import DesktopNavigation from "./navbar/DesktopNavigation";
+import MobileNavigation from "./navbar/MobileNavigation";
+import UserMenu from "./auth/UserMenu";
 
 const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const location = useLocation();
 
-  // Close mobile nav when route changes
+  // Handle scroll effect
   useEffect(() => {
-    setIsMobileNavOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    // Handle scroll events for navbar appearance
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 50);
     };
 
-    // Handle escape key for mobile nav
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsMobileNavOpen(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    document.addEventListener('keydown', handleEscape);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('keydown', handleEscape);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Prevent body scroll when mobile nav is open
+  // Close mobile menu when route changes
   useEffect(() => {
-    if (isMobileNavOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileNavOpen]);
+    setIsMobileMenuOpen(false);
+  }, [location]);
 
-  const isActive = (path: string) => {
-    if (path === '/services') {
-      return location.pathname === path ? 'active' : '';
-    }
-    return location.pathname === path ? 'active' : '';
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const isServicesActive = location.pathname === '/services';
-  const isProductsActive = location.pathname.startsWith('/products');
-
-  const closeMobileMenu = () => setIsMobileNavOpen(false);
-
   return (
-    <header 
-      id="top"
-      className={`fixed top-0 left-0 right-0 z-[9990] transition-all duration-300 ${
-        isScrolled ? 'bg-space-dark-blue/90 backdrop-blur-md py-2 shadow-lg' : 'py-4'
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-space-dark-blue/95 backdrop-blur-sm shadow-lg"
+          : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/#top" className="flex items-center space-x-2 z-[9991]">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="text-2xl font-bold text-accent">
+            ZepTech
+          </Link>
+
+          {/* Desktop Navigation */}
+          <DesktopNavigation />
+
+          {/* Desktop Auth Menu */}
+          <div className="hidden md:flex items-center gap-4">
+            <UserMenu />
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={toggleMobileMenu}
+            className="md:hidden text-white p-2"
+            aria-label="Toggle mobile menu"
           >
-            <img 
-              src="/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png" 
-              alt="ƷBI Logo" 
-              className="h-9 w-auto"
-            />
-          </motion.div>
-        </Link>
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
 
-        {/* Desktop Navigation */}
-        <DesktopNavigation 
-          isActive={isActive} 
-          isServicesActive={isServicesActive} 
-          isProductsActive={isProductsActive} 
+        {/* Mobile Navigation */}
+        <MobileNavigation 
+          isOpen={isMobileMenuOpen} 
+          onClose={() => setIsMobileMenuOpen(false)} 
         />
-
-        {/* Mobile Navigation Toggle */}
-        <button 
-          className="md:hidden text-white p-1 z-[9992]" 
-          onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-          aria-label={isMobileNavOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMobileNavOpen}
-          aria-controls="mobile-menu"
-          style={{ position: 'relative' }}
-        >
-          {isMobileNavOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
       </div>
-
-      {/* Mobile Navigation Menu */}
-      <MobileNavigation 
-        isOpen={isMobileNavOpen} 
-        isActive={isActive} 
-        onClose={closeMobileMenu}
-      />
-    </header>
+    </nav>
   );
 };
 

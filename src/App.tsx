@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -8,6 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import CookieConsent from "./components/CookieConsent";
 import LiveChat from "./components/LiveChat/LiveChat";
 import VisitorTracker from "./components/VisitorTracker";
+import { AuthProvider } from "./components/auth/AuthProvider";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -39,6 +41,10 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 
 // ElevenLabs page
 const ElevenLabs = lazy(() => import("./pages/ElevenLabs"));
+
+// Auth pages
+const Auth = lazy(() => import("./pages/Auth"));
+const Profile = lazy(() => import("./pages/Profile"));
 
 // Loading component for Suspense
 const PageLoader = () => (
@@ -90,6 +96,8 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Index />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/services" element={<Services />} />
       <Route path="/recruitment-marketing" element={<RecruitmentMarketing />} />
       <Route path="/portfolio" element={<Portfolio />} />
@@ -155,13 +163,15 @@ const App: React.FC = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <ScrollToTop />
-              <Suspense fallback={<PageLoader />}>
-                <AppRoutes />
-                <VisitorTracker />
-              </Suspense>
-              <ConditionalLiveChat />
-              <ConditionalCookieConsent />
+              <AuthProvider>
+                <ScrollToTop />
+                <Suspense fallback={<PageLoader />}>
+                  <AppRoutes />
+                  <VisitorTracker />
+                </Suspense>
+                <ConditionalLiveChat />
+                <ConditionalCookieConsent />
+              </AuthProvider>
             </BrowserRouter>
           </TooltipProvider>
         </QueryClientProvider>
