@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import MobileServicesMenu from "./MobileServicesMenu";
 import MobileProductsMenu from "./MobileProductsMenu";
-import { services, products } from "./constants";
+import { serviceCategories, productCategories } from "./constants";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 interface MobileNavigationProps {
@@ -121,7 +121,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
             <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <MobileServicesMenu services={services} onClose={onClose} />
+            <MobileServicesMenu onClose={onClose} />
           </CollapsibleContent>
         </Collapsible>
 
@@ -131,7 +131,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
             <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? 'rotate-180' : ''}`} />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <MobileProductsMenu products={products} onClose={onClose} />
+            <MobileProductsMenu onClose={onClose} />
           </CollapsibleContent>
         </Collapsible>
 

@@ -30,6 +30,15 @@ const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Helper function to determine if a path is active
+  const isActive = (path: string) => {
+    return location.pathname === path ? 'active' : '';
+  };
+
+  // Check if services or products sections are active
+  const isServicesActive = location.pathname === '/services' || location.search.includes('service=');
+  const isProductsActive = location.pathname === '/products' || location.search.includes('product=');
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -46,7 +55,11 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <DesktopNavigation />
+          <DesktopNavigation 
+            isActive={isActive}
+            isServicesActive={isServicesActive}
+            isProductsActive={isProductsActive}
+          />
 
           {/* Desktop Auth Menu */}
           <div className="hidden md:flex items-center gap-4">
