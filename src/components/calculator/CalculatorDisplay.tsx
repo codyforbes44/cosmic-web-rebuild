@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { History, X } from 'lucide-react';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import CalculatorEmbed from './CalculatorEmbed';
 
 interface CalculatorDisplayProps {
   display: string;
@@ -24,17 +25,21 @@ const CalculatorDisplay = ({ display, history, onClearHistory }: CalculatorDispl
         </div>
       </div>
 
-      {/* History Toggle */}
+      {/* History Toggle and Embed */}
       <div className="flex justify-between items-center">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setShowHistory(!showHistory)}
-          className="text-gray-300 border-gray-600 hover:bg-gray-700"
-        >
-          <History size={16} className="mr-1" />
-          History
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowHistory(!showHistory)}
+            className="text-gray-300 border-gray-600 hover:bg-gray-700"
+          >
+            <History size={16} className="mr-1" />
+            History
+          </Button>
+          
+          <CalculatorEmbed />
+        </div>
         
         {history.length > 0 && (
           <Button

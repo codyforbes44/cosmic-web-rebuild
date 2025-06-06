@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CalculatorDisplay from './CalculatorDisplay';
 import CalculatorButtons from './CalculatorButtons';
 import { useCalculator } from './hooks/useCalculator';
+
 const CalculatorInterface = () => {
   const {
     display,
@@ -18,8 +20,18 @@ const CalculatorInterface = () => {
     toggleAngleMode,
     clearHistory
   } = useCalculator();
-  return <div className="w-full max-w-md mx-auto">
-      <Card className="bg-space-deep-blue/90 border-brand-gold/30 backdrop-blur-sm">
+  
+  const [isEmbedded, setIsEmbedded] = useState(false);
+  
+  useEffect(() => {
+    // Check if the calculator is being embedded (via URL parameter)
+    const urlParams = new URLSearchParams(window.location.search);
+    setIsEmbedded(urlParams.get('embed') === 'true');
+  }, []);
+  
+  return (
+    <div className={`w-full ${isEmbedded ? 'max-w-full' : 'max-w-md mx-auto'}`}>
+      <Card className={`bg-space-deep-blue/90 border-brand-gold/30 backdrop-blur-sm ${isEmbedded ? 'shadow-none' : ''}`}>
         <CardHeader className="pb-4">
           <CardTitle className="text-center text-brand-gold">Ʒʙɪ Scientific Calculator</CardTitle>
           <div className="flex justify-center items-center gap-2 text-sm text-gray-300">
@@ -33,9 +45,28 @@ const CalculatorInterface = () => {
         <CardContent className="space-y-4">
           <CalculatorDisplay display={display} history={history} onClearHistory={clearHistory} />
           
-          <CalculatorButtons onNumberClick={handleNumberClick} onOperatorClick={handleOperatorClick} onFunctionClick={handleFunctionClick} onEquals={handleEquals} onClear={handleClear} onClearEntry={handleClearEntry} onBackspace={handleBackspace} isDegrees={isDegrees} />
+          <CalculatorButtons 
+            onNumberClick={handleNumberClick} 
+            onOperatorClick={handleOperatorClick} 
+            onFunctionClick={handleFunctionClick} 
+            onEquals={handleEquals} 
+            onClear={handleClear} 
+            onClearEntry={handleClearEntry} 
+            onBackspace={handleBackspace} 
+            isDegrees={isDegrees} 
+          />
+          
+          {isEmbedded && (
+            <div className="text-center text-xs text-gray-400 mt-2">
+              <a href="https://zbi.tools" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors">
+                Powered by Ʒʙɪ Tools
+              </a>
+            </div>
+          )}
         </CardContent>
       </Card>
-    </div>;
+    </div>
+  );
 };
+
 export default CalculatorInterface;
