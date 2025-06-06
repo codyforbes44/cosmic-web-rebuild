@@ -16,5 +16,11 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-# Sitemap location (uncomment when sitemap is available)
-# Sitemap: https://zbi-consulting.com/sitemap.xml
+# Disallow crawling of utility pages
+Disallow: /11l
+
+# Crawl delay for better server performance
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://zbi-consulting.com/sitemap.xml
