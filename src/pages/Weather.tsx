@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import StarBackground from "@/components/StarBackground";
+import WeatherBackground from "@/components/weather/WeatherBackground";
 import { fetchWeatherData, WeatherResponse } from "@/components/footer/weather/WeatherService";
 import WeatherPageHeader from "@/components/weather/WeatherPageHeader";
 import WeatherPageTabs from "@/components/weather/WeatherPageTabs";
@@ -14,6 +15,7 @@ import AirQualityCard from "@/components/weather/AirQualityCard";
 import WeatherSharing from "@/components/weather/WeatherSharing";
 import LocationSearch from "@/components/weather/LocationSearch";
 import EnhancedWeatherDetails from "@/components/weather/EnhancedWeatherDetails";
+import "@/components/weather/WeatherBackground.css";
 
 const Weather: React.FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
@@ -72,8 +74,19 @@ const Weather: React.FC = () => {
         type="website"
       />
       <Navbar />
+      
+      {/* Dynamic Weather Background */}
+      {weatherData && (
+        <WeatherBackground 
+          condition={weatherData.current.condition}
+          className="z-0"
+        />
+      )}
+      
+      {/* Star Background Overlay */}
       <StarBackground />
-      <main className="min-h-screen bg-gradient-to-b from-space-dark-blue to-space-deep-blue py-16 md:py-24 px-4 relative">
+      
+      <main className="min-h-screen py-16 md:py-24 px-4 relative">
         <div className="container mx-auto max-w-7xl relative z-10">
           <WeatherPageHeader />
 
