@@ -4,7 +4,6 @@ import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import StarBackground from "@/components/StarBackground";
 import WeatherBackground from "./WeatherBackground";
-import WeatherPageHeader from "./WeatherPageHeader";
 import WeatherPageTabs from "./WeatherPageTabs";
 import WeatherPageContent from "./WeatherPageContent";
 import WeatherLoadingState from "./WeatherLoadingState";
@@ -66,7 +65,7 @@ const WeatherPageLayout = () => {
       
       <main className={`min-h-screen ${isMobile ? 'py-20 px-3' : 'py-16 md:py-24 px-4'} relative`}>
         <div className={`container mx-auto ${isMobile ? 'max-w-full' : 'max-w-7xl'} relative z-10`}>
-          <WeatherPageHeader />
+          {/* WeatherPageHeader removed from here */}
 
           {error && <WeatherErrorCard error={error} />}
 
