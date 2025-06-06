@@ -21,6 +21,10 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured');
     }
 
+    if (!symptoms?.trim()) {
+      throw new Error('Symptoms are required');
+    }
+
     const systemPrompt = `You are a medical AI assistant designed to help users understand potential medical conditions based on their symptoms. 
 
 IMPORTANT DISCLAIMERS:
@@ -59,6 +63,8 @@ Focus on:
 
 Please analyze these symptoms and provide potential medical conditions with appropriate urgency levels and recommendations.`;
 
+    console.log('Processing medical diagnosis request');
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -77,11 +83,18 @@ Please analyze these symptoms and provide potential medical conditions with appr
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('OpenAI API error:', response.status, errorText);
+      throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
     const analysis = data.choices[0].message.content;
+
+    // Log usage for monitoring
+    if (data.usage) {
+      console.log(`Medical diagnosis usage: ${data.usage.total_tokens} tokens`);
+    }
 
     // Try to parse as JSON, fallback to text if needed
     let parsedAnalysis;
