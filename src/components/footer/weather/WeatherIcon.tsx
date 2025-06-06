@@ -24,8 +24,9 @@ const WeatherIcon = ({ condition, size = 28, isDay = true }: WeatherIconProps) =
   
   // Handle all OpenWeatherMap weather conditions
   switch (normalizedCondition) {
-    // Clear sky
+    // Clear sky - handle both "clear" and "clear sky"
     case 'clear':
+    case 'clear sky':
       return <Sun size={size} className="text-yellow-400" />;
     
     // Few clouds (11-25%)
