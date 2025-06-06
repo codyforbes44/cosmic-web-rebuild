@@ -24,10 +24,16 @@ const Weather: React.FC = () => {
   const [units, setUnits] = useState<'imperial' | 'metric'>('imperial');
   const [currentLocation, setCurrentLocation] = useState<string>('');
 
-  const loadWeatherData = async (location?: string) => {
+  const loadWeatherData = async (location?: string, forceRefresh = false) => {
     try {
       setLoading(true);
       setError(null);
+      
+      // Clear cache if force refresh is requested
+      if (forceRefresh) {
+        localStorage.removeItem(`weather_data_${units}`);
+        console.log('Weather cache cleared - forcing fresh data fetch');
+      }
       
       const data = await fetchWeatherData(units);
       
@@ -49,11 +55,17 @@ const Weather: React.FC = () => {
   const handleLocationChange = (newLocation: string) => {
     setCurrentLocation(newLocation);
     // In a real app, you would fetch weather for the new location
-    loadWeatherData(newLocation);
+    loadWeatherData(newLocation, true);
   };
 
   useEffect(() => {
-    loadWeatherData();
+    // Force refresh on initial load
+    loadWeatherData(undefined, true);
+  }, []);
+
+  useEffect(() => {
+    // Force refresh when units change
+    loadWeatherData(undefined, true);
   }, [units]);
 
   const handleUnitsChange = (newUnits: 'imperial' | 'metric') => {
