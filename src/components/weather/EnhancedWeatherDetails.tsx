@@ -68,9 +68,11 @@ const EnhancedWeatherDetails = ({ weatherData, units }: EnhancedWeatherDetailsPr
             <div className="space-y-2">
               <div className="text-lg font-semibold text-white">{weatherData.moonPhase.phase}</div>
               <div className="text-sm text-gray-300">{weatherData.moonPhase.illumination}% illuminated</div>
-              <div className="text-xs text-gray-400">
-                Rise: {weatherData.moonPhase.moonrise} | Set: {weatherData.moonPhase.moonset}
-              </div>
+              {weatherData.moonPhase.moonrise && weatherData.moonPhase.moonset && (
+                <div className="text-xs text-gray-400">
+                  Rise: {weatherData.moonPhase.moonrise} | Set: {weatherData.moonPhase.moonset}
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

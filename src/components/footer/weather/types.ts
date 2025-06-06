@@ -50,12 +50,13 @@ export interface MoonPhase {
   phase: string;
   illumination: number;
   nextFullMoon: string;
+  moonrise?: string;
+  moonset?: string;
 }
 
 export interface TideData {
-  nextHigh: string;
-  nextLow: string;
-  height: number;
+  high: { time: string; height: number }[];
+  low: { time: string; height: number }[];
 }
 
 export interface HistoricalWeather {
@@ -63,6 +64,8 @@ export interface HistoricalWeather {
   tempMax: number;
   tempMin: number;
   condition: string;
+  temperature: number;
+  comparison: string;
 }
 
 export interface WeatherResponse {
