@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { OPENAI_CONFIG } from '@/config/openai';
+import { OPENAI_CONFIG, OpenAIModel } from '@/config/openai';
 
 interface AIContextType {
   isAIEnabled: boolean;
@@ -29,7 +29,7 @@ interface AIProviderProps {
 }
 
 export const AIProvider = ({ children }: AIProviderProps) => {
-  const [currentModel, setCurrentModelState] = useState(OPENAI_CONFIG.models.fast);
+  const [currentModel, setCurrentModelState] = useState<string>(OPENAI_CONFIG.models.fast);
   const [apiUsage, setApiUsage] = useState({
     requestsToday: 0,
     tokensUsed: 0
