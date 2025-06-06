@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import StarBackground from "@/components/StarBackground";
@@ -29,6 +29,11 @@ const WeatherPageLayout = () => {
   } = useWeatherPage();
   
   const isMobile = useIsMobile();
+  const [currentTab, setCurrentTab] = useState("current");
+
+  const handleTabChange = (tab: string) => {
+    setCurrentTab(tab);
+  };
 
   if (loading) {
     return <WeatherLoadingState />;
@@ -73,7 +78,7 @@ const WeatherPageLayout = () => {
 
           {weatherData && (
             <>
-              <WeatherPageTabs>
+              <WeatherPageTabs onTabChange={handleTabChange}>
                 <WeatherPageContent
                   weatherData={weatherData}
                   units={units}
@@ -81,7 +86,8 @@ const WeatherPageLayout = () => {
                 />
               </WeatherPageTabs>
 
-              <WeatherAdditionalInfo />
+              {/* Only show Additional Information on Current tab */}
+              {currentTab === "current" && <WeatherAdditionalInfo />}
             </>
           )}
 

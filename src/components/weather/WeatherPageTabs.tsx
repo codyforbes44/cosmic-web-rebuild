@@ -6,18 +6,21 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 interface WeatherPageTabsProps {
   children: React.ReactNode;
+  onTabChange?: (value: string) => void;
 }
 
-const WeatherPageTabs = ({ children }: WeatherPageTabsProps) => {
+const WeatherPageTabs = ({ children, onTabChange }: WeatherPageTabsProps) => {
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("current");
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+    onTabChange?.(value);
   };
 
   const handleMobileTabClick = (tabValue: string) => {
     setActiveTab(tabValue);
+    onTabChange?.(tabValue);
   };
 
   return (
