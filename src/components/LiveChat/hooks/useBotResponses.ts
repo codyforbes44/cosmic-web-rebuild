@@ -20,9 +20,13 @@ export const useBotResponses = (
     setIsTyping
   );
 
+  let lastUserMessage = '';
+  let isRequestInProgress = false;
+
   const { invoke: invokeOpenAI, isLoading: isAILoading } = useOpenAI({
     functionName: 'openai-chat',
     onSuccess: (data) => {
+      isRequestInProgress = false;
       setIsThinking(false);
       setIsTyping(true);
       
@@ -44,28 +48,28 @@ export const useBotResponses = (
         }, typingDuration);
       } catch (error) {
         console.error('Error formatting AI response:', error);
-        setIsThinking(false);
-        setIsTyping(false);
-        
-        const errorMessage: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          text: "I'm having trouble processing that request. Please try again.",
-          sender: 'bot',
-          timestamp: new Date(),
-        };
-        
-        setMessages(prev => [...prev, errorMessage]);
+        handleFallbackResponse();
       }
     },
     onError: (error) => {
       console.error('OpenAI API error:', error);
-      setIsThinking(false);
+      isRequestInProgress = false;
+      handleFallbackResponse();
+    }
+  });
+
+  const handleFallbackResponse = () => {
+    setIsThinking(false);
+    setIsTyping(true);
+    
+    const knowledgeResponse = findRelevantResponse(lastUserMessage, isAuthenticated);
+    const fallbackResponse = knowledgeResponse || 
+      "I'm experiencing technical difficulties. How can I help you with our services?";
+    
+    const typingDuration = calculateTypingDuration(fallbackResponse, TYPING_SPEED);
+    
+    setTimeout(() => {
       setIsTyping(false);
-      
-      // Fallback to knowledge base
-      const knowledgeResponse = findRelevantResponse(lastUserMessage, isAuthenticated);
-      const fallbackResponse = knowledgeResponse || 
-        "I'm experiencing technical difficulties. How can I help you with our services?";
       
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -75,10 +79,8 @@ export const useBotResponses = (
       };
       
       setMessages(prev => [...prev, errorMessage]);
-    }
-  });
-
-  let lastUserMessage = '';
+    }, typingDuration);
+  };
 
   // Get suggestions for quick responses from knowledge base
   const getSuggestions = (): string[] => {
@@ -86,6 +88,12 @@ export const useBotResponses = (
   };
 
   const generateBotResponse = async (userMessage: string) => {
+    // Prevent multiple concurrent requests
+    if (isRequestInProgress || isAILoading) {
+      console.log('Request already in progress, skipping...');
+      return;
+    }
+
     lastUserMessage = userMessage;
     
     // First check if this is a Zapier command
@@ -96,8 +104,9 @@ export const useBotResponses = (
       if (isZapierCommand) return;
     }
     
-    // Use OpenAI for AI-powered responses
+    // Try OpenAI first, but with rate limiting protection
     setIsThinking(true);
+    isRequestInProgress = true;
     
     try {
       const aiRequest = buildOpenAIRequest(userMessage, {
@@ -111,36 +120,20 @@ export const useBotResponses = (
         
         Keep responses conversational, helpful, and focused on how ƷBI can help their business grow.
         If asked about pricing or specific quotes, direct them to contact the sales team.
-        Be friendly and professional, representing the ƷBI brand.`
+        Be friendly and professional, representing the ƷBI brand.
+        Keep responses under 100 words when possible.`
       });
       
+      // Add a small delay to help with rate limiting
+      await new Promise(resolve => setTimeout(resolve, 500));
       await invokeOpenAI(aiRequest);
     } catch (error) {
       console.error('Failed to generate AI response:', error);
+      isRequestInProgress = false;
       
-      // Fallback to knowledge-based response
+      // Immediate fallback to knowledge-based response
       setTimeout(() => {
-        setIsThinking(false);
-        setIsTyping(true);
-        
-        const knowledgeResponse = findRelevantResponse(userMessage, isAuthenticated);
-        const botResponse = knowledgeResponse || 
-          "I don't have specific information about that. Could you please provide more details or ask about our services?";
-        
-        const typingDuration = calculateTypingDuration(botResponse, TYPING_SPEED);
-        
-        setTimeout(() => {
-          setIsTyping(false);
-          
-          const newBotMessage: ChatMessage = {
-            id: (Date.now() + 1).toString(),
-            text: botResponse,
-            sender: 'bot',
-            timestamp: new Date(),
-          };
-          
-          setMessages(prev => [...prev, newBotMessage]);
-        }, typingDuration);
+        handleFallbackResponse();
       }, getRandomDelay(THINKING_DELAY.min, THINKING_DELAY.max));
     }
   };
