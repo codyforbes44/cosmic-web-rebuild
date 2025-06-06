@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -34,6 +33,9 @@ const Maps = lazy(() => import("./pages/Maps"));
 // New Product Pages
 const Products = lazy(() => import("./pages/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+
+// Lazy load pages for better performance
+const ElevenLabs = lazy(() => import("./pages/ElevenLabs"));
 
 // Loading component for Suspense
 const PageLoader = () => (
@@ -83,6 +85,7 @@ const AppRoutes = () => {
       <Route path="/products/:productId" element={<ProductDetail />} />
       
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="/11l" element={<ElevenLabs />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
