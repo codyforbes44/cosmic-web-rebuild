@@ -61,8 +61,8 @@ const LiveChat = () => {
             isPinned={isPinned}
             chatContainerRef={chatContainerRef}
             isDraggable={isPinned}
-            dragRef={dragRef}
-            onMouseDown={handleMouseDown}
+            dragRef={isPinned ? dragRef : undefined}
+            onMouseDown={isPinned ? handleMouseDown : undefined}
           />
         </div>
       )}

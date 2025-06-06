@@ -43,7 +43,10 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
       <div className="flex items-center">
         {onTogglePin && (
           <button 
-            onClick={onTogglePin} 
+            onClick={(e) => {
+              e.stopPropagation();
+              onTogglePin();
+            }} 
             className="text-white hover:bg-white/10 p-2 rounded-full transition-colors mr-1"
             aria-label={isPinned ? "Unpin chat" : "Pin chat"}
             title={isPinned ? "Unpin chat" : "Pin chat"}
@@ -52,7 +55,10 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           </button>
         )}
         <button 
-          onClick={onToggleChat} 
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleChat();
+          }} 
           className="text-white hover:bg-white/10 p-2 rounded-full transition-colors"
           aria-label="Close chat"
         >
