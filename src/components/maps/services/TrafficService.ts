@@ -56,7 +56,8 @@ export const generateAlternativeRoutes = (): RouteOption[] => [
     duration: '12 min',
     distance: '8.3 mi',
     traffic: 'light',
-    description: 'Via Main St and Broadway Ave'
+    description: 'Via Main St and Broadway Ave',
+    coordinates: []
   },
   {
     id: 'shortest',
