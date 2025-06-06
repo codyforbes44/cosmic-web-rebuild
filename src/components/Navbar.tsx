@@ -5,11 +5,12 @@ import { Menu, X } from "lucide-react";
 import DesktopNavigation from "./navbar/DesktopNavigation";
 import MobileNavigation from "./navbar/MobileNavigation";
 import UserMenu from "./auth/UserMenu";
+import { useMobileMenu } from "@/hooks/use-mobile-menu";
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu } = useMobileMenu();
 
   // Handle scroll effect
   useEffect(() => {
@@ -20,15 +21,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location]);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
 
   // Helper function to determine if a path is active
   const isActive = (path: string) => {
@@ -92,7 +84,7 @@ const Navbar = () => {
         {/* Mobile Navigation */}
         <MobileNavigation 
           isOpen={isMobileMenuOpen} 
-          onClose={() => setIsMobileMenuOpen(false)} 
+          onClose={toggleMobileMenu} 
         />
       </div>
     </nav>
