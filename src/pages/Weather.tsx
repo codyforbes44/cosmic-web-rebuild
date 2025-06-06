@@ -92,18 +92,12 @@ const Weather: React.FC = () => {
 
           {error && <WeatherErrorCard error={error} />}
 
-          {/* Location Search and Sharing */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Location Search */}
+          <div className="mb-6">
             <LocationSearch 
               onLocationChange={handleLocationChange}
               currentLocation={currentLocation}
             />
-            {weatherData && (
-              <WeatherSharing 
-                weatherData={weatherData.current} 
-                units={units}
-              />
-            )}
           </div>
 
           {weatherData && (
@@ -152,6 +146,14 @@ const Weather: React.FC = () => {
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Weather Sharing - Moved to bottom */}
+              <div className="mt-8">
+                <WeatherSharing 
+                  weatherData={weatherData.current} 
+                  units={units}
+                />
               </div>
             </>
           )}
