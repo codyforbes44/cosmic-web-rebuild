@@ -31,11 +31,11 @@ const DriversMatter = lazy(() => import("./pages/DriversMatter"));
 const Weather = lazy(() => import("./pages/Weather"));
 const Maps = lazy(() => import("./pages/Maps"));
 
-// New Product Pages
+// Product Pages
 const Products = lazy(() => import("./pages/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 
-// Lazy load pages for better performance
+// ElevenLabs page
 const ElevenLabs = lazy(() => import("./pages/ElevenLabs"));
 
 // Loading component for Suspense
@@ -85,8 +85,10 @@ const AppRoutes = () => {
       <Route path="/products" element={<Products />} />
       <Route path="/products/:productId" element={<ProductDetail />} />
       
-      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      {/* ElevenLabs route */}
       <Route path="/11l" element={<ElevenLabs />} />
+      
+      {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

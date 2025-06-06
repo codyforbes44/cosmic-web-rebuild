@@ -57,7 +57,11 @@ export const generateAlternativeRoutes = (): RouteOption[] => [
     distance: '8.3 mi',
     traffic: 'light',
     description: 'Via Main St and Broadway Ave',
-    coordinates: []
+    coordinates: [
+      [35.4676, -97.5164],
+      [35.4776, -97.5264],
+      [35.4876, -97.5364]
+    ]
   },
   {
     id: 'shortest',
@@ -66,7 +70,11 @@ export const generateAlternativeRoutes = (): RouteOption[] => [
     distance: '7.1 mi',
     traffic: 'moderate',
     description: 'Via Oak Street',
-    coordinates: []
+    coordinates: [
+      [35.4676, -97.5164],
+      [35.4726, -97.5214],
+      [35.4826, -97.5314]
+    ]
   },
   {
     id: 'scenic',
@@ -76,7 +84,12 @@ export const generateAlternativeRoutes = (): RouteOption[] => [
     traffic: 'light',
     tollCost: '$2.50',
     description: 'Via Scenic Highway - toll road',
-    coordinates: []
+    coordinates: [
+      [35.4676, -97.5164],
+      [35.4796, -97.5284],
+      [35.4896, -97.5384],
+      [35.4976, -97.5464]
+    ]
   }
 ];
 

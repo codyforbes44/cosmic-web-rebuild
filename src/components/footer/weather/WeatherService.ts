@@ -177,13 +177,25 @@ const fetchWeatherByLocation = async (location: string, units: 'imperial' | 'met
     windSpeed: Math.round(currentWeatherResult.wind.speed),
     timestamp: Date.now(),
     feelsLike: Math.round(currentWeatherResult.main.feels_like),
-    pressure: units === 'imperial' ? (currentWeatherResult.main.pressure * 0.02953).toFixed(2) : currentWeatherResult.main.pressure,
-    pressureTrend: 'steady', // Would need historical data for real trend
-    uvIndex: 5, // Would need UV API
-    visibility: units === 'imperial' ? Math.round(currentWeatherResult.visibility * 0.000621371) : Math.round(currentWeatherResult.visibility / 1000),
+    pressure: units === 'imperial' 
+      ? parseFloat((currentWeatherResult.main.pressure * 0.02953).toFixed(2))
+      : currentWeatherResult.main.pressure,
+    pressureTrend: 'steady',
+    uvIndex: 5,
+    visibility: units === 'imperial' 
+      ? Math.round(currentWeatherResult.visibility * 0.000621371)
+      : Math.round(currentWeatherResult.visibility / 1000),
     dewPoint: Math.round(currentWeatherResult.main.temp - ((100 - currentWeatherResult.main.humidity) / 5)),
-    sunrise: new Date(currentWeatherResult.sys.sunrise * 1000).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
-    sunset: new Date(currentWeatherResult.sys.sunset * 1000).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+    sunrise: new Date(currentWeatherResult.sys.sunrise * 1000).toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit', 
+      hour12: true 
+    }),
+    sunset: new Date(currentWeatherResult.sys.sunset * 1000).toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit', 
+      hour12: true 
+    }),
   };
   
   return { 
@@ -223,7 +235,7 @@ const processForecastData = (forecastList: any[]): ForecastDay[] => {
         date: new Date(date).toLocaleDateString('en-US', { weekday: 'short' }),
         temp_max: Math.round(Math.max(...temps)),
         temp_min: Math.round(Math.min(...temps)),
-        condition: conditions[0], // Use first condition of the day
+        condition: conditions[0],
         humidity: Math.round(humidities.reduce((a, b) => a + b, 0) / humidities.length)
       };
     });
