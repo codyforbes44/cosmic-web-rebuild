@@ -1,3 +1,4 @@
+import { formatTimeDisplay } from '@/utils/timezone';
 
 interface WeatherData {
   location: string;
@@ -169,6 +170,10 @@ const fetchWeatherByLocation = async (location: string, units: 'imperial' | 'met
     forecast = generateDemoForecast(units);
   }
   
+  // Convert sunrise/sunset times to UTC-6
+  const sunriseTime = new Date(currentWeatherResult.sys.sunrise * 1000);
+  const sunsetTime = new Date(currentWeatherResult.sys.sunset * 1000);
+  
   const current: WeatherData = {
     location: location,
     temperature: Math.round(currentWeatherResult.main.temp),
@@ -186,16 +191,8 @@ const fetchWeatherByLocation = async (location: string, units: 'imperial' | 'met
       ? Math.round(currentWeatherResult.visibility * 0.000621371)
       : Math.round(currentWeatherResult.visibility / 1000),
     dewPoint: Math.round(currentWeatherResult.main.temp - ((100 - currentWeatherResult.main.humidity) / 5)),
-    sunrise: new Date(currentWeatherResult.sys.sunrise * 1000).toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
-      minute: '2-digit', 
-      hour12: true 
-    }),
-    sunset: new Date(currentWeatherResult.sys.sunset * 1000).toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
-      minute: '2-digit', 
-      hour12: true 
-    }),
+    sunrise: formatTimeDisplay(sunriseTime),
+    sunset: formatTimeDisplay(sunsetTime),
   };
   
   return { 

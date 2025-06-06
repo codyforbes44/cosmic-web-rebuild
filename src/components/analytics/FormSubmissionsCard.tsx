@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, MessageSquare, Calendar } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { formatDateDisplay } from "@/utils/timezone";
 
 interface FormSubmission {
   id: string;
@@ -150,7 +151,7 @@ const FormSubmissionsCard = () => {
                 </div>
                 <div className="flex items-center text-xs text-gray-400">
                   <Calendar className="w-3 h-3 mr-1" />
-                  {new Date(submission.created_at).toLocaleDateString()}
+                  {formatDateDisplay(submission.created_at)}
                 </div>
               </div>
             ))}

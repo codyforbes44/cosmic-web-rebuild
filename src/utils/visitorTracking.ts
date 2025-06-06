@@ -1,7 +1,7 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { TablesInsert } from "@/integrations/supabase/types";
 import { toast } from "@/hooks/use-toast";
+import { getCurrentISOInAppTimezone, formatDateTimeDisplay } from "./timezone";
 
 interface VisitorMetadata extends Omit<TablesInsert<'visitor_metadata'>, 'id' | 'visit_timestamp'> {
   // All fields are optional as we might not be able to collect all data
@@ -41,7 +41,7 @@ export async function trackVisitor(): Promise<void> {
     const userAgent = navigator.userAgent;
     const browserLanguage = navigator.language;
 
-    // Create metadata object
+    // Create metadata object with UTC-6 timestamp
     const metadata: VisitorMetadata = {
       user_agent: userAgent,
       browser_language: browserLanguage,
@@ -61,7 +61,10 @@ export async function trackVisitor(): Promise<void> {
       debugLog('Attempting direct database insert...');
       const { data, error } = await supabase
         .from('visitor_metadata')
-        .insert(metadata)
+        .insert({
+          ...metadata,
+          visit_timestamp: getCurrentISOInAppTimezone()
+        })
         .select('*')
         .single();
       
@@ -78,7 +81,7 @@ export async function trackVisitor(): Promise<void> {
         setTimeout(() => {
           toast({
             title: "Welcome!",
-            description: "Thanks for visiting ƷBI! Your visit has been recorded for analytics.",
+            description: `Thanks for visiting ƷBI! Your visit has been recorded for analytics. Time: ${formatDateTimeDisplay(new Date())}`,
             duration: 3000,
           });
         }, 1000);
@@ -98,7 +101,10 @@ export async function trackVisitor(): Promise<void> {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(metadata),
+          body: JSON.stringify({
+            ...metadata,
+            visit_timestamp: getCurrentISOInAppTimezone()
+          }),
           signal: controller.signal
         });
         
@@ -154,7 +160,7 @@ function detectOS(userAgent: string): string {
   return 'Unknown';
 }
 
-// Function to record time spent on a page
+// Function to record time spent on a page with UTC-6 timestamps
 let pageLoadTime = Date.now();
 let isTracked = false;
 
@@ -185,7 +191,8 @@ export function trackPageTime(): () => void {
     try {
       const { error } = await supabase.from('visitor_metadata').insert({
         time_on_page: cappedTime,
-        page_url: window.location.href
+        page_url: window.location.href,
+        visit_timestamp: getCurrentISOInAppTimezone()
       });
       
       if (error) {
@@ -199,7 +206,7 @@ export function trackPageTime(): () => void {
   };
 }
 
-// Export a function to track specific events
+// Export a function to track specific events with UTC-6 timestamps
 export function trackEvent(eventName: string, eventProperties?: Record<string, any>): void {
   debugLog('Tracking event:', eventName, eventProperties);
   
@@ -209,7 +216,8 @@ export function trackEvent(eventName: string, eventProperties?: Record<string, a
       // Note: the visitor_metadata table doesn't have event_name/event_properties columns
       // This would need additional columns or a separate events table
       user_agent: `Event: ${eventName}`,
-      referrer: eventProperties ? JSON.stringify(eventProperties) : null
+      referrer: eventProperties ? JSON.stringify(eventProperties) : null,
+      visit_timestamp: getCurrentISOInAppTimezone()
     }).then(({ error }) => {
       if (error) {
         debugLog('Error tracking event:', error);
