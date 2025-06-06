@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
-import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { fetchWeatherData, WeatherResponse } from "@/components/footer/weather/WeatherService";
 import WeatherPageHeader from "@/components/weather/WeatherPageHeader";
 import WeatherPageTabs from "@/components/weather/WeatherPageTabs";
@@ -67,8 +66,6 @@ const Weather: React.FC = () => {
       <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-space-dark-blue to-space-deep-blue py-16 md:py-24 px-4">
         <div className="container mx-auto max-w-6xl">
-          <BreadcrumbNav currentPageLabel="Weather" />
-          
           <WeatherPageHeader 
             onRefresh={handleRefresh}
             refreshing={refreshing}
