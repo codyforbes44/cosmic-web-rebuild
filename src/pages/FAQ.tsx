@@ -5,17 +5,9 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import LiveChat from '@/components/LiveChat/LiveChat';
 import StarBackground from "@/components/StarBackground";
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { HomeIcon } from 'lucide-react';
-import { 
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage
-} from "@/components/ui/breadcrumb";
+import PageHeader from "@/components/PageHeader";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import { HelpCircle } from 'lucide-react';
 
 // Import refactored components
 import FAQCategories from '@/components/FAQ/FAQCategories';
@@ -40,36 +32,14 @@ const FAQ = () => {
         <StarBackground />
         <div className="container mx-auto px-4 py-24 relative z-10">
           {/* Breadcrumb Navigation */}
-          <div className="mb-6">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/" className="flex items-center">
-                      <HomeIcon className="h-4 w-4 mr-1" />
-                      <span>Home</span>
-                    </Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>FAQ</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
+          <BreadcrumbNav currentPageLabel="FAQ" />
           
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-3xl mx-auto mb-16"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Frequently Asked Questions</h1>
-            <p className="text-xl text-gray-300">
-              Get answers to common questions about our services, products, and how we can help your business succeed
-            </p>
-          </motion.div>
+          {/* Page Header */}
+          <PageHeader 
+            title="Frequently Asked Questions"
+            description="Get answers to common questions about our services, products, and how we can help your business succeed"
+            icon={HelpCircle}
+          />
 
           <div className="max-w-4xl mx-auto">
             <FAQCategories activeTab={activeTab} setActiveTab={setActiveTab} />
