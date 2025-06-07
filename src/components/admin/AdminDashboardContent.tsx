@@ -52,10 +52,14 @@ export const AdminDashboardContent: React.FC = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 bg-space-deep-blue">
+        <TabsList className="grid w-full grid-cols-5 bg-space-deep-blue">
           <TabsTrigger value="overview" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <BarChart3 size={16} />
             Overview
+          </TabsTrigger>
+          <TabsTrigger value="analytics" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+            <Activity size={16} />
+            Analytics
           </TabsTrigger>
           <TabsTrigger value="users" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <Users size={16} />
@@ -145,6 +149,10 @@ export const AdminDashboardContent: React.FC = () => {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="analytics">
+          <AdminAnalyticsPanel />
         </TabsContent>
 
         <TabsContent value="users">
