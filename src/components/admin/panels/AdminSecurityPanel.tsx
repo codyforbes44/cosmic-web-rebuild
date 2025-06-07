@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -13,32 +13,10 @@ import {
   Ban,
   CheckCircle,
   XCircle,
-  Clock,
-  ExternalLink
+  Clock
 } from 'lucide-react';
-import { SecurityErrorModal } from '../modals/SecurityErrorModal';
-
-interface SecurityEvent {
-  id: string;
-  type: string;
-  description: string;
-  severity: 'low' | 'medium' | 'high' | 'critical';
-  timestamp: string;
-  status: 'active' | 'resolved' | 'investigating';
-  details?: {
-    ipAddress?: string;
-    userAgent?: string;
-    userId?: string;
-    endpoint?: string;
-    attemptCount?: number;
-    location?: string;
-  };
-}
 
 export const AdminSecurityPanel: React.FC = () => {
-  const [selectedEvent, setSelectedEvent] = useState<SecurityEvent | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const securityMetrics = [
     { name: 'Failed Logins', value: '12', status: 'warning', icon: Lock },
     { name: 'Blocked IPs', value: '3', status: 'good', icon: Ban },
@@ -46,49 +24,30 @@ export const AdminSecurityPanel: React.FC = () => {
     { name: 'Security Events', value: '5', status: 'warning', icon: AlertTriangle },
   ];
 
-  const securityEvents: SecurityEvent[] = [
+  const securityEvents = [
     {
-      id: 'SEC-001',
+      id: '1',
       type: 'Failed Login',
       description: 'Multiple failed login attempts from IP 192.168.1.100',
       severity: 'medium',
       timestamp: '2024-01-15 14:30:22',
-      status: 'active',
-      details: {
-        ipAddress: '192.168.1.100',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        endpoint: '/auth/login',
-        attemptCount: 5,
-        location: 'New York, NY, USA'
-      }
+      status: 'active'
     },
     {
-      id: 'SEC-002',
+      id: '2',
       type: 'Rate Limit',
       description: 'Rate limit exceeded for API endpoint /api/data',
       severity: 'low',
       timestamp: '2024-01-15 13:45:10',
-      status: 'resolved',
-      details: {
-        ipAddress: '10.0.0.50',
-        endpoint: '/api/data',
-        attemptCount: 100,
-        userAgent: 'PostmanRuntime/7.32.3'
-      }
+      status: 'resolved'
     },
     {
-      id: 'SEC-003',
+      id: '3',
       type: 'Suspicious Activity',
       description: 'Unusual access pattern detected from user admin@example.com',
       severity: 'high',
       timestamp: '2024-01-15 12:15:30',
-      status: 'investigating',
-      details: {
-        userId: 'user_123456',
-        ipAddress: '203.0.113.1',
-        userAgent: 'curl/7.68.0',
-        location: 'Unknown'
-      }
+      status: 'investigating'
     }
   ];
 
@@ -102,7 +61,6 @@ export const AdminSecurityPanel: React.FC = () => {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'bg-red-500/20 text-red-400 border-red-500/50';
       case 'high': return 'bg-red-500/20 text-red-400 border-red-500/50';
       case 'medium': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50';
       case 'low': return 'bg-blue-500/20 text-blue-400 border-blue-500/50';
@@ -126,16 +84,6 @@ export const AdminSecurityPanel: React.FC = () => {
       case 'critical': return 'bg-red-500/20 text-red-400 border-red-500/50';
       default: return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
     }
-  };
-
-  const handleEventClick = (event: SecurityEvent) => {
-    setSelectedEvent(event);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedEvent(null);
   };
 
   return (
@@ -177,32 +125,24 @@ export const AdminSecurityPanel: React.FC = () => {
               Recent Security Events
             </CardTitle>
             <CardDescription className="text-gray-400">
-              Latest security alerts and incidents (click to view details)
+              Latest security alerts and incidents
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {securityEvents.map((event) => (
-                <div 
-                  key={event.id} 
-                  className="p-4 bg-black/20 rounded-lg border border-gray-700 cursor-pointer hover:bg-black/30 transition-colors"
-                  onClick={() => handleEventClick(event)}
-                >
+                <div key={event.id} className="p-4 bg-black/20 rounded-lg border border-gray-700">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       {getStatusIcon(event.status)}
                       <span className="text-white font-medium">{event.type}</span>
-                      <ExternalLink className="h-3 w-3 text-gray-400" />
                     </div>
                     <Badge className={getSeverityColor(event.severity)}>
                       {event.severity}
                     </Badge>
                   </div>
                   <p className="text-gray-300 text-sm mb-2">{event.description}</p>
-                  <div className="flex items-center justify-between text-xs">
-                    <p className="text-gray-400">{event.timestamp}</p>
-                    <span className="text-gray-400">#{event.id}</span>
-                  </div>
+                  <p className="text-gray-400 text-xs">{event.timestamp}</p>
                 </div>
               ))}
             </div>
@@ -253,12 +193,6 @@ export const AdminSecurityPanel: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-
-      <SecurityErrorModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        event={selectedEvent}
-      />
     </div>
   );
 };
