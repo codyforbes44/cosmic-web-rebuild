@@ -18,38 +18,77 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, Search, UserPlus, Shield, Ban } from 'lucide-react';
+import { MoreHorizontal, Search, UserPlus, Shield, Ban, Loader2 } from 'lucide-react';
 import { AddUserModal } from '../modals/AddUserModal';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+
+interface UserWithRole {
+  id: string;
+  email: string;
+  full_name: string | null;
+  created_at: string;
+  last_sign_in_at: string | null;
+  role: string;
+}
 
 export const AdminUsersPanel: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+  const { toast } = useToast();
 
-  // Mock user data - in real app this would come from Supabase
-  const users = [
-    {
-      id: '1',
-      email: 'admin@example.com',
-      fullName: 'Admin User',
-      role: 'admin',
-      status: 'active',
-      lastLogin: '2024-01-15',
-      createdAt: '2024-01-01'
+  // Fetch users with their roles from Supabase
+  const { data: users = [], isLoading, refetch } = useQuery({
+    queryKey: ['admin-users'],
+    queryFn: async () => {
+      // First get all users from auth.users via admin API
+      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
+      
+      if (authError) {
+        throw new Error(authError.message);
+      }
+
+      // Get user roles from user_roles table
+      const { data: userRoles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id, role');
+
+      if (rolesError) {
+        console.error('Error fetching user roles:', rolesError);
+      }
+
+      // Get user profiles for additional info
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, full_name');
+
+      if (profilesError) {
+        console.error('Error fetching profiles:', profilesError);
+      }
+
+      // Combine the data
+      const usersWithRoles: UserWithRole[] = authUsers.users.map(user => {
+        const userRole = userRoles?.find(role => role.user_id === user.id);
+        const profile = profiles?.find(p => p.id === user.id);
+        
+        return {
+          id: user.id,
+          email: user.email || '',
+          full_name: profile?.full_name || user.user_metadata?.full_name || null,
+          created_at: user.created_at,
+          last_sign_in_at: user.last_sign_in_at,
+          role: userRole?.role || 'user'
+        };
+      });
+
+      return usersWithRoles;
     },
-    {
-      id: '2',
-      email: 'user@example.com',
-      fullName: 'Regular User',
-      role: 'user',
-      status: 'active',
-      lastLogin: '2024-01-14',
-      createdAt: '2024-01-10'
-    }
-  ];
+  });
 
   const filteredUsers = users.filter(user =>
     user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
+    user.full_name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getRoleBadgeColor = (role: string) => {
@@ -60,19 +99,64 @@ export const AdminUsersPanel: React.FC = () => {
     }
   };
 
-  const getStatusBadgeColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'bg-green-500/20 text-green-400 border-green-500/50';
-      case 'inactive': return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
-      case 'banned': return 'bg-red-500/20 text-red-400 border-red-500/50';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
+  const getStatusBadgeColor = (lastSignIn: string | null) => {
+    if (!lastSignIn) return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
+    
+    const lastSignInDate = new Date(lastSignIn);
+    const daysSinceLastSignIn = (Date.now() - lastSignInDate.getTime()) / (1000 * 60 * 60 * 24);
+    
+    if (daysSinceLastSignIn <= 7) {
+      return 'bg-green-500/20 text-green-400 border-green-500/50';
+    } else if (daysSinceLastSignIn <= 30) {
+      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50';
+    } else {
+      return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
+    }
+  };
+
+  const getStatusText = (lastSignIn: string | null) => {
+    if (!lastSignIn) return 'Never logged in';
+    
+    const lastSignInDate = new Date(lastSignIn);
+    const daysSinceLastSignIn = (Date.now() - lastSignInDate.getTime()) / (1000 * 60 * 60 * 24);
+    
+    if (daysSinceLastSignIn <= 1) {
+      return 'Active';
+    } else if (daysSinceLastSignIn <= 7) {
+      return 'Recent';
+    } else if (daysSinceLastSignIn <= 30) {
+      return 'Inactive';
+    } else {
+      return 'Dormant';
     }
   };
 
   const handleUserAdded = () => {
-    // In a real app, this would refresh the users list from Supabase
-    console.log('User added, refreshing list...');
+    refetch();
+    toast({
+      title: "User list updated",
+      description: "The user list has been refreshed with the latest data.",
+    });
   };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <Card className="bg-space-deep-blue border-gray-700">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-center space-x-2">
+              <Loader2 className="h-6 w-6 animate-spin text-accent" />
+              <span className="text-white">Loading users...</span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -85,7 +169,7 @@ export const AdminUsersPanel: React.FC = () => {
                 User Management
               </CardTitle>
               <CardDescription className="text-gray-400">
-                Manage user accounts, roles, and permissions
+                Manage user accounts, roles, and permissions ({users.length} total users)
               </CardDescription>
             </div>
             <Button 
@@ -127,7 +211,7 @@ export const AdminUsersPanel: React.FC = () => {
                   <TableRow key={user.id} className="border-gray-700 hover:bg-gray-800/50">
                     <TableCell>
                       <div>
-                        <p className="text-white font-medium">{user.fullName || 'N/A'}</p>
+                        <p className="text-white font-medium">{user.full_name || 'N/A'}</p>
                         <p className="text-gray-400 text-sm">{user.email}</p>
                       </div>
                     </TableCell>
@@ -137,12 +221,14 @@ export const AdminUsersPanel: React.FC = () => {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge className={getStatusBadgeColor(user.status)}>
-                        {user.status}
+                      <Badge className={getStatusBadgeColor(user.last_sign_in_at)}>
+                        {getStatusText(user.last_sign_in_at)}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-gray-300">{user.lastLogin}</TableCell>
-                    <TableCell className="text-gray-300">{user.createdAt}</TableCell>
+                    <TableCell className="text-gray-300">
+                      {user.last_sign_in_at ? formatDate(user.last_sign_in_at) : 'Never'}
+                    </TableCell>
+                    <TableCell className="text-gray-300">{formatDate(user.created_at)}</TableCell>
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -169,6 +255,13 @@ export const AdminUsersPanel: React.FC = () => {
               </TableBody>
             </Table>
           </div>
+
+          {filteredUsers.length === 0 && !isLoading && (
+            <div className="text-center py-8">
+              <Shield className="mx-auto h-12 w-12 text-gray-400 mb-3" />
+              <p className="text-gray-400">No users found matching your search.</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
