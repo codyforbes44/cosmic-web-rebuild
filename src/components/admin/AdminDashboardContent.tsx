@@ -15,7 +15,8 @@ import {
   Activity,
   Globe,
   MessageSquare,
-  RefreshCw
+  RefreshCw,
+  Bot
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,6 +24,7 @@ import { AdminUsersPanel } from './panels/AdminUsersPanel';
 import { AdminAnalyticsPanel } from './panels/AdminAnalyticsPanel';
 import { AdminSystemPanel } from './panels/AdminSystemPanel';
 import { AdminSecurityPanel } from './panels/AdminSecurityPanel';
+import { AdminChatbotPanel } from './panels/AdminChatbotPanel';
 
 export const AdminDashboardContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -131,7 +133,7 @@ export const AdminDashboardContent: React.FC = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5 bg-space-deep-blue">
+        <TabsList className="grid w-full grid-cols-6 bg-space-deep-blue">
           <TabsTrigger value="overview" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <BarChart3 size={16} />
             Overview
@@ -143,6 +145,10 @@ export const AdminDashboardContent: React.FC = () => {
           <TabsTrigger value="users" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <Users size={16} />
             Users
+          </TabsTrigger>
+          <TabsTrigger value="chatbot" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+            <Bot size={16} />
+            Chatbot
           </TabsTrigger>
           <TabsTrigger value="system" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <Settings size={16} />
@@ -208,7 +214,7 @@ export const AdminDashboardContent: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <Button 
                   variant="outline" 
                   className="h-20 flex-col gap-2 border-gray-600 hover:bg-accent-hover/10 hover:border-accent focus:ring-2 focus:ring-accent"
@@ -224,6 +230,14 @@ export const AdminDashboardContent: React.FC = () => {
                 >
                   <Users className="h-5 w-5" />
                   <span className="text-sm">Manage Users</span>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex-col gap-2 border-gray-600 hover:bg-accent-hover/10 hover:border-accent focus:ring-2 focus:ring-accent"
+                  onClick={() => setActiveTab('chatbot')}
+                >
+                  <Bot className="h-5 w-5" />
+                  <span className="text-sm">Chatbot</span>
                 </Button>
                 <Button 
                   variant="outline" 
@@ -252,6 +266,10 @@ export const AdminDashboardContent: React.FC = () => {
 
         <TabsContent value="users">
           <AdminUsersPanel />
+        </TabsContent>
+
+        <TabsContent value="chatbot">
+          <AdminChatbotPanel />
         </TabsContent>
 
         <TabsContent value="system">
