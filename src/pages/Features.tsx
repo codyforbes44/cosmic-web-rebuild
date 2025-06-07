@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -127,7 +126,7 @@ const Features = () => {
                       onClick={() => handleFeatureSelect("Hugging Face Models")}>
                   <CardHeader>
                     <div className="flex justify-between items-center mb-2">
-                      <Robot className="h-8 w-8 text-orange-400" />
+                      <Bot className="h-8 w-8 text-orange-400" />
                       <Badge>Available Now</Badge>
                     </div>
                     <CardTitle className="text-xl text-white">Hugging Face Models</CardTitle>
@@ -764,7 +763,7 @@ const Features = () => {
                       onClick={() => handleFeatureSelect("Hugging Face Models")}>
                   <CardHeader>
                     <div className="flex justify-between items-center mb-2">
-                      <Robot className="h-8 w-8 text-orange-400" />
+                      <Bot className="h-8 w-8 text-orange-400" />
                       <Badge>Available Now</Badge>
                     </div>
                     <CardTitle className="text-xl text-white">Hugging Face Models</CardTitle>
