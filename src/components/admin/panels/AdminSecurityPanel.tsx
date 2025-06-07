@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -13,10 +13,24 @@ import {
   Ban,
   CheckCircle,
   XCircle,
-  Clock
+  Clock,
+  ExternalLink
 } from 'lucide-react';
+import { SecurityEventModal } from '../modals/SecurityEventModal';
+
+interface SecurityEvent {
+  id: string;
+  type: string;
+  description: string;
+  severity: 'low' | 'medium' | 'high';
+  timestamp: string;
+  status: 'active' | 'resolved' | 'investigating';
+}
 
 export const AdminSecurityPanel: React.FC = () => {
+  const [selectedEvent, setSelectedEvent] = useState<SecurityEvent | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const securityMetrics = [
     { name: 'Failed Logins', value: '12', status: 'warning', icon: Lock },
     { name: 'Blocked IPs', value: '3', status: 'good', icon: Ban },
@@ -24,7 +38,7 @@ export const AdminSecurityPanel: React.FC = () => {
     { name: 'Security Events', value: '5', status: 'warning', icon: AlertTriangle },
   ];
 
-  const securityEvents = [
+  const securityEvents: SecurityEvent[] = [
     {
       id: '1',
       type: 'Failed Login',
@@ -86,6 +100,16 @@ export const AdminSecurityPanel: React.FC = () => {
     }
   };
 
+  const handleEventClick = (event: SecurityEvent) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  };
+
   return (
     <div className="space-y-6">
       {/* Security Alert */}
@@ -125,17 +149,22 @@ export const AdminSecurityPanel: React.FC = () => {
               Recent Security Events
             </CardTitle>
             <CardDescription className="text-gray-400">
-              Latest security alerts and incidents
+              Latest security alerts and incidents (click to view details)
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {securityEvents.map((event) => (
-                <div key={event.id} className="p-4 bg-black/20 rounded-lg border border-gray-700">
+                <div 
+                  key={event.id} 
+                  className="p-4 bg-black/20 rounded-lg border border-gray-700 cursor-pointer hover:bg-black/30 transition-colors"
+                  onClick={() => handleEventClick(event)}
+                >
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       {getStatusIcon(event.status)}
                       <span className="text-white font-medium">{event.type}</span>
+                      <ExternalLink className="h-3 w-3 text-gray-400" />
                     </div>
                     <Badge className={getSeverityColor(event.severity)}>
                       {event.severity}
@@ -193,6 +222,13 @@ export const AdminSecurityPanel: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Security Event Modal */}
+      <SecurityEventModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        event={selectedEvent}
+      />
     </div>
   );
 };
