@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Settings, Users, LineChart, CloudLightning, Map, Calculator, Database, Lock, Clock, Zap } from "lucide-react";
+import { ArrowRight, Settings, Users, LineChart, CloudLightning, Map, Calculator, Database, Lock, Clock, Zap, Brain, MessageSquare, Robot, Palette, Shield, Globe } from "lucide-react";
 import FeaturePreview from "@/components/features/FeaturePreview";
 
 const Features = () => {
@@ -44,6 +44,8 @@ const Features = () => {
     else if (feature === "Interactive Maps") navigate("/maps");
     else if (feature === "Scientific Calculator") navigate("/calculator");
     else if (feature === "Analytics Dashboard") navigate("/analytics");
+    else if (feature === "OpenAI Assistant") navigate("/openai");
+    else if (feature === "Hugging Face Models") navigate("/huggingface");
   };
   
   return (
@@ -76,6 +78,7 @@ const Features = () => {
               <TabsTrigger value="all">All Features</TabsTrigger>
               <TabsTrigger value="productivity">Productivity</TabsTrigger>
               <TabsTrigger value="data">Data & Analytics</TabsTrigger>
+              <TabsTrigger value="ai">AI & Automation</TabsTrigger>
               <TabsTrigger value="integration">Integrations</TabsTrigger>
               <TabsTrigger value="premium" className="relative">
                 Premium
@@ -87,6 +90,192 @@ const Features = () => {
             
             <TabsContent value="all" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* OpenAI Assistant Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("OpenAI Assistant")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Brain className="h-8 w-8 text-blue-400" />
+                      <Badge>Available Now</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">OpenAI Assistant</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Advanced AI-powered chat with GPT-4 models
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Interactive chat interface with multiple OpenAI models including GPT-4o, with customizable system prompts and parameters.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-blue-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("OpenAI Assistant");
+                      }}
+                    >
+                      Activate <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Hugging Face Models Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Hugging Face Models")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Robot className="h-8 w-8 text-orange-400" />
+                      <Badge>Available Now</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Hugging Face Models</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Access to thousands of open-source AI models
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Explore and test various AI models from Hugging Face's extensive library for different tasks and applications.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-orange-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Hugging Face Models");
+                      }}
+                    >
+                      Activate <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Smart Notifications Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Smart Notifications")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <MessageSquare className="h-8 w-8 text-green-400" />
+                      <Badge className="bg-amber-700 hover:bg-amber-600">Coming Soon</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Smart Notifications</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      AI-powered intelligent notification system
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Get contextual notifications based on your usage patterns and preferences, powered by machine learning.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-green-900/30 hover:text-white"
+                      disabled
+                    >
+                      Coming Soon <Clock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Theme Customization Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Theme Customization")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Palette className="h-8 w-8 text-purple-400" />
+                      <Badge className="bg-amber-700 hover:bg-amber-600">Coming Soon</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Theme Customization</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Personalize your interface with custom themes
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Create and apply custom color schemes, layouts, and visual preferences to match your brand or style.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-purple-900/30 hover:text-white"
+                      disabled
+                    >
+                      Coming Soon <Clock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Advanced Security Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Advanced Security")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Shield className="h-8 w-8 text-red-400" />
+                      <Badge className="bg-brand-gold text-black">Premium</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Advanced Security</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Enterprise-grade security and compliance features
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Two-factor authentication, audit logs, data encryption, and compliance reporting for enterprise users.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-red-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Advanced Security", true);
+                      }}
+                    >
+                      Premium Feature <Lock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Global CDN Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Global CDN")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Globe className="h-8 w-8 text-cyan-400" />
+                      <Badge className="bg-brand-gold text-black">Premium</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Global CDN</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Lightning-fast global content delivery
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Accelerate your applications with our global content delivery network for optimal performance worldwide.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-cyan-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Global CDN", true);
+                      }}
+                    >
+                      Premium Feature <Lock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
                 {/* Weather Alerts Feature Card */}
                 <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
                       onClick={() => handleFeatureSelect("Weather Alerts")}>
@@ -373,6 +562,35 @@ const Features = () => {
                   </CardFooter>
                 </Card>
                 
+                {/* Theme Customization Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Theme Customization")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Palette className="h-8 w-8 text-purple-400" />
+                      <Badge className="bg-amber-700 hover:bg-amber-600">Coming Soon</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Theme Customization</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Personalize your interface with custom themes
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Create and apply custom color schemes, layouts, and visual preferences to match your brand or style.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-purple-900/30 hover:text-white"
+                      disabled
+                    >
+                      Coming Soon <Clock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
                 {/* AI Assistant */}
                 <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
                       onClick={() => handleFeatureSelect("AI Assistant")}>
@@ -472,6 +690,167 @@ const Features = () => {
                     </Button>
                   </CardFooter>
                 </Card>
+
+                {/* Global CDN Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Global CDN")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Globe className="h-8 w-8 text-cyan-400" />
+                      <Badge className="bg-brand-gold text-black">Premium</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Global CDN</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Lightning-fast global content delivery
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Accelerate your applications with our global content delivery network for optimal performance worldwide.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-cyan-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Global CDN", true);
+                      }}
+                    >
+                      Premium Feature <Lock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="ai" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* OpenAI Assistant Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("OpenAI Assistant")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Brain className="h-8 w-8 text-blue-400" />
+                      <Badge>Available Now</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">OpenAI Assistant</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Advanced AI-powered chat with GPT-4 models
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Interactive chat interface with multiple OpenAI models including GPT-4o, with customizable system prompts and parameters.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-blue-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("OpenAI Assistant");
+                      }}
+                    >
+                      Activate <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Hugging Face Models Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Hugging Face Models")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Robot className="h-8 w-8 text-orange-400" />
+                      <Badge>Available Now</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Hugging Face Models</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Access to thousands of open-source AI models
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Explore and test various AI models from Hugging Face's extensive library for different tasks and applications.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-orange-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Hugging Face Models");
+                      }}
+                    >
+                      Activate <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Smart Notifications Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Smart Notifications")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <MessageSquare className="h-8 w-8 text-green-400" />
+                      <Badge className="bg-amber-700 hover:bg-amber-600">Coming Soon</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Smart Notifications</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      AI-powered intelligent notification system
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Get contextual notifications based on your usage patterns and preferences, powered by machine learning.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-green-900/30 hover:text-white"
+                      disabled
+                    >
+                      Coming Soon <Clock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* AI Assistant */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("AI Assistant")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Zap className="h-8 w-8 text-yellow-400" />
+                      <Badge className="bg-brand-gold text-black">Premium</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">AI Assistant</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Intelligent help across all platform tools
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Get contextual assistance and intelligent suggestions as you work with our platform tools.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-yellow-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("AI Assistant", true);
+                      }}
+                    >
+                      Premium Feature <Lock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
               </div>
             </TabsContent>
             
@@ -540,11 +919,107 @@ const Features = () => {
                     </Button>
                   </CardFooter>
                 </Card>
+
+                {/* Global CDN Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Global CDN")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Globe className="h-8 w-8 text-cyan-400" />
+                      <Badge className="bg-brand-gold text-black">Premium</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Global CDN</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Lightning-fast global content delivery
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Accelerate your applications with our global content delivery network for optimal performance worldwide.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-cyan-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Global CDN", true);
+                      }}
+                    >
+                      Premium Feature <Lock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
               </div>
             </TabsContent>
             
             <TabsContent value="premium" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Advanced Security Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Advanced Security")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Shield className="h-8 w-8 text-red-400" />
+                      <Badge className="bg-brand-gold text-black">Premium</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Advanced Security</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Enterprise-grade security and compliance features
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Two-factor authentication, audit logs, data encryption, and compliance reporting for enterprise users.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-red-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Advanced Security", true);
+                      }}
+                    >
+                      Premium Feature <Lock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Global CDN Feature */}
+                <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
+                      onClick={() => handleFeatureSelect("Global CDN")}>
+                  <CardHeader>
+                    <div className="flex justify-between items-center mb-2">
+                      <Globe className="h-8 w-8 text-cyan-400" />
+                      <Badge className="bg-brand-gold text-black">Premium</Badge>
+                    </div>
+                    <CardTitle className="text-xl text-white">Global CDN</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Lightning-fast global content delivery
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-300">
+                      Accelerate your applications with our global content delivery network for optimal performance worldwide.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-cyan-900/30 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFeatureActivate("Global CDN", true);
+                      }}
+                    >
+                      Premium Feature <Lock className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+                
                 {/* Custom API Access */}
                 <Card className="bg-space-deep-blue/80 border-gray-700 hover:border-brand-gold/50 transition-all cursor-pointer"
                       onClick={() => handleFeatureSelect("Custom API Access")}>

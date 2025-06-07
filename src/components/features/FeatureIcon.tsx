@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { CloudLightning, Map, Calculator, LineChart, Users, Database, Zap, Settings } from "lucide-react";
+import { CloudLightning, Map, Calculator, LineChart, Users, Database, Zap, Settings, Brain, Robot, MessageSquare, Palette, Shield, Globe } from "lucide-react";
 
 interface FeatureIconProps {
   featureName: string;
@@ -23,6 +23,12 @@ const FeatureIcon: React.FC<FeatureIconProps> = ({ featureName, size = "md", cla
       case "Custom API Access": return <Database className={`${iconSize} text-red-400 ${className}`} />;
       case "AI Assistant": return <Zap className={`${iconSize} text-yellow-400 ${className}`} />;
       case "Advanced Settings": return <Settings className={`${iconSize} text-indigo-400 ${className}`} />;
+      case "OpenAI Assistant": return <Brain className={`${iconSize} text-blue-400 ${className}`} />;
+      case "Hugging Face Models": return <Robot className={`${iconSize} text-orange-400 ${className}`} />;
+      case "Smart Notifications": return <MessageSquare className={`${iconSize} text-green-400 ${className}`} />;
+      case "Theme Customization": return <Palette className={`${iconSize} text-purple-400 ${className}`} />;
+      case "Advanced Security": return <Shield className={`${iconSize} text-red-400 ${className}`} />;
+      case "Global CDN": return <Globe className={`${iconSize} text-cyan-400 ${className}`} />;
       default: return null;
     }
   };

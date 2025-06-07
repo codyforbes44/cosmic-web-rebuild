@@ -73,6 +73,54 @@ const FeatureCapabilities: React.FC<FeatureCapabilitiesProps> = ({ featureName, 
           "Data handling preferences",
           "Integration options"
         ];
+      case "OpenAI Assistant":
+        return [
+          "Multiple GPT model access",
+          "Customizable system prompts",
+          "Temperature and token controls",
+          "Conversation history",
+          "Real-time responses"
+        ];
+      case "Hugging Face Models":
+        return [
+          "Thousands of AI models",
+          "Text and image processing",
+          "Model comparison tools",
+          "Custom model deployment",
+          "Open-source community"
+        ];
+      case "Smart Notifications":
+        return [
+          "AI-powered relevance filtering",
+          "Behavioral pattern learning",
+          "Cross-platform delivery",
+          "Priority-based scheduling",
+          "Custom notification rules"
+        ];
+      case "Theme Customization":
+        return [
+          "Custom color schemes",
+          "Layout personalization",
+          "Brand integration options",
+          "Multiple theme profiles",
+          "Dark and light mode variants"
+        ];
+      case "Advanced Security":
+        return [
+          "Two-factor authentication",
+          "End-to-end encryption",
+          "Audit trail logging",
+          "Compliance reporting",
+          "Enterprise SSO integration"
+        ];
+      case "Global CDN":
+        return [
+          "Worldwide edge locations",
+          "Automatic failover",
+          "Performance optimization",
+          "Real-time analytics",
+          "99.9% uptime guarantee"
+        ];
       default:
         return ["Feature information not available"];
     }
