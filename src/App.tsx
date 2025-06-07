@@ -34,6 +34,7 @@ const Maps = lazy(() => import("./pages/Maps"));
 const MedicalDiagnosis = lazy(() => import("./pages/MedicalDiagnosis"));
 const ScientificCalculator = lazy(() => import("./pages/ScientificCalculator"));
 const Features = lazy(() => import("./pages/Features"));
+const HuggingFace = lazy(() => import("./pages/HuggingFace"));
 
 // Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -113,6 +114,7 @@ const AppRoutes = () => {
       <Route path="/medical-diagnosis" element={<MedicalDiagnosis />} />
       <Route path="/calculator" element={<ScientificCalculator />} />
       <Route path="/features" element={<Features />} />
+      <Route path="/huggingface" element={<HuggingFace />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
