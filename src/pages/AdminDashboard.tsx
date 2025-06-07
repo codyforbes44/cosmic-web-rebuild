@@ -2,7 +2,7 @@
 import React from 'react';
 import { AdminGuard } from '@/components/admin/AdminGuard';
 import { AdminDashboardContent } from '@/components/admin/AdminDashboardContent';
-import { SEO } from '@/components/SEO';
+import SEO from '@/components/SEO';
 
 const AdminDashboard = () => {
   return (
