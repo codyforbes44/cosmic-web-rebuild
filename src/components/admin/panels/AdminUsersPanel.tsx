@@ -19,9 +19,11 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Search, UserPlus, Shield, Ban } from 'lucide-react';
+import { AddUserModal } from '../modals/AddUserModal';
 
 export const AdminUsersPanel: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
 
   // Mock user data - in real app this would come from Supabase
   const users = [
@@ -67,6 +69,11 @@ export const AdminUsersPanel: React.FC = () => {
     }
   };
 
+  const handleUserAdded = () => {
+    // In a real app, this would refresh the users list from Supabase
+    console.log('User added, refreshing list...');
+  };
+
   return (
     <div className="space-y-6">
       <Card className="bg-space-deep-blue border-gray-700">
@@ -81,7 +88,10 @@ export const AdminUsersPanel: React.FC = () => {
                 Manage user accounts, roles, and permissions
               </CardDescription>
             </div>
-            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground focus:ring-2 focus:ring-accent">
+            <Button 
+              onClick={() => setIsAddUserModalOpen(true)}
+              className="bg-accent hover:bg-accent-hover text-accent-foreground focus:ring-2 focus:ring-accent"
+            >
               <UserPlus className="h-4 w-4 mr-2" />
               Add User
             </Button>
@@ -161,6 +171,12 @@ export const AdminUsersPanel: React.FC = () => {
           </div>
         </CardContent>
       </Card>
+
+      <AddUserModal
+        isOpen={isAddUserModalOpen}
+        onClose={() => setIsAddUserModalOpen(false)}
+        onUserAdded={handleUserAdded}
+      />
     </div>
   );
 };
