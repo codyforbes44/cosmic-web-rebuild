@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, Lock, Mail, User } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -38,6 +38,20 @@ const Auth = () => {
     );
   }
 
+  const checkAdminAndRedirect = async (userId: string) => {
+    try {
+      const { data, error } = await supabase.rpc('is_admin', { user_id: userId });
+      if (!error && data) {
+        navigate('/admin');
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error checking admin role:', error);
+      return false;
+    }
+  };
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -48,7 +62,16 @@ const Auth = () => {
       if (error) {
         setError(error.message);
       } else {
-        navigate('/');
+        // Check if user is admin after successful login
+        const { data: { user: signedInUser } } = await supabase.auth.getUser();
+        if (signedInUser) {
+          const isAdminRedirected = await checkAdminAndRedirect(signedInUser.id);
+          if (!isAdminRedirected) {
+            navigate('/');
+          }
+        } else {
+          navigate('/');
+        }
       }
     } catch (err) {
       setError('An unexpected error occurred');
@@ -147,7 +170,7 @@ const Auth = () => {
 
                   <Button
                     type="submit"
-                    className="w-full bg-brand-gold hover:bg-brand-gold/90 text-black"
+                    className="w-full bg-accent hover:bg-accent-hover text-accent-foreground"
                     disabled={isLoading}
                   >
                     {isLoading ? (
@@ -239,7 +262,7 @@ const Auth = () => {
 
                   <Button
                     type="submit"
-                    className="w-full bg-brand-gold hover:bg-brand-gold/90 text-black"
+                    className="w-full bg-accent hover:bg-accent-hover text-accent-foreground"
                     disabled={isLoading}
                   >
                     {isLoading ? (

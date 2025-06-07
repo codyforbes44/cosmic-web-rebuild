@@ -17,14 +17,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { signUp, signIn, signOut } = useAuthOperations();
   const { updateProfile } = useProfileOperations(user);
 
+  const checkAdminRole = async (userId: string): Promise<boolean> => {
+    try {
+      const { data, error } = await supabase.rpc('is_admin', { user_id: userId });
+      if (error) {
+        console.error('Error checking admin role:', error);
+        return false;
+      }
+      return data || false;
+    } catch (error) {
+      console.error('Error checking admin role:', error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         console.log('Auth state change:', event, session?.user?.id);
         
         if (event === 'SIGNED_OUT') {
           cleanupAuthState();
+        }
+        
+        if (event === 'SIGNED_IN' && session?.user) {
+          // Check if user is admin and redirect if on auth page
+          setTimeout(async () => {
+            const isAdmin = await checkAdminRole(session.user.id);
+            if (isAdmin && window.location.pathname === '/auth') {
+              window.location.href = '/admin';
+              return;
+            }
+          }, 0);
         }
         
         setSession(session);
