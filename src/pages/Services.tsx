@@ -23,25 +23,38 @@ import { services } from "@/data/servicesData";
 import { Settings } from "lucide-react";
 
 const Services = () => {
+  console.log('Services component rendering...');
+  console.log('Available services:', services);
+  
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState(services[0]);
   
+  console.log('Selected service:', selectedService);
+  
   useEffect(() => {
+    console.log('Location search params:', location.search);
     const searchParams = new URLSearchParams(location.search);
     const serviceParam = searchParams.get('service');
     
     if (serviceParam) {
+      console.log('Service param found:', serviceParam);
       const foundService = services.find(service => service.id === serviceParam);
       if (foundService) {
+        console.log('Found service:', foundService);
         setSelectedService(foundService);
+      } else {
+        console.log('Service not found for param:', serviceParam);
       }
     }
   }, [location.search]);
 
   const handleTabChange = (value: string) => {
+    console.log('Tab change requested:', value);
     navigate(`/services?service=${value}`);
   };
+
+  console.log('About to render Services page UI');
 
   return (
     <>
