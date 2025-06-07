@@ -19,6 +19,7 @@ export const navLinks: NavLink[] = [
   { name: 'Maps', path: '/maps' },
   { name: 'Calculator', path: '/calculator' },
   { name: 'Features', path: '/features' },
+  { name: 'OpenAI', path: '/openai' },
   { name: 'Hugging Face', path: '/huggingface' },
   { name: 'FAQ', path: '/faq' }
 ];

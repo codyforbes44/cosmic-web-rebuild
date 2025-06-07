@@ -1,0 +1,29 @@
+
+import React from 'react';
+import PageHeader from '@/components/PageHeader';
+import StarBackground from '@/components/StarBackground';
+import OpenAIPlayground from '@/components/ai/OpenAIPlayground';
+import { Brain } from 'lucide-react';
+
+const OpenAI = () => {
+  return (
+    <div className="min-h-screen relative">
+      <StarBackground />
+      <div className="relative z-10">
+        <PageHeader
+          title="OpenAI Chat Assistant"
+          description="Interact with advanced AI models from OpenAI including GPT-4"
+          icon={Brain}
+        />
+        
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex justify-center">
+            <OpenAIPlayground />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OpenAI;
