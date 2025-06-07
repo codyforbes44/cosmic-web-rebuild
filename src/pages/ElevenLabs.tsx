@@ -1,6 +1,8 @@
 
 import React, { useEffect } from 'react';
 import StarBackground from '@/components/StarBackground';
+import PageHeader from '@/components/PageHeader';
+import { Bot } from 'lucide-react';
 
 declare global {
   namespace JSX {
@@ -32,7 +34,12 @@ const ElevenLabs = () => {
   return (
     <div className="min-h-screen relative">
       <StarBackground />
-      <div className="relative z-10">
+      <div className="relative z-10 p-8">
+        <PageHeader 
+          title="AI Assistant"
+          description="Chat with our advanced AI assistant powered by ElevenLabs technology for natural voice conversations"
+          icon={Bot}
+        />
         <elevenlabs-convai agent-id="agent_01jwedntnjf7tt0qma00a2276r"></elevenlabs-convai>
       </div>
     </div>

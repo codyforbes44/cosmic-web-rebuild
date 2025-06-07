@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import StarBackground from '@/components/StarBackground';
+import PageHeader from '@/components/PageHeader';
 import MapInterface from '@/components/maps/MapInterface';
 import DirectionsPanel from '@/components/maps/DirectionsPanel';
 import LocationSearch from '@/components/maps/LocationSearch';
@@ -41,10 +42,12 @@ const Maps = () => {
           {/* Header */}
           <div className="bg-space-deep-blue/50 backdrop-blur-sm border-b border-white/10 p-4">
             <div className="max-w-7xl mx-auto">
-              <div className="flex items-center gap-3 mb-4">
-                <MapPin className="w-8 h-8 text-brand-gold" />
-                <h1 className="text-3xl font-bold text-white">Maps & Directions</h1>
-              </div>
+              <PageHeader 
+                title="Maps & Directions"
+                description="Get detailed maps, turn-by-turn directions, and explore locations with our advanced mapping interface"
+                icon={MapPin}
+                className="mb-4"
+              />
               
               {/* Search Interface */}
               <LocationSearch

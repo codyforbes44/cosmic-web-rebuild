@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import StarBackground from "@/components/StarBackground";
+import PageHeader from "@/components/PageHeader";
 import WeatherBackground from "./WeatherBackground";
 import WeatherPageTabs from "./WeatherPageTabs";
 import WeatherPageContent from "./WeatherPageContent";
@@ -15,6 +16,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useWeatherPage } from './WeatherPageProvider';
 import { useIsMobile } from "@/hooks/use-mobile";
 import FavoriteLocations from './FavoriteLocations';
+import { Cloud } from 'lucide-react';
 import "@/components/weather/WeatherBackground.css";
 
 const WeatherPageLayout = () => {
@@ -65,7 +67,13 @@ const WeatherPageLayout = () => {
       
       <main className={`min-h-screen ${isMobile ? 'py-20 px-3' : 'py-16 md:py-24 px-4'} relative`}>
         <div className={`container mx-auto ${isMobile ? 'max-w-full' : 'max-w-7xl'} relative z-10`}>
-          {/* WeatherPageHeader removed from here */}
+          {/* Weather Page Header */}
+          <PageHeader 
+            title="Ʒʙɪ Weather Center"
+            description={isMobile ? "Real-time weather data and forecasts" : "Comprehensive weather information, forecasts, and interactive maps for your location"}
+            icon={Cloud}
+            className={isMobile ? 'mb-6' : 'mb-8'}
+          />
 
           {error && <WeatherErrorCard error={error} />}
 

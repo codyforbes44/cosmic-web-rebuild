@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { Package } from 'lucide-react';
 
 import StarBackground from "@/components/StarBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import ProductsHeader from '@/components/products/ProductsHeader';
+import PageHeader from "@/components/PageHeader";
 import ProductsTestimonials from '@/components/products/ProductsTestimonials';
 import ProductsCTA from '@/components/products/ProductsCTA';
 import ProductTabs from '@/components/products/ProductTabs';
@@ -81,7 +82,11 @@ const Products = () => {
           </div>
           
           {/* Header Section */}
-          <ProductsHeader />
+          <PageHeader 
+            title="Our Products"
+            description="Comprehensive enterprise solutions designed for the trucking industry to streamline operations and improve driver experience"
+            icon={Package}
+          />
 
           {/* Product Tabs */}
           <div className="mb-8">
