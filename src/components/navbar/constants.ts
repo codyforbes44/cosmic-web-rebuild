@@ -1,3 +1,4 @@
+
 import { 
   Home, 
   Briefcase, 
@@ -16,8 +17,6 @@ export interface NavLink {
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/' },
-  { name: 'Services', path: '/services' },
-  { name: 'Products', path: '/products' },
   { name: 'About', path: '/about' },
   { name: 'News', path: '/news' },
   { name: 'FAQ', path: '/faq' },
