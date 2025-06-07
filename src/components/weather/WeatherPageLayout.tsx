@@ -11,7 +11,6 @@ import WeatherErrorCard from "./WeatherErrorCard";
 import WeatherAlerts from "./WeatherAlerts";
 import LocationSearch from "./LocationSearch";
 import WeatherAdditionalInfo from "./WeatherAdditionalInfo";
-import WeatherPageHeader from "./WeatherPageHeader";
 import { Toaster } from "@/components/ui/toaster";
 import { useWeatherPage } from './WeatherPageProvider';
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -64,11 +63,10 @@ const WeatherPageLayout = () => {
       {/* Star Background Overlay */}
       <StarBackground />
       
-      {/* Weather Page Header */}
-      <WeatherPageHeader />
-      
-      <main className={`min-h-screen ${isMobile ? 'py-8 px-3' : 'py-16 px-4'} relative`}>
+      <main className={`min-h-screen ${isMobile ? 'py-20 px-3' : 'py-16 md:py-24 px-4'} relative`}>
         <div className={`container mx-auto ${isMobile ? 'max-w-full' : 'max-w-7xl'} relative z-10`}>
+          {/* WeatherPageHeader removed from here */}
+
           {error && <WeatherErrorCard error={error} />}
 
           <div className={`${isMobile ? 'grid grid-cols-1 gap-4' : 'grid md:grid-cols-3 gap-6'}`}>
