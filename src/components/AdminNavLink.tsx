@@ -17,7 +17,7 @@ const AdminNavLink: React.FC<AdminNavLinkProps> = ({ className }) => {
     >
       <ScrollToTopLink 
         to="/admin" 
-        className={`flex items-center text-sm px-4 py-2 bg-accent/20 text-white rounded-md hover:bg-accent/30 transition-all ${className}`}
+        className={`flex items-center text-sm px-4 py-2 bg-accent/20 text-accent-foreground rounded-md hover:bg-accent-hover/30 transition-all focus:ring-2 focus:ring-accent ${className}`}
       >
         <Settings size={16} className="mr-2" />
         <span>Admin Dashboard</span>

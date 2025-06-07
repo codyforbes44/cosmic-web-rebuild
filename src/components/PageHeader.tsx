@@ -37,7 +37,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
       <div className="relative z-10">
         <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 md:mb-4">
           {Icon && (
-            <Icon className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-brand-gold drop-shadow-lg flex-shrink-0" />
+            <Icon className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-accent drop-shadow-lg flex-shrink-0" />
           )}
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg leading-tight">
             {title}

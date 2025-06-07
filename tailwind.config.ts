@@ -43,7 +43,11 @@ export default {
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					foreground: 'hsl(var(--accent-foreground))',
+					hover: 'hsl(var(--accent-hover))',
+					active: 'hsl(var(--accent-active))',
+					muted: 'hsl(var(--accent-muted))',
+					subtle: 'hsl(var(--accent-subtle))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -73,7 +77,7 @@ export default {
 				},
 				brand: {
 					'blue': '#1EAEDB',
-					'gold': '#9b87f5',   // Changed from gold to a professional purple color
+					'gold': '#9b87f5',
 					'black': '#000000',
 					'white': '#FFFFFF'
 				}

@@ -53,19 +53,19 @@ export const AdminDashboardContent: React.FC = () => {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid w-full grid-cols-4 bg-space-deep-blue">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
+          <TabsTrigger value="overview" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <BarChart3 size={16} />
             Overview
           </TabsTrigger>
-          <TabsTrigger value="users" className="flex items-center gap-2">
+          <TabsTrigger value="users" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <Users size={16} />
             Users
           </TabsTrigger>
-          <TabsTrigger value="system" className="flex items-center gap-2">
+          <TabsTrigger value="system" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <Settings size={16} />
             System
           </TabsTrigger>
-          <TabsTrigger value="security" className="flex items-center gap-2">
+          <TabsTrigger value="security" className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
             <Shield size={16} />
             Security
           </TabsTrigger>
@@ -126,19 +126,19 @@ export const AdminDashboardContent: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-gray-800">
+                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-accent-hover/10 hover:border-accent focus:ring-2 focus:ring-accent">
                   <Database className="h-5 w-5" />
                   <span className="text-sm">Backup DB</span>
                 </Button>
-                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-gray-800">
+                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-accent-hover/10 hover:border-accent focus:ring-2 focus:ring-accent">
                   <Mail className="h-5 w-5" />
                   <span className="text-sm">Email Users</span>
                 </Button>
-                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-gray-800">
+                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-accent-hover/10 hover:border-accent focus:ring-2 focus:ring-accent">
                   <FileText className="h-5 w-5" />
                   <span className="text-sm">Generate Report</span>
                 </Button>
-                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-gray-800">
+                <Button variant="outline" className="h-20 flex-col gap-2 border-gray-600 hover:bg-accent-hover/10 hover:border-accent focus:ring-2 focus:ring-accent">
                   <Globe className="h-5 w-5" />
                   <span className="text-sm">Deploy Update</span>
                 </Button>

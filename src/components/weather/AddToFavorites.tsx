@@ -73,14 +73,17 @@ const AddToFavorites = ({ location, latitude, longitude, country }: AddToFavorit
       onClick={handleToggleFavorite}
       disabled={isProcessing || !location}
       className={`
-        ${existingFavorite ? 'bg-brand-gold/10 text-brand-gold border-brand-gold/30' : 'bg-transparent border-white/20 text-white hover:bg-white/10'} 
-        transition-all duration-200
+        ${existingFavorite 
+          ? 'bg-accent/10 text-accent border-accent/30 hover:bg-accent-hover/20' 
+          : 'bg-transparent border-white/20 text-white hover:bg-white/10'
+        } 
+        transition-all duration-200 focus:ring-2 focus:ring-accent
       `}
     >
       {isProcessing ? (
         <Loader2 className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} animate-spin mr-2`} />
       ) : existingFavorite ? (
-        <Star className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} text-brand-gold fill-brand-gold mr-2`} />
+        <Star className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} text-accent fill-accent mr-2`} />
       ) : (
         <Star className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} mr-2`} />
       )}

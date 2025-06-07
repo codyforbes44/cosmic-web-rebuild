@@ -54,7 +54,7 @@ export const AdminUsersPanel: React.FC = () => {
     switch (role) {
       case 'admin': return 'bg-red-500/20 text-red-400 border-red-500/50';
       case 'moderator': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50';
-      default: return 'bg-blue-500/20 text-blue-400 border-blue-500/50';
+      default: return 'bg-accent/20 text-accent border-accent/50';
     }
   };
 
@@ -81,7 +81,7 @@ export const AdminUsersPanel: React.FC = () => {
                 Manage user accounts, roles, and permissions
               </CardDescription>
             </div>
-            <Button className="bg-accent hover:bg-accent/80 text-white">
+            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground focus:ring-2 focus:ring-accent">
               <UserPlus className="h-4 w-4 mr-2" />
               Add User
             </Button>
@@ -95,7 +95,7 @@ export const AdminUsersPanel: React.FC = () => {
               placeholder="Search users by email or name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-gray-800 border-gray-600 text-white"
+              className="pl-10 bg-gray-800 border-gray-600 text-white focus:ring-2 focus:ring-accent"
             />
           </div>
 
@@ -136,18 +136,18 @@ export const AdminUsersPanel: React.FC = () => {
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-700 focus:ring-2 focus:ring-accent">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700">
-                          <DropdownMenuItem className="text-white hover:bg-gray-700">
+                          <DropdownMenuItem className="text-white hover:bg-gray-700 focus:bg-accent focus:text-accent-foreground">
                             Edit User
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="text-white hover:bg-gray-700">
+                          <DropdownMenuItem className="text-white hover:bg-gray-700 focus:bg-accent focus:text-accent-foreground">
                             Change Role
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-400 hover:bg-gray-700">
+                          <DropdownMenuItem className="text-red-400 hover:bg-gray-700 focus:bg-red-500 focus:text-white">
                             <Ban className="h-4 w-4 mr-2" />
                             Ban User
                           </DropdownMenuItem>

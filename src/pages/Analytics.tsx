@@ -59,7 +59,7 @@ const Analytics: React.FC = () => {
                 onClick={handleTestTracking}
                 variant="outline"
                 size="sm"
-                className="bg-transparent border-accent/50 text-accent hover:bg-accent/10"
+                className="bg-transparent border-accent/50 text-accent hover:bg-accent-hover/10 focus:ring-2 focus:ring-accent"
               >
                 <TestTube className="w-4 h-4 mr-2" />
                 Test Tracking
@@ -68,7 +68,7 @@ const Analytics: React.FC = () => {
                 onClick={handleRefresh}
                 variant="outline"
                 size="sm"
-                className="bg-transparent border-white/20 text-white hover:bg-white/10"
+                className="bg-transparent border-white/20 text-white hover:bg-white/10 focus:ring-2 focus:ring-accent"
                 disabled={loading}
               >
                 <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
@@ -95,7 +95,7 @@ const Analytics: React.FC = () => {
                     onClick={handleRefresh}
                     variant="outline"
                     size="sm"
-                    className="bg-transparent border-red-500/50 text-red-300 hover:bg-red-500/10"
+                    className="bg-transparent border-red-500/50 text-red-300 hover:bg-red-500/10 focus:ring-2 focus:ring-red-500"
                   >
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Try Again
@@ -137,7 +137,7 @@ const Analytics: React.FC = () => {
                         onClick={handleTestTracking}
                         variant="outline"
                         size="sm"
-                        className="bg-transparent border-yellow-500/50 text-yellow-300 hover:bg-yellow-500/10"
+                        className="bg-transparent border-yellow-500/50 text-yellow-300 hover:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500"
                       >
                         <TestTube className="w-4 h-4 mr-2" />
                         Test Visitor Tracking
@@ -156,7 +156,7 @@ const Analytics: React.FC = () => {
                     onClick={handleRefresh}
                     variant="outline"
                     size="sm"
-                    className="mt-4 bg-transparent border-white/20 text-white hover:bg-white/10"
+                    className="mt-4 bg-transparent border-white/20 text-white hover:bg-white/10 focus:ring-2 focus:ring-accent"
                   >
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Check Again
