@@ -47,8 +47,8 @@ const Services = () => {
     <>
       <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-24 pb-24">
-        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+      <main className="min-h-screen pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 md:pb-24">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 max-w-6xl">
           {/* Breadcrumb navigation */}
           <BreadcrumbNav currentPageLabel="Services" />
           
@@ -60,7 +60,7 @@ const Services = () => {
           />
 
           {/* Service Tabs */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <ServiceTabs 
               services={services} 
               selectedServiceId={selectedService.id} 
@@ -69,17 +69,17 @@ const Services = () => {
           </div>
 
           {/* Service Content */}
-          <Tabs value={selectedService.id} className="mb-16">
+          <Tabs value={selectedService.id} className="mb-12 sm:mb-16">
             {services.map((service) => (
               <TabsContent key={service.id} value={service.id} className="mt-0 animate-in fade-in-50">
                 {/* Service Info */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
                   <ServiceImage image={service.image} name={service.title || service.name || ''} />
                   <ServiceInfo service={service} />
                 </div>
                 
                 {/* Pain Points and Benefits */}
-                <div className="mt-16">
+                <div className="mt-12 sm:mt-16">
                   <ServiceDetails service={service} />
                 </div>
                 
@@ -92,7 +92,7 @@ const Services = () => {
                 )}
                 
                 {/* Case Study */}
-                <div className="mt-16">
+                <div className="mt-12 sm:mt-16">
                   <ServiceCaseStudy 
                     serviceId={service.id}
                     title={service.case_study.title}

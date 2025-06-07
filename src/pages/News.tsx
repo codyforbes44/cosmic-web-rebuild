@@ -40,8 +40,8 @@ const News = () => {
       />
       <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
-        <div className="container mx-auto px-4 max-w-6xl">
+      <main className="min-h-screen pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 md:pb-24">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 max-w-6xl">
           {/* Breadcrumb navigation */}
           <BreadcrumbNav currentPageLabel="Business Insights" />
           
@@ -52,7 +52,7 @@ const News = () => {
             icon={Newspaper}
           />
 
-          <div className="space-card p-8 rounded-xl mb-12">
+          <div className="space-card p-4 sm:p-6 md:p-8 rounded-xl mb-8 sm:mb-12">
             {/* Search and Filter */}
             <SearchFilter 
               searchQuery={searchQuery}
@@ -64,7 +64,7 @@ const News = () => {
           </div>
 
           {/* News Articles */}
-          <div className="space-card p-8 rounded-xl">
+          <div className="space-card p-4 sm:p-6 md:p-8 rounded-xl">
             <ArticleList 
               articles={filteredArticles} 
               categories={categories}

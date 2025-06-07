@@ -30,7 +30,7 @@ const FAQ = () => {
       
       <div className="min-h-screen relative overflow-hidden">
         <StarBackground />
-        <div className="container mx-auto px-4 py-24 relative z-10">
+        <div className="container mx-auto px-3 sm:px-4 py-16 sm:py-20 md:py-24 relative z-10">
           {/* Breadcrumb Navigation */}
           <BreadcrumbNav currentPageLabel="FAQ" />
           

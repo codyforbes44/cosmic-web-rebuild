@@ -57,12 +57,12 @@ const Products = () => {
         image={productCategories[0].image}
       />
       <Navbar />
-      <main className="pt-24 pb-16 relative overflow-hidden">
+      <main className="pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 relative overflow-hidden">
         <StarBackground />
         
-        <div className="container mx-auto px-4 max-w-7xl">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 max-w-7xl">
           {/* Breadcrumb Navigation */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -89,7 +89,7 @@ const Products = () => {
           />
 
           {/* Product Tabs */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <ProductTabs 
               products={productCategories}
               selectedProductId={selectedProductId}
@@ -98,7 +98,7 @@ const Products = () => {
           </div>
           
           {/* Product Content */}
-          <Tabs value={selectedProductId} className="mb-16">
+          <Tabs value={selectedProductId} className="mb-12 sm:mb-16">
             {productCategories.map((product) => (
               <TabsContent key={product.href} value={product.href} className="mt-0 animate-in fade-in-50">
                 <ProductCard product={product} index={0} />

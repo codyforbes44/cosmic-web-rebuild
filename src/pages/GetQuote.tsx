@@ -22,9 +22,9 @@ const GetQuote = () => {
       />
       <Navbar />
       <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
-        <section className="py-20">
-          <div className="container mx-auto px-4">
+      <main className="min-h-screen pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 md:pb-24">
+        <section className="py-12 sm:py-16 md:py-20">
+          <div className="container mx-auto px-3 sm:px-4">
             {/* Breadcrumb navigation */}
             <BreadcrumbNav currentPageLabel="Get a Quote" />
             
@@ -35,14 +35,14 @@ const GetQuote = () => {
               icon={FileText}
             />
             
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl mx-auto">
-              {/* Services List - 4 columns on large screens */}
-              <div className="lg:col-span-4 order-2 lg:order-1">
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 sm:gap-8 md:gap-12 max-w-6xl mx-auto">
+              {/* Services List - Full width on mobile, 4 columns on XL screens */}
+              <div className="xl:col-span-4 order-1 xl:order-1">
                 <ServicesList />
               </div>
               
-              {/* Quote Form - 8 columns on large screens */}
-              <div className="lg:col-span-8 order-1 lg:order-2">
+              {/* Quote Form - Full width on mobile, 8 columns on XL screens */}
+              <div className="xl:col-span-8 order-2 xl:order-2">
                 <QuoteForm />
               </div>
             </div>
