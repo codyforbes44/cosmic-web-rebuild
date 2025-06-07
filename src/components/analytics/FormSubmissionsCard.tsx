@@ -37,8 +37,7 @@ const FormSubmissionsCard = () => {
       const { data: contactData, error: contactError } = await supabase
         .from('contact_submissions')
         .select('id, created_at, name, subject, email, message')
-        .order('created_at', { ascending: false })
-        .limit(50);
+        .order('created_at', { ascending: false });
 
       if (contactError) throw contactError;
 
@@ -46,8 +45,7 @@ const FormSubmissionsCard = () => {
       const { data: quoteData, error: quoteError } = await supabase
         .from('quote_requests')
         .select('id, created_at, full_name, service_type, email, phone, company_name, project_description, budget, timeline, terms_accepted')
-        .order('created_at', { ascending: false })
-        .limit(50);
+        .order('created_at', { ascending: false });
 
       if (quoteError) throw quoteError;
 
@@ -78,7 +76,7 @@ const FormSubmissionsCard = () => {
         })),
       ];
 
-      // Sort by date
+      // Sort by date and return all real submissions
       return combined.sort((a, b) => 
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
@@ -161,8 +159,8 @@ const FormSubmissionsCard = () => {
 
           {submissions && submissions.length > 0 ? (
             <div className="space-y-3 max-h-64 overflow-y-auto">
-              <h4 className="text-sm font-medium text-gray-300 mb-3">Recent Submissions</h4>
-              {submissions.slice(0, 10).map((submission) => (
+              <h4 className="text-sm font-medium text-gray-300 mb-3">All Submissions</h4>
+              {submissions.map((submission) => (
                 <div
                   key={submission.id}
                   className="flex items-center justify-between p-3 bg-space-dark-blue/50 rounded-lg border border-gray-700"
