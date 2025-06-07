@@ -1,27 +1,27 @@
-import { Rocket, Code, LayoutDashboard, CircleUserRound, Mail, Calendar, FileText, GraduationCap, Briefcase, LucideIcon, Users } from "lucide-react";
+import { 
+  Home, 
+  Briefcase, 
+  Package, 
+  Users, 
+  Newspaper, 
+  HelpCircle, 
+  Mail 
+} from 'lucide-react';
 
 export interface NavLink {
   name: string;
   path: string;
-  icon?: LucideIcon;
   disabled?: boolean;
 }
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/' },
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'News', path: '/news' },
+  { name: 'Services', path: '/services' },
+  { name: 'Products', path: '/products' },
   { name: 'About', path: '/about' },
-  { name: 'Contact', path: '/contact' },
-  { name: 'Partners', path: '/partners' },
-  { name: 'Analytics', path: '/analytics' },
-  { name: 'Weather', path: '/weather' },
-  { name: 'Maps', path: '/maps' },
-  { name: 'Calculator', path: '/calculator' },
-  { name: 'Features', path: '/features' },
-  { name: 'OpenAI', path: '/openai' },
-  { name: 'Hugging Face', path: '/huggingface' },
-  { name: 'FAQ', path: '/faq' }
+  { name: 'News', path: '/news' },
+  { name: 'FAQ', path: '/faq' },
+  { name: 'Contact', path: '/contact' }
 ];
 
 export interface ServiceCategory {
@@ -31,171 +31,72 @@ export interface ServiceCategory {
   color: string;
 }
 
-export const serviceCategories = [
+export const serviceCategories: ServiceCategory[] = [
   {
-    title: "Strategic Consulting",
-    href: "/services?service=strategy",
-    description: "Technology strategy development and roadmap planning aligned with business objectives",
-    color: "#10B981"
+    title: 'Strategy Consulting',
+    href: '/services',
+    description: 'Develop a winning strategy for your trucking business',
+    color: '#793ef9',
   },
   {
-    title: "Recruitment Marketing",
-    href: "/services?service=recruitment",
-    description: "Powerful driver recruitment campaigns that deliver results",
-    color: "#FF6B35"
+    title: 'Digital Marketing',
+    href: '/services',
+    description: 'Attract and retain drivers with targeted campaigns',
+    color: '#ff6188',
   },
   {
-    title: "Digital Marketing",
-    href: "/services?service=digital",
-    description: "Strategic digital marketing solutions for trucking companies",
-    color: "#2563EB"
+    title: 'Custom Development',
+    href: '/services',
+    description: 'Tailor-made software solutions for your unique needs',
+    color: '#50fa7b',
   },
   {
-    title: "Social Media Marketing",
-    href: "/services?service=social",
-    description: "Strategic social media solutions for trucking and logistics",
-    color: "#E91E63"
+    title: 'Web Development',
+    href: '/services',
+    description: 'Build a professional website to showcase your brand',
+    color: '#f1fa8c',
   },
   {
-    title: "Custom Development",
-    href: "/services?service=custom",
-    description: "Tailor-made software solutions for your unique business needs",
-    color: "#8B5CF6"
+    title: 'Analytics & Tracking',
+    href: '/services',
+    description: 'Gain insights into your business performance',
+    color: '#bd93f9',
   },
   {
-    title: "Web & Mobile Apps",
-    href: "/services?service=web",
-    description: "Modern web and mobile application development",
-    color: "#F59E0B"
+    title: 'AI Solutions',
+    href: '/services',
+    description: 'Leverage the power of AI to optimize your operations',
+    color: '#ff79c6',
   },
   {
-    title: "Data Analytics",
-    href: "/services?service=analytics",
-    description: "Advanced analytics and visualization solutions",
-    color: "#EC4899"
+    title: 'Recruitment Marketing',
+    href: '/recruitment-marketing',
+    description: 'Specialized marketing strategies for driver recruitment',
+    color: '#A8FF32',
   },
-  {
-    title: "AI & Machine Learning",
-    href: "/services?service=ai",
-    description: "Intelligent automation and prediction solutions",
-    color: "#06B6D4"
-  }
 ];
 
-// Add ProductCategory interface
 export interface ProductCategory {
   title: string;
   href: string;
   description: string;
-  color: string;
   image: string;
+  color: string;
 }
 
-// Add productCategories array with updated image paths
 export const productCategories: ProductCategory[] = [
   {
-    title: "3BI Connect",
-    href: "/products?product=3bi-connect",
-    description: "Comprehensive platform for driver management and retention",
-    color: "#2563EB",
-    image: "/lovable-uploads/e3113b32-9c5a-4411-93bd-66a08ea62185.png"
+    title: '3BI Connect',
+    href: '/products?product=3bi-connect',
+    description: 'The all-in-one platform for managing your trucking business',
+    image: '/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png',
+    color: '#ffb86c',
   },
   {
-    title: "Carrier Partner Network",
-    href: "/products?product=carrier-partner-network",
-    description: "Connect with qualified drivers and streamline hiring",
-    color: "#10B981",
-    image: "/lovable-uploads/b6488acc-bc3b-49ce-a399-f736207129fe.png"
-  },
-  {
-    title: "TruckOnboard",
-    href: "/products?product=truckonboard",
-    description: "Digital onboarding solution for truck drivers",
-    color: "#06B6D4",
-    image: "/lovable-uploads/dbd9cb45-ab91-470f-8a3e-4640e6b5539c.png"
-  },
-  {
-    title: "Drivers Matter",
-    href: "/products?product=drivers-matter",
-    description: "Advocating for commercial drivers' rights and improved working conditions",
-    color: "#ea384c",
-    image: "/lovable-uploads/229a0194-f31b-490f-ba2c-e7666f2614fa.png"
-  }
-];
-
-export interface Product {
-  title: string;
-  href: string;
-  description: string;
-  icon: LucideIcon;
-}
-
-export const products: Product[] = [
-  {
-    title: "AI Trucking Assistant",
-    href: "/products/ai-trucking-assistant",
-    description: "AI-powered virtual assistant for trucking operations",
-    icon: Rocket,
-  },
-  {
-    title: "Custom TMS",
-    href: "/products/custom-tms",
-    description: "Customizable Transportation Management System",
-    icon: Code,
-  },
-  {
-    title: "Driver Management",
-    href: "/products/driver-management",
-    description: "Streamline driver management processes",
-    icon: CircleUserRound,
-  },
-  {
-    title: "Analytics Dashboard",
-    href: "/products/analytics-dashboard",
-    description: "Real-time analytics dashboard for informed decisions",
-    icon: LayoutDashboard,
+    title: 'TruckOnboard',
+    href: '/products?product=truckonboard',
+    description: 'Streamline your driver onboarding process',
+    image: '/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png',
+    color: '#8be9fd',
   },
 ];
-
-export interface DashboardConfig {
-  sidebarNav: {
-    title: string;
-    href: string;
-    icon?: LucideIcon;
-  }[];
-}
-
-export const dashboardConfig: DashboardConfig = {
-  sidebarNav: [
-    {
-      title: "Profile",
-      href: "/dashboard/profile",
-      icon: CircleUserRound,
-    },
-    {
-      title: "Billing",
-      href: "/dashboard/billing",
-      icon: Mail,
-    },
-    {
-      title: "Invoices",
-      href: "/dashboard/invoices",
-      icon: FileText,
-    },
-    {
-      title: "Schedule",
-      href: "/dashboard/schedule",
-      icon: Calendar,
-    },
-    {
-      title: "Education",
-      href: "/dashboard/education",
-      icon: GraduationCap,
-    },
-    {
-      title: "Careers",
-      href: "/dashboard/careers",
-      icon: Briefcase,
-    },
-  ],
-}
