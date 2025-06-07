@@ -254,3 +254,35 @@ export const detectInjection = (input: string): boolean => {
   
   return injectionPatterns.some(pattern => pattern.test(input));
 };
+
+/**
+ * Enhanced session validation
+ */
+export const validateSessionSecurity = (): { valid: boolean; warnings: string[] } => {
+  const warnings: string[] = [];
+  
+  // Check for suspicious activity indicators
+  const suspiciousKeys = Object.keys(localStorage).filter(key => 
+    key.includes('injection') || 
+    key.includes('exploit') || 
+    key.includes('attack')
+  );
+  
+  if (suspiciousKeys.length > 0) {
+    warnings.push('Suspicious local storage keys detected');
+  }
+  
+  // Check for rate limit violations
+  const rateLimitKeys = Object.keys(localStorage).filter(key => 
+    key.startsWith('rate_limit_') && key.includes('_blocked')
+  );
+  
+  if (rateLimitKeys.length > 3) {
+    warnings.push('Multiple rate limit violations detected');
+  }
+  
+  return {
+    valid: warnings.length === 0,
+    warnings
+  };
+};
