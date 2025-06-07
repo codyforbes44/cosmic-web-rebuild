@@ -5,9 +5,10 @@ interface WeatherBackgroundProps {
   condition: string;
   className?: string;
   isDay?: boolean;
+  animated?: boolean;
 }
 
-const WeatherBackground = ({ condition, className = '', isDay = true }: WeatherBackgroundProps) => {
+const WeatherBackground = ({ condition, className = '', isDay = true, animated = false }: WeatherBackgroundProps) => {
   const getBackgroundForCondition = (weatherCondition: string, dayTime: boolean) => {
     const normalizedCondition = weatherCondition.toLowerCase();
     
@@ -87,7 +88,9 @@ const WeatherBackground = ({ condition, className = '', isDay = true }: WeatherB
       : 'bg-gradient-to-b from-space-dark-blue to-space-deep-blue';
   };
 
-  const getWeatherEffects = (weatherCondition: string) => {
+  const getWeatherEffects = (weatherCondition: string, isAnimated: boolean) => {
+    if (!isAnimated) return null;
+    
     const normalizedCondition = weatherCondition.toLowerCase();
     
     if (normalizedCondition.includes('rain') || normalizedCondition.includes('shower')) {
@@ -114,20 +117,27 @@ const WeatherBackground = ({ condition, className = '', isDay = true }: WeatherB
   };
 
   const backgroundClass = getBackgroundForCondition(condition, isDay);
-  const weatherEffect = getWeatherEffects(condition);
+  const weatherEffect = getWeatherEffects(condition, animated);
 
   return (
-    <div className={`fixed inset-0 ${backgroundClass} ${className}`}>
+    <div className={`fixed inset-0 ${backgroundClass} ${className} transition-all duration-1000`}>
       {/* Weather-specific overlay effects */}
       {weatherEffect && (
         <div className={`absolute inset-0 ${
-          weatherEffect.includes('rain') ? 'opacity-20' :
-          weatherEffect.includes('snow') ? 'opacity-30' :
-          weatherEffect.includes('drizzle') ? 'opacity-15' :
-          weatherEffect.includes('cloud') ? 'opacity-15' :
-          weatherEffect.includes('storm') ? 'opacity-25' : 'opacity-20'
+          weatherEffect.includes('rain') ? 'opacity-30' :
+          weatherEffect.includes('snow') ? 'opacity-40' :
+          weatherEffect.includes('drizzle') ? 'opacity-20' :
+          weatherEffect.includes('cloud') ? 'opacity-20' :
+          weatherEffect.includes('storm') ? 'opacity-35' : 'opacity-25'
         }`}>
           <div className={weatherEffect}></div>
+        </div>
+      )}
+      
+      {/* Additional ambient particles for clear weather */}
+      {condition.toLowerCase().includes('clear') && animated && (
+        <div className="absolute inset-0 opacity-10">
+          <div className="sun-rays"></div>
         </div>
       )}
     </div>

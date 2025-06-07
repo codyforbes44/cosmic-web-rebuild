@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
-import StarBackground from "@/components/StarBackground";
 import PageHeader from "@/components/PageHeader";
 import WeatherBackground from "./WeatherBackground";
 import WeatherPageTabs from "./WeatherPageTabs";
@@ -53,17 +52,15 @@ const WeatherPageLayout = () => {
       />
       <Navbar />
       
-      {/* Dynamic Weather Background */}
+      {/* Dynamic Weather Background with animations */}
       {weatherData && (
         <WeatherBackground 
           condition={weatherData.current.condition}
           isDay={isDay}
           className="z-0"
+          animated={true}
         />
       )}
-      
-      {/* Star Background Overlay */}
-      <StarBackground />
       
       <main className={`min-h-screen ${isMobile ? 'py-20 px-3' : 'py-16 md:py-24 px-4'} relative`}>
         <div className={`container mx-auto ${isMobile ? 'max-w-full' : 'max-w-7xl'} relative z-10`}>
