@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Settings, Users, LineChart, CloudLightning, Map, Calculator, Database, Lock, Clock, Zap, Brain, MessageSquare, Robot, Palette, Shield, Globe } from "lucide-react";
+import { ArrowRight, Settings, Users, LineChart, CloudLightning, Map, Calculator, Database, Lock, Clock, Zap, Brain, MessageSquare, Bot, Palette, Shield, Globe } from "lucide-react";
 import FeaturePreview from "@/components/features/FeaturePreview";
 
 const Features = () => {
