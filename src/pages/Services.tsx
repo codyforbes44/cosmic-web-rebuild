@@ -6,6 +6,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
+import PageHeader from "@/components/PageHeader";
 import ClientLogoBanner from "@/components/ClientLogoBanner";
 import ServiceCaseStudy from "@/components/ServiceCaseStudy";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
@@ -15,10 +16,11 @@ import ServiceInfo from "@/components/services/ServiceInfo";
 import ServiceDetails from "@/components/services/ServiceDetails";
 import ServiceTestimonials from "@/components/services/ServiceTestimonials";
 import ServicesCTA from "@/components/services/ServicesCTA";
-import ServicesHeader from "@/components/services/ServicesHeader";
 import FeaturedServices from "@/components/services/FeaturedServices";
+import ServiceTabs from "@/components/services/ServiceTabs";
 
 import { services } from "@/data/servicesData";
+import { Settings } from "lucide-react";
 
 const Services = () => {
   const location = useLocation();
@@ -50,12 +52,21 @@ const Services = () => {
           {/* Breadcrumb navigation */}
           <BreadcrumbNav currentPageLabel="Services" />
           
-          {/* Header with tabs */}
-          <ServicesHeader 
-            services={services} 
-            selectedServiceId={selectedService.id} 
-            onTabChange={handleTabChange} 
+          {/* Page Header */}
+          <PageHeader 
+            title="Our Services"
+            description="Comprehensive technology solutions designed to transform your business and drive innovation"
+            icon={Settings}
           />
+
+          {/* Service Tabs */}
+          <div className="mb-8">
+            <ServiceTabs 
+              services={services} 
+              selectedServiceId={selectedService.id} 
+              onTabChange={handleTabChange} 
+            />
+          </div>
 
           {/* Service Content */}
           <Tabs value={selectedService.id} className="mb-16">

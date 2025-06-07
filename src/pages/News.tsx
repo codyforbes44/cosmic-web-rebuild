@@ -3,6 +3,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
+import PageHeader from "@/components/PageHeader";
 import SEO from "@/components/SEO";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { businessArticles, categories } from "@/data/newsData";
@@ -10,6 +11,7 @@ import ArticleList from "@/components/news/ArticleList";
 import ArticleModal from "@/components/news/ArticleModal";
 import SearchFilter from "@/components/news/SearchFilter";
 import { BusinessArticle } from "@/types/news";
+import { Newspaper } from "lucide-react";
 
 const News = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -43,16 +45,14 @@ const News = () => {
           {/* Breadcrumb navigation */}
           <BreadcrumbNav currentPageLabel="Business Insights" />
           
-          <div className="space-card p-8 rounded-xl mb-12">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                Business Insights
-              </h1>
-              <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-                Stay informed with the latest industry insights, technology trends, and success stories from our business experts
-              </p>
-            </div>
+          {/* Page Header */}
+          <PageHeader 
+            title="Business Insights"
+            description="Stay informed with the latest industry insights, technology trends, and success stories from our business experts"
+            icon={Newspaper}
+          />
 
+          <div className="space-card p-8 rounded-xl mb-12">
             {/* Search and Filter */}
             <SearchFilter 
               searchQuery={searchQuery}

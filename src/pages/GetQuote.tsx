@@ -4,11 +4,12 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StarBackground from "@/components/StarBackground";
+import PageHeader from "@/components/PageHeader";
 import SEO from "@/components/SEO";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
-import QuoteHeader from "@/components/quote/QuoteHeader";
 import QuoteForm from "@/components/quote/QuoteForm";
 import ServicesList from "@/components/quote/ServicesList";
+import { FileText } from "lucide-react";
 
 const GetQuote = () => {
   return (
@@ -27,7 +28,12 @@ const GetQuote = () => {
             {/* Breadcrumb navigation */}
             <BreadcrumbNav currentPageLabel="Get a Quote" />
             
-            <QuoteHeader />
+            {/* Page Header */}
+            <PageHeader 
+              title="Get a Quote"
+              description="Request a personalized quote for our business and technology services. Our team will provide a detailed proposal tailored to your needs."
+              icon={FileText}
+            />
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl mx-auto">
               {/* Services List - 4 columns on large screens */}
