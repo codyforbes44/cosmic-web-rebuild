@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -36,6 +35,7 @@ const ScientificCalculator = lazy(() => import("./pages/ScientificCalculator"));
 const Features = lazy(() => import("./pages/Features"));
 const OpenAI = lazy(() => import("./pages/OpenAI"));
 const HuggingFace = lazy(() => import("./pages/HuggingFace"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 // Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -129,6 +129,9 @@ const AppRoutes = () => {
       
       {/* ElevenLabs route */}
       <Route path="/11l" element={<ElevenLabs />} />
+      
+      {/* Admin Dashboard route */}
+      <Route path="/admin" element={<AdminDashboard />} />
       
       {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />
