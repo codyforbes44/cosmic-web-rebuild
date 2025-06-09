@@ -15,7 +15,6 @@ import { useWeatherPage } from './WeatherPageProvider';
 import { useIsMobile } from "@/hooks/use-mobile";
 import FavoriteLocations from './FavoriteLocations';
 import { Cloud } from 'lucide-react';
-import "@/components/weather/WeatherBackground.css";
 
 const WeatherPageLayout = () => {
   
