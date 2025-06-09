@@ -84,6 +84,7 @@ export const WeatherPageProvider = ({ children }: WeatherPageProviderProps) => {
       if (data) {
         setWeatherData(data);
         setCurrentLocation(data.current.location);
+        console.log('WeatherPageProvider: Weather data loaded for location:', data.current.location);
         // Only show demo warning if this is actually demo data
         if (data.current.location === 'Demo City') {
           setError('Unable to fetch real weather data - showing demo data');
@@ -98,22 +99,26 @@ export const WeatherPageProvider = ({ children }: WeatherPageProviderProps) => {
   };
 
   const handleLocationChange = (newLocation: string) => {
+    console.log('WeatherPageProvider: Location change requested:', newLocation);
     setCurrentLocation(newLocation);
-    // In a real app, you would fetch weather for the new location
+    // Force refresh when location changes manually
     loadWeatherData(newLocation, true);
   };
 
   const handleUnitsChange = (newUnits: 'imperial' | 'metric') => {
+    console.log('WeatherPageProvider: Units changed to:', newUnits);
     setUnits(newUnits);
   };
 
   useEffect(() => {
-    // Force refresh on initial load
+    // Initial load with location detection
+    console.log('WeatherPageProvider: Initial weather data load');
     loadWeatherData(undefined, true);
   }, []);
 
   useEffect(() => {
     // Force refresh when units change
+    console.log('WeatherPageProvider: Reloading due to units change:', units);
     loadWeatherData(undefined, true);
   }, [units]);
 
