@@ -3,6 +3,9 @@ import React from 'react';
 import { getBackgroundForCondition } from './utils/WeatherConditions';
 import { getWeatherEffects, getEffectOpacity } from './utils/WeatherEffects';
 import WeatherOverlays from './components/WeatherOverlays';
+import './styles/animations.css';
+import './styles/effects.css';
+import './styles/mobile.css';
 
 interface WeatherBackgroundProps {
   condition: string;
