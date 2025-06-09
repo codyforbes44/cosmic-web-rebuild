@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { User, Settings, LogOut, Star, Brain, BarChart, Cloud, Calculator, Wrench, Stethoscope, FolderOpen } from 'lucide-react';
+import { User, Settings, LogOut, Star, Brain, BarChart, Cloud, Calculator, Wrench, Stethoscope, FolderOpen, Shield } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
@@ -121,8 +121,12 @@ const UserMenu = () => {
         <DropdownMenuSeparator className="bg-gray-700" />
         
         <DropdownMenuLabel className="text-xs text-gray-400 font-normal">
-          Tools & Features
+          Secure Pages
         </DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => navigate('/admin')} className="text-white hover:bg-gray-800">
+          <Shield className="mr-2 h-4 w-4" />
+          Admin Dashboard
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate('/projects')} className="text-white hover:bg-gray-800">
           <FolderOpen className="mr-2 h-4 w-4" />
           Projects

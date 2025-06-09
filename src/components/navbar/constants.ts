@@ -1,4 +1,3 @@
-
 import { 
   Home, 
   Briefcase, 
@@ -25,6 +24,7 @@ export const navLinks: NavLink[] = [
 
 // Secure navigation links for authenticated users
 export const secureNavLinks: NavLink[] = [
+  { name: 'Admin Dashboard', path: '/admin' },
   { name: 'Projects', path: '/projects' },
   { name: 'Analytics', path: '/analytics' },
   { name: 'Weather', path: '/weather' },

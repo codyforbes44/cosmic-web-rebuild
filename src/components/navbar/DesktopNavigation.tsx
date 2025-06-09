@@ -5,7 +5,9 @@ import { navLinks } from './constants';
 import DesktopNavLink from './DesktopNavLink';
 import ServiceDropdown from './ServiceDropdown';
 import ProductDropdown from './ProductDropdown';
+import SecureDropdown from './SecureDropdown';
 import ScrollToTopLink from '../ScrollToTopLink';
+import { useAuth } from '@/components/auth/AuthProvider';
 
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
@@ -14,6 +16,13 @@ interface DesktopNavigationProps {
 }
 
 const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: DesktopNavigationProps) => {
+  const { user } = useAuth();
+  
+  // Check if any secure page is active
+  const isSecureActive = ['/admin', '/analytics', '/projects', '/weather', '/calculator', '/openai', '/huggingface', '/features', '/medical-diagnosis'].some(path => 
+    isActive(path) === 'active'
+  );
+
   return (
     <nav className="hidden md:flex items-center space-x-4">
       {/* Home link */}
@@ -29,6 +38,11 @@ const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: Des
 
       {/* Products Dropdown */}
       <ProductDropdown isActive={isProductsActive} />
+
+      {/* Secure Pages Dropdown - Only show if user is logged in */}
+      {user && (
+        <SecureDropdown isActive={isSecureActive} />
+      )}
 
       {/* Remaining links */}
       {navLinks.slice(1).map((link, index) => (

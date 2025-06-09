@@ -14,7 +14,8 @@ import {
   Calculator,
   Wrench,
   Stethoscope,
-  FolderOpen
+  FolderOpen,
+  Shield
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -22,7 +23,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import MobileServicesMenu from "./MobileServicesMenu";
 import MobileProductsMenu from "./MobileProductsMenu";
-import { serviceCategories, productCategories, navLinks } from "./constants";
+import { serviceCategories, productCategories, navLinks, secureNavLinks } from "./constants";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 interface MobileNavigationProps {
@@ -34,7 +35,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
   const { user, signOut } = useAuth();
   const [servicesOpen, setServicesOpen] = React.useState(false);
   const [productsOpen, setProductsOpen] = React.useState(false);
-  const [toolsOpen, setToolsOpen] = React.useState(false);
+  const [secureOpen, setSecureOpen] = React.useState(false);
 
   if (!isOpen) return null;
 
@@ -48,6 +49,30 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
   const handleSignOut = async () => {
     await signOut();
     onClose();
+  };
+
+  const getIconForSecurePage = (path: string) => {
+    switch (path) {
+      case '/admin':
+        return <Settings className="h-4 w-4" />;
+      case '/analytics':
+        return <BarChart className="h-4 w-4" />;
+      case '/projects':
+        return <FolderOpen className="h-4 w-4" />;
+      case '/weather':
+        return <Cloud className="h-4 w-4" />;
+      case '/calculator':
+        return <Calculator className="h-4 w-4" />;
+      case '/openai':
+      case '/huggingface':
+        return <Brain className="h-4 w-4" />;
+      case '/medical-diagnosis':
+        return <Stethoscope className="h-4 w-4" />;
+      case '/features':
+        return <Wrench className="h-4 w-4" />;
+      default:
+        return <Shield className="h-4 w-4" />;
+    }
   };
 
   return (
@@ -135,79 +160,29 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
           </CollapsibleContent>
         </Collapsible>
 
-        {/* Secure Tools Section - Only show if user is logged in */}
+        {/* Secure Pages Section - Only show if user is logged in */}
         {user && (
-          <Collapsible open={toolsOpen} onOpenChange={setToolsOpen}>
+          <Collapsible open={secureOpen} onOpenChange={setSecureOpen}>
             <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md">
-              Tools & AI
-              <ChevronDown className={`h-4 w-4 transition-transform ${toolsOpen ? 'rotate-180' : ''}`} />
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4" />
+                Secure Pages
+              </div>
+              <ChevronDown className={`h-4 w-4 transition-transform ${secureOpen ? 'rotate-180' : ''}`} />
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="ml-4 space-y-1">
-                <Link
-                  to="/projects"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <FolderOpen className="h-4 w-4" />
-                  Projects
-                </Link>
-                <Link
-                  to="/analytics"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <BarChart className="h-4 w-4" />
-                  Analytics
-                </Link>
-                <Link
-                  to="/weather"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <Cloud className="h-4 w-4" />
-                  Weather
-                </Link>
-                <Link
-                  to="/calculator"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <Calculator className="h-4 w-4" />
-                  Calculator
-                </Link>
-                <Link
-                  to="/openai"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <Brain className="h-4 w-4" />
-                  OpenAI Chat
-                </Link>
-                <Link
-                  to="/huggingface"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <Brain className="h-4 w-4" />
-                  HuggingFace AI
-                </Link>
-                <Link
-                  to="/features"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <Wrench className="h-4 w-4" />
-                  Features
-                </Link>
-                <Link
-                  to="/medical-diagnosis"
-                  onClick={onClose}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
-                >
-                  <Stethoscope className="h-4 w-4" />
-                  Medical Diagnosis
-                </Link>
+                {secureNavLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={onClose}
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md"
+                  >
+                    {getIconForSecurePage(link.path)}
+                    {link.name}
+                  </Link>
+                ))}
               </div>
             </CollapsibleContent>
           </Collapsible>
