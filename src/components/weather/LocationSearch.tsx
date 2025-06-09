@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, Navigation } from 'lucide-react';
+import { Search, MapPin, Navigation, Target } from 'lucide-react';
 import { useIsMobile } from "@/hooks/use-mobile";
+import { getBrowserLocation } from '@/components/footer/weather/LocationService';
+import { useToast } from "@/hooks/use-toast";
 import AddToFavorites from './AddToFavorites';
 
 interface LocationSearchProps {
@@ -14,7 +16,9 @@ interface LocationSearchProps {
 
 const LocationSearch = ({ onLocationChange, currentLocation }: LocationSearchProps) => {
   const [searchValue, setSearchValue] = useState('');
+  const [isGettingLocation, setIsGettingLocation] = useState(false);
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   const handleSearch = () => {
     if (searchValue.trim()) {
@@ -23,17 +27,24 @@ const LocationSearch = ({ onLocationChange, currentLocation }: LocationSearchPro
     }
   };
 
-  const handleUseCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          onLocationChange(`${latitude},${longitude}`);
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-        }
-      );
+  const handleUseCurrentLocation = async () => {
+    setIsGettingLocation(true);
+    try {
+      const preciseLocation = await getBrowserLocation();
+      onLocationChange(preciseLocation);
+      toast({
+        title: "Location Updated",
+        description: `Using precise location: ${preciseLocation}`,
+      });
+    } catch (error) {
+      console.error('Error getting precise location:', error);
+      toast({
+        title: "Location Error",
+        description: "Could not get precise location. Using IP-based location instead.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGettingLocation(false);
     }
   };
 
@@ -69,21 +80,34 @@ const LocationSearch = ({ onLocationChange, currentLocation }: LocationSearchPro
           
           <Button
             onClick={handleUseCurrentLocation}
+            disabled={isGettingLocation}
             variant="outline"
             className={`${isMobile ? 'px-3 h-10' : 'px-4 h-12'} bg-transparent border-white/20 text-white hover:bg-white/10 touch-manipulation`}
           >
-            <Navigation className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} />
-            {!isMobile && <span className="ml-2">Use Location</span>}
+            {isGettingLocation ? (
+              <Target className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} animate-spin`} />
+            ) : (
+              <Navigation className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} />
+            )}
+            {!isMobile && (
+              <span className="ml-2">
+                {isGettingLocation ? 'Locating...' : 'Precise Location'}
+              </span>
+            )}
           </Button>
         </div>
         
         <div className={`flex items-center justify-between ${isMobile ? 'gap-1 mt-2' : 'gap-2 mt-3'}`}>
-          <div className={`flex items-center ${isMobile ? 'gap-1' : 'gap-2'} text-gray-400`}>
-            <MapPin className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
-            <span className={`${isMobile ? 'text-xs' : 'text-sm'} truncate`}>Current: {currentLocation}</span>
+          <div className={`flex items-center ${isMobile ? 'gap-1' : 'gap-2'} text-gray-400 flex-1 min-w-0`}>
+            <MapPin className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} flex-shrink-0`} />
+            <span className={`${isMobile ? 'text-xs' : 'text-sm'} truncate`} title={currentLocation}>
+              Current: {currentLocation}
+            </span>
           </div>
           
-          <AddToFavorites location={currentLocation} />
+          <div className="flex-shrink-0">
+            <AddToFavorites location={currentLocation} />
+          </div>
         </div>
       </CardContent>
     </Card>
