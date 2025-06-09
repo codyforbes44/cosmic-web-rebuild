@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -121,11 +120,11 @@ const AppRoutes = () => {
       <Route path="/features" element={<ProtectedRoute><Features /></ProtectedRoute>} />
       <Route path="/medical-diagnosis" element={<ProtectedRoute><MedicalDiagnosis /></ProtectedRoute>} />
       <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/weather" element={<ProtectedRoute><Weather /></ProtectedRoute>} />
+      <Route path="/calculator" element={<ProtectedRoute><ScientificCalculator /></ProtectedRoute>} />
       
       {/* Public routes */}
-      <Route path="/weather" element={<Weather />} />
       <Route path="/maps" element={<Maps />} />
-      <Route path="/calculator" element={<ScientificCalculator />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
