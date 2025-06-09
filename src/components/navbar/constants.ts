@@ -1,3 +1,4 @@
+
 import { 
   Home, 
   Briefcase, 
@@ -45,43 +46,43 @@ export interface ServiceCategory {
 export const serviceCategories: ServiceCategory[] = [
   {
     title: 'Strategy Consulting',
-    href: '/services',
+    href: '/services?service=strategy',
     description: 'Develop a winning strategy for your trucking business',
     color: '#793ef9',
   },
   {
     title: 'Digital Marketing',
-    href: '/services',
+    href: '/services?service=digital',
     description: 'Attract and retain drivers with targeted campaigns',
     color: '#ff6188',
   },
   {
     title: 'Custom Development',
-    href: '/services',
+    href: '/services?service=custom',
     description: 'Tailor-made software solutions for your unique needs',
     color: '#50fa7b',
   },
   {
     title: 'Web Development',
-    href: '/services',
+    href: '/services?service=web',
     description: 'Build a professional website to showcase your brand',
     color: '#f1fa8c',
   },
   {
     title: 'Analytics & Tracking',
-    href: '/services',
+    href: '/services?service=analytics',
     description: 'Gain insights into your business performance',
     color: '#bd93f9',
   },
   {
     title: 'AI Solutions',
-    href: '/services',
+    href: '/services?service=ai',
     description: 'Leverage the power of AI to optimize your operations',
     color: '#ff79c6',
   },
   {
     title: 'Recruitment Marketing',
-    href: '/recruitment-marketing',
+    href: '/services?service=recruitment',
     description: 'Specialized marketing strategies for driver recruitment',
     color: '#A8FF32',
   },
@@ -98,14 +99,14 @@ export interface ProductCategory {
 export const productCategories: ProductCategory[] = [
   {
     title: '3BI Connect',
-    href: '/products?product=3bi-connect',
+    href: '3bi-connect',
     description: 'The all-in-one platform for managing your trucking business',
     image: '/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png',
     color: '#ffb86c',
   },
   {
     title: 'TruckOnboard',
-    href: '/products?product=truckonboard',
+    href: 'truckonboard',
     description: 'Streamline your driver onboarding process',
     image: '/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png',
     color: '#8be9fd',

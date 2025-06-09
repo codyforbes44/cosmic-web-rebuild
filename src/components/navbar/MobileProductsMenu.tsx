@@ -25,7 +25,7 @@ const MobileProductsMenu = ({ onClose }: MobileProductsMenuProps) => {
             className="py-1"
           >
             <Link 
-              to={`/products?product=${product.href.split('=')[1]}`}
+              to={`/products?product=${product.href}`}
               className="block text-center text-base hover:text-white py-1"
               onClick={onClose}
               style={{ color: product.color }}

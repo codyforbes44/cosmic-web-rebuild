@@ -39,7 +39,7 @@ const ProductDropdown = ({ isActive }: ProductDropdownProps) => {
                 {productCategories.map((product) => (
                   <li key={product.href}>
                     <Link
-                      to={`/products?product=${product.href.split('=')[1]}`}
+                      to={`/products?product=${product.href}`}
                       className={cn(
                         "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 focus:bg-gray-700"
                       )}
