@@ -1,3 +1,17 @@
+
+/* Mobile-optimized weather effects */
+.mobile-optimized {
+  transform: scale(0.8);
+  filter: blur(0.5px);
+}
+
+@media (min-width: 768px) {
+  .mobile-optimized {
+    transform: scale(1);
+    filter: none;
+  }
+}
+
 .rain-effect {
   background-image: 
     linear-gradient(transparent 0%, transparent 40%, rgba(200,220,255,0.9) 40%, rgba(200,220,255,0.9) 42%, transparent 42%),
@@ -7,6 +21,14 @@
   animation: rain 0.4s linear infinite;
   height: 100%;
   width: 100%;
+}
+
+/* Mobile optimization for rain */
+@media (max-width: 767px) {
+  .rain-effect {
+    background-size: 4px 15px, 6px 20px, 8px 25px;
+    animation: rain 0.5s linear infinite;
+  }
 }
 
 .heavy-rain-effect {
@@ -20,6 +42,14 @@
   width: 100%;
 }
 
+/* Mobile optimization for heavy rain */
+@media (max-width: 767px) {
+  .heavy-rain-effect {
+    background-size: 3px 20px, 5px 28px, 7px 35px;
+    animation: heavyRain 0.2s linear infinite;
+  }
+}
+
 .drizzle-effect {
   background-image: 
     linear-gradient(transparent 0%, transparent 70%, rgba(220,235,255,0.6) 70%, rgba(220,235,255,0.6) 71%, transparent 71%),
@@ -28,6 +58,14 @@
   animation: drizzle 0.8s linear infinite;
   height: 100%;
   width: 100%;
+}
+
+/* Mobile optimization for drizzle */
+@media (max-width: 767px) {
+  .drizzle-effect {
+    background-size: 3px 6px, 4px 9px;
+    animation: drizzle 1s linear infinite;
+  }
 }
 
 .snow-effect {
@@ -42,6 +80,14 @@
   width: 100%;
 }
 
+/* Mobile optimization for snow */
+@media (max-width: 767px) {
+  .snow-effect {
+    background-size: 60px 60px, 45px 45px, 30px 30px, 75px 75px;
+    animation: snow 15s linear infinite;
+  }
+}
+
 .clouds-effect {
   background-image: 
     radial-gradient(ellipse 400px 200px at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 70%),
@@ -52,6 +98,14 @@
   animation: clouds 25s ease-in-out infinite;
   height: 100%;
   width: 100%;
+}
+
+/* Mobile optimization for clouds */
+@media (max-width: 767px) {
+  .clouds-effect {
+    background-size: 400px 200px, 350px 175px, 375px 190px, 300px 150px;
+    animation: clouds 30s ease-in-out infinite;
+  }
 }
 
 .cloud-layers {
@@ -65,6 +119,14 @@
   width: 100%;
 }
 
+/* Mobile optimization for cloud layers */
+@media (max-width: 767px) {
+  .cloud-layers {
+    background-size: 500px 250px, 400px 200px, 350px 175px;
+    animation: cloudLayers 35s ease-in-out infinite;
+  }
+}
+
 .storm-effect {
   background-image: 
     linear-gradient(45deg, transparent 30%, rgba(255,255,150,0.2) 30%, rgba(255,255,150,0.2) 32%, transparent 32%),
@@ -74,6 +136,14 @@
   animation: storm 0.8s ease-in-out infinite;
   height: 100%;
   width: 100%;
+}
+
+/* Mobile optimization for storm */
+@media (max-width: 767px) {
+  .storm-effect {
+    background-size: 100px 100px, 200px 200px, 75px 75px;
+    animation: storm 1s ease-in-out infinite;
+  }
 }
 
 .sun-rays {
@@ -88,6 +158,14 @@
   width: 100%;
 }
 
+/* Mobile optimization for sun rays */
+@media (max-width: 767px) {
+  .sun-rays {
+    background-size: 100px 100px, 75px 75px, 175px 175px, 150px 150px;
+    animation: sunRays 35s ease-in-out infinite;
+  }
+}
+
 .stars-effect {
   background-image: 
     radial-gradient(circle, rgba(255,255,255,0.9) 0.5px, transparent 0.5px),
@@ -99,6 +177,14 @@
   width: 100%;
 }
 
+/* Mobile optimization for stars */
+@media (max-width: 767px) {
+  .stars-effect {
+    background-size: 150px 150px, 100px 100px, 75px 75px;
+    animation: stars 25s ease-in-out infinite;
+  }
+}
+
 .fog-effect {
   background-image: 
     linear-gradient(0deg, transparent 0%, rgba(255,255,255,0.15) 25%, rgba(248,250,252,0.2) 50%, rgba(255,255,255,0.15) 75%, transparent 100%),
@@ -107,6 +193,14 @@
   animation: fog 18s ease-in-out infinite;
   height: 100%;
   width: 100%;
+}
+
+/* Mobile optimization for fog */
+@media (max-width: 767px) {
+  .fog-effect {
+    background-size: 100% 200px, 100% 150px;
+    animation: fog 22s ease-in-out infinite;
+  }
 }
 
 .wind-effect {
@@ -120,7 +214,15 @@
   width: 100%;
 }
 
-/* Enhanced animations */
+/* Mobile optimization for wind */
+@media (max-width: 767px) {
+  .wind-effect {
+    background-size: 150px 45px, 100px 35px, 80px 30px;
+    animation: wind 5s ease-in-out infinite;
+  }
+}
+
+/* Enhanced animations - mobile optimized */
 @keyframes rain {
   0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
   100% { background-position: 6px 20px, 9px 30px, 12px 35px; }
@@ -233,6 +335,23 @@
   66% {
     background-position: 133px 0%, 100px 0%, 80px 0%;
     transform: translateX(-5px);
+  }
+}
+
+/* Reduce motion for mobile devices with limited processing power */
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .rain-effect,
+  .heavy-rain-effect,
+  .drizzle-effect,
+  .snow-effect,
+  .clouds-effect,
+  .cloud-layers,
+  .storm-effect,
+  .sun-rays,
+  .stars-effect,
+  .fog-effect,
+  .wind-effect {
+    animation: none;
   }
 }
 

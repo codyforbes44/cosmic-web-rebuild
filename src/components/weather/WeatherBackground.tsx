@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface WeatherBackgroundProps {
@@ -149,55 +150,55 @@ const WeatherBackground = ({ condition, className = '', isDay = true, animated =
   const weatherEffect = getWeatherEffects(condition, animated);
 
   return (
-    <div className={`fixed inset-0 ${backgroundClass} ${className} transition-all duration-1000`}>
+    <div className={`fixed inset-0 ${backgroundClass} ${className} transition-all duration-1000 overflow-hidden`}>
       {/* Atmospheric overlay for depth */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/5" />
       
-      {/* Weather-specific overlay effects */}
+      {/* Weather-specific overlay effects - mobile optimized */}
       {weatherEffect && (
         <div className={`absolute inset-0 ${
-          weatherEffect.includes('heavy-rain') ? 'opacity-50' :
-          weatherEffect.includes('rain') ? 'opacity-40' :
-          weatherEffect.includes('snow') ? 'opacity-45' :
-          weatherEffect.includes('drizzle') ? 'opacity-30' :
-          weatherEffect.includes('cloud') ? 'opacity-35' :
-          weatherEffect.includes('storm') ? 'opacity-60' :
-          weatherEffect.includes('fog') ? 'opacity-40' :
-          weatherEffect.includes('wind') ? 'opacity-25' : 'opacity-30'
+          weatherEffect.includes('heavy-rain') ? 'opacity-40 md:opacity-50' :
+          weatherEffect.includes('rain') ? 'opacity-30 md:opacity-40' :
+          weatherEffect.includes('snow') ? 'opacity-35 md:opacity-45' :
+          weatherEffect.includes('drizzle') ? 'opacity-25 md:opacity-30' :
+          weatherEffect.includes('cloud') ? 'opacity-25 md:opacity-35' :
+          weatherEffect.includes('storm') ? 'opacity-45 md:opacity-60' :
+          weatherEffect.includes('fog') ? 'opacity-30 md:opacity-40' :
+          weatherEffect.includes('wind') ? 'opacity-20 md:opacity-25' : 'opacity-25 md:opacity-30'
         }`}>
-          <div className={weatherEffect}></div>
+          <div className={`${weatherEffect} mobile-optimized`}></div>
         </div>
       )}
       
-      {/* Sun rays for clear weather */}
+      {/* Sun rays for clear weather - mobile optimized */}
       {condition.toLowerCase().includes('clear') && animated && isDay && (
-        <div className="absolute inset-0 opacity-20">
-          <div className="sun-rays"></div>
+        <div className="absolute inset-0 opacity-15 md:opacity-20">
+          <div className="sun-rays mobile-optimized"></div>
         </div>
       )}
       
-      {/* Moon and stars for clear night */}
+      {/* Moon and stars for clear night - mobile optimized */}
       {condition.toLowerCase().includes('clear') && animated && !isDay && (
         <>
-          <div className="absolute top-20 right-20 w-16 h-16 bg-slate-100 rounded-full opacity-80 shadow-lg shadow-slate-100/50"></div>
-          <div className="absolute inset-0 opacity-60">
-            <div className="stars-effect"></div>
+          <div className="absolute top-16 right-16 md:top-20 md:right-20 w-12 h-12 md:w-16 md:h-16 bg-slate-100 rounded-full opacity-70 md:opacity-80 shadow-lg shadow-slate-100/50"></div>
+          <div className="absolute inset-0 opacity-50 md:opacity-60">
+            <div className="stars-effect mobile-optimized"></div>
           </div>
         </>
       )}
       
-      {/* Cloud layers for realistic depth */}
+      {/* Cloud layers for realistic depth - mobile optimized */}
       {(condition.toLowerCase().includes('cloud') || condition.toLowerCase().includes('overcast')) && animated && (
-        <div className="absolute inset-0 opacity-30">
-          <div className="cloud-layers"></div>
+        <div className="absolute inset-0 opacity-25 md:opacity-30">
+          <div className="cloud-layers mobile-optimized"></div>
         </div>
       )}
       
-      {/* Extra atmospheric layer for dramatic weather */}
+      {/* Extra atmospheric layer for dramatic weather - mobile optimized */}
       {(condition.toLowerCase().includes('thunderstorm') || 
         condition.toLowerCase().includes('tornado')) && animated && (
-        <div className="absolute inset-0 opacity-25">
-          <div className="wind-effect"></div>
+        <div className="absolute inset-0 opacity-20 md:opacity-25">
+          <div className="wind-effect mobile-optimized"></div>
         </div>
       )}
     </div>
