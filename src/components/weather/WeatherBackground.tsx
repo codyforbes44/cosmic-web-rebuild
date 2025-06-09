@@ -38,6 +38,13 @@ const WeatherBackground = ({ condition, className = '', isDay = true, animated =
       return 'bg-gradient-to-b from-gray-500 via-gray-600 to-gray-700';
     }
     
+    // Heavy rain
+    if (normalizedCondition.includes('heavy') && normalizedCondition.includes('rain')) {
+      return dayTime
+        ? 'bg-gradient-to-b from-gray-700 via-gray-800 to-gray-900'
+        : 'bg-gradient-to-b from-gray-900 via-black to-gray-800';
+    }
+    
     // Rain (all types)
     if (normalizedCondition.includes('rain') && !normalizedCondition.includes('snow')) {
       return dayTime
@@ -54,7 +61,7 @@ const WeatherBackground = ({ condition, className = '', isDay = true, animated =
     
     // Thunderstorm
     if (normalizedCondition.includes('thunderstorm')) {
-      return 'bg-gradient-to-b from-gray-900 via-black to-gray-900';
+      return 'bg-gradient-to-b from-gray-900 via-black to-purple-900';
     }
     
     // Snow (all types)
@@ -93,24 +100,45 @@ const WeatherBackground = ({ condition, className = '', isDay = true, animated =
     
     const normalizedCondition = weatherCondition.toLowerCase();
     
+    // Heavy rain effects
+    if (normalizedCondition.includes('heavy') && normalizedCondition.includes('rain')) {
+      return 'heavy-rain-effect';
+    }
+    
+    // Regular rain effects
     if (normalizedCondition.includes('rain') || normalizedCondition.includes('shower')) {
       return 'rain-effect';
     }
     
+    // Snow effects
     if (normalizedCondition.includes('snow') || normalizedCondition.includes('sleet')) {
       return 'snow-effect';
     }
     
+    // Drizzle effects
     if (normalizedCondition.includes('drizzle')) {
       return 'drizzle-effect';
     }
     
+    // Cloud effects
     if (normalizedCondition.includes('cloud')) {
       return 'clouds-effect';
     }
     
+    // Thunderstorm effects
     if (normalizedCondition.includes('thunderstorm')) {
       return 'storm-effect';
+    }
+    
+    // Fog/Mist effects
+    if (normalizedCondition.includes('fog') || normalizedCondition.includes('mist') || 
+        normalizedCondition.includes('haze')) {
+      return 'fog-effect';
+    }
+    
+    // Wind effects
+    if (normalizedCondition.includes('wind') || normalizedCondition.includes('squall')) {
+      return 'wind-effect';
     }
     
     return null;
@@ -124,11 +152,14 @@ const WeatherBackground = ({ condition, className = '', isDay = true, animated =
       {/* Weather-specific overlay effects */}
       {weatherEffect && (
         <div className={`absolute inset-0 ${
-          weatherEffect.includes('rain') ? 'opacity-30' :
-          weatherEffect.includes('snow') ? 'opacity-40' :
-          weatherEffect.includes('drizzle') ? 'opacity-20' :
-          weatherEffect.includes('cloud') ? 'opacity-20' :
-          weatherEffect.includes('storm') ? 'opacity-35' : 'opacity-25'
+          weatherEffect.includes('heavy-rain') ? 'opacity-40' :
+          weatherEffect.includes('rain') ? 'opacity-35' :
+          weatherEffect.includes('snow') ? 'opacity-45' :
+          weatherEffect.includes('drizzle') ? 'opacity-25' :
+          weatherEffect.includes('cloud') ? 'opacity-30' :
+          weatherEffect.includes('storm') ? 'opacity-50' :
+          weatherEffect.includes('fog') ? 'opacity-35' :
+          weatherEffect.includes('wind') ? 'opacity-25' : 'opacity-30'
         }`}>
           <div className={weatherEffect}></div>
         </div>
@@ -136,8 +167,16 @@ const WeatherBackground = ({ condition, className = '', isDay = true, animated =
       
       {/* Additional ambient particles for clear weather */}
       {condition.toLowerCase().includes('clear') && animated && (
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-15">
           <div className="sun-rays"></div>
+        </div>
+      )}
+      
+      {/* Extra atmospheric layer for dramatic weather */}
+      {(condition.toLowerCase().includes('thunderstorm') || 
+        condition.toLowerCase().includes('tornado')) && animated && (
+        <div className="absolute inset-0 opacity-20">
+          <div className="wind-effect"></div>
         </div>
       )}
     </div>
