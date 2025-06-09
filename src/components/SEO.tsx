@@ -27,14 +27,14 @@ interface SEOProps {
 
 const SEO = ({
   title,
-  description = "ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth",
-  keywords = "business consulting, technology solutions, digital transformation, ƷBI, custom software development, data analytics, AI solutions",
+  description = "ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth.",
+  keywords = "business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation",
   image = "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png",
   url = window.location.href,
   type = "website",
   article,
   organization = {
-    name: "ƷBI Technology Solutions",
+    name: "ƷBI - Business Technology Solutions",
     logo: "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png",
     contactPoint: {
       telephone: "+1-555-0123",
@@ -43,23 +43,24 @@ const SEO = ({
   }
 }: SEOProps) => {
   const siteTitle = `${title} | ƷBI - Business Technology Solutions`;
-  const siteName = "ƷBI Technology Solutions";
+  const siteName = "ƷBI - Business Technology Solutions";
+  const baseUrl = "https://3bi.io";
   
   // Convert relative image paths to absolute URLs
   const absoluteImageUrl = image.startsWith('http') 
     ? image 
-    : `${window.location.origin}${image}`;
+    : `${baseUrl}${image}`;
     
   const absoluteLogoUrl = organization.logo?.startsWith('http')
     ? organization.logo
-    : `${window.location.origin}${organization.logo}`;
+    : `${baseUrl}${organization.logo}`;
 
   // Generate structured data for organization
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": organization.name,
-    "url": window.location.origin,
+    "url": baseUrl,
     "logo": absoluteLogoUrl,
     "description": description,
     "contactPoint": {
@@ -68,8 +69,8 @@ const SEO = ({
       "contactType": organization.contactPoint?.contactType
     },
     "sameAs": [
-      "https://www.linkedin.com/company/zbi-tech",
-      "https://twitter.com/zbi_tech"
+      "https://www.linkedin.com/company/3bi-io",
+      "https://twitter.com/3bi_io"
     ]
   };
 
@@ -118,8 +119,8 @@ const SEO = ({
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@zbi_tech" />
-      <meta name="twitter:creator" content="@zbi_tech" />
+      <meta name="twitter:site" content="@3bi_io" />
+      <meta name="twitter:creator" content="@3bi_io" />
       <meta property="twitter:url" content={url} />
       <meta property="twitter:title" content={siteTitle} />
       <meta property="twitter:description" content={description} />

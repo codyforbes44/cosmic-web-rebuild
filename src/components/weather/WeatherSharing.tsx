@@ -42,7 +42,7 @@ const WeatherSharing = ({ weatherData, units }: WeatherSharingProps) => {
       if (navigator.share) {
         try {
           await navigator.share({
-            title: 'Weather Update',
+            title: 'Weather Update - ƷBI',
             text: text,
             url: url,
           });
@@ -54,7 +54,7 @@ const WeatherSharing = ({ weatherData, units }: WeatherSharingProps) => {
   };
 
   const generateWeatherWidget = () => {
-    const widgetCode = `<iframe src="${window.location.origin}/weather?widget=true" width="300" height="200" frameborder="0"></iframe>`;
+    const widgetCode = `<iframe src="https://3bi.io/weather?widget=true" width="300" height="200" frameborder="0"></iframe>`;
     navigator.clipboard.writeText(widgetCode);
     toast({
       title: "Widget code copied",

@@ -15,8 +15,8 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
       <StarBackground />
       <div className="min-h-screen relative z-10">
         <SEO 
-          title="ZepTech - Advanced Technology Solutions"
-          description="Cutting-edge technology solutions including AI, machine learning, cloud computing, and digital transformation services."
+          title="ƷBI - Business Technology Solutions"
+          description="ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth."
         />
         <Navbar />
         {children}

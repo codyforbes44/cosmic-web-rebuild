@@ -33,10 +33,10 @@ export const generateLocalBusinessSchema = () => {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "ƷBI Technology Solutions",
-    "image": "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png",
-    "@id": window.location.origin,
-    "url": window.location.origin,
+    "name": "ƷBI - Business Technology Solutions",
+    "image": "https://3bi.io/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png",
+    "@id": "https://3bi.io",
+    "url": "https://3bi.io",
     "telephone": "+1-555-0123",
     "address": {
       "@type": "PostalAddress",
@@ -64,8 +64,8 @@ export const generateLocalBusinessSchema = () => {
       "closes": "17:00"
     },
     "sameAs": [
-      "https://www.linkedin.com/company/zbi-tech",
-      "https://twitter.com/zbi_tech"
+      "https://www.linkedin.com/company/3bi-io",
+      "https://twitter.com/3bi_io"
     ]
   };
 };

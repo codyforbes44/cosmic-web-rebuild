@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -43,9 +44,9 @@ const WeatherPageLayout = () => {
   return (
     <>
       <SEO
-        title="Ʒʙɪ Weather Center"
+        title="ƷBI Weather Center"
         description="Comprehensive weather information and forecasts for your location. Real-time conditions, hourly forecasts, and interactive weather maps."
-        keywords="weather, forecast, current conditions, temperature, humidity, wind, weather maps, Ʒʙɪ weather"
+        keywords="weather, forecast, current conditions, temperature, humidity, wind, weather maps, ƷBI weather"
         image="/lovable-uploads/934f1150-c3bd-4fb4-9445-ec288ccb6c47.png"
         type="website"
       />
@@ -65,7 +66,7 @@ const WeatherPageLayout = () => {
         <div className={`container mx-auto ${isMobile ? 'max-w-full' : 'max-w-7xl'} relative z-10`}>
           {/* Weather Page Header */}
           <PageHeader 
-            title="Ʒʙɪ Weather Center"
+            title="ƷBI Weather Center"
             description={isMobile ? "Real-time weather data and forecasts" : "Comprehensive weather information, forecasts, and interactive maps for your location"}
             icon={Cloud}
             className={isMobile ? 'mb-6' : 'mb-8'}
