@@ -39,11 +39,6 @@ const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: Des
       {/* Products Dropdown */}
       <ProductDropdown isActive={isProductsActive} />
 
-      {/* Secure Pages Dropdown - Only show if user is logged in */}
-      {user && (
-        <SecureDropdown isActive={isSecureActive} />
-      )}
-
       {/* Remaining links */}
       {navLinks.slice(1).map((link, index) => (
         <DesktopNavLink 
@@ -53,6 +48,11 @@ const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: Des
           index={index + 1}
         />
       ))}
+
+      {/* Secure Pages Dropdown - Moved to far right, only show if user is logged in */}
+      {user && (
+        <SecureDropdown isActive={isSecureActive} />
+      )}
       
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
