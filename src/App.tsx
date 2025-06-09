@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -9,6 +10,7 @@ import CookieConsent from "./components/CookieConsent";
 import LiveChat from "./components/LiveChat/LiveChat";
 import VisitorTracker from "./components/VisitorTracker";
 import { AuthProvider } from "./components/auth/AuthProvider";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -110,14 +112,20 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/get-quote" element={<GetQuote />} />
       <Route path="/partners" element={<Partners />} />
-      <Route path="/analytics" element={<Analytics />} />
+      
+      {/* Protected routes - require authentication */}
+      <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+      <Route path="/projects" element={<ProtectedRoute><ProjectManagement /></ProtectedRoute>} />
+      <Route path="/openai" element={<ProtectedRoute><OpenAI /></ProtectedRoute>} />
+      <Route path="/huggingface" element={<ProtectedRoute><HuggingFace /></ProtectedRoute>} />
+      <Route path="/features" element={<ProtectedRoute><Features /></ProtectedRoute>} />
+      <Route path="/medical-diagnosis" element={<ProtectedRoute><MedicalDiagnosis /></ProtectedRoute>} />
+      <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+      
+      {/* Public routes */}
       <Route path="/weather" element={<Weather />} />
       <Route path="/maps" element={<Maps />} />
-      <Route path="/medical-diagnosis" element={<MedicalDiagnosis />} />
       <Route path="/calculator" element={<ScientificCalculator />} />
-      <Route path="/features" element={<Features />} />
-      <Route path="/openai" element={<OpenAI />} />
-      <Route path="/huggingface" element={<HuggingFace />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
@@ -130,12 +138,6 @@ const AppRoutes = () => {
       
       {/* ElevenLabs route */}
       <Route path="/11l" element={<ElevenLabs />} />
-      
-      {/* Admin Dashboard route */}
-      <Route path="/admin" element={<AdminDashboard />} />
-      
-      {/* Project Management route */}
-      <Route path="/projects" element={<ProjectManagement />} />
       
       {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />
