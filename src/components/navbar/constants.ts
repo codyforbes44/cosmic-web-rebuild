@@ -1,3 +1,4 @@
+
 import { 
   Home, 
   Briefcase, 
@@ -20,6 +21,18 @@ export const navLinks: NavLink[] = [
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
   { name: 'FAQ', path: '/faq' }
+];
+
+// Secure navigation links for authenticated users
+export const secureNavLinks: NavLink[] = [
+  { name: 'Projects', path: '/projects' },
+  { name: 'Analytics', path: '/analytics' },
+  { name: 'Weather', path: '/weather' },
+  { name: 'Calculator', path: '/calculator' },
+  { name: 'OpenAI Chat', path: '/openai' },
+  { name: 'HuggingFace AI', path: '/huggingface' },
+  { name: 'Features', path: '/features' },
+  { name: 'Medical Diagnosis', path: '/medical-diagnosis' }
 ];
 
 export interface ServiceCategory {

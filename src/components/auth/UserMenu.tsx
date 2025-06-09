@@ -8,8 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { User, Settings, LogOut, Star } from 'lucide-react';
+import { User, Settings, LogOut, Star, Brain, BarChart, Cloud, Calculator, Wrench, Stethoscope, FolderOpen } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
@@ -86,7 +87,7 @@ const UserMenu = () => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-space-deep-blue border-gray-700" align="end">
+      <DropdownMenuContent className="w-64 bg-space-deep-blue border-gray-700" align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <Avatar className="h-8 w-8">
             <AvatarImage src={profile?.avatar_url || ''} alt={profile?.full_name || user.email || ''} />
@@ -104,6 +105,10 @@ const UserMenu = () => {
           </div>
         </div>
         <DropdownMenuSeparator className="bg-gray-700" />
+        
+        <DropdownMenuLabel className="text-xs text-gray-400 font-normal">
+          Account
+        </DropdownMenuLabel>
         <DropdownMenuItem onClick={handleProfileClick} className="text-white hover:bg-gray-800">
           <User className="mr-2 h-4 w-4" />
           Profile Settings
@@ -112,6 +117,51 @@ const UserMenu = () => {
           <Star className="mr-2 h-4 w-4" />
           Favorite Locations
         </DropdownMenuItem>
+        
+        <DropdownMenuSeparator className="bg-gray-700" />
+        
+        <DropdownMenuLabel className="text-xs text-gray-400 font-normal">
+          Tools & Features
+        </DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => navigate('/projects')} className="text-white hover:bg-gray-800">
+          <FolderOpen className="mr-2 h-4 w-4" />
+          Projects
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/analytics')} className="text-white hover:bg-gray-800">
+          <BarChart className="mr-2 h-4 w-4" />
+          Analytics
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/weather')} className="text-white hover:bg-gray-800">
+          <Cloud className="mr-2 h-4 w-4" />
+          Weather
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/calculator')} className="text-white hover:bg-gray-800">
+          <Calculator className="mr-2 h-4 w-4" />
+          Calculator
+        </DropdownMenuItem>
+        
+        <DropdownMenuSeparator className="bg-gray-700" />
+        
+        <DropdownMenuLabel className="text-xs text-gray-400 font-normal">
+          AI Tools
+        </DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => navigate('/openai')} className="text-white hover:bg-gray-800">
+          <Brain className="mr-2 h-4 w-4" />
+          OpenAI Chat
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/huggingface')} className="text-white hover:bg-gray-800">
+          <Brain className="mr-2 h-4 w-4" />
+          HuggingFace AI
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/features')} className="text-white hover:bg-gray-800">
+          <Wrench className="mr-2 h-4 w-4" />
+          Features
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/medical-diagnosis')} className="text-white hover:bg-gray-800">
+          <Stethoscope className="mr-2 h-4 w-4" />
+          Medical Diagnosis
+        </DropdownMenuItem>
+        
         <DropdownMenuSeparator className="bg-gray-700" />
         <DropdownMenuItem onClick={signOut} className="text-red-400 hover:bg-gray-800">
           <LogOut className="mr-2 h-4 w-4" />
