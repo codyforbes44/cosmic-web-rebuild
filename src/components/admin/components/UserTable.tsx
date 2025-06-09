@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -14,9 +13,11 @@ import { UserActionsMenu } from './UserActionsMenu';
 
 interface UserTableProps {
   users: UserWithRole[];
+  onUpdateRole: (userId: string, newRole: string) => Promise<void>;
+  onBanUser: (userId: string) => Promise<void>;
 }
 
-export const UserTable: React.FC<UserTableProps> = ({ users }) => {
+export const UserTable: React.FC<UserTableProps> = ({ users, onUpdateRole, onBanUser }) => {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin': return 'bg-red-500/20 text-red-400 border-red-500/50';
@@ -98,7 +99,11 @@ export const UserTable: React.FC<UserTableProps> = ({ users }) => {
               </TableCell>
               <TableCell className="text-gray-300">{formatDate(user.created_at)}</TableCell>
               <TableCell>
-                <UserActionsMenu />
+                <UserActionsMenu 
+                  user={user} 
+                  onUpdateRole={onUpdateRole}
+                  onBanUser={onBanUser}
+                />
               </TableCell>
             </TableRow>
           ))}

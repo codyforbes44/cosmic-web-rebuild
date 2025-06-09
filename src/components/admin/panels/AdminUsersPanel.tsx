@@ -18,7 +18,9 @@ export const AdminUsersPanel: React.FC = () => {
     isLoading,
     searchTerm,
     setSearchTerm,
-    handleUserAdded
+    handleUserAdded,
+    updateUserRole,
+    banUser
   } = useAdminUsers();
 
   if (isLoading) {
@@ -52,7 +54,11 @@ export const AdminUsersPanel: React.FC = () => {
           <UserSearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           
           {filteredUsers.length > 0 ? (
-            <UserTable users={filteredUsers} />
+            <UserTable 
+              users={filteredUsers} 
+              onUpdateRole={updateUserRole}
+              onBanUser={banUser}
+            />
           ) : (
             <EmptyUsersState />
           )}

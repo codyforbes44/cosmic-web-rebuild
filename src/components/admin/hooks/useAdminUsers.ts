@@ -20,47 +20,23 @@ export const useAdminUsers = () => {
   const { data: users = [], isLoading, refetch } = useQuery({
     queryKey: ['admin-users'],
     queryFn: async () => {
-      // First get all users from auth.users via admin API
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
-      
-      if (authError) {
-        throw new Error(authError.message);
-      }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No session');
 
-      // Get user roles from user_roles table
-      const { data: userRoles, error: rolesError } = await supabase
-        .from('user_roles')
-        .select('user_id, role');
-
-      if (rolesError) {
-        console.error('Error fetching user roles:', rolesError);
-      }
-
-      // Get user profiles for additional info
-      const { data: profiles, error: profilesError } = await supabase
-        .from('profiles')
-        .select('id, full_name');
-
-      if (profilesError) {
-        console.error('Error fetching profiles:', profilesError);
-      }
-
-      // Combine the data
-      const usersWithRoles: UserWithRole[] = authUsers.users.map(user => {
-        const userRole = userRoles?.find(role => role.user_id === user.id);
-        const profile = profiles?.find(p => p.id === user.id);
-        
-        return {
-          id: user.id,
-          email: user.email || '',
-          full_name: profile?.full_name || user.user_metadata?.full_name || null,
-          created_at: user.created_at,
-          last_sign_in_at: user.last_sign_in_at,
-          role: userRole?.role || 'user'
-        };
+      const response = await fetch(`${supabase.supabaseUrl}/functions/v1/admin-users?action=list-users`, {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
-      return usersWithRoles;
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to fetch users');
+      }
+
+      const result = await response.json();
+      return result.users as UserWithRole[];
     },
   });
 
@@ -68,6 +44,74 @@ export const useAdminUsers = () => {
     user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.full_name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const updateUserRole = async (userId: string, newRole: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No session');
+
+      const response = await fetch(`${supabase.supabaseUrl}/functions/v1/admin-users?action=update-role`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, newRole }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to update role');
+      }
+
+      toast({
+        title: "Role updated",
+        description: "User role has been successfully updated.",
+      });
+
+      refetch();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const banUser = async (userId: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No session');
+
+      const response = await fetch(`${supabase.supabaseUrl}/functions/v1/admin-users?action=ban-user`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to ban user');
+      }
+
+      toast({
+        title: "User banned",
+        description: "User has been successfully banned.",
+      });
+
+      refetch();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleUserAdded = () => {
     refetch();
@@ -84,6 +128,8 @@ export const useAdminUsers = () => {
     searchTerm,
     setSearchTerm,
     handleUserAdded,
+    updateUserRole,
+    banUser,
     refetch
   };
 };
