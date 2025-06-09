@@ -75,16 +75,9 @@ export async function trackVisitor(): Promise<void> {
       
       debugLog('Direct database insert successful:', data);
       
-      // Show welcome toast for new visitors occasionally
+      // Mark visitor as tracked without showing notification
       const isFirstVisit = !localStorage.getItem('hasVisited');
-      if (isFirstVisit && Math.random() > 0.7) { // 30% chance to show welcome
-        setTimeout(() => {
-          toast({
-            title: "Welcome!",
-            description: `Thanks for visiting ƷBI! Your visit has been recorded for analytics. Time: ${formatDateTimeDisplay(new Date())}`,
-            duration: 3000,
-          });
-        }, 1000);
+      if (isFirstVisit) {
         localStorage.setItem('hasVisited', 'true');
       }
       
