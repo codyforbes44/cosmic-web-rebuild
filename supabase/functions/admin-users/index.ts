@@ -45,103 +45,97 @@ serve(async (req) => {
       })
     }
 
-    const url = new URL(req.url)
-    const action = url.searchParams.get('action')
+    if (req.method === 'GET') {
+      // Get all users from auth
+      const { data: authUsers, error: authError } = await supabaseAdmin.auth.admin.listUsers()
+      if (authError) throw authError
 
-    switch (req.method) {
-      case 'GET':
-        if (action === 'list-users') {
-          // Get all users from auth
-          const { data: authUsers, error: authError } = await supabaseAdmin.auth.admin.listUsers()
-          if (authError) throw authError
+      // Get user roles
+      const { data: userRoles, error: rolesError } = await supabaseAdmin
+        .from('user_roles')
+        .select('user_id, role')
+      if (rolesError) throw rolesError
 
-          // Get user roles
-          const { data: userRoles, error: rolesError } = await supabaseAdmin
-            .from('user_roles')
-            .select('user_id, role')
-          if (rolesError) throw rolesError
+      // Get profiles
+      const { data: profiles, error: profilesError } = await supabaseAdmin
+        .from('profiles')
+        .select('id, full_name')
+      if (profilesError) throw profilesError
 
-          // Get profiles
-          const { data: profiles, error: profilesError } = await supabaseAdmin
-            .from('profiles')
-            .select('id, full_name')
-          if (profilesError) throw profilesError
-
-          // Combine data
-          const usersWithRoles = authUsers.users.map(authUser => {
-            const userRole = userRoles?.find(role => role.user_id === authUser.id)
-            const profile = profiles?.find(p => p.id === authUser.id)
-            
-            return {
-              id: authUser.id,
-              email: authUser.email || '',
-              full_name: profile?.full_name || authUser.user_metadata?.full_name || null,
-              created_at: authUser.created_at,
-              last_sign_in_at: authUser.last_sign_in_at,
-              role: userRole?.role || 'user'
-            }
-          })
-
-          return new Response(JSON.stringify({ users: usersWithRoles }), {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          })
-        }
-        break
-
-      case 'POST':
-        const body = await req.json()
+      // Combine data
+      const usersWithRoles = authUsers.users.map(authUser => {
+        const userRole = userRoles?.find(role => role.user_id === authUser.id)
+        const profile = profiles?.find(p => p.id === authUser.id)
         
-        if (action === 'update-role') {
-          const { userId, newRole } = body
-          
-          // First, remove existing role
-          await supabaseAdmin
+        return {
+          id: authUser.id,
+          email: authUser.email || '',
+          full_name: profile?.full_name || authUser.user_metadata?.full_name || null,
+          created_at: authUser.created_at,
+          last_sign_in_at: authUser.last_sign_in_at,
+          role: userRole?.role || 'user'
+        }
+      })
+
+      return new Response(JSON.stringify({ users: usersWithRoles }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
+    }
+
+    if (req.method === 'POST') {
+      const body = await req.json()
+      const { action } = body
+      
+      if (action === 'update-role') {
+        const { userId, newRole } = body
+        
+        // First, remove existing role
+        await supabaseAdmin
+          .from('user_roles')
+          .delete()
+          .eq('user_id', userId)
+
+        // Add new role if not 'user' (default)
+        if (newRole !== 'user') {
+          const { error: roleError } = await supabaseAdmin
             .from('user_roles')
-            .delete()
-            .eq('user_id', userId)
-
-          // Add new role if not 'user' (default)
-          if (newRole !== 'user') {
-            const { error: roleError } = await supabaseAdmin
-              .from('user_roles')
-              .insert({ user_id: userId, role: newRole })
-            
-            if (roleError) throw roleError
-          }
-
-          return new Response(JSON.stringify({ success: true }), {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          })
+            .insert({ user_id: userId, role: newRole })
+          
+          if (roleError) throw roleError
         }
 
-        if (action === 'ban-user') {
-          const { userId } = body
-          
-          const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
-            ban_duration: '876000h' // 100 years
-          })
-          
-          if (error) throw error
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
+      }
 
-          return new Response(JSON.stringify({ success: true }), {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          })
-        }
+      if (action === 'ban-user') {
+        const { userId } = body
+        
+        const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+          ban_duration: '876000h' // 100 years
+        })
+        
+        if (error) throw error
 
-        if (action === 'unban-user') {
-          const { userId } = body
-          
-          const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
-            ban_duration: 'none'
-          })
-          
-          if (error) throw error
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
+      }
 
-          return new Response(JSON.stringify({ success: true }), {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          })
-        }
-        break
+      if (action === 'unban-user') {
+        const { userId } = body
+        
+        const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+          ban_duration: 'none'
+        })
+        
+        if (error) throw error
+
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
+      }
     }
 
     return new Response(JSON.stringify({ error: 'Invalid request' }), {

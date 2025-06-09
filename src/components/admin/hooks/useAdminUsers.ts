@@ -20,23 +20,15 @@ export const useAdminUsers = () => {
   const { data: users = [], isLoading, refetch } = useQuery({
     queryKey: ['admin-users'],
     queryFn: async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('No session');
-
-      const response = await fetch(`${supabase.supabaseUrl}/functions/v1/admin-users?action=list-users`, {
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
-        },
+      const { data, error } = await supabase.functions.invoke('admin-users', {
+        method: 'GET',
       });
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to fetch users');
+      if (error) {
+        throw new Error(error.message || 'Failed to fetch users');
       }
 
-      const result = await response.json();
-      return result.users as UserWithRole[];
+      return data.users as UserWithRole[];
     },
   });
 
@@ -47,21 +39,17 @@ export const useAdminUsers = () => {
 
   const updateUserRole = async (userId: string, newRole: string) => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('No session');
-
-      const response = await fetch(`${supabase.supabaseUrl}/functions/v1/admin-users?action=update-role`, {
+      const { data, error } = await supabase.functions.invoke('admin-users', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
+        body: { 
+          action: 'update-role',
+          userId, 
+          newRole 
         },
-        body: JSON.stringify({ userId, newRole }),
       });
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to update role');
+      if (error) {
+        throw new Error(error.message || 'Failed to update role');
       }
 
       toast({
@@ -81,21 +69,16 @@ export const useAdminUsers = () => {
 
   const banUser = async (userId: string) => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('No session');
-
-      const response = await fetch(`${supabase.supabaseUrl}/functions/v1/admin-users?action=ban-user`, {
+      const { data, error } = await supabase.functions.invoke('admin-users', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
+        body: { 
+          action: 'ban-user',
+          userId 
         },
-        body: JSON.stringify({ userId }),
       });
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to ban user');
+      if (error) {
+        throw new Error(error.message || 'Failed to ban user');
       }
 
       toast({
