@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -37,6 +36,7 @@ const Features = lazy(() => import("./pages/Features"));
 const OpenAI = lazy(() => import("./pages/OpenAI"));
 const HuggingFace = lazy(() => import("./pages/HuggingFace"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const ProjectManagement = lazy(() => import("./pages/ProjectManagement"));
 
 // Product Pages
 const Products = lazy(() => import("./pages/Products"));
@@ -133,6 +133,9 @@ const AppRoutes = () => {
       
       {/* Admin Dashboard route */}
       <Route path="/admin" element={<AdminDashboard />} />
+      
+      {/* Project Management route */}
+      <Route path="/projects" element={<ProjectManagement />} />
       
       {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />

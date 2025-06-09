@@ -1,4 +1,3 @@
-
 import { 
   Home, 
   Briefcase, 
@@ -17,10 +16,12 @@ export interface NavLink {
 
 export const navLinks: NavLink[] = [
   { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
+  { name: 'Portfolio', path: '/portfolio' },
+  { name: 'Projects', path: '/projects' },
   { name: 'News', path: '/news' },
-  { name: 'FAQ', path: '/faq' },
-  { name: 'Contact', path: '/contact' }
+  { name: 'About', path: '/about' },
+  { name: 'Contact', path: '/contact' },
+  { name: 'FAQ', path: '/faq' }
 ];
 
 export interface ServiceCategory {
