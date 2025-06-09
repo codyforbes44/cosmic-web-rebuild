@@ -9,7 +9,6 @@ const testimonials = [
     id: 1,
     name: "Sarah Johnson",
     position: "CTO",
-    image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png",
     content: "ƷBI transformed our outdated systems into a modern digital platform that increased our operational efficiency by 40%. Their team's expertise and dedication to our success exceeded our expectations.",
     rating: 5
   },
@@ -17,7 +16,6 @@ const testimonials = [
     id: 2,
     name: "Michael Chen",
     position: "CEO",
-    image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png",
     content: "Working with ƷBI was a game-changer for our business. Their strategic insights and custom software solutions helped us capture new market opportunities and increase revenue by 35% in just six months.",
     rating: 5
   },
@@ -25,7 +23,6 @@ const testimonials = [
     id: 3,
     name: "Priya Patel",
     position: "COO",
-    image: "https://id-preview--2b064041-b594-40d8-9e86-f104f5c81b6c.lovable.app/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png",
     content: "ƷBI's data analytics solutions gave us unprecedented visibility into our operations. Their team worked closely with us to implement solutions that reduced costs and improved service delivery across our global network.",
     rating: 5
   }
@@ -61,11 +58,6 @@ const Testimonials: React.FC = () => {
                   <p className="text-gray-200 italic mb-6">"{testimonial.content}"</p>
                 </CardContent>
                 <CardFooter className="flex items-center border-t border-gray-800 pt-4">
-                  <img 
-                    src={testimonial.image} 
-                    alt={testimonial.name}
-                    className="h-12 w-12 rounded-full mr-4 object-cover"
-                  />
                   <div>
                     <h4 className="font-medium text-white">{testimonial.name}</h4>
                     <p className="text-sm text-gray-400">{testimonial.position}</p>
