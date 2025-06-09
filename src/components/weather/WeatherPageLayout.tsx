@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -19,6 +18,7 @@ import { Cloud } from 'lucide-react';
 import "@/components/weather/WeatherBackground.css";
 
 const WeatherPageLayout = () => {
+  
   const { 
     weatherData, 
     loading, 
