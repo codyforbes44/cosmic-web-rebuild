@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AdminGuard } from '@/components/admin/AdminGuard';
 import { AdminLayout } from '@/components/admin/AdminLayout';
-import { MobileAdminHeader } from '@/components/admin/components/MobileAdminHeader';
 import { AdminDashboardOverview } from '@/components/admin/panels/AdminDashboardOverview';
 import { AdminAnalyticsPanel } from '@/components/admin/panels/AdminAnalyticsPanel';
 import { AdminUsersPanel } from '@/components/admin/panels/AdminUsersPanel';
@@ -12,6 +11,7 @@ import { AdminChatbotPanel } from '@/components/admin/panels/AdminChatbotPanel';
 import { AdminAPIPanel } from '@/components/admin/panels/AdminAPIPanel';
 import { AdminSystemPanel } from '@/components/admin/panels/AdminSystemPanel';
 import { AdminSecurityPanel } from '@/components/admin/panels/AdminSecurityPanel';
+import { AdminDesktopHeader } from '@/components/admin/components/AdminDesktopHeader';
 import SEO from '@/components/SEO';
 
 const AdminDashboard = () => {
@@ -23,32 +23,50 @@ const AdminDashboard = () => {
     setRefreshKey(prev => prev + 1);
   };
 
-  const getTabTitle = (tab: string) => {
-    const titles = {
-      overview: 'Dashboard Overview',
-      analytics: 'Analytics & Insights',
-      users: 'User Management',
-      verification: 'Admin Verification',
-      chatbot: 'Chatbot Management',
-      api: 'API & Secrets',
-      system: 'System Settings',
-      security: 'Security Center'
+  const getTabInfo = (tab: string) => {
+    const tabInfo = {
+      overview: { 
+        title: 'Dashboard Overview', 
+        subtitle: 'Centralized management console',
+        icon: 'BarChart3'
+      },
+      analytics: { 
+        title: 'Analytics & Insights', 
+        subtitle: 'Track performance and usage',
+        icon: 'Activity'
+      },
+      users: { 
+        title: 'User Management', 
+        subtitle: 'Manage user accounts and roles',
+        icon: 'Users'
+      },
+      verification: { 
+        title: 'Admin Verification', 
+        subtitle: 'Verify admin user access',
+        icon: 'Shield'
+      },
+      chatbot: { 
+        title: 'Chatbot Management', 
+        subtitle: 'Configure AI assistant',
+        icon: 'Bot'
+      },
+      api: { 
+        title: 'API & Secrets', 
+        subtitle: 'Manage API keys and secrets',
+        icon: 'Key'
+      },
+      system: { 
+        title: 'System Settings', 
+        subtitle: 'System configuration and settings',
+        icon: 'Settings'
+      },
+      security: { 
+        title: 'Security Center', 
+        subtitle: 'Security monitoring and controls',
+        icon: 'Shield'
+      }
     };
-    return titles[tab as keyof typeof titles] || 'Admin Dashboard';
-  };
-
-  const getTabSubtitle = (tab: string) => {
-    const subtitles = {
-      overview: 'Centralized management console',
-      analytics: 'Track performance and usage',
-      users: 'Manage user accounts and roles',
-      verification: 'Verify admin user access',
-      chatbot: 'Configure AI assistant',
-      api: 'Manage API keys and secrets',
-      system: 'System configuration and settings',
-      security: 'Security monitoring and controls'
-    };
-    return subtitles[tab as keyof typeof subtitles];
+    return tabInfo[tab as keyof typeof tabInfo] || tabInfo.overview;
   };
 
   const renderTabContent = () => {
@@ -74,21 +92,28 @@ const AdminDashboard = () => {
     }
   };
 
+  const currentTabInfo = getTabInfo(activeTab);
+
   return (
     <>
       <SEO 
-        title="Admin Dashboard - Management Console" 
-        description="Secure admin dashboard for managing all application features and settings"
+        title={`${currentTabInfo.title} - Admin Dashboard`}
+        description={`Admin dashboard - ${currentTabInfo.subtitle}`}
       />
       <AdminGuard>
         <AdminLayout>
-          <MobileAdminHeader
-            title={getTabTitle(activeTab)}
-            subtitle={getTabSubtitle(activeTab)}
-            onRefresh={activeTab === 'overview' ? handleRefresh : undefined}
-          />
-          <div className="flex-1">
-            {renderTabContent()}
+          <div className="flex flex-col h-full bg-space-dark-blue">
+            <AdminDesktopHeader
+              title={currentTabInfo.title}
+              subtitle={currentTabInfo.subtitle}
+              onRefresh={activeTab === 'overview' ? handleRefresh : undefined}
+              activeTab={activeTab}
+            />
+            <div className="flex-1 overflow-auto p-6">
+              <div className="max-w-7xl mx-auto">
+                {renderTabContent()}
+              </div>
+            </div>
           </div>
         </AdminLayout>
       </AdminGuard>
