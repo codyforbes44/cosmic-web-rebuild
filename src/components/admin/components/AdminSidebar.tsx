@@ -21,7 +21,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
 
@@ -58,6 +57,7 @@ export const AdminSidebar: React.FC = () => {
           <button
             onClick={toggleSidebar}
             className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
           </button>
@@ -81,6 +81,7 @@ export const AdminSidebar: React.FC = () => {
                           ? 'bg-accent text-white font-medium shadow-lg'
                           : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
                       }`}
+                      title={isCollapsed ? item.title : undefined}
                     >
                       <item.icon className={`h-5 w-5 flex-shrink-0 ${isActive(item.id) ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
                       {!isCollapsed && (

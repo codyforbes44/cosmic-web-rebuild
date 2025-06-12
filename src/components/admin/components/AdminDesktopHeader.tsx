@@ -2,8 +2,9 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Settings, Bell } from 'lucide-react';
+import { RefreshCw, Settings, Bell, Menu } from 'lucide-react';
 import { useAuth } from '@/components/auth/AuthProvider';
+import { useSidebar } from '@/components/ui/sidebar';
 
 interface AdminDesktopHeaderProps {
   title: string;
@@ -21,12 +22,23 @@ export const AdminDesktopHeader: React.FC<AdminDesktopHeaderProps> = ({
   isLoading = false
 }) => {
   const { user } = useAuth();
+  const { toggleSidebar } = useSidebar();
 
   return (
     <div className="bg-space-deep-blue border-b border-gray-700 px-6 py-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
+            {/* Sidebar Toggle */}
+            <Button
+              onClick={toggleSidebar}
+              variant="outline"
+              size="sm"
+              className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              <Menu className="w-4 h-4" />
+            </Button>
+
             <div>
               <h1 className="text-2xl font-bold text-white">{title}</h1>
               {subtitle && (
