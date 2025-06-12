@@ -7,6 +7,7 @@ import { MobileAdminHeader } from '@/components/admin/components/MobileAdminHead
 import { AdminDashboardOverview } from '@/components/admin/panels/AdminDashboardOverview';
 import { AdminAnalyticsPanel } from '@/components/admin/panels/AdminAnalyticsPanel';
 import { AdminUsersPanel } from '@/components/admin/panels/AdminUsersPanel';
+import { AdminUserVerificationPanel } from '@/components/admin/panels/AdminUserVerificationPanel';
 import { AdminChatbotPanel } from '@/components/admin/panels/AdminChatbotPanel';
 import { AdminAPIPanel } from '@/components/admin/panels/AdminAPIPanel';
 import { AdminSystemPanel } from '@/components/admin/panels/AdminSystemPanel';
