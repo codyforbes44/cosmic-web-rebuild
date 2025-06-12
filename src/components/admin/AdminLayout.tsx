@@ -12,7 +12,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
 
   return (
-    <SidebarProvider collapsedWidth={isMobile ? 0 : 56}>
+    <SidebarProvider>
       <div className="min-h-screen flex w-full bg-space-dark-blue">
         <AdminSidebar />
         <main className="flex-1 overflow-auto">

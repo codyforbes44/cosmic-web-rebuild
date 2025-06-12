@@ -34,17 +34,18 @@ const navigationItems = [
 ];
 
 export const AdminSidebar: React.FC = () => {
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
   const currentTab = new URLSearchParams(location.search).get('tab') || 'overview';
+  const isCollapsed = state === 'collapsed';
 
   const isActive = (tabId: string) => currentTab === tabId;
 
   return (
-    <Sidebar className={`${collapsed ? 'w-0' : 'w-64'} bg-space-deep-blue border-r border-gray-700`}>
+    <Sidebar className={`${isCollapsed ? 'w-14' : 'w-64'} bg-space-deep-blue border-r border-gray-700`}>
       <div className="p-4 border-b border-gray-700">
         <div className="flex items-center justify-between">
-          <h2 className={`text-white font-bold ${collapsed ? 'hidden' : 'block'}`}>
+          <h2 className={`text-white font-bold ${isCollapsed ? 'hidden' : 'block'}`}>
             Admin Dashboard
           </h2>
           <SidebarTrigger className="text-white hover:bg-white/10" />
@@ -70,7 +71,7 @@ export const AdminSidebar: React.FC = () => {
                       }`}
                     >
                       <item.icon className="h-5 w-5 flex-shrink-0" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
