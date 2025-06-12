@@ -27,6 +27,7 @@ const navigationItems = [
   { id: 'overview', title: 'Overview', icon: BarChart3 },
   { id: 'analytics', title: 'Analytics', icon: Activity },
   { id: 'users', title: 'Users', icon: Users },
+  { id: 'verification', title: 'Admin Check', icon: Shield },
   { id: 'chatbot', title: 'Chatbot', icon: Bot },
   { id: 'api', title: 'API & Secrets', icon: Key },
   { id: 'system', title: 'System', icon: Settings },

@@ -27,6 +27,7 @@ const AdminDashboard = () => {
       overview: 'Dashboard Overview',
       analytics: 'Analytics & Insights',
       users: 'User Management',
+      verification: 'Admin Verification',
       chatbot: 'Chatbot Management',
       api: 'API & Secrets',
       system: 'System Settings',
@@ -40,6 +41,7 @@ const AdminDashboard = () => {
       overview: 'Centralized management console',
       analytics: 'Track performance and usage',
       users: 'Manage user accounts and roles',
+      verification: 'Verify admin user access',
       chatbot: 'Configure AI assistant',
       api: 'Manage API keys and secrets',
       system: 'System configuration and settings',
@@ -56,6 +58,8 @@ const AdminDashboard = () => {
         return <AdminAnalyticsPanel />;
       case 'users':
         return <AdminUsersPanel />;
+      case 'verification':
+        return <AdminUserVerificationPanel />;
       case 'chatbot':
         return <AdminChatbotPanel />;
       case 'api':
