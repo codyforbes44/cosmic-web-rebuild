@@ -8,7 +8,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, TestTube, Calendar } from "lucide-react";
 import { useAnalytics } from "@/hooks/use-analytics";
-import OverviewCards from "@/components/analytics/OverviewCards";
 import AnalyticsTabs from "@/components/analytics/AnalyticsTabs";
 import FormSubmissionsCard from "@/components/analytics/FormSubmissionsCard";
 import { trackVisitor } from "@/utils/visitorTracking";
@@ -105,13 +104,6 @@ const Analytics: React.FC = () => {
             </Card>
           ) : data ? (
             <>
-              <OverviewCards 
-                totalVisitors={data.totalVisitors} 
-                totalCountries={data.totalCountries} 
-                avgTimeOnPage={data.avgTimeOnPage} 
-                topPage={data.topPage} 
-              />
-              
               {/* Form Submissions Section */}
               <div className="mb-8">
                 <FormSubmissionsCard />
