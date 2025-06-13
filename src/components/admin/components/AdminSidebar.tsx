@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { 
@@ -8,7 +7,6 @@ import {
   Shield, 
   Bot, 
   Key,
-  Activity,
   ChevronLeft,
   ChevronRight,
   FileText
@@ -27,7 +25,6 @@ import {
 
 const navigationItems = [
   { id: 'overview', title: 'Overview', icon: BarChart3, description: 'Dashboard overview' },
-  { id: 'analytics', title: 'Analytics', icon: Activity, description: 'Performance metrics' },
   { id: 'users', title: 'Users', icon: Users, description: 'User management' },
   { id: 'verification', title: 'Admin Check', icon: Shield, description: 'Admin verification' },
   { id: 'secure-pages', title: 'Secure Pages', icon: FileText, description: 'Protected content management' },
