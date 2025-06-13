@@ -46,9 +46,9 @@ export const AdminSidebar: React.FC = () => {
   const isActive = (tabId: string) => currentTab === tabId;
 
   return (
-    <Sidebar className={`${isCollapsed ? 'w-16' : 'w-72'} bg-space-deep-blue border-r border-gray-700 transition-all duration-300`}>
+    <Sidebar className={`${isCollapsed ? 'w-16' : 'w-72'} bg-space-deep-blue border-r border-gray-700 transition-all duration-300 [&_.sheet-content]:bg-space-deep-blue [&_.sheet-content]:backdrop-blur-sm`}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-700">
+      <div className="p-4 border-b border-gray-700 bg-space-deep-blue">
         <div className="flex items-center justify-between">
           {!isCollapsed && (
             <div>
@@ -66,7 +66,7 @@ export const AdminSidebar: React.FC = () => {
         </div>
       </div>
 
-      <SidebarContent className="py-4">
+      <SidebarContent className="py-4 bg-space-deep-blue">
         <SidebarGroup>
           <SidebarGroupLabel className={`text-gray-400 px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}`}>
             Management Tools
@@ -105,7 +105,7 @@ export const AdminSidebar: React.FC = () => {
 
       {/* Footer */}
       {!isCollapsed && (
-        <div className="p-4 border-t border-gray-700 mt-auto">
+        <div className="p-4 border-t border-gray-700 mt-auto bg-space-deep-blue">
           <div className="text-center">
             <p className="text-xs text-gray-500">Admin Dashboard v2.0</p>
             <p className="text-xs text-gray-600 mt-1">Secure Management Portal</p>
