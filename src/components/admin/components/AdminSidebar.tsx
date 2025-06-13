@@ -10,7 +10,8 @@ import {
   Key,
   Activity,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  FileText
 } from 'lucide-react';
 import {
   Sidebar,
@@ -29,6 +30,7 @@ const navigationItems = [
   { id: 'analytics', title: 'Analytics', icon: Activity, description: 'Performance metrics' },
   { id: 'users', title: 'Users', icon: Users, description: 'User management' },
   { id: 'verification', title: 'Admin Check', icon: Shield, description: 'Admin verification' },
+  { id: 'secure-pages', title: 'Secure Pages', icon: FileText, description: 'Protected content management' },
   { id: 'chatbot', title: 'Chatbot', icon: Bot, description: 'AI assistant' },
   { id: 'api', title: 'API & Secrets', icon: Key, description: 'API management' },
   { id: 'system', title: 'System', icon: Settings, description: 'System settings' },

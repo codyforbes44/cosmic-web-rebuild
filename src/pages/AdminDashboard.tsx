@@ -7,6 +7,7 @@ import { AdminDashboardOverview } from '@/components/admin/panels/AdminDashboard
 import { AdminAnalyticsPanel } from '@/components/admin/panels/AdminAnalyticsPanel';
 import { AdminUsersPanel } from '@/components/admin/panels/AdminUsersPanel';
 import { AdminUserVerificationPanel } from '@/components/admin/panels/AdminUserVerificationPanel';
+import { AdminSecurePagesPanel } from '@/components/admin/panels/AdminSecurePagesPanel';
 import { AdminChatbotPanel } from '@/components/admin/panels/AdminChatbotPanel';
 import { AdminAPIPanel } from '@/components/admin/panels/AdminAPIPanel';
 import { AdminSystemPanel } from '@/components/admin/panels/AdminSystemPanel';
@@ -45,6 +46,11 @@ const AdminDashboard = () => {
         subtitle: 'Verify admin user access',
         icon: 'Shield'
       },
+      'secure-pages': {
+        title: 'Secure Pages',
+        subtitle: 'Manage protected content and access controls',
+        icon: 'FileText'
+      },
       chatbot: { 
         title: 'Chatbot Management', 
         subtitle: 'Configure AI assistant',
@@ -79,6 +85,8 @@ const AdminDashboard = () => {
         return <AdminUsersPanel />;
       case 'verification':
         return <AdminUserVerificationPanel />;
+      case 'secure-pages':
+        return <AdminSecurePagesPanel />;
       case 'chatbot':
         return <AdminChatbotPanel />;
       case 'api':
