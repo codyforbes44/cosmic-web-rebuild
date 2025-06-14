@@ -10,6 +10,7 @@ import { UserSearchBar } from '../components/UserSearchBar';
 import { EmptyUsersState } from '../components/EmptyUsersState';
 import { LoadingState } from '../components/LoadingState';
 import { useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 export const AdminUsersPanel: React.FC = () => {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
@@ -31,6 +32,28 @@ export const AdminUsersPanel: React.FC = () => {
     if (targetUser) {
       console.log('Testing password reset for user:', targetUser.id);
       await resetPassword(targetUser.id, 'TestPassword123!');
+    } else {
+      console.error('User c@3bi.io not found in users list');
+    }
+  };
+
+  const testAdminFunction = async () => {
+    try {
+      console.log('Testing admin function connectivity...');
+      
+      const { data, error } = await supabase.functions.invoke('admin-users', {
+        method: 'GET',
+      });
+
+      console.log('Admin function test result:', { data, error });
+      
+      if (error) {
+        console.error('Admin function error:', error);
+      } else {
+        console.log('Admin function working, found', data?.users?.length, 'users');
+      }
+    } catch (err) {
+      console.error('Admin function test failed:', err);
     }
   };
 
@@ -45,12 +68,18 @@ export const AdminUsersPanel: React.FC = () => {
         <CardHeader>
           <CardTitle className="text-white">Password Reset Test</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-3">
           <Button 
             onClick={testPasswordReset}
-            className="bg-red-600 hover:bg-red-700 text-white"
+            className="bg-red-600 hover:bg-red-700 text-white w-full"
           >
             Reset c@3bi.io Password to TestPassword123!
+          </Button>
+          <Button 
+            onClick={testAdminFunction}
+            className="bg-blue-600 hover:bg-blue-700 text-white w-full"
+          >
+            Test Admin Function Connectivity
           </Button>
         </CardContent>
       </Card>

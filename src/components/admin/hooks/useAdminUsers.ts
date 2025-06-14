@@ -98,6 +98,8 @@ export const useAdminUsers = () => {
 
   const resetPassword = async (userId: string, newPassword: string) => {
     try {
+      console.log('Starting password reset for:', { userId, newPassword });
+      
       const { data, error } = await supabase.functions.invoke('admin-users', {
         method: 'POST',
         body: { 
@@ -107,7 +109,10 @@ export const useAdminUsers = () => {
         },
       });
 
+      console.log('Function response:', { data, error });
+
       if (error) {
+        console.error('Function invoke error:', error);
         throw new Error(error.message || 'Failed to reset password');
       }
 
@@ -118,6 +123,7 @@ export const useAdminUsers = () => {
 
       refetch();
     } catch (error: any) {
+      console.error('Password reset error:', error);
       toast({
         title: "Error",
         description: error.message,
