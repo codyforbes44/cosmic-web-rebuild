@@ -46,6 +46,9 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 // ElevenLabs page
 const ElevenLabs = lazy(() => import("./pages/ElevenLabs"));
 
+// U2014 page
+const U2014 = lazy(() => import("./pages/U2014"));
+
 // Auth pages
 const Auth = lazy(() => import("./pages/Auth"));
 const Profile = lazy(() => import("./pages/Profile"));
@@ -137,6 +140,9 @@ const AppRoutes = () => {
       
       {/* ElevenLabs route */}
       <Route path="/11l" element={<ElevenLabs />} />
+      
+      {/* U2014 route */}
+      <Route path="/u2014" element={<U2014 />} />
       
       {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />
