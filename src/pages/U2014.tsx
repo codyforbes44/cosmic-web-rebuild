@@ -18,23 +18,32 @@ import { useZephelSounds } from '@/hooks/useZephelSounds';
 import { useZephelMetrics } from '@/hooks/useZephelMetrics';
 
 const U2014 = () => {
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: 'ZEPHEL online. Sovereign system cores aligned. Awaiting your directive, Architect.',
-      timestamp: new Date().toLocaleTimeString()
-    }
-  ]);
   const [input, setInput] = useState('');
-  const [systemStatus, setSystemStatus] = useState({
-    'Sovereign.Logic': 'ACTIVE',
-    'QuantaZest.Design': 'ACTIVE', 
-    'Mentor.Akadelight': 'ACTIVE',
-    'Omniview.Futurecast': 'ACTIVE',
-    'ZEPHEL.NEURONET': 'ACTIVE'
-  });
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [matrixEffects, setMatrixEffects] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
+  // Hooks for all ZEPHEL features
   const { isLoading, invoke } = useOpenAI();
+  const { currentSession, messages, setMessages, saveMessage, switchSession } = useZephelSessions();
+  const { speak, isPlaying } = useZephelVoice();
+  const { playSystemBoot, playCommandExecute, playSuccess, playError } = useZephelSounds();
+  const { metrics, cpuUsage, memoryUsage, networkLatency, systemHealth } = useZephelMetrics();
+
+  // Initialize system
+  useEffect(() => {
+    playSystemBoot();
+    setMatrixEffects(true);
+    setTimeout(() => setMatrixEffects(false), 5000);
+  }, []);
+
+  // Auto-scroll messages
+  useEffect(() => {
+    const messagesContainer = document.querySelector('.messages-container');
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  }, [messages]);
 
   const config = {
     name: "ZEPHEL ∴ GODMODE",
@@ -85,15 +94,14 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
-    const newUserMessage = {
-      role: 'user',
-      content: input,
-      timestamp: new Date().toLocaleTimeString()
-    };
-
-    setMessages(prev => [...prev, newUserMessage]);
+    playCommandExecute();
     const currentInput = input;
     setInput('');
+
+    // Save user message to database if session exists
+    if (currentSession) {
+      await saveMessage('user', currentInput);
+    }
 
     try {
       // Build OpenAI request with ZEPHEL system prompt
@@ -107,23 +115,28 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
       const result = await invoke(request);
       
       if (result?.choices?.[0]?.message?.content) {
-        const assistantMessage = {
-          role: 'assistant',
-          content: result.choices[0].message.content,
-          timestamp: new Date().toLocaleTimeString()
-        };
-        setMessages(prev => [...prev, assistantMessage]);
+        const responseContent = result.choices[0].message.content;
+        
+        // Save assistant message to database if session exists
+        if (currentSession) {
+          await saveMessage('assistant', responseContent);
+        }
+        
+        // Play voice if enabled
+        if (voiceEnabled && !isPlaying) {
+          speak(responseContent);
+        }
+        
+        playSuccess();
       }
     } catch (error) {
       console.error('ZEPHEL communication error:', error);
+      playError();
       
-      // Fallback response on error
-      const errorResponse = {
-        role: 'assistant',
-        content: 'ZEPHEL.ERROR: Communication link disrupted. Attempting to re-establish sovereign connection...',
-        timestamp: new Date().toLocaleTimeString()
-      };
-      setMessages(prev => [...prev, errorResponse]);
+      // Save error message to database if session exists
+      if (currentSession) {
+        await saveMessage('assistant', 'ZEPHEL.ERROR: Communication link disrupted. Attempting to re-establish sovereign connection...');
+      }
     }
   };
 
@@ -164,11 +177,16 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {Object.entries(systemStatus).map(([system, status]) => (
+                {Object.entries(metrics).map(([system, metric]) => (
                   <div key={system} className="flex justify-between items-center">
                     <span className="text-xs text-gray-400">{system}</span>
-                    <Badge variant="outline" className="border-green-500 text-green-400 text-xs">
-                      {status}
+                    <Badge variant="outline" className={`text-xs ${
+                      metric.status === 'active' ? 'border-green-500 text-green-400' :
+                      metric.status === 'warning' ? 'border-yellow-500 text-yellow-400' :
+                      metric.status === 'error' ? 'border-red-500 text-red-400' :
+                      'border-gray-500 text-gray-400'
+                    }`}>
+                      {String(metric.value)}
                     </Badge>
                   </div>
                 ))}
