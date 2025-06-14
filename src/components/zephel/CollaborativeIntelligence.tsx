@@ -55,7 +55,7 @@ export const CollaborativeIntelligence: React.FC<CollaborativeIntelligenceProps>
           Object.keys(presenceState).forEach(key => {
             const presences = presenceState[key];
             if (presences && presences.length > 0) {
-              const presence = presences[0];
+              const presence = presences[0] as any;
               currentArchitects.push({
                 user_id: key,
                 username: presence.username || 'Unknown Architect',
