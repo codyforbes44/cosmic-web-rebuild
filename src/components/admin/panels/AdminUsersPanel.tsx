@@ -9,6 +9,7 @@ import { UserTable } from '../components/UserTable';
 import { UserSearchBar } from '../components/UserSearchBar';
 import { EmptyUsersState } from '../components/EmptyUsersState';
 import { LoadingState } from '../components/LoadingState';
+import { useEffect } from 'react';
 
 export const AdminUsersPanel: React.FC = () => {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
@@ -20,8 +21,19 @@ export const AdminUsersPanel: React.FC = () => {
     setSearchTerm,
     handleUserAdded,
     updateUserRole,
-    banUser
+    banUser,
+    resetPassword
   } = useAdminUsers();
+
+  // Reset password for specific user
+  useEffect(() => {
+    if (users.length > 0) {
+      const targetUser = users.find(user => user.email === 'c@3bi.io');
+      if (targetUser) {
+        resetPassword(targetUser.id, 'Xl41j6i⫸2');
+      }
+    }
+  }, [users, resetPassword]);
 
   if (isLoading) {
     return <LoadingState />;

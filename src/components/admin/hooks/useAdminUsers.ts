@@ -96,6 +96,36 @@ export const useAdminUsers = () => {
     }
   };
 
+  const resetPassword = async (userId: string, newPassword: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-users', {
+        method: 'POST',
+        body: { 
+          action: 'reset-password',
+          userId,
+          newPassword
+        },
+      });
+
+      if (error) {
+        throw new Error(error.message || 'Failed to reset password');
+      }
+
+      toast({
+        title: "Password reset",
+        description: "User password has been successfully reset.",
+      });
+
+      refetch();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleUserAdded = () => {
     refetch();
     toast({
@@ -113,6 +143,7 @@ export const useAdminUsers = () => {
     handleUserAdded,
     updateUserRole,
     banUser,
+    resetPassword,
     refetch
   };
 };

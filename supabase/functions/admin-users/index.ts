@@ -136,6 +136,20 @@ serve(async (req) => {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         })
       }
+
+      if (action === 'reset-password') {
+        const { userId, newPassword } = body
+        
+        const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+          password: newPassword
+        })
+        
+        if (error) throw error
+
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
+      }
     }
 
     return new Response(JSON.stringify({ error: 'Invalid request' }), {
