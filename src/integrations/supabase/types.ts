@@ -219,6 +219,89 @@ export type Database = {
         }
         Relationships: []
       }
+      zephel_messages: {
+        Row: {
+          content: string
+          id: string
+          metadata: Json | null
+          role: string
+          session_id: string
+          timestamp: string
+        }
+        Insert: {
+          content: string
+          id?: string
+          metadata?: Json | null
+          role: string
+          session_id: string
+          timestamp?: string
+        }
+        Update: {
+          content?: string
+          id?: string
+          metadata?: Json | null
+          role?: string
+          session_id?: string
+          timestamp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zephel_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "zephel_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      zephel_metrics: {
+        Row: {
+          id: string
+          metric_name: string
+          metric_value: Json
+          recorded_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          metric_name: string
+          metric_value: Json
+          recorded_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          metric_name?: string
+          metric_value?: Json
+          recorded_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      zephel_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          session_name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          session_name?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          session_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

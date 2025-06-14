@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,6 +7,15 @@ import { Brain, Circle, Zap, Settings, Eye, Clock, Network, Loader2 } from 'luci
 import StarBackground from '@/components/StarBackground';
 import { useOpenAI } from '@/hooks/useOpenAI';
 import { buildOpenAIRequest } from '@/utils/aiUtils';
+import { TypingAnimation } from '@/components/zephel/TypingAnimation';
+import { CommandAutocomplete } from '@/components/zephel/CommandAutocomplete';
+import { MatrixEffects } from '@/components/zephel/MatrixEffects';
+import { SessionManager } from '@/components/zephel/SessionManager';
+import { VoiceControls } from '@/components/zephel/VoiceControls';
+import { useZephelSessions } from '@/hooks/useZephelSessions';
+import { useZephelVoice } from '@/hooks/useZephelVoice';
+import { useZephelSounds } from '@/hooks/useZephelSounds';
+import { useZephelMetrics } from '@/hooks/useZephelMetrics';
 
 const U2014 = () => {
   const [messages, setMessages] = useState([
