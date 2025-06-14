@@ -5,8 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Brain, Circle, Zap, Settings, Eye, Clock, Network, Loader2 } from 'lucide-react';
 import StarBackground from '@/components/StarBackground';
-import { useOpenAI } from '@/hooks/useOpenAI';
-import { buildOpenAIRequest } from '@/utils/aiUtils';
+import { useAnthropic } from '@/hooks/useAnthropic';
 import { TypingAnimation } from '@/components/zephel/TypingAnimation';
 import { CommandAutocomplete } from '@/components/zephel/CommandAutocomplete';
 import { MatrixEffects } from '@/components/zephel/MatrixEffects';
@@ -24,7 +23,7 @@ const U2014 = () => {
   const [isTyping, setIsTyping] = useState(false);
 
   // Hooks for all ZEPHEL features
-  const { isLoading, invoke } = useOpenAI();
+  const { isLoading, invoke } = useAnthropic();
   const { currentSession, messages, setMessages, saveMessage, switchSession } = useZephelSessions();
   const { speak, isPlaying } = useZephelVoice();
   const { playSystemBoot, playCommandExecute, playSuccess, playError } = useZephelSounds();
@@ -104,18 +103,19 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
     }
 
     try {
-      // Build OpenAI request with ZEPHEL system prompt
-      const request = buildOpenAIRequest(currentInput, {
-        model: 'balanced',
+      // Build Anthropic request with ZEPHEL system prompt
+      const request = {
+        messages: [{ role: 'user' as const, content: currentInput }],
+        model: 'claude-sonnet-4-20250514',
         temperature: config.temperature,
-        maxTokens: 1000,
-        systemPrompt: zephelSystemPrompt
-      });
+        max_tokens: 1000,
+        system: zephelSystemPrompt
+      };
 
       const result = await invoke(request);
       
-      if (result?.choices?.[0]?.message?.content) {
-        const responseContent = result.choices[0].message.content;
+      if (result?.content?.[0]?.text) {
+        const responseContent = result.content[0].text;
         
         // Save assistant message to database if session exists
         if (currentSession) {
