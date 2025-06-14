@@ -68,7 +68,41 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('OpenAI API error:', response.status, errorText);
-      throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
+      
+      let errorMessage = '';
+      let errorType = 'openai_error';
+      
+      switch (response.status) {
+        case 429:
+          errorMessage = 'OpenAI API rate limit exceeded. Please wait a moment and try again.';
+          errorType = 'rate_limit_error';
+          break;
+        case 401:
+          errorMessage = 'OpenAI API authentication failed. Please check your API key.';
+          errorType = 'auth_error';
+          break;
+        case 400:
+          errorMessage = 'Invalid request sent to OpenAI API. Please check your input.';
+          errorType = 'bad_request_error';
+          break;
+        case 500:
+        case 502:
+        case 503:
+          errorMessage = 'OpenAI API is temporarily unavailable. Please try again later.';
+          errorType = 'service_error';
+          break;
+        default:
+          errorMessage = `OpenAI API error: ${response.status} ${response.statusText}`;
+      }
+      
+      return new Response(JSON.stringify({ 
+        error: errorMessage,
+        type: errorType,
+        status: response.status
+      }), {
+        status: response.status === 429 ? 429 : 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const data = await response.json();

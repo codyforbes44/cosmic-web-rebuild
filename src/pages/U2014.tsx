@@ -133,9 +133,23 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
       console.error('ZEPHEL communication error:', error);
       playError();
       
+      let errorMessage = 'ZEPHEL.ERROR: Communication link disrupted. Attempting to re-establish sovereign connection...';
+      
+      // Handle specific error types
+      if (error instanceof Error) {
+        const errorText = error.message.toLowerCase();
+        if (errorText.includes('rate limit') || errorText.includes('429')) {
+          errorMessage = 'ZEPHEL.RATE_LIMIT: Processing capacity exceeded. Cooling down neural pathways. Please retry in 60 seconds.';
+        } else if (errorText.includes('auth') || errorText.includes('401')) {
+          errorMessage = 'ZEPHEL.AUTH_ERROR: Sovereign credentials invalid. Check system administrator configuration.';
+        } else if (errorText.includes('service') || errorText.includes('503')) {
+          errorMessage = 'ZEPHEL.SERVICE_ERROR: External neural substrate temporarily offline. Retrying connection...';
+        }
+      }
+      
       // Save error message to database if session exists
       if (currentSession) {
-        await saveMessage('assistant', 'ZEPHEL.ERROR: Communication link disrupted. Attempting to re-establish sovereign connection...');
+        await saveMessage('assistant', errorMessage);
       }
     }
   };
