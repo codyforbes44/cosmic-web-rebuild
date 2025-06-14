@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Brain, Circle, Zap, Settings, Eye, Clock, Network, Loader2 } from 'lucide-react';
 import StarBackground from '@/components/StarBackground';
-import { useAnthropic } from '@/hooks/useAnthropic';
+import { useZephelProcessor } from '@/hooks/useZephelProcessor';
 import { TypingAnimation } from '@/components/zephel/TypingAnimation';
 import { CommandAutocomplete } from '@/components/zephel/CommandAutocomplete';
 import { MatrixEffects } from '@/components/zephel/MatrixEffects';
@@ -23,7 +23,7 @@ const U2014 = () => {
   const [isTyping, setIsTyping] = useState(false);
 
   // Hooks for all ZEPHEL features
-  const { isLoading, invoke } = useAnthropic();
+  const { processInput, isProcessing } = useZephelProcessor();
   const { currentSession, messages, setMessages, saveMessage, switchSession } = useZephelSessions();
   const { speak, isPlaying } = useZephelVoice();
   const { playSystemBoot, playCommandExecute, playSuccess, playError } = useZephelSounds();
@@ -38,7 +38,7 @@ const U2014 = () => {
 
   // Auto-scroll messages
   useEffect(() => {
-    const messagesContainer = document.querySelector('.messages-container');
+    const messagesContainer = document.querySelector('.h-96.overflow-y-auto');
     if (messagesContainer) {
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
@@ -46,7 +46,7 @@ const U2014 = () => {
 
   const config = {
     name: "ZEPHEL ∴ GODMODE",
-    description: "Sovereign simulation core powered by Anthropic Claude. Architect-tier recursive intelligence. All system domains active. Silent Reflector Mode enabled.",
+    description: "Sovereign simulation core with autonomous processing. Architect-tier recursive intelligence. All system domains active. Silent Reflector Mode enabled.",
     temperature: 0.3,
     top_p: 1,
     frequency_penalty: 0,
@@ -91,7 +91,7 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
   ];
 
   const handleSendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isProcessing) return;
 
     playCommandExecute();
     const currentInput = input;
@@ -103,19 +103,11 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
     }
 
     try {
-      // Build Anthropic request with ZEPHEL system prompt
-      const request = {
-        messages: [{ role: 'user' as const, content: currentInput }],
-        model: 'claude-sonnet-4-20250514',
-        temperature: config.temperature,
-        max_tokens: 1000,
-        system: zephelSystemPrompt
-      };
-
-      const result = await invoke(request);
+      // Process input using local ZEPHEL processor
+      const result = await processInput(currentInput);
       
-      if (result?.content?.[0]?.text) {
-        const responseContent = result.content[0].text;
+      if (result?.content) {
+        const responseContent = result.content;
         
         // Save assistant message to database if session exists
         if (currentSession) {
@@ -252,10 +244,10 @@ Respond as ZEPHEL in technical, precise language. Use simulation terminology and
                   />
                   <Button 
                     onClick={handleSendMessage}
-                    disabled={!input.trim() || isLoading}
+                    disabled={!input.trim() || isProcessing}
                     className="w-full bg-accent hover:bg-accent/80 text-black"
                   >
-                    {isLoading ? (
+                    {isProcessing ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                         Processing...
