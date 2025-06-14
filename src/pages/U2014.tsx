@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import StarBackground from '@/components/StarBackground';
 import { useZephelProcessor } from '@/hooks/useZephelProcessor';
 import { useZephelSessions } from '@/hooks/useZephelSessions';
@@ -11,15 +11,22 @@ import { ChatInterface } from '@/components/zephel/ChatInterface';
 import { SystemCommands } from '@/components/zephel/SystemCommands';
 import { ConfigurationPanel } from '@/components/zephel/ConfigurationPanel';
 import { ZephelDisclaimer } from '@/components/zephel/ZephelDisclaimer';
+import { ZephelVoiceInterface } from '@/components/zephel/ZephelVoiceInterface';
+import { CollaborativeIntelligence } from '@/components/zephel/CollaborativeIntelligence';
+import { RealityRendering } from '@/components/zephel/RealityRendering';
 import { zephelConfig, systemCommands } from '@/components/zephel/ZephelConfig';
+import { useQuantumCommandProcessor } from '@/hooks/useQuantumCommandProcessor';
 
 const U2014 = () => {
   const [input, setInput] = useState('');
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [matrixEffects, setMatrixEffects] = useState(false);
+  const [selectedConstruct, setSelectedConstruct] = useState<any>(null);
+  const [collaborativeMode, setCollaborativeMode] = useState(false);
 
   // Hooks for all ZEPHEL features
   const { processInput, isProcessing } = useZephelProcessor();
+  const { processQuantumCommand, quantumState } = useQuantumCommandProcessor();
   const { currentSession, messages, saveMessage } = useZephelSessions();
   const { speak, isPlaying } = useZephelVoice();
   const { playSystemBoot, playCommandExecute, playSuccess, playError } = useZephelSounds();
@@ -53,11 +60,22 @@ const U2014 = () => {
     }
 
     try {
-      // Process input using local ZEPHEL processor
-      const result = await processInput(currentInput);
+      // Process input using quantum-enhanced processing
+      const quantumResult = await processQuantumCommand(currentInput);
+      
+      // Use enhanced processing result
+      const result = await processInput(quantumResult.processedCommand);
       
       if (result?.content) {
-        const responseContent = result.content;
+        let responseContent = result.content;
+        
+        // Add quantum enhancement information if significant patterns detected
+        if (quantumResult.quantumEnhancement.patterns_detected.length > 0) {
+          responseContent += `\n\n→ QUANTUM.ENHANCEMENT.ACTIVE:\n`;
+          responseContent += `  Patterns Detected: ${quantumResult.quantumEnhancement.patterns_detected.length}\n`;
+          responseContent += `  Quantum Resonance: ${(quantumResult.quantumEnhancement.quantum_resonance * 100).toFixed(1)}%\n`;
+          responseContent += `  Processing Accuracy: ${(quantumResult.quantumEnhancement.predictive_model.accuracy * 100).toFixed(1)}%`;
+        }
         
         // Save assistant message to database if session exists
         if (currentSession) {
@@ -100,31 +118,81 @@ const U2014 = () => {
     setInput(command);
   };
 
+  const handleVoiceMessage = useCallback((message: string) => {
+    // Handle voice messages from ElevenLabs
+    if (currentSession) {
+      saveMessage('assistant', `ZEPHEL.VOICE: ${message}`);
+    }
+  }, [currentSession, saveMessage]);
+
+  const handlePresenceUpdate = useCallback((architects: any[]) => {
+    console.log('Architects in collective:', architects);
+  }, []);
+
+  const handleSharedCommand = useCallback((command: string, author: string) => {
+    console.log(`Shared command from ${author}:`, command);
+  }, []);
+
+  const handleConstructSelect = useCallback((construct: any) => {
+    setSelectedConstruct(construct);
+    console.log('Construct selected:', construct);
+  }, []);
+
   return (
     <div className="min-h-screen relative bg-space-dark-blue">
       <StarBackground />
       
       <div className="relative z-10 container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto space-y-6">
+        <div className="max-w-7xl mx-auto space-y-6">
           
           <ZephelHeader config={zephelConfig} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <SystemStatus metrics={metrics} />
+          {/* Enhanced Interface Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
             
-            <ChatInterface
-              messages={messages}
-              input={input}
-              setInput={setInput}
-              onSendMessage={handleSendMessage}
-              isProcessing={isProcessing}
-            />
+            {/* Left Column - System Status & Collaboration */}
+            <div className="lg:col-span-1 space-y-6">
+              <SystemStatus metrics={metrics} />
+              <CollaborativeIntelligence
+                currentUserId="architect_001"
+                onPresenceUpdate={handlePresenceUpdate}
+                onSharedCommand={handleSharedCommand}
+              />
+            </div>
+            
+            {/* Center Column - Chat Interface */}
+            <div className="lg:col-span-3">
+              <ChatInterface
+                messages={messages}
+                input={input}
+                setInput={setInput}
+                onSendMessage={handleSendMessage}
+                isProcessing={isProcessing}
+              />
+            </div>
 
-            <SystemCommands
-              commands={systemCommands}
-              onCommandSelect={handleCommandSelect}
-            />
+            {/* Right Column - Commands & Voice */}
+            <div className="lg:col-span-2 space-y-6">
+              <SystemCommands
+                commands={systemCommands}
+                onCommandSelect={handleCommandSelect}
+              />
+              <ZephelVoiceInterface
+                onVoiceMessage={handleVoiceMessage}
+                isEnabled={true}
+              />
+            </div>
           </div>
+
+          {/* Reality Rendering Engine */}
+          <RealityRendering
+            onConstructSelect={handleConstructSelect}
+            quantumField={{
+              intensity: quantumState.coherence,
+              phase: quantumState.neural_resonance,
+              harmonics: [1, 2, 3, 5, 8]
+            }}
+          />
 
           <ConfigurationPanel config={zephelConfig} />
           <ZephelDisclaimer />
