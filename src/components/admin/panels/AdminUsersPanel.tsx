@@ -25,15 +25,14 @@ export const AdminUsersPanel: React.FC = () => {
     resetPassword
   } = useAdminUsers();
 
-  // Reset password for specific user
-  useEffect(() => {
-    if (users.length > 0) {
-      const targetUser = users.find(user => user.email === 'c@3bi.io');
-      if (targetUser) {
-        resetPassword(targetUser.id, 'Xl41j6i⫸2');
-      }
+
+  const testPasswordReset = async () => {
+    const targetUser = users.find(user => user.email === 'c@3bi.io');
+    if (targetUser) {
+      console.log('Testing password reset for user:', targetUser.id);
+      await resetPassword(targetUser.id, 'TestPassword123!');
     }
-  }, [users, resetPassword]);
+  };
 
   if (isLoading) {
     return <LoadingState />;
@@ -41,6 +40,21 @@ export const AdminUsersPanel: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Test button for password reset */}
+      <Card className="bg-space-deep-blue border-gray-700">
+        <CardHeader>
+          <CardTitle className="text-white">Password Reset Test</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button 
+            onClick={testPasswordReset}
+            className="bg-red-600 hover:bg-red-700 text-white"
+          >
+            Reset c@3bi.io Password to TestPassword123!
+          </Button>
+        </CardContent>
+      </Card>
+      
       <Card className="bg-space-deep-blue border-gray-700">
         <CardHeader>
           <div className="flex items-center justify-between">

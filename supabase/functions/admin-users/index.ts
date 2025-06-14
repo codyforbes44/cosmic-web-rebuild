@@ -140,15 +140,34 @@ serve(async (req) => {
       if (action === 'reset-password') {
         const { userId, newPassword } = body
         
-        const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
-          password: newPassword
-        })
+        console.log('Reset password request received:', { userId, passwordLength: newPassword?.length });
         
-        if (error) throw error
-
-        return new Response(JSON.stringify({ success: true }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        })
+        if (!userId || !newPassword) {
+          console.error('Missing userId or newPassword');
+          return new Response(JSON.stringify({ error: 'userId and newPassword are required' }), {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          })
+        }
+        
+        try {
+          const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+            password: newPassword
+          })
+          
+          if (error) {
+            console.error('Supabase auth error:', error);
+            throw error
+          }
+          
+          console.log('Password reset successful for user:', userId);
+          return new Response(JSON.stringify({ success: true }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          })
+        } catch (authError) {
+          console.error('Auth update failed:', authError);
+          throw authError
+        }
       }
     }
 
