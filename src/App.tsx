@@ -43,9 +43,6 @@ const ProjectManagement = lazy(() => import("./pages/ProjectManagement"));
 const Products = lazy(() => import("./pages/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 
-// ElevenLabs page
-const ElevenLabs = lazy(() => import("./pages/ElevenLabs"));
-
 // U2014 page
 const U2014 = lazy(() => import("./pages/U2014"));
 
@@ -138,9 +135,6 @@ const AppRoutes = () => {
       <Route path="/products" element={<Products />} />
       <Route path="/products/:productId" element={<ProductDetail />} />
       
-      {/* ElevenLabs route */}
-      <Route path="/11l" element={<ElevenLabs />} />
-      
       {/* U2014 route */}
       <Route path="/u2014" element={<U2014 />} />
       
@@ -151,24 +145,10 @@ const AppRoutes = () => {
 };
 
 const ConditionalLiveChat = () => {
-  const location = useLocation();
-  
-  // Don't show LiveChat on the /11l route
-  if (location.pathname === '/11l') {
-    return null;
-  }
-  
   return <LiveChat />;
 };
 
 const ConditionalCookieConsent = () => {
-  const location = useLocation();
-  
-  // Don't show CookieConsent on the /11l route
-  if (location.pathname === '/11l') {
-    return null;
-  }
-  
   return <CookieConsent />;
 };
 
