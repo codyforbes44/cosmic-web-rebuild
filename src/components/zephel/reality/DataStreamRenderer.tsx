@@ -1,6 +1,8 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Text, Line, Tube } from '@react-three/drei';
+import { Line, Tube } from '@react-three/drei';
+import { DataPacket } from './data/DataPacket';
+import { DataHub } from './data/DataHub';
 import * as THREE from 'three';
 
 interface DataStreamProps {
@@ -146,72 +148,18 @@ export const DataStreamRenderer: React.FC<DataStreamProps> = ({
         const position = stream.curve.getPoint(packet.position);
         
         return (
-          <group key={index} position={position}>
-            {/* Packet Visualization */}
-            <mesh>
-              <octahedronGeometry args={[packet.size]} />
-              <meshStandardMaterial
-                color={stream.color}
-                emissive={stream.color}
-                emissiveIntensity={0.5 * dataIntensity}
-                transparent
-                opacity={0.8}
-              />
-            </mesh>
-            
-            {/* Data Label */}
-            <Text
-              position={[0, packet.size + 0.3, 0]}
-              fontSize={0.15}
-              color={stream.color}
-              anchorX="center"
-              anchorY="middle"
-              material-transparent
-              material-opacity={0.7}
-            >
-              {packet.data.toString(16).toUpperCase()}
-            </Text>
-          </group>
-        );
-      })}
-
-      {/* Central Data Hub */}
-      <mesh position={[0, 0, 0]}>
-        <dodecahedronGeometry args={[0.8]} />
-        <meshStandardMaterial
-          color="#00ff88"
-          emissive="#004422"
-          emissiveIntensity={dataIntensity}
-          transparent
-          opacity={0.7}
-        />
-      </mesh>
-
-      {/* Data Flow Indicators */}
-      {Array.from({ length: 6 }).map((_, index) => {
-        const angle = (index / 6) * Math.PI * 2;
-        const radius = 1.2;
-        
-        return (
-          <Text
+          <DataPacket
             key={index}
-            position={[
-              Math.cos(angle) * radius,
-              0,
-              Math.sin(angle) * radius
-            ]}
-            rotation={[0, -angle, 0]}
-            fontSize={0.1}
-            color="#00ffff"
-            anchorX="center"
-            anchorY="middle"
-            material-transparent
-            material-opacity={0.8}
-          >
-            {['INPUT', 'PROCESS', 'ANALYZE', 'LEARN', 'OUTPUT', 'FEEDBACK'][index]}
-          </Text>
+            position={position}
+            size={packet.size}
+            color={stream.color}
+            data={packet.data}
+            dataIntensity={dataIntensity}
+          />
         );
       })}
+
+      <DataHub dataIntensity={dataIntensity} />
     </group>
   );
 };

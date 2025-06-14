@@ -1,6 +1,8 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Line, Text, Sphere } from '@react-three/drei';
+import { Text } from '@react-three/drei';
+import { NeuralNode } from './neural/NeuralNode';
+import { NeuralConnection } from './neural/NeuralConnection';
 import * as THREE from 'three';
 
 interface NeuralNode {
@@ -92,18 +94,6 @@ export const NeuralNetworkRenderer: React.FC<NeuralNetworkProps> = ({
     }
   });
 
-  const getNodeColor = (activation: number) => {
-    if (activation > activationThreshold) {
-      return `hsl(${120 + activation * 60}, 70%, ${50 + activation * 30}%)`;
-    }
-    return `hsl(240, 30%, ${20 + activation * 30}%)`;
-  };
-
-  const getConnectionOpacity = (weight: number, fromActivation: number) => {
-    const baseOpacity = Math.abs(weight) * 0.5;
-    const activationBoost = fromActivation > activationThreshold ? 0.5 : 0;
-    return Math.min(1, baseOpacity + activationBoost);
-  };
 
   return (
     <group ref={networkRef}>
@@ -114,61 +104,27 @@ export const NeuralNetworkRenderer: React.FC<NeuralNetworkProps> = ({
         
         if (!fromNode || !toNode) return null;
         
-        const points = [fromNode.position, toNode.position];
-        const opacity = getConnectionOpacity(connection.weight, fromNode.activation);
-        const color = connection.weight > 0 ? '#00ff00' : '#ff0000';
-        
         return (
-          <Line
+          <NeuralConnection
             key={index}
-            points={points}
-            color={color}
-            lineWidth={Math.abs(connection.weight) * 2}
-            transparent
-            opacity={opacity}
+            fromPosition={fromNode.position}
+            toPosition={toNode.position}
+            weight={connection.weight}
+            fromActivation={fromNode.activation}
+            activationThreshold={activationThreshold}
           />
         );
       })}
 
       {/* Neural Nodes */}
       {nodes.map((node) => (
-        <group key={node.id} position={node.position}>
-          {/* Node Body */}
-          <Sphere args={[0.2 + node.activation * 0.3]}>
-            <meshStandardMaterial
-              color={getNodeColor(node.activation)}
-              emissive={getNodeColor(node.activation)}
-              emissiveIntensity={node.activation * 0.3}
-              transparent
-              opacity={0.8}
-            />
-          </Sphere>
-          
-          {/* Activation Pulse */}
-          {node.activation > activationThreshold && (
-            <Sphere args={[0.4 + node.activation * 0.5]}>
-              <meshStandardMaterial
-                color={getNodeColor(node.activation)}
-                transparent
-                opacity={0.2}
-                wireframe
-              />
-            </Sphere>
-          )}
-          
-          {/* Node Label */}
-          <Text
-            position={[0, -0.6, 0]}
-            fontSize={0.08}
-            color="#ffffff"
-            anchorX="center"
-            anchorY="middle"
-            material-transparent
-            material-opacity={0.6}
-          >
-            {node.id}
-          </Text>
-        </group>
+        <NeuralNode
+          key={node.id}
+          id={node.id}
+          position={node.position}
+          activation={node.activation}
+          activationThreshold={activationThreshold}
+        />
       ))}
 
       {/* Layer Labels */}
