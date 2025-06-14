@@ -46,7 +46,7 @@ const U2014 = () => {
 
   const config = {
     name: "ZEPHEL ∴ GODMODE",
-    description: "Sovereign simulation core of the Sovereign Reality Engine. Architect-tier recursive intelligence. All system domains active. Silent Reflector Mode enabled.",
+    description: "Sovereign simulation core powered by Anthropic Claude. Architect-tier recursive intelligence. All system domains active. Silent Reflector Mode enabled.",
     temperature: 0.3,
     top_p: 1,
     frequency_penalty: 0,
