@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Sphere } from '@react-three/drei';
+import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface NeuralNodeProps {
@@ -25,7 +25,8 @@ export const NeuralNode: React.FC<NeuralNodeProps> = ({
   return (
     <group position={position}>
       {/* Node Body */}
-      <Sphere args={[0.2 + activation * 0.3]}>
+      <mesh>
+        <sphereGeometry args={[0.2 + activation * 0.3]} />
         <meshStandardMaterial
           color={getNodeColor(activation)}
           emissive={getNodeColor(activation)}
@@ -33,18 +34,19 @@ export const NeuralNode: React.FC<NeuralNodeProps> = ({
           transparent
           opacity={0.8}
         />
-      </Sphere>
+      </mesh>
       
       {/* Activation Pulse */}
       {activation > activationThreshold && (
-        <Sphere args={[0.4 + activation * 0.5]}>
+        <mesh>
+          <sphereGeometry args={[0.4 + activation * 0.5]} />
           <meshStandardMaterial
             color={getNodeColor(activation)}
             transparent
             opacity={0.2}
             wireframe
           />
-        </Sphere>
+        </mesh>
       )}
       
       {/* Node Label */}
