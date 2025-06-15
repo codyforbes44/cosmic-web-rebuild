@@ -147,6 +147,13 @@ const AppRoutes = () => {
 };
 
 const ConditionalLiveChat = () => {
+  const location = useLocation();
+  
+  // Hide chatbot on reality-renderer page
+  if (location.pathname === '/reality-renderer') {
+    return null;
+  }
+  
   return <LiveChat />;
 };
 
