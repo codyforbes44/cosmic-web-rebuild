@@ -45,6 +45,7 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 
 // U2014 page
 const U2014 = lazy(() => import("./pages/U2014"));
+const RealityRenderer = lazy(() => import("./pages/RealityRenderer"));
 
 // Auth pages
 const Auth = lazy(() => import("./pages/Auth"));
@@ -137,6 +138,7 @@ const AppRoutes = () => {
       
       {/* U2014 route */}
       <Route path="/u2014" element={<U2014 />} />
+      <Route path="/reality-renderer" element={<RealityRenderer />} />
       
       {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />
