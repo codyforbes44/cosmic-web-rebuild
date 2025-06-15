@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface RealityEnvironmentProps {
@@ -18,23 +17,26 @@ export const RealityEnvironment: React.FC<RealityEnvironmentProps> = ({ intensit
 
   return (
     <group ref={envRef}>
-      <Environment preset="night" />
-      
       {/* Cosmic Grid */}
       <gridHelper args={[50, 50, '#004488', '#002244']} position={[0, -10, 0]} />
       
-      {/* Ambient Lighting */}
-      <ambientLight intensity={0.3} color="#004488" />
+      {/* Enhanced Lighting Setup */}
+      <ambientLight intensity={0.4} color="#001144" />
       <directionalLight 
         position={[10, 10, 5]} 
-        intensity={0.8} 
+        intensity={1.2} 
         color="#ffffff"
         castShadow
       />
       <pointLight 
         position={[-10, -10, -5]} 
         color="#00ffff" 
-        intensity={intensity} 
+        intensity={intensity * 1.5} 
+      />
+      <pointLight 
+        position={[10, -5, -10]} 
+        color="#4400ff" 
+        intensity={intensity * 0.8} 
       />
       
       {/* Reality Boundary */}
