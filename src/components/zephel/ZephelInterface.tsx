@@ -28,7 +28,7 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
   // Hooks for all ZEPHEL features
   const { processInput, isProcessing } = useZephelProcessor();
   const { processQuantumCommand, quantumState } = useQuantumCommandProcessor();
-  const { currentSession, messages, saveMessage } = useZephelSessions();
+  const { currentSession, messages, saveMessage, setMessages } = useZephelSessions();
   const { speak, isPlaying } = useZephelVoice();
   const { playSystemBoot, playCommandExecute, playSuccess, playError } = useZephelSounds();
   const { metrics } = useZephelMetrics();
@@ -49,21 +49,38 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
   const handleSendMessage = useCallback(async () => {
     if (!input.trim() || isProcessing) return;
 
+    console.log('ZEPHEL: Starting message processing...', { input, isProcessing });
     playCommandExecute();
     const currentInput = input;
     setInput('');
 
     // Save user message to database if session exists
     if (currentSession) {
+      console.log('ZEPHEL: Saving user message to session:', currentSession.id);
       await saveMessage('user', currentInput);
+    } else {
+      console.log('ZEPHEL: No current session - adding message to local state');
+      // Add message to local state even without session
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        session_id: '',
+        role: 'user',
+        content: currentInput,
+        timestamp: new Date().toISOString(),
+        metadata: {}
+      }]);
     }
 
     try {
+      console.log('ZEPHEL: Processing quantum command...');
       // Process input using quantum-enhanced processing
       const quantumResult = await processQuantumCommand(currentInput);
+      console.log('ZEPHEL: Quantum processing complete:', quantumResult);
       
       // Use enhanced processing result
+      console.log('ZEPHEL: Processing input with ZEPHEL processor...');
       const result = await processInput(quantumResult.processedCommand);
+      console.log('ZEPHEL: ZEPHEL processing complete:', result);
       
       if (result?.content) {
         let responseContent = result.content;
