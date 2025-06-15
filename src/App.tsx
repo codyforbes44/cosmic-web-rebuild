@@ -45,7 +45,7 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 
 // U2014 page
 const U2014 = lazy(() => import("./pages/U2014"));
-const RealityRenderer = lazy(() => import("./pages/RealityRenderer"));
+import RealityRenderer from "./pages/RealityRenderer";
 
 // Auth pages
 const Auth = lazy(() => import("./pages/Auth"));
