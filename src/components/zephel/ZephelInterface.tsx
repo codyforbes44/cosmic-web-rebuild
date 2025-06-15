@@ -61,14 +61,15 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
     } else {
       console.log('ZEPHEL: No current session - adding message to local state');
       // Add message to local state even without session
-      setMessages(prev => [...prev, {
+      const userMessage = {
         id: Date.now().toString(),
         session_id: '',
-        role: 'user',
+        role: 'user' as const,
         content: currentInput,
         timestamp: new Date().toISOString(),
         metadata: {}
-      }]);
+      };
+      setMessages(prev => [...prev, userMessage]);
     }
 
     try {
@@ -93,9 +94,19 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
           responseContent += `  Processing Accuracy: ${(quantumResult.quantumEnhancement.predictive_model.accuracy * 100).toFixed(1)}%`;
         }
         
-        // Save assistant message to database if session exists
+        // Save assistant message to database if session exists, otherwise add to local state
         if (currentSession) {
           await saveMessage('assistant', responseContent);
+        } else {
+          const assistantMessage = {
+            id: (Date.now() + 1).toString(),
+            session_id: '',
+            role: 'assistant' as const,
+            content: responseContent,
+            timestamp: new Date().toISOString(),
+            metadata: {}
+          };
+          setMessages(prev => [...prev, assistantMessage]);
         }
         
         // Play voice if enabled
@@ -123,9 +134,19 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
         }
       }
       
-      // Save error message to database if session exists
+      // Save error message to database if session exists, otherwise add to local state
       if (currentSession) {
         await saveMessage('assistant', errorMessage);
+      } else {
+        const errorMessageObj = {
+          id: (Date.now() + 2).toString(),
+          session_id: '',
+          role: 'assistant' as const,
+          content: errorMessage,
+          timestamp: new Date().toISOString(),
+          metadata: { error: true }
+        };
+        setMessages(prev => [...prev, errorMessageObj]);
       }
     }
   }, [input, isProcessing, currentSession, processQuantumCommand, processInput, saveMessage, voiceEnabled, isPlaying, speak, playCommandExecute, playSuccess, playError]);
