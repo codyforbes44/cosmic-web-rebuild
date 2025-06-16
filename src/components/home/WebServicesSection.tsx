@@ -5,12 +5,10 @@ import { ArrowRight, Check, Star, Code, Smartphone, Globe, Zap } from 'lucide-re
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import DemoRequestModal from '../products/DemoRequestModal';
 
 const WebServicesSection = () => {
-  const [loading, setLoading] = useState<string | null>(null);
-  const { toast } = useToast();
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
 
   const services = [
     {
@@ -45,7 +43,6 @@ const WebServicesSection = () => {
       price: "$497",
       originalPrice: "$1,500",
       description: "Perfect for small businesses getting started online",
-      priceAmount: 49700,
       features: [
         "5-page responsive website",
         "Mobile-optimized design",
@@ -62,7 +59,6 @@ const WebServicesSection = () => {
       price: "$997",
       originalPrice: "$3,500",
       description: "Complete solution for growing businesses",
-      priceAmount: 99700,
       features: [
         "Up to 15 pages",
         "Custom design & branding",
@@ -81,7 +77,6 @@ const WebServicesSection = () => {
       price: "$1,997",
       originalPrice: "$8,000",
       description: "Full-scale web application for large organizations",
-      priceAmount: 199700,
       features: [
         "Unlimited pages",
         "Custom web application",
@@ -98,40 +93,18 @@ const WebServicesSection = () => {
     }
   ];
 
-  const handlePurchase = async (tierName: string, priceAmount: number) => {
-    setLoading(tierName);
-    
-    try {
-      const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: {
-          priceAmount,
-          mode: 'payment'
-        }
-      });
-
-      if (error) throw error;
-
-      if (data?.url) {
-        window.open(data.url, '_blank');
-      }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to start checkout process. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(null);
-    }
-  };
-
   return (
     <section className="py-24 bg-gradient-to-br from-space-deep-blue/20 to-space-dark-blue/40 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
       </div>
+
+      <DemoRequestModal 
+        isOpen={demoModalOpen} 
+        onOpenChange={setDemoModalOpen} 
+        productTitle="Web Development Services"
+      />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
@@ -233,11 +206,10 @@ const WebServicesSection = () => {
                   
                   <Button 
                     className={`w-full bg-gradient-to-r ${tier.color} hover:opacity-90 text-white py-6 text-lg font-semibold`}
-                    onClick={() => handlePurchase(tier.name, tier.priceAmount)}
-                    disabled={loading === tier.name}
+                    onClick={() => setDemoModalOpen(true)}
                   >
-                    {loading === tier.name ? "Processing..." : "Get Started Today"}
-                    {loading !== tier.name && <ArrowRight className="ml-2 h-5 w-5" />}
+                    Get Started Today
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </CardContent>
               </Card>
@@ -264,11 +236,10 @@ const WebServicesSection = () => {
             <Button 
               size="lg" 
               className="bg-accent hover:bg-accent/90 text-white px-8 py-6 text-lg"
-              onClick={() => handlePurchase("Custom Project", 49700)}
-              disabled={loading === "Custom Project"}
+              onClick={() => setDemoModalOpen(true)}
             >
-              {loading === "Custom Project" ? "Processing..." : "Start Your Project Today"}
-              {loading !== "Custom Project" && <ArrowRight className="ml-2 h-5 w-5" />}
+              Start Your Project Today
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Link to="/contact">
               <Button 
