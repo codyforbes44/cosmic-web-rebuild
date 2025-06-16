@@ -1,7 +1,7 @@
 
 import React from "react";
 import HeroSection from "../HeroSection";
-import ProductOfferings from "../ProductOfferings";
+import WebDevelopmentServices from "../WebDevelopmentServices";
 import TechnologyShowcase from "../TechnologyShowcase";
 import Testimonials from "../Testimonials";
 import Newsletter from "../Newsletter";
@@ -10,7 +10,7 @@ const MainContent: React.FC = () => {
   return (
     <>
       <HeroSection />
-      <ProductOfferings />
+      <WebDevelopmentServices />
       <TechnologyShowcase />
       <Testimonials />
       <Newsletter />
