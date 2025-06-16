@@ -1,10 +1,10 @@
 
 import React from "react";
 import HeroSection from "../HeroSection";
-import WebDevelopmentServices from "../WebDevelopmentServices";
-import TechnologyShowcase from "../TechnologyShowcase";
-import Testimonials from "../Testimonials";
-import Newsletter from "../Newsletter";
+import WebDevelopmentServices from "./WebServicesSection";
+import TechnologyShowcase from "./TechShowcase";
+import ClientTestimonials from "./ClientTestimonials";
+import NewsletterSection from "./NewsletterSection";
 
 const MainContent: React.FC = () => {
   return (
@@ -12,8 +12,8 @@ const MainContent: React.FC = () => {
       <HeroSection />
       <WebDevelopmentServices />
       <TechnologyShowcase />
-      <Testimonials />
-      <Newsletter />
+      <ClientTestimonials />
+      <NewsletterSection />
     </>
   );
 };
