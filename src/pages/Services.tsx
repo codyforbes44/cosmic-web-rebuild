@@ -18,6 +18,7 @@ import ServiceTestimonials from "@/components/services/ServiceTestimonials";
 import ServicesCTA from "@/components/services/ServicesCTA";
 import FeaturedServices from "@/components/services/FeaturedServices";
 import ServiceTabs from "@/components/services/ServiceTabs";
+import WebServicesSection from "@/components/home/WebServicesSection";
 
 import { services } from "@/data/servicesData";
 import { Settings } from "lucide-react";
@@ -58,6 +59,11 @@ const Services = () => {
             description="Comprehensive technology solutions designed to transform your business and drive innovation"
             icon={Settings}
           />
+
+          {/* Website Development Services Section */}
+          <div className="mb-16">
+            <WebServicesSection />
+          </div>
 
           {/* Service Tabs */}
           <div className="mb-6 sm:mb-8">
