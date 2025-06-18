@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { navLinks } from './constants';
 import DesktopNavLink from './DesktopNavLink';
 import ServiceDropdown from './ServiceDropdown';
-import ProductDropdown from './ProductDropdown';
 import SecureDropdown from './SecureDropdown';
 import ScrollToTopLink from '../ScrollToTopLink';
 import { useAuth } from '@/components/auth/AuthProvider';
@@ -15,7 +14,7 @@ interface DesktopNavigationProps {
   isProductsActive: boolean;
 }
 
-const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: DesktopNavigationProps) => {
+const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProps) => {
   const { user } = useAuth();
   
   // Check if any secure page is active
@@ -35,9 +34,6 @@ const DesktopNavigation = ({ isActive, isServicesActive, isProductsActive }: Des
 
       {/* Services Dropdown */}
       <ServiceDropdown isActive={isServicesActive} />
-
-      {/* Products Dropdown */}
-      <ProductDropdown isActive={isProductsActive} />
 
       {/* Remaining links */}
       {navLinks.slice(1).map((link, index) => (

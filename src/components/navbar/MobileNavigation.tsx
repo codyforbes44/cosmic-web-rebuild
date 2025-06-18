@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -22,8 +21,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import MobileServicesMenu from "./MobileServicesMenu";
-import MobileProductsMenu from "./MobileProductsMenu";
-import { serviceCategories, productCategories, navLinks, secureNavLinks } from "./constants";
+import { serviceCategories, navLinks, secureNavLinks } from "./constants";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 interface MobileNavigationProps {
@@ -34,7 +32,6 @@ interface MobileNavigationProps {
 const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) => {
   const { user, signOut } = useAuth();
   const [servicesOpen, setServicesOpen] = React.useState(false);
-  const [productsOpen, setProductsOpen] = React.useState(false);
   const [secureOpen, setSecureOpen] = React.useState(false);
 
   if (!isOpen) return null;
@@ -150,15 +147,17 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
           </CollapsibleContent>
         </Collapsible>
 
-        <Collapsible open={productsOpen} onOpenChange={setProductsOpen}>
-          <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md">
-            Products
-            <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? 'rotate-180' : ''}`} />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <MobileProductsMenu onClose={onClose} />
-          </CollapsibleContent>
-        </Collapsible>
+        {/* Other navigation links */}
+        {navLinks.slice(1).map((link) => (
+          <Link
+            key={link.name}
+            to={link.path}
+            className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
+            onClick={onClose}
+          >
+            {link.name}
+          </Link>
+        ))}
 
         {/* Secure Pages Section - Only show if user is logged in */}
         {user && (
@@ -187,18 +186,6 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
             </CollapsibleContent>
           </Collapsible>
         )}
-
-        {/* Remaining navigation links from navLinks array (skipping Home which is first) */}
-        {navLinks.slice(1).map((link) => (
-          <Link
-            key={link.name}
-            to={link.path}
-            className="block px-3 py-2 text-base font-medium text-white hover:bg-white/10 rounded-md"
-            onClick={onClose}
-          >
-            {link.name}
-          </Link>
-        ))}
 
         {/* Get Quote Button */}
         <div className="px-3 py-2">

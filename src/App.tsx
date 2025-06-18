@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -38,10 +39,6 @@ const OpenAI = lazy(() => import("./pages/OpenAI"));
 const HuggingFace = lazy(() => import("./pages/HuggingFace"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const ProjectManagement = lazy(() => import("./pages/ProjectManagement"));
-
-// Product Pages
-const Products = lazy(() => import("./pages/Products"));
-const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 
 // U2014 page
 const U2014 = lazy(() => import("./pages/U2014"));
@@ -131,10 +128,6 @@ const AppRoutes = () => {
       <Route path="/terms" element={<TermsOfService />} />
       <Route path="/accessibility" element={<Accessibility />} />
       <Route path="/drivers-matter" element={<DriversMatter />} />
-      
-      {/* Product routes */}
-      <Route path="/products" element={<Products />} />
-      <Route path="/products/:productId" element={<ProductDetail />} />
       
       {/* U2014 route */}
       <Route path="/u2014" element={<U2014 />} />

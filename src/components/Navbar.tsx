@@ -35,9 +35,8 @@ const Navbar = () => {
     return location.pathname === path ? 'active' : '';
   };
 
-  // Check if services or products sections are active
+  // Check if services section is active
   const isServicesActive = location.pathname === '/services' || location.search.includes('service=');
-  const isProductsActive = location.pathname === '/products' || location.search.includes('product=');
 
   return (
     <nav
@@ -67,7 +66,7 @@ const Navbar = () => {
           <DesktopNavigation 
             isActive={isActive}
             isServicesActive={isServicesActive}
-            isProductsActive={isProductsActive}
+            isProductsActive={false}
           />
 
           {/* Desktop Auth Menu */}

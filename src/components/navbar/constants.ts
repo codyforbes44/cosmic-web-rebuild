@@ -47,13 +47,13 @@ export const serviceCategories: ServiceCategory[] = [
   {
     title: 'Strategy Consulting',
     href: '/services?service=strategy',
-    description: 'Develop a winning strategy for your trucking business',
+    description: 'Develop a winning strategy for your business',
     color: '#793ef9',
   },
   {
     title: 'Digital Marketing',
     href: '/services?service=digital',
-    description: 'Attract and retain drivers with targeted campaigns',
+    description: 'Attract and retain customers with targeted campaigns',
     color: '#ff6188',
   },
   {
@@ -83,32 +83,7 @@ export const serviceCategories: ServiceCategory[] = [
   {
     title: 'Recruitment Marketing',
     href: '/services?service=recruitment',
-    description: 'Specialized marketing strategies for driver recruitment',
+    description: 'Specialized marketing strategies for recruiting talent',
     color: '#A8FF32',
-  },
-];
-
-export interface ProductCategory {
-  title: string;
-  href: string;
-  description: string;
-  image: string;
-  color: string;
-}
-
-export const productCategories: ProductCategory[] = [
-  {
-    title: '3BI Connect',
-    href: '3bi-connect',
-    description: 'The all-in-one platform for managing your trucking business',
-    image: '/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png',
-    color: '#ffb86c',
-  },
-  {
-    title: 'TruckOnboard',
-    href: 'truckonboard',
-    description: 'Streamline your driver onboarding process',
-    image: '/lovable-uploads/782b1ad6-c071-49e4-abbd-f8022130bdc2.png',
-    color: '#8be9fd',
   },
 ];
