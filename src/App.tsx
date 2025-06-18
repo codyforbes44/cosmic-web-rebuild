@@ -39,6 +39,7 @@ const OpenAI = lazy(() => import("./pages/OpenAI"));
 const HuggingFace = lazy(() => import("./pages/HuggingFace"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const ProjectManagement = lazy(() => import("./pages/ProjectManagement"));
+const Demo = lazy(() => import("./pages/Demo"));
 
 // U2014 page
 const U2014 = lazy(() => import("./pages/U2014"));
@@ -109,6 +110,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/get-quote" element={<GetQuote />} />
       <Route path="/partners" element={<Partners />} />
+      <Route path="/demo" element={<Demo />} />
       
       {/* Protected routes - require authentication */}
       <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
