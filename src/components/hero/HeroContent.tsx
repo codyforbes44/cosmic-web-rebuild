@@ -9,19 +9,19 @@ const HeroContent = () => {
       <span className="inline-block text-orange-500 mb-4 text-sm md:text-lg tracking-wider font-medium px-3 py-1 bg-orange-500/10 rounded-full">INDUSTRY LEADING RECRUITMENT MARKETING</span>
       
       <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-white">
-        Solve Your Driver Shortage With <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">ƷBI</span>
+        Solve Your Talent Shortage With <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">ƷBI</span>
       </h1>
       
       <p className="text-gray-300 mb-4 md:mb-6 text-base md:text-lg">
-        Streamlined recruitment marketing that delivers qualified CDL drivers while reducing your cost-per-hire by up to 40%.
+        Streamlined recruitment marketing that delivers qualified candidates while reducing your cost-per-hire by up to 40%.
       </p>
       
       <ul className="mb-6 md:mb-8 space-y-2 max-w-md mx-auto md:mx-0">
         {[
-          "250% increase in qualified driver applications",
+          "250% increase in qualified candidate applications",
           "Multi-channel campaigns across all platforms",
           "Industry-specific targeting and messaging",
-          "Proven track record with trucking companies"
+          "Proven track record across all sectors"
         ].map((benefit, index) => (
           <li key={index} className="flex items-start">
             <Check className="h-5 w-5 text-orange-500 mr-2 flex-shrink-0 mt-1" />

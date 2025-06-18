@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Users, Target, TrendingUp, CheckCircle, Truck, Star } from 'lucide-react';
+import { ArrowRight, Users, Target, TrendingUp, CheckCircle, Building, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,28 +13,28 @@ const RecruitmentMarketingSection = () => {
   const features = [
     {
       icon: Users,
-      title: "Qualified CDL Drivers",
-      description: "Target experienced commercial drivers with valid CDLs and clean driving records",
+      title: "Qualified Candidates",
+      description: "Target experienced professionals with relevant skills and clean backgrounds",
       color: "#FF6B35"
     },
     {
       icon: Target,
       title: "Multi-Channel Campaigns",
-      description: "Reach drivers across job boards, social media, and industry-specific platforms",
+      description: "Reach candidates across job boards, social media, and industry-specific platforms",
       color: "#10B981"
     },
     {
       icon: TrendingUp,
       title: "Proven Results",
-      description: "Reduce cost-per-hire by up to 40% while improving driver quality and retention",
+      description: "Reduce cost-per-hire by up to 40% while improving candidate quality and retention",
       color: "#3B82F6"
     }
   ];
 
   const benefits = [
-    "250% increase in qualified driver applications",
+    "250% increase in qualified candidate applications",
     "38% reduction in cost-per-hire",
-    "25% improvement in driver retention rates",
+    "25% improvement in employee retention rates",
     "Data-driven targeting for optimal ROI",
     "Industry-specific recruitment expertise"
   ];
@@ -67,8 +67,8 @@ const RecruitmentMarketingSection = () => {
               Streamlined <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Recruitment Marketing</span>
             </h2>
             <p className="text-gray-300 max-w-3xl mx-auto text-lg mb-8">
-              Solve your driver shortage with our specialized recruitment campaigns designed specifically for trucking companies. 
-              <span className="text-orange-400 block mt-2">Get more qualified drivers while reducing your hiring costs.</span>
+              Solve your talent shortage with our specialized recruitment campaigns designed for businesses across all industries. 
+              <span className="text-orange-400 block mt-2">Get more qualified candidates while reducing your hiring costs.</span>
             </p>
           </motion.div>
         </div>
@@ -125,12 +125,12 @@ const RecruitmentMarketingSection = () => {
             className="bg-space-deep-blue/60 p-8 rounded-xl border border-orange-500/20"
           >
             <div className="flex items-center mb-4">
-              <Truck className="h-8 w-8 text-orange-500 mr-3" />
+              <Building className="h-8 w-8 text-orange-500 mr-3" />
               <h4 className="text-xl font-bold text-white">Case Study Highlight</h4>
             </div>
-            <h5 className="text-lg font-semibold text-orange-400 mb-2">Midwest Express Logistics</h5>
+            <h5 className="text-lg font-semibold text-orange-400 mb-2">TechStart Solutions</h5>
             <p className="text-gray-300 mb-4">
-              Facing severe driver shortages, we helped them transform their recruitment strategy with targeted campaigns and compelling messaging.
+              Facing critical talent shortages, we helped them transform their recruitment strategy with targeted campaigns and compelling messaging across multiple channels.
             </p>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
@@ -156,13 +156,13 @@ const RecruitmentMarketingSection = () => {
           viewport={{ once: true }}
           className="text-center bg-gradient-to-r from-orange-500/10 to-red-600/10 border border-orange-500/20 rounded-2xl p-8 md:p-12"
         >
-          <Truck className="h-12 w-12 text-orange-500 mx-auto mb-6" />
+          <Building className="h-12 w-12 text-orange-500 mx-auto mb-6" />
           <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">
-            Ready to Solve Your Driver Shortage?
+            Ready to Solve Your Talent Shortage?
           </h3>
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join successful trucking companies who have transformed their recruitment with our proven marketing strategies. 
-            Get more qualified drivers and reduce your hiring costs starting today.
+            Join successful businesses across all industries who have transformed their recruitment with our proven marketing strategies. 
+            Get more qualified candidates and reduce your hiring costs starting today.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
