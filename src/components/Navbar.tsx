@@ -49,7 +49,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-accent">
+          <Link to="/" className="text-2xl font-bold text-orange-500">
             <img 
               src="/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png" 
               alt="ZepTech" 
