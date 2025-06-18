@@ -10,7 +10,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-white mb-2">Welcome</h1>
-          <p className="text-gray-400">Sign in to your account or create a new one</p>
+          <p className="text-gray-400">Sign in to your account</p>
         </div>
 
         <Tabs defaultValue="signin" className="w-full">
