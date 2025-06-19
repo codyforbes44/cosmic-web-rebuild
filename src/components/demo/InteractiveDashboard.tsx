@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
-import { TrendingUp, Users, DollarSign, Eye, RefreshCw, Download, Filter } from 'lucide-react';
+import { TrendingUp, Users, DollarSign, Eye, RefreshCw, Download } from 'lucide-react';
 
 const COLORS = ['#ff6b35', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -88,10 +88,6 @@ const InteractiveDashboard: React.FC = () => {
             <Button variant="outline" className="border-white/20 text-white hover:bg-white/5">
               <Download className="w-4 h-4 mr-2" />
               Export Report
-            </Button>
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/5">
-              <Filter className="w-4 h-4 mr-2" />
-              Custom Filters
             </Button>
           </div>
         </div>

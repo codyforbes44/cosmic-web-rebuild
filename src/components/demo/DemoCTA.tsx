@@ -192,7 +192,7 @@ const DemoCTA: React.FC = () => {
                 <p className="text-sm text-gray-400 mb-2">Trusted by 500+ companies worldwide</p>
                 <div className="flex justify-center items-center gap-4 text-xs text-gray-500">
                   <span>• No setup fees</span>
-                  <span>• 30-day free trial</span>
+                  <span>• 30-day money-back guarantee</span>
                   <span>• Cancel anytime</span>
                 </div>
               </div>
