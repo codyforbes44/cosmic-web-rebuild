@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -39,6 +38,7 @@ const OpenAI = lazy(() => import("./pages/OpenAI"));
 const HuggingFace = lazy(() => import("./pages/HuggingFace"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const ProjectManagement = lazy(() => import("./pages/ProjectManagement"));
+const Demo = lazy(() => import("./pages/Demo"));
 
 // U2014 page
 const U2014 = lazy(() => import("./pages/U2014"));
@@ -98,6 +98,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Index />} />
+      <Route path="/demo" element={<Demo />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/services" element={<Services />} />
