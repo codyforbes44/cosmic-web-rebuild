@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,6 +11,7 @@ const COLORS = ['#ff6b35', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const InteractiveDashboard: React.FC = () => {
   const [activeMetric, setActiveMetric] = useState('revenue');
   const [isLive, setIsLive] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const [data, setData] = useState({
     revenue: [
       { month: 'Jan', value: 45000, growth: 12 },
@@ -65,6 +65,42 @@ const InteractiveDashboard: React.FC = () => {
     setIsLive(!isLive);
   };
 
+  const handleExportReport = async () => {
+    setIsExporting(true);
+    
+    // Simulate export process with realistic timing
+    setTimeout(() => {
+      // Create a sample report data structure
+      const reportData = {
+        timestamp: new Date().toISOString(),
+        kpis,
+        data,
+        exportFormat: 'comprehensive',
+        insights: [
+          'Revenue grew 12% month-over-month',
+          'User acquisition increased by 15%',
+          'Conversion rate improved by 2.1%'
+        ]
+      };
+      
+      // In a real application, this would generate and download a file
+      console.log('Exporting comprehensive analytics report:', reportData);
+      
+      // Show success feedback
+      const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `analytics-report-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      setIsExporting(false);
+    }, 2000);
+  };
+
   return (
     <section id="interactive-demo" className="py-16 px-4">
       <div className="container mx-auto">
@@ -85,11 +121,29 @@ const InteractiveDashboard: React.FC = () => {
               <RefreshCw className={`w-4 h-4 mr-2 ${isLive ? 'animate-spin' : ''}`} />
               {isLive ? 'Live Mode ON' : 'Enable Live Mode'}
             </Button>
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/5">
-              <Download className="w-4 h-4 mr-2" />
-              Export Report
+            <Button 
+              variant="outline" 
+              className="border-white/20 text-white hover:bg-white/5"
+              onClick={handleExportReport}
+              disabled={isExporting}
+            >
+              <Download className={`w-4 h-4 mr-2 ${isExporting ? 'animate-pulse' : ''}`} />
+              {isExporting ? 'Generating Report...' : 'Export Analytics Report'}
             </Button>
           </div>
+          
+          {isExporting && (
+            <div className="max-w-md mx-auto mb-8">
+              <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+                <div className="text-blue-300 text-sm mb-2">
+                  Creating comprehensive analytics report...
+                </div>
+                <div className="w-full bg-blue-500/20 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full animate-pulse w-3/4"></div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* KPI Cards */}

@@ -187,14 +187,14 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
           </Collapsible>
         )}
 
-        {/* Get Quote Button */}
+        {/* View Demo Button */}
         <div className="px-3 py-2">
           <Link
-            to="/get-quote"
+            to="/demo"
             onClick={onClose}
             className="flex items-center justify-center px-4 py-2 bg-accent hover:bg-accent/80 text-white rounded-md font-medium"
           >
-            Get a Quote
+            View Demo
           </Link>
         </div>
       </div>

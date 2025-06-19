@@ -55,8 +55,8 @@ const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProp
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, delay: 0.6 }}
       >
-        <ScrollToTopLink to="/get-quote">
-          <Button className="bg-accent hover:bg-accent/80 text-white">Get a Quote</Button>
+        <ScrollToTopLink to="/demo">
+          <Button className="bg-accent hover:bg-accent/80 text-white">View Demo</Button>
         </ScrollToTopLink>
       </motion.div>
     </nav>
