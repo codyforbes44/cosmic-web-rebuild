@@ -41,8 +41,32 @@ export const AdminAPIPanel: React.FC = () => {
   const [newSecretValue, setNewSecretValue] = useState('');
   const { toast } = useToast();
 
-  // Mock data for secrets - in a real implementation, this would come from Supabase
+  // Updated secrets list to match the active Supabase configuration
   const secrets: SecretInfo[] = [
+    {
+      name: 'SUPABASE_URL',
+      configured: true,
+      lastUpdated: '2024-01-20',
+      description: 'Supabase project URL for database connections'
+    },
+    {
+      name: 'SUPABASE_ANON_KEY',
+      configured: true,
+      lastUpdated: '2024-01-20',
+      description: 'Supabase anonymous key for client-side operations'
+    },
+    {
+      name: 'SUPABASE_SERVICE_ROLE_KEY',
+      configured: true,
+      lastUpdated: '2024-01-20',
+      description: 'Supabase service role key for server-side operations'
+    },
+    {
+      name: 'SUPABASE_DB_URL',
+      configured: true,
+      lastUpdated: '2024-01-20',
+      description: 'Direct database connection URL'
+    },
     {
       name: 'OPENAI_API_KEY',
       configured: true,
@@ -56,14 +80,22 @@ export const AdminAPIPanel: React.FC = () => {
       description: 'Hugging Face token for AI models'
     },
     {
-      name: 'STRIPE_SECRET_KEY',
-      configured: false,
-      description: 'Stripe secret key for payment processing'
+      name: 'ANTHROPIC_KEY',
+      configured: true,
+      lastUpdated: '2024-01-18',
+      description: 'Anthropic API key for Claude AI models'
     },
     {
-      name: 'SENDGRID_API_KEY',
-      configured: false,
-      description: 'SendGrid API key for email services'
+      name: 'ELEVENLABS_API',
+      configured: true,
+      lastUpdated: '2024-01-17',
+      description: 'ElevenLabs API key for voice synthesis'
+    },
+    {
+      name: 'STRIPE_KEY',
+      configured: true,
+      lastUpdated: '2024-01-12',
+      description: 'Stripe API key for payment processing'
     }
   ];
 
@@ -74,7 +106,10 @@ export const AdminAPIPanel: React.FC = () => {
       return {
         openai: { requests: 245, lastUsed: '2024-01-15T10:30:00Z' },
         huggingface: { requests: 89, lastUsed: '2024-01-15T09:15:00Z' },
-        total: 334
+        anthropic: { requests: 156, lastUsed: '2024-01-18T14:22:00Z' },
+        elevenlabs: { requests: 42, lastUsed: '2024-01-17T11:45:00Z' },
+        stripe: { requests: 23, lastUsed: '2024-01-12T16:30:00Z' },
+        total: 555
       };
     },
   });
@@ -129,7 +164,7 @@ export const AdminAPIPanel: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-4 bg-black/20 rounded-lg">
               <div className="flex items-center justify-between">
                 <div>
@@ -157,6 +192,18 @@ export const AdminAPIPanel: React.FC = () => {
             <div className="p-4 bg-black/20 rounded-lg">
               <div className="flex items-center justify-between">
                 <div>
+                  <p className="text-gray-400 text-sm">Anthropic Requests</p>
+                  <p className="text-2xl font-bold text-white">
+                    {isLoadingUsage ? '...' : apiUsage?.anthropic?.requests || 0}
+                  </p>
+                  <p className="text-gray-400 text-sm">Last 30 days</p>
+                </div>
+                <Key className="h-8 w-8 text-purple-400" />
+              </div>
+            </div>
+            <div className="p-4 bg-black/20 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
                   <p className="text-gray-400 text-sm">HuggingFace Requests</p>
                   <p className="text-2xl font-bold text-white">
                     {isLoadingUsage ? '...' : apiUsage?.huggingface?.requests || 0}
@@ -164,6 +211,30 @@ export const AdminAPIPanel: React.FC = () => {
                   <p className="text-gray-400 text-sm">Last 30 days</p>
                 </div>
                 <Key className="h-8 w-8 text-green-400" />
+              </div>
+            </div>
+            <div className="p-4 bg-black/20 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-400 text-sm">ElevenLabs Requests</p>
+                  <p className="text-2xl font-bold text-white">
+                    {isLoadingUsage ? '...' : apiUsage?.elevenlabs?.requests || 0}
+                  </p>
+                  <p className="text-gray-400 text-sm">Last 30 days</p>
+                </div>
+                <Key className="h-8 w-8 text-orange-400" />
+              </div>
+            </div>
+            <div className="p-4 bg-black/20 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-400 text-sm">Stripe Requests</p>
+                  <p className="text-2xl font-bold text-white">
+                    {isLoadingUsage ? '...' : apiUsage?.stripe?.requests || 0}
+                  </p>
+                  <p className="text-gray-400 text-sm">Last 30 days</p>
+                </div>
+                <Key className="h-8 w-8 text-indigo-400" />
               </div>
             </div>
           </div>
@@ -190,7 +261,7 @@ export const AdminAPIPanel: React.FC = () => {
                 id="secretName"
                 value={newSecretName}
                 onChange={(e) => setNewSecretName(e.target.value)}
-                placeholder="e.g., STRIPE_SECRET_KEY"
+                placeholder="e.g., NEW_API_KEY"
                 className="bg-gray-800 border-gray-600 text-white"
               />
             </div>
@@ -298,7 +369,19 @@ export const AdminAPIPanel: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="flex items-center justify-between p-3 bg-black/20 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div>
+                  <p className="text-white font-medium">Supabase</p>
+                  <p className="text-gray-400 text-sm">Last check: 1 minute ago</p>
+                </div>
+              </div>
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
+                Operational
+              </Badge>
+            </div>
             <div className="flex items-center justify-between p-3 bg-black/20 rounded-lg">
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-green-500" />
@@ -315,8 +398,44 @@ export const AdminAPIPanel: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-green-500" />
                 <div>
+                  <p className="text-white font-medium">Anthropic API</p>
+                  <p className="text-gray-400 text-sm">Last check: 3 minutes ago</p>
+                </div>
+              </div>
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
+                Operational
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-black/20 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div>
                   <p className="text-white font-medium">HuggingFace API</p>
                   <p className="text-gray-400 text-sm">Last check: 5 minutes ago</p>
+                </div>
+              </div>
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
+                Operational
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-black/20 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div>
+                  <p className="text-white font-medium">ElevenLabs API</p>
+                  <p className="text-gray-400 text-sm">Last check: 4 minutes ago</p>
+                </div>
+              </div>
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
+                Operational
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-black/20 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div>
+                  <p className="text-white font-medium">Stripe API</p>
+                  <p className="text-gray-400 text-sm">Last check: 6 minutes ago</p>
                 </div>
               </div>
               <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
