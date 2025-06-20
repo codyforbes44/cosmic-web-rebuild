@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -48,6 +47,9 @@ import RealityRenderer from "./pages/RealityRenderer";
 // Auth pages
 const Auth = lazy(() => import("./pages/Auth"));
 const Profile = lazy(() => import("./pages/Profile"));
+
+// Voice Interface page
+const VoiceInterface = lazy(() => import("./pages/VoiceInterface"));
 
 // Loading component for Suspense
 const PageLoader = () => (
@@ -122,6 +124,7 @@ const AppRoutes = () => {
       <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
       <Route path="/weather" element={<ProtectedRoute><Weather /></ProtectedRoute>} />
       <Route path="/calculator" element={<ProtectedRoute><ScientificCalculator /></ProtectedRoute>} />
+      <Route path="/voice" element={<ProtectedRoute><VoiceInterface /></ProtectedRoute>} />
       
       {/* Public routes */}
       <Route path="/maps" element={<Maps />} />
