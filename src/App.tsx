@@ -137,15 +137,15 @@ const AppRoutes = () => {
       <Route path="/accessibility" element={<Accessibility />} />
       <Route path="/drivers-matter" element={<DriversMatter />} />
       
+      {/* ElevenLabs embed route - PUBLIC */}
+      <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
+      
       {/* Special utility route */}
       <Route path="/11l" element={<RealityRenderer />} />
       
       {/* U2014 route */}
       <Route path="/u2014" element={<U2014 />} />
       <Route path="/reality-renderer" element={<RealityRenderer />} />
-      
-      {/* ElevenLabs embed route */}
-      <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
       
       {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />
