@@ -51,6 +51,9 @@ const Profile = lazy(() => import("./pages/Profile"));
 // Voice Interface page
 const VoiceInterface = lazy(() => import("./pages/VoiceInterface"));
 
+// ElevenLabs Embed page
+const ElevenLabsEmbed = lazy(() => import("./pages/ElevenLabsEmbed"));
+
 // Loading component for Suspense
 const PageLoader = () => (
   <div className="min-h-screen bg-space-dark-blue flex items-center justify-center">
@@ -141,6 +144,9 @@ const AppRoutes = () => {
       <Route path="/u2014" element={<U2014 />} />
       <Route path="/reality-renderer" element={<RealityRenderer />} />
       
+      {/* ElevenLabs embed route */}
+      <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
+      
       {/* Catch-all route for 404 - MUST be last */}
       <Route path="*" element={<NotFound />} />
     </Routes>
@@ -150,8 +156,8 @@ const AppRoutes = () => {
 const ConditionalLiveChat = () => {
   const location = useLocation();
   
-  // Hide chatbot on reality-renderer and 11l pages
-  if (location.pathname === '/reality-renderer' || location.pathname === '/11l') {
+  // Hide chatbot on reality-renderer, 11l, and elevenlabs pages
+  if (location.pathname === '/reality-renderer' || location.pathname === '/11l' || location.pathname === '/elevenlabs') {
     return null;
   }
   
@@ -159,6 +165,13 @@ const ConditionalLiveChat = () => {
 };
 
 const ConditionalCookieConsent = () => {
+  const location = useLocation();
+  
+  // Hide cookie consent on elevenlabs page
+  if (location.pathname === '/elevenlabs') {
+    return null;
+  }
+  
   return <CookieConsent />;
 };
 
