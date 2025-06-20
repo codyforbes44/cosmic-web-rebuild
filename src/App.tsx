@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -130,6 +131,9 @@ const AppRoutes = () => {
       <Route path="/accessibility" element={<Accessibility />} />
       <Route path="/drivers-matter" element={<DriversMatter />} />
       
+      {/* Special utility route */}
+      <Route path="/11l" element={<RealityRenderer />} />
+      
       {/* U2014 route */}
       <Route path="/u2014" element={<U2014 />} />
       <Route path="/reality-renderer" element={<RealityRenderer />} />
@@ -143,8 +147,8 @@ const AppRoutes = () => {
 const ConditionalLiveChat = () => {
   const location = useLocation();
   
-  // Hide chatbot on reality-renderer page
-  if (location.pathname === '/reality-renderer') {
+  // Hide chatbot on reality-renderer and 11l pages
+  if (location.pathname === '/reality-renderer' || location.pathname === '/11l') {
     return null;
   }
   
