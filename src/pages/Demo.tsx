@@ -5,7 +5,6 @@ import Footer from '@/components/Footer';
 import DemoHeader from '@/components/demo/DemoHeader';
 import InteractiveDashboard from '@/components/demo/InteractiveDashboard';
 import DemoFeatures from '@/components/demo/DemoFeatures';
-import DemoTestimonials from '@/components/demo/DemoTestimonials';
 import DemoCTA from '@/components/demo/DemoCTA';
 import SEO from '@/components/SEO';
 
@@ -16,6 +15,7 @@ const Demo: React.FC = () => {
         title="Interactive Demo - Advanced Analytics Platform"
         description="Experience our powerful analytics and reporting platform with real-time data visualization, customizable dashboards, and comprehensive business intelligence tools."
         keywords="analytics demo, business intelligence, data visualization, reporting tools, dashboard demo"
+        image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&crop=center"
       />
       <div className="min-h-screen bg-gradient-to-br from-space-dark-blue via-space-deep-blue to-space-dark-blue">
         <Navbar />
@@ -23,7 +23,6 @@ const Demo: React.FC = () => {
           <DemoHeader />
           <InteractiveDashboard />
           <DemoFeatures />
-          <DemoTestimonials />
           <DemoCTA />
         </main>
         <Footer />

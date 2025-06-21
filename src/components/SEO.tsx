@@ -29,7 +29,7 @@ const SEO = ({
   title,
   description = "ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth.",
   keywords = "business technology, digital transformation, IT consulting, ƷBI, technology solutions, business innovation",
-  image = "/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png",
+  image = "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=630&fit=crop&crop=center",
   url = window.location.href,
   type = "website",
   article,
