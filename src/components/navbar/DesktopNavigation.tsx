@@ -1,12 +1,11 @@
 
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { navLinks } from './constants';
-import DesktopNavLink from './DesktopNavLink';
-import ServiceDropdown from './ServiceDropdown';
-import SecureDropdown from './SecureDropdown';
-import ScrollToTopLink from '../ScrollToTopLink';
-import { useAuth } from '@/components/auth/AuthProvider';
+import React from "react";
+import { Link } from "react-router-dom";
+import DesktopNavLink from "./DesktopNavLink";
+import ServiceDropdown from "./ServiceDropdown";
+import SecureDropdown from "./SecureDropdown";
+import { navigationItems, productCategories } from "./constants";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
@@ -14,52 +13,86 @@ interface DesktopNavigationProps {
   isProductsActive: boolean;
 }
 
-const DesktopNavigation = ({ isActive, isServicesActive }: DesktopNavigationProps) => {
-  const { user } = useAuth();
-  
-  // Check if any secure page is active
-  const isSecureActive = ['/admin', '/analytics', '/projects', '/weather', '/calculator', '/openai', '/huggingface', '/features', '/medical-diagnosis'].some(path => 
-    isActive(path) === 'active'
-  );
+const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ 
+  isActive, 
+  isServicesActive, 
+  isProductsActive 
+}) => {
+  const handlePartnerClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Redirect to contact page when clicking Partners
+    window.location.href = '/contact';
+  };
 
   return (
-    <nav className="hidden md:flex items-center space-x-4">
-      {/* Home link */}
-      <DesktopNavLink 
-        key={navLinks[0].name}
-        link={navLinks[0]} 
-        isActive={isActive(navLinks[0].path) === 'active'} 
-        index={0}
-      />
+    <div className="hidden md:flex items-center space-x-6">
+      <NavigationMenu>
+        <NavigationMenuList className="flex space-x-6">
+          {navigationItems.map((item) => {
+            if (item.name === "Services") {
+              return <ServiceDropdown key={item.name} isActive={isServicesActive} />;
+            }
+            
+            if (item.name === "Products") {
+              return (
+                <NavigationMenuItem key={item.name}>
+                  <NavigationMenuTrigger 
+                    className={`bg-transparent hover:bg-white/10 text-white ${
+                      isProductsActive ? 'text-orange-500' : ''
+                    }`}
+                  >
+                    Products
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid gap-3 p-6 w-[500px] grid-cols-2">
+                      {productCategories.map((product) => (
+                        <Link
+                          key={product.title}
+                          to={product.href}
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none text-white">
+                            {product.title}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-gray-400">
+                            {product.description}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              );
+            }
 
-      {/* Services Dropdown */}
-      <ServiceDropdown isActive={isServicesActive} />
+            if (item.name === "Partners") {
+              return (
+                <DesktopNavLink 
+                  key={item.name}
+                  to={item.href} 
+                  isActive={false}
+                  onClick={handlePartnerClick}
+                >
+                  {item.name}
+                </DesktopNavLink>
+              );
+            }
 
-      {/* Remaining links */}
-      {navLinks.slice(1).map((link, index) => (
-        <DesktopNavLink 
-          key={link.name}
-          link={link} 
-          isActive={isActive(link.path) === 'active'} 
-          index={index + 1}
-        />
-      ))}
-
-      {/* Secure Pages Dropdown - Moved to far right, only show if user is logged in */}
-      {user && (
-        <SecureDropdown isActive={isSecureActive} />
-      )}
-      
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3, delay: 0.6 }}
-      >
-        <ScrollToTopLink to="/demo">
-          <Button className="bg-accent hover:bg-accent/80 text-white">View Demo</Button>
-        </ScrollToTopLink>
-      </motion.div>
-    </nav>
+            return (
+              <DesktopNavLink 
+                key={item.name}
+                to={item.href} 
+                isActive={isActive(item.href) === 'active'}
+              >
+                {item.name}
+              </DesktopNavLink>
+            );
+          })}
+          
+          <SecureDropdown />
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
   );
 };
 

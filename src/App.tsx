@@ -1,204 +1,142 @@
-import React, { lazy, Suspense, useEffect } from "react";
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
-import CookieConsent from "./components/CookieConsent";
-import LiveChat from "./components/LiveChat/LiveChat";
-import VisitorTracker from "./components/VisitorTracker";
-import { AuthProvider } from "./components/auth/AuthProvider";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
-
-// Lazy load pages for better performance
-const Index = lazy(() => import("./pages/Index"));
-const Services = lazy(() => import("./pages/Services"));
-const Portfolio = lazy(() => import("./pages/Portfolio"));
-const News = lazy(() => import("./pages/News"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
-const GetQuote = lazy(() => import("./pages/GetQuote"));
-const Partners = lazy(() => import("./pages/Partners"));
-const CaseStudy = lazy(() => import("./pages/CaseStudy"));
-const FAQ = lazy(() => import("./pages/FAQ"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const TermsOfService = lazy(() => import("./pages/TermsOfService"));
-const Accessibility = lazy(() => import("./pages/Accessibility"));
-const Analytics = lazy(() => import("./pages/Analytics"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const RecruitmentMarketing = lazy(() => import("./pages/RecruitmentMarketing"));
-const DriversMatter = lazy(() => import("./pages/DriversMatter"));
-const Weather = lazy(() => import("./pages/Weather"));
-const Maps = lazy(() => import("./pages/Maps"));
-const MedicalDiagnosis = lazy(() => import("./pages/MedicalDiagnosis"));
-const ScientificCalculator = lazy(() => import("./pages/ScientificCalculator"));
-const Features = lazy(() => import("./pages/Features"));
-const OpenAI = lazy(() => import("./pages/OpenAI"));
-const HuggingFace = lazy(() => import("./pages/HuggingFace"));
-const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const ProjectManagement = lazy(() => import("./pages/ProjectManagement"));
-const Demo = lazy(() => import("./pages/Demo"));
-
-// U2014 page
-const U2014 = lazy(() => import("./pages/U2014"));
+import { AuthProvider } from "@/components/auth/AuthProvider";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import VisitorTracker from "@/components/VisitorTracker";
+import CookieConsent from "@/components/CookieConsent";
+import Index from "./pages/Index";
+import Services from "./pages/Services";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import GetQuote from "./pages/GetQuote";
+import FAQ from "./pages/FAQ";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import Accessibility from "./pages/Accessibility";
+import AdminDashboard from "./pages/AdminDashboard";
+import Auth from "./pages/Auth";
+import Profile from "./pages/Profile";
+import Features from "./pages/Features";
+import CaseStudy from "./pages/CaseStudy";
+import Partners from "./pages/Partners";
+import Portfolio from "./pages/Portfolio";
+import Gallery from "./pages/Gallery";
+import News from "./pages/News";
+import NotFound from "./pages/NotFound";
+import Analytics from "./pages/Analytics";
+import U2014 from "./pages/U2014";
+import Planets from "./pages/Planets";
+import ProjectManagement from "./pages/ProjectManagement";
 import RealityRenderer from "./pages/RealityRenderer";
+import Demo from "./pages/Demo";
+import RecruitmentMarketing from "./pages/RecruitmentMarketing";
+import DriversMatter from "./pages/DriversMatter";
+import Weather from "./pages/Weather";
+import ScientificCalculator from "./pages/ScientificCalculator";
+import MedicalDiagnosis from "./pages/MedicalDiagnosis";
+import OpenAI from "./pages/OpenAI";
+import HuggingFace from "./pages/HuggingFace";
+import VoiceInterface from "./pages/VoiceInterface";
+import ElevenLabsEmbed from "./pages/ElevenLabsEmbed";
+import Maps from "./pages/Maps";
+import ChatbotProducts from "./pages/ChatbotProducts";
 
-// Auth pages
-const Auth = lazy(() => import("./pages/Auth"));
-const Profile = lazy(() => import("./pages/Profile"));
-
-// Voice Interface page
-const VoiceInterface = lazy(() => import("./pages/VoiceInterface"));
-
-// ElevenLabs Embed page
-const ElevenLabsEmbed = lazy(() => import("./pages/ElevenLabsEmbed"));
-
-// Loading component for Suspense
-const PageLoader = () => (
-  <div className="min-h-screen bg-space-dark-blue flex items-center justify-center">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto mb-4"></div>
-      <p className="text-gray-300">Loading...</p>
-    </div>
-  </div>
-);
-
-// Create a query client with better defaults
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
       retry: 1,
-      refetchOnWindowFocus: false,
     },
   },
 });
 
-// Scroll to top on route change - MOVED INSIDE BrowserRouter
-const ScrollToTop = () => {
-  const { pathname, hash } = useLocation();
-  
-  useEffect(() => {
-    // If hash is present, let the browser handle the scroll
-    if (hash) {
-      // Use a small timeout to ensure DOM is ready
-      setTimeout(() => {
-        const element = document.getElementById(hash.substring(1));
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        } else if (hash === '#top') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 0);
-    } else {
-      // No hash, scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [pathname, hash]);
-  
-  return null;
-};
-
-const AppRoutes = () => {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/demo" element={<Demo />} />
-      <Route path="/auth" element={<Auth />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/services" element={<Services />} />
-      <Route path="/recruitment-marketing" element={<RecruitmentMarketing />} />
-      <Route path="/portfolio" element={<Portfolio />} />
-      <Route path="/case-study/:id" element={<CaseStudy />} />
-      <Route path="/news" element={<News />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/get-quote" element={<GetQuote />} />
-      <Route path="/partners" element={<Partners />} />
-      
-      {/* Protected routes - require authentication */}
-      <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-      <Route path="/projects" element={<ProtectedRoute><ProjectManagement /></ProtectedRoute>} />
-      <Route path="/openai" element={<ProtectedRoute><OpenAI /></ProtectedRoute>} />
-      <Route path="/huggingface" element={<ProtectedRoute><HuggingFace /></ProtectedRoute>} />
-      <Route path="/features" element={<ProtectedRoute><Features /></ProtectedRoute>} />
-      <Route path="/medical-diagnosis" element={<ProtectedRoute><MedicalDiagnosis /></ProtectedRoute>} />
-      <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/weather" element={<ProtectedRoute><Weather /></ProtectedRoute>} />
-      <Route path="/calculator" element={<ProtectedRoute><ScientificCalculator /></ProtectedRoute>} />
-      <Route path="/voice" element={<ProtectedRoute><VoiceInterface /></ProtectedRoute>} />
-      
-      {/* Public routes */}
-      <Route path="/maps" element={<Maps />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/privacy" element={<PrivacyPolicy />} />
-      <Route path="/terms" element={<TermsOfService />} />
-      <Route path="/accessibility" element={<Accessibility />} />
-      <Route path="/drivers-matter" element={<DriversMatter />} />
-      
-      {/* ElevenLabs embed route - PUBLIC */}
-      <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
-      
-      {/* Special utility route */}
-      <Route path="/11l" element={<RealityRenderer />} />
-      
-      {/* U2014 route */}
-      <Route path="/u2014" element={<U2014 />} />
-      <Route path="/reality-renderer" element={<RealityRenderer />} />
-      
-      {/* Catch-all route for 404 - MUST be last */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
-};
-
-const ConditionalLiveChat = () => {
-  const location = useLocation();
-  
-  // Hide chatbot on reality-renderer, 11l, and elevenlabs pages
-  if (location.pathname === '/reality-renderer' || location.pathname === '/11l' || location.pathname === '/elevenlabs') {
-    return null;
-  }
-  
-  return <LiveChat />;
-};
-
-const ConditionalCookieConsent = () => {
-  const location = useLocation();
-  
-  // Hide cookie consent on elevenlabs page
-  if (location.pathname === '/elevenlabs') {
-    return null;
-  }
-  
-  return <CookieConsent />;
-};
-
-const App: React.FC = () => {
-  return (
-    <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AuthProvider>
-                <ScrollToTop />
-                <Suspense fallback={<PageLoader />}>
-                  <AppRoutes />
-                  <VisitorTracker />
-                </Suspense>
-                <ConditionalLiveChat />
-                <ConditionalCookieConsent />
-              </AuthProvider>
-            </BrowserRouter>
-          </TooltipProvider>
-        </QueryClientProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AuthProvider>
+              <VisitorTracker />
+              <Routes>
+                {/* Public routes */}
+                <Route path="/" element={<Index />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/quote" element={<GetQuote />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/accessibility" element={<Accessibility />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/case-study/:slug" element={<CaseStudy />} />
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/demo" element={<Demo />} />
+                <Route path="/recruitment-marketing" element={<RecruitmentMarketing />} />
+                <Route path="/drivers-matter" element={<DriversMatter />} />
+                <Route path="/u2014" element={<U2014 />} />
+                <Route path="/planets" element={<Planets />} />
+                
+                {/* Unsecured product pages */}
+                <Route path="/calculator" element={<ScientificCalculator />} />
+                <Route path="/weather" element={<Weather />} />
+                <Route path="/medical-diagnosis" element={<MedicalDiagnosis />} />
+                <Route path="/openai" element={<OpenAI />} />
+                <Route path="/huggingface" element={<HuggingFace />} />
+                <Route path="/voice" element={<VoiceInterface />} />
+                <Route path="/maps" element={<Maps />} />
+                <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
+
+                {/* Protected routes */}
+                <Route path="/admin" element={
+                  <ProtectedRoute>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/profile" element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                } />
+                <Route path="/analytics" element={
+                  <ProtectedRoute>
+                    <Analytics />
+                  </ProtectedRoute>
+                } />
+                <Route path="/projects" element={
+                  <ProtectedRoute>
+                    <ProjectManagement />
+                  </ProtectedRoute>
+                } />
+                <Route path="/reality" element={
+                  <ProtectedRoute>
+                    <RealityRenderer />
+                  </ProtectedRoute>
+                } />
+                <Route path="/chatbot-products" element={<ChatbotProducts />} />
+
+                {/* 404 route */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <CookieConsent />
+            </AuthProvider>
+          </BrowserRouter>
+        </TooltipProvider>
       </HelmetProvider>
-    </React.StrictMode>
+    </QueryClientProvider>
   );
-};
+}
 
 export default App;
