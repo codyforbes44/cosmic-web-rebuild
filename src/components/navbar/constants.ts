@@ -62,21 +62,6 @@ export const productCategories = [
     title: "Voice AI Assistant", 
     href: "/voice",
     description: "Natural voice interaction technology"
-  },
-  {
-    title: "Scientific Calculator",
-    href: "/calculator",
-    description: "Advanced calculation tools"
-  },
-  {
-    title: "Weather Services",
-    href: "/weather", 
-    description: "Comprehensive weather data and forecasting"
-  },
-  {
-    title: "Medical Diagnosis AI",
-    href: "/medical-diagnosis",
-    description: "AI-powered medical assistance tools"
   }
 ];
 
@@ -115,10 +100,5 @@ export const secureNavLinks: NavLink[] = [
   { name: "Admin Dashboard", path: "/admin", disabled: false },
   { name: "Analytics", path: "/analytics", disabled: false },
   { name: "Project Management", path: "/projects", disabled: false },
-  { name: "Weather", path: "/weather", disabled: false },
-  { name: "Calculator", path: "/calculator", disabled: false },
-  { name: "OpenAI Playground", path: "/openai", disabled: false },
-  { name: "HuggingFace Models", path: "/huggingface", disabled: false },
-  { name: "Medical Diagnosis", path: "/medical-diagnosis", disabled: false },
   { name: "Features", path: "/features", disabled: false }
 ];

@@ -17,7 +17,7 @@ export const useZephelState = () => {
   const activateZephel = useCallback(() => {
     setZephelState({
       isActive: true,
-      mode: 'ZEPHEL.CORE.ACTIVE',
+      mode: 'ƷBI.CORE.ACTIVE',
       lastActivated: new Date()
     });
   }, []);
