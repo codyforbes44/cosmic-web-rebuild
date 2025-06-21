@@ -1,56 +1,24 @@
 
-import { Link } from 'react-router-dom';
-import { Ban } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { NavLink } from './constants';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import ScrollToTopLink from '../ScrollToTopLink';
+import React from 'react';
 
 interface DesktopNavLinkProps {
-  link: NavLink;
+  to: string;
   isActive: boolean;
-  index: number;
+  children: React.ReactNode;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
-const DesktopNavLink = ({ link, isActive, index }: DesktopNavLinkProps) => {
+const DesktopNavLink: React.FC<DesktopNavLinkProps> = ({ to, isActive, children, onClick }) => {
   return (
-    <motion.div
-      key={link.name}
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.1 }}
-      className="relative h-full"
+    <a
+      href={to}
+      onClick={onClick}
+      className={`text-white hover:text-orange-500 transition-colors px-3 py-2 ${
+        isActive ? 'text-orange-500' : ''
+      }`}
     >
-      {link.disabled ? (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="nav-link text-gray-500 cursor-not-allowed flex items-center h-10 px-3 py-2">
-                {link.name}
-                <Ban size={16} className="ml-1 opacity-70" />
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Coming soon</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <ScrollToTopLink 
-          to={link.path} 
-          className={`nav-link flex items-center h-10 px-3 py-2 ${isActive ? 'active' : ''}`}
-          aria-current={isActive ? 'page' : undefined}
-        >
-          {link.name}
-          {isActive && (
-            <motion.div 
-              className="h-0.5 bg-accent absolute bottom-0 left-0 right-0" 
-              layoutId="navbar-indicator"
-            />
-          )}
-        </ScrollToTopLink>
-      )}
-    </motion.div>
+      {children}
+    </a>
   );
 };
 

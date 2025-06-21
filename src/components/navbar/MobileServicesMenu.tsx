@@ -5,9 +5,15 @@ import { serviceCategories } from './constants';
 
 interface MobileServicesMenuProps {
   onClose: () => void;
+  onItemClick?: () => void;
 }
 
-const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
+const MobileServicesMenu: React.FC<MobileServicesMenuProps> = ({ onClose, onItemClick }) => {
+  const handleItemClick = () => {
+    onClose();
+    if (onItemClick) onItemClick();
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -27,7 +33,7 @@ const MobileServicesMenu = ({ onClose }: MobileServicesMenuProps) => {
             <Link 
               to={service.href} 
               className="block text-center text-base hover:text-white py-1"
-              onClick={onClose}
+              onClick={handleItemClick}
               style={{ color: service.color }}
             >
               {service.title}

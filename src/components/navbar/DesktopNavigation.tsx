@@ -89,7 +89,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
             );
           })}
           
-          <SecureDropdown />
+          <SecureDropdown isActive={false} />
         </NavigationMenuList>
       </NavigationMenu>
     </div>

@@ -28,7 +28,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
       <div className="px-4 py-4 space-y-4">
         {navigationItems.map((item) => {
           if (item.name === "Services") {
-            return <MobileServicesMenu key={item.name} onItemClick={onClose} />;
+            return <MobileServicesMenu key={item.name} onClose={onClose} onItemClick={onClose} />;
           }
           
           if (item.name === "Products") {

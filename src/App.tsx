@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from "@/components/auth/AuthProvider";
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import VisitorTracker from "@/components/VisitorTracker";
 import CookieConsent from "@/components/CookieConsent";
 import Index from "./pages/Index";
@@ -98,6 +98,7 @@ function App() {
                 <Route path="/voice" element={<VoiceInterface />} />
                 <Route path="/maps" element={<Maps />} />
                 <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
+                <Route path="/chatbot-products" element={<ChatbotProducts />} />
 
                 {/* Protected routes */}
                 <Route path="/admin" element={
@@ -125,7 +126,6 @@ function App() {
                     <RealityRenderer />
                   </ProtectedRoute>
                 } />
-                <Route path="/chatbot-products" element={<ChatbotProducts />} />
 
                 {/* 404 route */}
                 <Route path="*" element={<NotFound />} />
