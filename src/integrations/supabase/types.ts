@@ -132,6 +132,54 @@ export type Database = {
         }
         Relationships: []
       }
+      subscription_packages: {
+        Row: {
+          created_at: string
+          description: string
+          features: string[]
+          id: string
+          is_active: boolean
+          is_popular: boolean
+          max_chatbots: number | null
+          max_monthly_messages: number
+          name: string
+          price_monthly: number
+          price_yearly: number
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          features: string[]
+          id?: string
+          is_active?: boolean
+          is_popular?: boolean
+          max_chatbots?: number | null
+          max_monthly_messages: number
+          name: string
+          price_monthly: number
+          price_yearly: number
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          features?: string[]
+          id?: string
+          is_active?: boolean
+          is_popular?: boolean
+          max_chatbots?: number | null
+          max_monthly_messages?: number
+          name?: string
+          price_monthly?: number
+          price_yearly?: number
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null

@@ -16,7 +16,9 @@ interface SubscriptionPackage {
   features: string[];
   max_chatbots: number | null;
   max_monthly_messages: number;
+  is_popular: boolean;
   is_active: boolean;
+  sort_order: number;
 }
 
 export const SubscriptionPackages: React.FC = () => {
@@ -27,7 +29,7 @@ export const SubscriptionPackages: React.FC = () => {
         .from('subscription_packages')
         .select('*')
         .eq('is_active', true)
-        .order('price_monthly', { ascending: true });
+        .order('sort_order', { ascending: true });
       
       if (error) throw error;
       return data as SubscriptionPackage[];
@@ -47,12 +49,20 @@ export const SubscriptionPackages: React.FC = () => {
     }
   };
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (priceInCents: number) => {
+    const price = priceInCents / 100;
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
     }).format(price);
+  };
+
+  const calculateYearlySavings = (monthlyPrice: number, yearlyPrice: number) => {
+    const totalMonthly = monthlyPrice * 12;
+    const savings = totalMonthly - yearlyPrice;
+    const percentage = Math.round((savings / totalMonthly) * 100);
+    return { savings: savings / 100, percentage };
   };
 
   if (isLoading) {
@@ -66,71 +76,81 @@ export const SubscriptionPackages: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-white mb-4">Chatbot Subscription Plans</h2>
+        <h2 className="text-3xl font-bold text-white mb-4">Choose Your Plan</h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          Choose the perfect plan for your chatbot needs. All plans include our advanced AI technology and easy embedding.
+          Select the perfect chatbot plan for your business needs. All plans include our advanced AI technology and easy website embedding.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {packages?.map((pkg, index) => (
-          <Card 
-            key={pkg.id} 
-            className={`bg-space-deep-blue border-gray-700 relative ${
-              index === 1 ? 'border-accent border-2 scale-105' : ''
-            }`}
-          >
-            {index === 1 && (
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-accent text-white px-4 py-1">
-                  Most Popular
-                </Badge>
-              </div>
-            )}
-            <CardHeader className="text-center">
-              <div className="flex justify-center mb-4">
-                {getPackageIcon(pkg.name)}
-              </div>
-              <CardTitle className="text-white text-2xl">{pkg.name}</CardTitle>
-              <CardDescription className="text-gray-400">
-                {pkg.description}
-              </CardDescription>
-              <div className="mt-6">
-                <div className="text-3xl font-bold text-white">
-                  {formatPrice(pkg.price_monthly)}
-                  <span className="text-lg font-normal text-gray-400">/month</span>
+        {packages?.map((pkg) => {
+          const yearlySavings = calculateYearlySavings(pkg.price_monthly, pkg.price_yearly);
+          
+          return (
+            <Card 
+              key={pkg.id} 
+              className={`bg-space-deep-blue border-gray-700 relative ${
+                pkg.is_popular ? 'border-accent border-2 scale-105' : ''
+              }`}
+            >
+              {pkg.is_popular && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-accent text-white px-4 py-1">
+                    Most Popular
+                  </Badge>
                 </div>
-                <div className="text-sm text-gray-400 mt-1">
-                  or {formatPrice(pkg.price_yearly)}/year (save 2 months)
+              )}
+              <CardHeader className="text-center">
+                <div className="flex justify-center mb-4">
+                  {getPackageIcon(pkg.name)}
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3 mb-6">
-                {pkg.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start gap-3">
-                    <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button 
-                className={`w-full ${
-                  index === 1 
-                    ? 'bg-accent hover:bg-accent/80' 
-                    : 'bg-gray-700 hover:bg-gray-600'
-                }`}
-              >
-                Get Started
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
+                <CardTitle className="text-white text-2xl">{pkg.name}</CardTitle>
+                <CardDescription className="text-gray-400">
+                  {pkg.description}
+                </CardDescription>
+                <div className="mt-6">
+                  <div className="text-3xl font-bold text-white">
+                    {formatPrice(pkg.price_monthly)}
+                    <span className="text-lg font-normal text-gray-400">/month</span>
+                  </div>
+                  <div className="text-sm text-gray-400 mt-1">
+                    or {formatPrice(pkg.price_yearly)}/year 
+                    <span className="text-green-400 ml-1">
+                      (save {yearlySavings.percentage}%)
+                    </span>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3 mb-6">
+                  {pkg.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start gap-3">
+                      <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-300 text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button 
+                  className={`w-full ${
+                    pkg.is_popular 
+                      ? 'bg-accent hover:bg-accent/80' 
+                      : 'bg-gray-700 hover:bg-gray-600'
+                  }`}
+                >
+                  Get Started
+                </Button>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
-      <div className="text-center">
+      <div className="text-center space-y-2">
         <p className="text-gray-400 text-sm">
           All plans include a 14-day free trial. No setup fees. Cancel anytime.
+        </p>
+        <p className="text-gray-500 text-xs">
+          Need a custom solution? <span className="text-accent hover:underline cursor-pointer">Contact our sales team</span>
         </p>
       </div>
     </div>
