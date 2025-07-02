@@ -12,6 +12,7 @@ import ServiceCaseStudy from "@/components/ServiceCaseStudy";
 import SEO from "@/components/SEO";
 import { webService } from "@/data/services/webService";
 import LiveChat from "@/components/LiveChat/LiveChat";
+import WebDevelopmentServices from "@/components/WebDevelopmentServices";
 
 const WebDevelopment: React.FC = () => {
   const service = webService;
@@ -86,6 +87,9 @@ const WebDevelopment: React.FC = () => {
               ))}
             </div>
           </section>
+
+          {/* Packages Section */}
+          <WebDevelopmentServices />
           
           {/* Case Study */}
           <section className="mb-20">
