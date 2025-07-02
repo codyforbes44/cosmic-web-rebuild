@@ -13,9 +13,11 @@ interface ChatWindowProps {
   isThinking?: boolean;
   showZapierManager?: boolean;
   suggestedQuestions?: string[];
+  isMinimized?: boolean;
   onMessageChange: (message: string) => void;
   onSendMessage: () => void;
   onToggleChat: () => void;
+  onToggleMinimize?: () => void;
   onToggleZapierManager?: () => void;
   onTogglePin?: () => void;
   isPinned?: boolean;
@@ -34,9 +36,11 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   isThinking = false,
   showZapierManager = false,
   suggestedQuestions = [],
+  isMinimized = false,
   onMessageChange,
   onSendMessage,
   onToggleChat,
+  onToggleMinimize = () => {},
   onToggleZapierManager = () => {},
   onTogglePin,
   isPinned = false,
@@ -56,32 +60,38 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     <>
       <div 
         ref={dragRef}
-        className="w-[350px] h-[500px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col chat-window dark:bg-slate-900 dark:border dark:border-slate-700"
+        className={`w-[350px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col chat-window dark:bg-slate-900 dark:border dark:border-slate-700 transition-all duration-300 ${
+          isMinimized ? 'h-auto' : 'h-[500px]'
+        }`}
       >
         {/* Chat Header */}
         <ChatHeader 
           onToggleChat={onToggleChat}
+          onToggleMinimize={onToggleMinimize}
           onToggleZapierManager={onToggleZapierManager}
           onTogglePin={onTogglePin}
           isPinned={isPinned}
+          isMinimized={isMinimized}
           isDraggable={isDraggable}
           onMouseDown={onMouseDown}
           zephelState={zephelState}
           onDeactivateZephel={onDeactivateZephel}
         />
 
-        {/* Chat Container with all messaging components */}
-        <ChatContainer
-          messages={messages}
-          message={message}
-          isTyping={isTyping}
-          isThinking={isThinking}
-          suggestedQuestions={suggestedQuestions}
-          onMessageChange={onMessageChange}
-          onSendMessage={onSendMessage}
-          chatContainerRef={chatContainerRef}
-          onQuickResponseSelect={handleQuickResponse}
-        />
+        {/* Chat Container - only show when not minimized */}
+        {!isMinimized && (
+          <ChatContainer
+            messages={messages}
+            message={message}
+            isTyping={isTyping}
+            isThinking={isThinking}
+            suggestedQuestions={suggestedQuestions}
+            onMessageChange={onMessageChange}
+            onSendMessage={onSendMessage}
+            chatContainerRef={chatContainerRef}
+            onQuickResponseSelect={handleQuickResponse}
+          />
+        )}
       </div>
       
       {/* Zapier Manager */}

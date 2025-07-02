@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { useBotResponses } from './useBotResponses';
@@ -13,6 +12,7 @@ export const useChatState = () => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [unreadMessages, setUnreadMessages] = useState<number>(0);
   const [isPinned, setIsPinned] = useState<boolean>(false);
+  const [isMinimized, setIsMinimized] = useState<boolean>(false);
   const [isSendingFirstMessage, setIsSendingFirstMessage] = useState<boolean>(true);
   const [isThinking, setIsThinking] = useState<boolean>(false);
   const [showZapierManager, setShowZapierManager] = useState<boolean>(false);
@@ -74,6 +74,14 @@ export const useChatState = () => {
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
+    // Reset minimize state when toggling chat
+    if (!isOpen) {
+      setIsMinimized(false);
+    }
+  };
+
+  const toggleMinimize = () => {
+    setIsMinimized(prev => !prev);
   };
 
   const togglePin = () => {
@@ -83,6 +91,9 @@ export const useChatState = () => {
     if (!isOpen) {
       setIsOpen(true);
     }
+    
+    // Reset minimize state when pinning
+    setIsMinimized(false);
   };
 
   const toggleZapierManager = () => {
@@ -180,6 +191,7 @@ export const useChatState = () => {
     isThinking,
     unreadMessages,
     isPinned,
+    isMinimized,
     isSendingFirstMessage,
     showZapierManager,
     chatContainerRef,
@@ -188,6 +200,7 @@ export const useChatState = () => {
     deactivateZephel,
     setMessage,
     toggleChat,
+    toggleMinimize,
     togglePin,
     toggleZapierManager,
     handleSendMessage,

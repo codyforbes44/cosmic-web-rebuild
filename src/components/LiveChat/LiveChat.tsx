@@ -15,6 +15,7 @@ const LiveChat = () => {
     isThinking,
     unreadMessages,
     isPinned,
+    isMinimized,
     showZapierManager,
     chatContainerRef,
     suggestedQuestions,
@@ -22,6 +23,7 @@ const LiveChat = () => {
     deactivateZephel,
     setMessage,
     toggleChat,
+    toggleMinimize,
     togglePin,
     toggleZapierManager,
     handleSendMessage,
@@ -55,9 +57,11 @@ const LiveChat = () => {
             isThinking={isThinking}
             showZapierManager={showZapierManager}
             suggestedQuestions={suggestedQuestions}
+            isMinimized={isMinimized}
             onMessageChange={setMessage}
             onSendMessage={handleSendMessage}
             onToggleChat={toggleChat}
+            onToggleMinimize={toggleMinimize}
             onToggleZapierManager={toggleZapierManager}
             onTogglePin={togglePin}
             isPinned={isPinned}
