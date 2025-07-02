@@ -9,6 +9,7 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import VisitorTracker from "@/components/VisitorTracker";
 import CookieConsent from "@/components/CookieConsent";
+import LiveChat from "@/components/LiveChat/LiveChat";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import About from "./pages/About";
@@ -131,6 +132,9 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <CookieConsent />
+              
+              {/* Global LiveChat component - appears on all pages */}
+              <LiveChat />
             </AuthProvider>
           </BrowserRouter>
         </TooltipProvider>
