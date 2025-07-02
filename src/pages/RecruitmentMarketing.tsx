@@ -1,3 +1,4 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
@@ -18,9 +19,9 @@ const RecruitmentMarketing: React.FC = () => {
   return (
     <>
       <SEO 
-        title="Truck Driver Recruitment Marketing Services" 
-        description="Powerful driver recruitment campaigns for trucking companies. Attract, engage and convert qualified drivers while reducing cost-per-hire by up to 40%."
-        keywords="driver recruitment, truck driver marketing, driver hiring, fleet recruitment, transportation staffing, driver shortage solutions, CDL driver recruitment"
+        title="Professional Recruitment Marketing Services" 
+        description="Powerful recruitment campaigns for businesses across all industries. Attract, engage and convert qualified candidates while reducing cost-per-hire by up to 40%."
+        keywords="recruitment marketing, talent acquisition, candidate recruitment, hiring solutions, professional recruiting, recruitment campaigns, talent sourcing"
         image={service.image}
       />
       <Navbar />
@@ -37,10 +38,10 @@ const RecruitmentMarketing: React.FC = () => {
                 transition={{ duration: 0.5 }}
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: service.color }}>
-                  Recruitment Marketing for Trucking Companies
+                  Professional Recruitment Marketing
                 </h1>
                 <p className="text-xl text-gray-300 mb-8">
-                  Attract qualified drivers, reduce your cost-per-hire, and build a reliable fleet with our specialized recruitment marketing services.
+                  Attract qualified candidates, reduce your cost-per-hire, and build a strong workforce with our specialized recruitment marketing services across all industries.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link to="/get-quote">
@@ -69,7 +70,7 @@ const RecruitmentMarketing: React.FC = () => {
                 <div className="rounded-lg overflow-hidden shadow-2xl">
                   <img 
                     src={service.image} 
-                    alt="Truck Driver Recruitment" 
+                    alt="Professional Recruitment" 
                     className="w-full h-auto rounded-lg"
                   />
                 </div>
@@ -88,7 +89,7 @@ const RecruitmentMarketing: React.FC = () => {
             </div>
           </section>
           
-          {/* Driver Shortage Stats */}
+          {/* Industry Stats */}
           <section className="mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -97,16 +98,16 @@ const RecruitmentMarketing: React.FC = () => {
               className="grid grid-cols-1 md:grid-cols-3 gap-6"
             >
               <div className="bg-space-deep-blue/50 p-6 rounded-xl border border-gray-800">
-                <h3 className="text-2xl font-bold mb-2" style={{ color: service.color }}>80,000+</h3>
-                <p className="text-gray-300">Driver shortage in the US trucking industry</p>
+                <h3 className="text-2xl font-bold mb-2" style={{ color: service.color }}>70%</h3>
+                <p className="text-gray-300">Of companies struggle to find qualified candidates</p>
               </div>
               <div className="bg-space-deep-blue/50 p-6 rounded-xl border border-gray-800">
-                <h3 className="text-2xl font-bold mb-2" style={{ color: service.color }}>$8,000+</h3>
-                <p className="text-gray-300">Average cost-per-hire for qualified CDL drivers</p>
+                <h3 className="text-2xl font-bold mb-2" style={{ color: service.color }}>$5,000+</h3>
+                <p className="text-gray-300">Average cost-per-hire for skilled professionals</p>
               </div>
               <div className="bg-space-deep-blue/50 p-6 rounded-xl border border-gray-800">
-                <h3 className="text-2xl font-bold mb-2" style={{ color: service.color }}>90%</h3>
-                <p className="text-gray-300">Driver turnover rate at many large trucking companies</p>
+                <h3 className="text-2xl font-bold mb-2" style={{ color: service.color }}>3+ months</h3>
+                <p className="text-gray-300">Average time to fill professional positions</p>
               </div>
             </motion.div>
           </section>
@@ -114,9 +115,9 @@ const RecruitmentMarketing: React.FC = () => {
           {/* How It Works */}
           <section className="mb-20">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">How Our Driver Recruitment Works</h2>
+              <h2 className="text-3xl font-bold mb-4">How Our Recruitment Marketing Works</h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                A data-driven approach to finding and converting the right drivers for your fleet
+                A data-driven approach to finding and converting the right candidates for your organization
               </p>
             </div>
             
@@ -125,12 +126,12 @@ const RecruitmentMarketing: React.FC = () => {
                 {
                   step: "1",
                   title: "Discovery",
-                  description: "We learn about your company, fleet needs, and ideal driver profile"
+                  description: "We learn about your company, hiring needs, and ideal candidate profile"
                 },
                 {
                   step: "2",
                   title: "Campaign Strategy",
-                  description: "Develop targeted campaigns across multiple channels to reach qualified drivers"
+                  description: "Develop targeted campaigns across multiple channels to reach qualified professionals"
                 },
                 {
                   step: "3",
@@ -168,7 +169,7 @@ const RecruitmentMarketing: React.FC = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Benefits of Our Recruitment Marketing</h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Targeted strategies that deliver real results for your driver recruitment needs
+                Targeted strategies that deliver real results for your hiring needs across all industries
               </p>
             </div>
             
@@ -212,10 +213,10 @@ const RecruitmentMarketing: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div>
                   <h2 className="text-3xl font-bold mb-4">
-                    Ready to Solve Your Driver Recruitment Challenges?
+                    Ready to Solve Your Recruitment Challenges?
                   </h2>
                   <p className="text-xl text-gray-300 mb-6">
-                    Schedule a free consultation with our recruitment marketing specialists to discuss your needs.
+                    Schedule a free consultation with our recruitment marketing specialists to discuss your hiring needs.
                   </p>
                   <div className="flex flex-wrap gap-4">
                     <Link to="/get-quote">
@@ -237,7 +238,7 @@ const RecruitmentMarketing: React.FC = () => {
                 <div className="hidden lg:block">
                   <img 
                     src="/lovable-uploads/7f21da0a-fd77-43ea-a7af-3b11648397c0.png" 
-                    alt="Driver Recruitment" 
+                    alt="Professional Recruitment" 
                     className="w-full h-auto rounded-lg"
                   />
                 </div>
