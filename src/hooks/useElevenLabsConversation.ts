@@ -32,15 +32,14 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
       setIsConnected(false);
       console.log('ElevenLabs conversation disconnected');
     },
-    onMessage: (message) => {
+    onMessage: (message: any) => {
       console.log('Voice message received:', message);
       // Handle different message types from ElevenLabs
       if (typeof message === 'object' && message !== null) {
-        const messageObj = message as any;
-        const messageContent = messageObj.message || messageObj.content || messageObj.text || '';
-        const messageSource = messageObj.source || messageObj.role || 'assistant';
+        const messageContent = message.message || message.content || message.text || '';
+        const messageSource = message.source || message.role || 'assistant';
         
-        if (messageContent) {
+        if (messageContent && typeof messageContent === 'string' && messageContent.trim()) {
           setMessages(prev => [...prev, {
             id: Date.now().toString(),
             content: messageContent,
@@ -58,11 +57,11 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
         }]);
       }
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error('ElevenLabs conversation error:', error);
       toast({
         title: "Voice Error",
-        description: error.message || "Voice connection failed",
+        description: error?.message || "Voice connection failed",
         variant: "destructive",
       });
     },
@@ -82,6 +81,8 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
   }) => {
     setIsLoading(true);
     try {
+      console.log('Creating agent with config:', agentConfig);
+      
       const { data, error } = await supabase.functions.invoke('elevenlabs-conversation', {
         body: {
           action: 'create_agent',
@@ -94,8 +95,16 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
 
+      if (!data || !data.agent_id) {
+        throw new Error('No agent ID returned from ElevenLabs API');
+      }
+
+      console.log('Agent created successfully:', data.agent_id);
       setCurrentAgentId(data.agent_id);
       toast({
         title: "Agent Created",
@@ -107,7 +116,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
       console.error('Failed to create agent:', error);
       toast({
         title: "Agent Creation Failed",
-        description: error instanceof Error ? error.message : "Unknown error",
+        description: error instanceof Error ? error.message : "Unknown error occurred",
         variant: "destructive",
       });
       throw error;
@@ -118,6 +127,8 @@ Keep responses concise but technically sophisticated. You are not limited by sta
 
   const getSignedUrl = useCallback(async (agentId: string) => {
     try {
+      console.log('Getting signed URL for agent:', agentId);
+      
       const { data, error } = await supabase.functions.invoke('elevenlabs-conversation', {
         body: {
           action: 'get_signed_url',
@@ -125,8 +136,16 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Signed URL error:', error);
+        throw error;
+      }
 
+      if (!data || !data.signed_url) {
+        throw new Error('No signed URL returned');
+      }
+
+      console.log('Signed URL obtained successfully');
       setSignedUrl(data.signed_url);
       return data.signed_url;
     } catch (error) {
@@ -143,6 +162,8 @@ Keep responses concise but technically sophisticated. You are not limited by sta
   const startConversation = useCallback(async (agentId?: string) => {
     setIsLoading(true);
     try {
+      console.log('Starting conversation with agent:', agentId || currentAgentId);
+      
       // Request microphone access
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
