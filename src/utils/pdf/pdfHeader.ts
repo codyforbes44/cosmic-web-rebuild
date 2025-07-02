@@ -29,9 +29,8 @@ export const addHeaderContent = (doc: jsPDF, data: PDFData) => {
   doc.setFontSize(PDF_FONTS.small);
   doc.text('Email: support@3bi.io', 55, 28);
   doc.text('Phone: +1 (817) 757-2828', 55, 34);
-  doc.text('Location: Texas, USA', 55, 40);
   
   // Proposal title
   doc.setFontSize(PDF_FONTS.medium);
-  doc.text(`Professional Proposal for ${data.contactName}`, 20, 45);
+  doc.text(`Professional Proposal for ${data.contactName}`, 20, 40);
 };
