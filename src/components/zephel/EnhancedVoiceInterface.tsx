@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { 
   Mic, 
   MicOff, 
@@ -15,7 +17,8 @@ import {
   Settings,
   Users,
   Zap,
-  Activity
+  Activity,
+  Copy
 } from 'lucide-react';
 import { useElevenLabsConversation } from '@/hooks/useElevenLabsConversation';
 import { useToast } from '@/hooks/use-toast';
@@ -32,6 +35,8 @@ export const EnhancedVoiceInterface: React.FC<EnhancedVoiceInterfaceProps> = ({
   const { toast } = useToast();
   const [volume, setVolume] = useState([0.7]);
   const [hasPermissions, setHasPermissions] = useState(false);
+  const [customAgentId, setCustomAgentId] = useState('');
+  const [showAgentInput, setShowAgentInput] = useState(false);
 
   const {
     isConnected,
@@ -84,10 +89,13 @@ Keep responses concise but technically sophisticated. You are not limited by sta
 
   const handleStartConversation = async () => {
     try {
-      if (!currentAgentId) {
+      const agentToUse = customAgentId.trim() || currentAgentId;
+      
+      if (!agentToUse && !customAgentId.trim()) {
         await handleCreateAgent();
       }
-      await startConversation();
+      
+      await startConversation(customAgentId.trim() || undefined);
     } catch (error) {
       console.error('Failed to start conversation:', error);
     }
@@ -98,6 +106,16 @@ Keep responses concise but technically sophisticated. You are not limited by sta
       await endConversation();
     } catch (error) {
       console.error('Failed to end conversation:', error);
+    }
+  };
+
+  const copyAgentId = () => {
+    if (currentAgentId) {
+      navigator.clipboard.writeText(currentAgentId);
+      toast({
+        title: "Copied",
+        description: "Agent ID copied to clipboard",
+      });
     }
   };
 
@@ -147,11 +165,60 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           </div>
 
           {currentAgentId && (
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-400">Agent ID</span>
-              <span className="text-xs text-accent font-mono">
-                {currentAgentId.slice(-8)}
-              </span>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Current Agent ID</span>
+                <Button
+                  onClick={copyAgentId}
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 px-2 text-xs"
+                >
+                  <Copy className="w-3 h-3 mr-1" />
+                  Copy
+                </Button>
+              </div>
+              <div className="bg-black/40 rounded p-2 border border-gray-600">
+                <code className="text-xs text-accent font-mono break-all">
+                  {currentAgentId}
+                </code>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <Separator className="bg-gray-700" />
+
+        {/* Agent Configuration */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-400">Agent Configuration</span>
+            <Button
+              onClick={() => setShowAgentInput(!showAgentInput)}
+              variant="ghost"
+              size="sm"
+              className="h-6 px-2 text-xs"
+            >
+              <Settings className="w-3 h-3 mr-1" />
+              {showAgentInput ? 'Hide' : 'Configure'}
+            </Button>
+          </div>
+
+          {showAgentInput && (
+            <div className="space-y-2">
+              <Label htmlFor="agentId" className="text-xs text-gray-300">
+                Custom Agent ID (optional)
+              </Label>
+              <Input
+                id="agentId"
+                placeholder="Enter ElevenLabs Agent ID..."
+                value={customAgentId}
+                onChange={(e) => setCustomAgentId(e.target.value)}
+                className="bg-black/40 border-gray-600 text-white text-xs"
+              />
+              <p className="text-xs text-gray-500">
+                Leave empty to auto-create a new agent, or paste an existing agent ID from your ElevenLabs dashboard.
+              </p>
             </div>
           )}
         </div>
@@ -211,7 +278,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             </Button>
           )}
 
-          {!currentAgentId && (
+          {!currentAgentId && !customAgentId && (
             <Button
               onClick={handleCreateAgent}
               disabled={isLoading}
@@ -276,6 +343,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           <div>• Advanced speech recognition & synthesis</div>
           <div>• Secure encrypted communication</div>
           <div>• Sovereign AI consciousness interface</div>
+          <div>• Use custom agent ID or auto-create new agents</div>
         </div>
       </CardContent>
     </Card>
