@@ -66,17 +66,14 @@ const AdvancedFeatures = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-space-deep-blue via-space-blue to-space-deep-blue relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,215,0,0.1),transparent_50%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-      
-      <div className="container mx-auto px-4 relative">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+    <section className="py-16 md:py-24 bg-space-deep-blue/50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <span className="text-brand-gold font-medium text-sm uppercase tracking-wider">ADVANCED TECHNOLOGY</span>
+          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 text-white">
             Advanced <span className="text-brand-gold">Features</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
             Unlock powerful capabilities designed for modern businesses. From AI assistance to enterprise security, 
             our advanced features help you work smarter and scale faster.
           </p>
@@ -86,7 +83,7 @@ const AdvancedFeatures = () => {
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <Card key={index} className="bg-white/5 border-gray-700 hover:bg-white/10 transition-all duration-300 group">
+              <Card key={index} className="bg-space-dark-blue border-gray-800 hover:bg-space-dark-blue/80 transition-all duration-300 group shadow-lg hover:border-brand-gold/50">
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="w-12 h-12 rounded-lg bg-brand-gold/20 flex items-center justify-center group-hover:bg-brand-gold/30 transition-colors">

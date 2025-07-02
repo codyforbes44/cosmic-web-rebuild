@@ -40,25 +40,19 @@ const RecruitmentMarketingSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-space-deep-blue via-space-blue to-space-deep-blue relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,215,0,0.1),transparent_50%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-      
-      <div className="container mx-auto px-4 relative">
-        <div className="text-center mb-16">
-          <span className="inline-block text-brand-gold mb-4 text-sm md:text-lg tracking-wider font-medium px-3 py-1 bg-brand-gold/10 rounded-full">
-            RECRUITMENT MARKETING
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+    <section className="py-16 md:py-24 bg-space-deep-blue/50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <span className="text-brand-gold font-medium text-sm uppercase tracking-wider">RECRUITMENT MARKETING</span>
+          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 text-white">
             Find Top Talent <span className="text-brand-gold">Faster</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
             Revolutionary recruitment marketing that attracts quality candidates and reduces hiring costs through targeted digital campaigns
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
@@ -69,9 +63,9 @@ const RecruitmentMarketingSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="bg-white/5 border-gray-700 hover:bg-white/10 transition-all duration-300 group h-full">
+                <Card className="bg-space-dark-blue border-gray-800 hover:bg-space-dark-blue/80 transition-all duration-300 group h-full shadow-lg hover:border-brand-gold/50">
                   <CardHeader className="text-center">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 rounded-full bg-brand-gold/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-gold/30 transition-colors group-hover:scale-110">
                       <IconComponent className="w-8 h-8 text-brand-gold" />
                     </div>
                     <CardTitle className="text-white text-xl mb-2">{feature.title}</CardTitle>
@@ -85,7 +79,7 @@ const RecruitmentMarketingSection = () => {
           })}
         </div>
 
-        <div className="bg-white/5 rounded-2xl p-8 mb-12 border border-gray-700">
+        <div className="bg-space-dark-blue rounded-2xl p-8 mb-12 border border-gray-800 shadow-lg">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h3 className="text-3xl font-bold text-white mb-6">Proven Results</h3>
