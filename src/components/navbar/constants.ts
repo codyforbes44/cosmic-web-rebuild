@@ -3,7 +3,7 @@ export const navigationItems = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services", hasDropdown: true },
   { name: "Products", href: "/products", hasDropdown: true },
-  { name: "Partners", href: "/partners" },
+  { name: "FAQ", href: "/faq" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" }
 ];

@@ -18,12 +18,6 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
   isServicesActive, 
   isProductsActive 
 }) => {
-  const handlePartnerClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    // Redirect to contact page when clicking Partners
-    window.location.href = '/contact';
-  };
-
   return (
     <div className="hidden md:flex items-center space-x-6">
       <NavigationMenu>
@@ -62,19 +56,6 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-              );
-            }
-
-            if (item.name === "Partners") {
-              return (
-                <DesktopNavLink 
-                  key={item.name}
-                  to={item.href} 
-                  isActive={false}
-                  onClick={handlePartnerClick}
-                >
-                  {item.name}
-                </DesktopNavLink>
               );
             }
 

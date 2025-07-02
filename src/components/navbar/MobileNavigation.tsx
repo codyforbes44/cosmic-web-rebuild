@@ -14,13 +14,6 @@ interface MobileNavigationProps {
 }
 
 const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) => {
-  const handlePartnerClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    onClose();
-    // Redirect to contact page when clicking Partners
-    window.location.href = '/contact';
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -51,18 +44,6 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
                   ))}
                 </CollapsibleContent>
               </Collapsible>
-            );
-          }
-
-          if (item.name === "Partners") {
-            return (
-              <MobileNavLink 
-                key={item.name}
-                to={item.href} 
-                onClick={handlePartnerClick}
-              >
-                {item.name}
-              </MobileNavLink>
             );
           }
 
