@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import StarBackground from '@/components/StarBackground';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -11,8 +12,10 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
   children
 }) => {
   return (
-    <div className="min-h-screen bg-space-dark-blue flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-space-dark-blue flex items-center justify-center p-4 relative">
+      <StarBackground />
+      
+      <div className="w-full max-w-md relative z-10">
         <div className="mb-6">
           <Link 
             to="/" 
