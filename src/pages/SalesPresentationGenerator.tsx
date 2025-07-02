@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -66,7 +65,16 @@ const SalesPresentationGenerator = () => {
       }
 
       await generatePDF({
-        ...data,
+        contactName: data.contactName,
+        email: data.email,
+        phone: data.phone || '',
+        companyName: data.companyName || '',
+        address: data.address || '',
+        city: data.city || '',
+        state: data.state || '',
+        zipCode: data.zipCode || '',
+        date: data.date,
+        personalMessage: data.personalMessage || '',
         serviceName: selectedService.name,
         servicePrice: selectedService.price,
       });
