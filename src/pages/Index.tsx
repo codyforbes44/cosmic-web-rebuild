@@ -3,9 +3,7 @@ import SEO from "@/components/SEO";
 import HomeLayout from "@/components/home/HomeLayout";
 import MainContent from "@/components/home/MainContent";
 import WebServicesSection from "@/components/home/WebServicesSection";
-import RecruitmentMarketingSection from "@/components/home/RecruitmentMarketingSection";
 import AdvancedFeatures from "@/components/home/AdvancedFeatures";
-import ClientTestimonials from "@/components/home/ClientTestimonials";
 import NewsletterSection from "@/components/home/NewsletterSection";
 
 const Index = () => {
@@ -18,9 +16,7 @@ const Index = () => {
       />
       <MainContent />
       <WebServicesSection />
-      <RecruitmentMarketingSection />
       <AdvancedFeatures />
-      <ClientTestimonials />
       <NewsletterSection />
     </HomeLayout>
   );
