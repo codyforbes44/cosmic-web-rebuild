@@ -24,19 +24,39 @@ export const generatePDF = async (data: PDFData) => {
   const secondaryColor = [52, 73, 94]; // Dark gray
   const lightGray = [236, 240, 241];
   
-  // Header
+  // Header with company branding
   doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.rect(0, 0, 210, 40, 'F');
+  doc.rect(0, 0, 210, 50, 'F');
   
+  // Add company logo
+  try {
+    // Note: In a real implementation, you would load the image properly
+    // For now, we'll add a placeholder that represents the logo area
+    doc.setFillColor(255, 255, 255);
+    doc.rect(15, 10, 30, 20, 'F');
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.setFontSize(8);
+    doc.text('ƷBɪ LOGO', 20, 22);
+  } catch (error) {
+    console.log('Logo loading error:', error);
+  }
+  
+  // Company information
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(24);
-  doc.text('Professional Proposal', 20, 25);
+  doc.setFontSize(18);
+  doc.text('Ʒʙɪ | Business Intelligence : AI Solutions', 55, 20);
   
-  doc.setFontSize(12);
-  doc.text(`Prepared for ${data.contactName}`, 20, 35);
+  doc.setFontSize(10);
+  doc.text('Email: support@3bi.io', 55, 28);
+  doc.text('Phone: +1 (817) 757-2828', 55, 34);
+  doc.text('Location: Texas, USA', 55, 40);
+  
+  // Proposal title
+  doc.setFontSize(16);
+  doc.text(`Professional Proposal for ${data.contactName}`, 20, 45);
   
   // Client Information Section
-  let yPosition = 60;
+  let yPosition = 70;
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(16);
   doc.text('Client Information', 20, yPosition);
@@ -119,7 +139,7 @@ export const generatePDF = async (data: PDFData) => {
   doc.setFontSize(10);
   doc.text('Scan the QR code below to proceed with payment:', 20, yPosition);
   
-  // QR Code placeholder (you would integrate with a QR code library for actual implementation)
+  // QR Code placeholder
   yPosition += 10;
   doc.setFillColor(lightGray[0], lightGray[1], lightGray[2]);
   doc.rect(20, yPosition, 40, 40, 'F');
@@ -135,18 +155,20 @@ export const generatePDF = async (data: PDFData) => {
   doc.text('https://stripe.com/payment-link', 70, yPosition + 20);
   doc.text('(QR code will redirect here)', 70, yPosition + 30);
   
-  // Footer
+  // Footer with company branding
   const pageHeight = doc.internal.pageSize.height;
   doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.rect(0, pageHeight - 30, 210, 30, 'F');
+  doc.rect(0, pageHeight - 35, 210, 35, 'F');
   
   doc.setTextColor(255, 255, 255);
+  doc.setFontSize(12);
+  doc.text('Ʒʙɪ | Business Intelligence : AI Solutions', 20, pageHeight - 25);
   doc.setFontSize(10);
-  doc.text('Thank you for considering our services!', 20, pageHeight - 20);
-  doc.text('Contact us: info@company.com | (555) 123-4567', 20, pageHeight - 10);
+  doc.text('support@3bi.io | +1 (817) 757-2828 | Texas, USA', 20, pageHeight - 15);
+  doc.text('Thank you for considering our AI solutions!', 20, pageHeight - 5);
   
   // Save the PDF
-  const fileName = `${data.serviceName.replace(/\s+/g, '_')}_Proposal_${data.contactName.replace(/\s+/g, '_')}.pdf`;
+  const fileName = `3BI_${data.serviceName.replace(/\s+/g, '_')}_Proposal_${data.contactName.replace(/\s+/g, '_')}.pdf`;
   doc.save(fileName);
 };
 
