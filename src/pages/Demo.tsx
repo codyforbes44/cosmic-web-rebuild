@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import DemoHeader from '@/components/demo/DemoHeader';
 import InteractiveDashboard from '@/components/demo/InteractiveDashboard';
 import DemoFeatures from '@/components/demo/DemoFeatures';
+import DemoTestimonials from '@/components/demo/DemoTestimonials';
 import DemoCTA from '@/components/demo/DemoCTA';
 import SEO from '@/components/SEO';
 
@@ -23,6 +24,7 @@ const Demo: React.FC = () => {
           <DemoHeader />
           <InteractiveDashboard />
           <DemoFeatures />
+          <DemoTestimonials />
           <DemoCTA />
         </main>
         <Footer />
