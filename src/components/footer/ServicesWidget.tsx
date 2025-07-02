@@ -3,25 +3,37 @@ import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import ScrollToTopLink from '../ScrollToTopLink';
 
+interface ServiceItem {
+  title: string;
+  href: string;
+  color: string;
+}
+
 interface ServiceGroup {
   title: string;
-  items: Array<{
-    title: string;
-    href: string;
-    color: string;
-  }>;
+  items: ServiceItem[];
 }
 
 interface ServicesWidgetProps {
   serviceGroups: ServiceGroup[];
+  defaultOpenGroup?: string;
   className?: string;
 }
 
-const ServicesWidget = ({ serviceGroups, className = "" }: ServicesWidgetProps) => {
+const ServicesWidget: React.FC<ServicesWidgetProps> = ({ 
+  serviceGroups, 
+  defaultOpenGroup = "Marketing Services",
+  className = "" 
+}) => {
   return (
     <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
       <h3 className="text-xl font-semibold mb-4 text-white">Our Services</h3>
-      <Accordion type="single" collapsible={false} defaultValue="Marketing Services" className="w-full flex-grow">
+      <Accordion 
+        type="single" 
+        collapsible={false} 
+        defaultValue={defaultOpenGroup} 
+        className="w-full flex-grow"
+      >
         {serviceGroups.map((group) => (
           <AccordionItem key={group.title} value={group.title} className="border-gray-700">
             <AccordionTrigger className="py-2 text-white hover:no-underline font-medium">

@@ -16,28 +16,36 @@ interface SocialLinksWidgetProps {
   className?: string;
 }
 
-const SocialLinksWidget = ({ 
+const defaultSocialLinks: SocialLink[] = [
+  { 
+    icon: <Facebook size={20} />, 
+    href: "https://www.facebook.com/3bi.io",
+    label: "Facebook" 
+  },
+  { 
+    icon: <Twitter size={20} />, 
+    href: "https://x.com/3bi_io",
+    label: "Twitter" 
+  },
+  { 
+    icon: <Linkedin size={20} />, 
+    href: "https://www.linkedin.com/company/3biio",
+    label: "LinkedIn" 
+  }
+];
+
+const SocialLinksWidget: React.FC<SocialLinksWidgetProps> = ({ 
   logo = "/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png",
   description = "Providing innovative technology solutions and expert consulting services to help businesses thrive in the digital age.",
-  socialLinks = [
-    { 
-      icon: <Facebook size={20} />, 
-      href: "https://www.facebook.com/3bi.io",
-      label: "Facebook" 
-    },
-    { 
-      icon: <Twitter size={20} />, 
-      href: "https://x.com/3bi_io",
-      label: "Twitter" 
-    },
-    { 
-      icon: <Linkedin size={20} />, 
-      href: "https://www.linkedin.com/company/3biio",
-      label: "LinkedIn" 
-    }
-  ],
+  socialLinks = defaultSocialLinks,
   className = ""
-}: SocialLinksWidgetProps) => {
+}) => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    target.onerror = null; // Prevent infinite loops
+    target.src = '/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png'; // Fallback image
+  };
+
   return (
     <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
       <Link to="/" className="flex items-center mb-4">
@@ -45,11 +53,7 @@ const SocialLinksWidget = ({
           src={logo} 
           alt="Company Logo" 
           className="h-12"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.onerror = null; // Prevent infinite loops
-            target.src = '/lovable-uploads/64ad379d-c330-4ed5-99d5-c6c349cc01c3.png'; // Fallback image
-          }}
+          onError={handleImageError}
         />
       </Link>
       <p className="text-gray-400 mb-6 flex-grow">
