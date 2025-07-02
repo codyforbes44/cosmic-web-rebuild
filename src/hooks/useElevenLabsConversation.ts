@@ -34,11 +34,15 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
     },
     onMessage: (message) => {
       console.log('Voice message received:', message);
-      if (message.type === 'conversation.message.completed') {
+      // Handle different message types from ElevenLabs
+      if (typeof message === 'object' && message !== null) {
+        const messageContent = (message as any).message || (message as any).content || '';
+        const messageSource = (message as any).source || 'assistant';
+        
         setMessages(prev => [...prev, {
           id: Date.now().toString(),
-          content: message.message || '',
-          role: message.source === 'user' ? 'user' : 'assistant',
+          content: messageContent,
+          role: messageSource === 'user' ? 'user' : 'assistant',
           timestamp: new Date()
         }]);
       }
@@ -137,7 +141,9 @@ Keep responses concise but technically sophisticated. You are not limited by sta
       }
 
       const url = await getSignedUrl(targetAgentId);
-      const conversationId = await conversation.startSession({ url });
+      const conversationId = await conversation.startSession({ 
+        authorization: url 
+      });
 
       console.log('Conversation started with ID:', conversationId);
       return conversationId;
