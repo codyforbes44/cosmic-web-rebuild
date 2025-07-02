@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
@@ -31,7 +30,7 @@ const RecruitmentMarketing: React.FC = () => {
         <div className="container mx-auto px-4 md:px-6">
           {/* Hero Section */}
           <section className="mb-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="max-w-4xl mx-auto text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -40,10 +39,20 @@ const RecruitmentMarketing: React.FC = () => {
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: service.color }}>
                   Professional Recruitment Marketing
                 </h1>
-                <p className="text-xl text-gray-300 mb-8">
+                <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
                   Attract qualified candidates, reduce your cost-per-hire, and build a strong workforce with our specialized recruitment marketing services across all industries.
                 </p>
-                <div className="flex flex-wrap gap-4">
+                
+                <div className="bg-space-deep-blue/50 p-6 rounded-xl border border-gray-800 mb-8 inline-block">
+                  <p className="text-2xl font-bold mb-2" style={{ color: service.color }}>
+                    Reduce cost-per-hire by up to 40%
+                  </p>
+                  <p className="text-gray-300">
+                    Based on client performance data
+                  </p>
+                </div>
+                
+                <div className="flex flex-wrap gap-4 justify-center">
                   <Link to="/get-quote">
                     <Button 
                       size="lg"
@@ -58,32 +67,6 @@ const RecruitmentMarketing: React.FC = () => {
                       Schedule Consultation
                     </Button>
                   </Link>
-                </div>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative"
-              >
-                <div className="rounded-lg overflow-hidden shadow-2xl">
-                  <img 
-                    src={service.image} 
-                    alt="Professional Recruitment" 
-                    className="w-full h-auto rounded-lg"
-                  />
-                </div>
-                <div 
-                  className="absolute -bottom-6 -right-6 bg-black/80 backdrop-blur-sm p-4 rounded-lg border border-gray-700"
-                  style={{ borderColor: `${service.color}50` }}
-                >
-                  <p className="text-lg font-bold" style={{ color: service.color }}>
-                    Reduce cost-per-hire by up to 40%
-                  </p>
-                  <p className="text-sm text-gray-300">
-                    Based on client performance data
-                  </p>
                 </div>
               </motion.div>
             </div>
@@ -210,37 +193,28 @@ const RecruitmentMarketing: React.FC = () => {
           {/* CTA Section */}
           <section className="mt-20">
             <div className="bg-gradient-to-r from-gray-900 to-gray-800 p-8 md:p-12 rounded-2xl border border-gray-700">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h2 className="text-3xl font-bold mb-4">
-                    Ready to Solve Your Recruitment Challenges?
-                  </h2>
-                  <p className="text-xl text-gray-300 mb-6">
-                    Schedule a free consultation with our recruitment marketing specialists to discuss your hiring needs.
-                  </p>
-                  <div className="flex flex-wrap gap-4">
-                    <Link to="/get-quote">
-                      <Button 
-                        size="lg"
-                        style={{ backgroundColor: service.color }}
-                        className="text-white hover:opacity-90"
-                      >
-                        Get a Quote
-                      </Button>
-                    </Link>
-                    <Link to="/contact">
-                      <Button variant="outline" size="lg">
-                        Contact Us
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-                <div className="hidden lg:block">
-                  <img 
-                    src="/lovable-uploads/7f21da0a-fd77-43ea-a7af-3b11648397c0.png" 
-                    alt="Professional Recruitment" 
-                    className="w-full h-auto rounded-lg"
-                  />
+              <div className="text-center">
+                <h2 className="text-3xl font-bold mb-4">
+                  Ready to Solve Your Recruitment Challenges?
+                </h2>
+                <p className="text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
+                  Schedule a free consultation with our recruitment marketing specialists to discuss your hiring needs.
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <Link to="/get-quote">
+                    <Button 
+                      size="lg"
+                      style={{ backgroundColor: service.color }}
+                      className="text-white hover:opacity-90"
+                    >
+                      Get a Quote
+                    </Button>
+                  </Link>
+                  <Link to="/contact">
+                    <Button variant="outline" size="lg">
+                      Contact Us
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
