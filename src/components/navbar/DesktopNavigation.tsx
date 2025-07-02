@@ -6,6 +6,7 @@ import ServiceDropdown from "./ServiceDropdown";
 import SecureDropdown from "./SecureDropdown";
 import { navigationItems, productCategories } from "./constants";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 interface DesktopNavigationProps {
   isActive: (path: string) => string;
@@ -31,29 +32,35 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
               return (
                 <NavigationMenuItem key={item.name}>
                   <NavigationMenuTrigger 
-                    className={`bg-transparent hover:bg-white/10 text-white ${
-                      isProductsActive ? 'text-orange-500' : ''
+                    className={`nav-link bg-transparent h-10 px-3 py-2 ${
+                      isProductsActive ? 'active' : ''
                     }`}
                   >
                     Products
+                    {isProductsActive && (
+                      <div className="h-0.5 bg-accent absolute bottom-0 left-0 right-0" />
+                    )}
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="grid gap-3 p-6 w-[500px] grid-cols-2">
+                  <NavigationMenuContent className="bg-gray-800 border border-gray-700">
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                       {productCategories.map((product) => (
-                        <Link
-                          key={product.title}
-                          to={product.href}
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none text-white">
-                            {product.title}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-gray-400">
-                            {product.description}
-                          </p>
-                        </Link>
+                        <li key={product.href}>
+                          <Link
+                            to={product.href}
+                            className={cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 focus:bg-gray-700"
+                            )}
+                          >
+                            <div className="text-sm font-medium leading-none text-white">
+                              {product.title}
+                            </div>
+                            <p className="line-clamp-2 text-sm leading-snug text-gray-400">
+                              {product.description}
+                            </p>
+                          </Link>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               );
