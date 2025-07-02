@@ -12,23 +12,19 @@ const FooterContent: React.FC = () => {
     {
       title: "Marketing Services",
       items: serviceCategories.filter(service => 
-        service.title.includes("Marketing") || service.title.includes("Recruitment"))
+        service.title.includes("Marketing") || service.title.includes("Social"))
     },
     {
       title: "Technology Services",
       items: serviceCategories.filter(service => 
         service.title.includes("Development") || 
         service.title.includes("Web") || 
-        service.title.includes("Custom"))
+        service.title.includes("AI"))
     },
     {
       title: "Strategic Services",
       items: serviceCategories.filter(service => 
-        !service.title.includes("Marketing") && 
-        !service.title.includes("Recruitment") &&
-        !service.title.includes("Development") && 
-        !service.title.includes("Web") && 
-        !service.title.includes("Custom"))
+        service.title.includes("Strategy") || service.title.includes("Consulting"))
     }
   ];
 

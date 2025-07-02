@@ -47,6 +47,13 @@ import ElevenLabsEmbed from "./pages/ElevenLabsEmbed";
 import Maps from "./pages/Maps";
 import ChatbotProducts from "./pages/ChatbotProducts";
 
+// Import new service pages
+import DigitalMarketing from "./pages/DigitalMarketing";
+import WebDevelopment from "./pages/WebDevelopment";
+import AISolutions from "./pages/AISolutions";
+import StrategyConsulting from "./pages/StrategyConsulting";
+import SocialMediaManagement from "./pages/SocialMediaManagement";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -85,7 +92,15 @@ function App() {
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/demo" element={<Demo />} />
+                
+                {/* Individual Service Pages */}
+                <Route path="/digital-marketing" element={<DigitalMarketing />} />
+                <Route path="/web-development" element={<WebDevelopment />} />
+                <Route path="/ai-solutions" element={<AISolutions />} />
+                <Route path="/strategy-consulting" element={<StrategyConsulting />} />
+                <Route path="/social-media-management" element={<SocialMediaManagement />} />
                 <Route path="/recruitment-marketing" element={<RecruitmentMarketing />} />
+                
                 <Route path="/drivers-matter" element={<DriversMatter />} />
                 <Route path="/u2014" element={<U2014 />} />
                 <Route path="/planets" element={<Planets />} />

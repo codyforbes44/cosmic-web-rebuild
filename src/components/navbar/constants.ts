@@ -11,37 +11,37 @@ export const navigationItems = [
 export const serviceCategories = [
   {
     title: "Digital Marketing",
-    href: "/services?service=digital-marketing",
+    href: "/digital-marketing",
     description: "Comprehensive digital marketing solutions",
     color: "#f59e0b"
   },
   {
     title: "Web Development",
-    href: "/services?service=web-development", 
+    href: "/web-development", 
     description: "Custom websites and web applications",
     color: "#3b82f6"
   },
   {
     title: "AI Solutions",
-    href: "/services?service=ai-solutions",
+    href: "/ai-solutions",
     description: "Artificial intelligence integration",
     color: "#8b5cf6"
   },
   {
     title: "Strategy Consulting", 
-    href: "/services?service=strategy-consulting",
+    href: "/strategy-consulting",
     description: "Business strategy and consulting",
     color: "#10b981"
   },
   {
     title: "Social Media Management",
-    href: "/services?service=social-media",
+    href: "/social-media-management",
     description: "Social media strategy and management",
     color: "#f472b6"
   },
   {
     title: "Recruitment Marketing",
-    href: "/services?service=recruitment-marketing", 
+    href: "/recruitment-marketing", 
     description: "Specialized recruitment solutions",
     color: "#ef4444"
   }
