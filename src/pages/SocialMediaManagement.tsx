@@ -12,6 +12,7 @@ import ServiceCaseStudy from "@/components/ServiceCaseStudy";
 import SEO from "@/components/SEO";
 import { socialService } from "@/data/services/socialService";
 import LiveChat from "@/components/LiveChat/LiveChat";
+import DigitalMarketingPackages from "@/components/services/DigitalMarketingPackages";
 
 const SocialMediaManagement: React.FC = () => {
   const service = socialService;
@@ -86,6 +87,9 @@ const SocialMediaManagement: React.FC = () => {
               ))}
             </div>
           </section>
+
+          {/* Packages Section */}
+          <DigitalMarketingPackages />
           
           {/* Case Study */}
           <section className="mb-20">
