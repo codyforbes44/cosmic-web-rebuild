@@ -1,17 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
-import { TabsContent } from "@/components/ui/tabs";
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import AuthLayout from '@/components/auth/AuthLayout';
 import SignInForm from '@/components/auth/SignInForm';
-import SignUpForm from '@/components/auth/SignUpForm';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
   
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -35,25 +32,12 @@ const Auth = () => {
 
   return (
     <AuthLayout>
-      <TabsContent value="signin">
-        <SignInForm 
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-        />
-      </TabsContent>
-      
-      <TabsContent value="signup">
-        <SignUpForm 
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          fullName={fullName}
-          setFullName={setFullName}
-        />
-      </TabsContent>
+      <SignInForm 
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+      />
     </AuthLayout>
   );
 };
