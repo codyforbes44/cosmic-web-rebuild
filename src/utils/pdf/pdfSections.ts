@@ -1,5 +1,6 @@
+
 import { jsPDF } from 'jspdf';
-import { PDF_COLORS, PDF_FONTS, addCompanyLogo, addQRCodePlaceholder } from './pdfStyles';
+import { PDF_COLORS, PDF_FONTS, addQRCodePlaceholder } from './pdfStyles';
 import { getServiceDetails } from './serviceDetails';
 
 interface PDFData {
@@ -16,25 +17,6 @@ interface PDFData {
   serviceName: string;
   servicePrice: string;
 }
-
-export const addHeaderContent = (doc: jsPDF, data: PDFData) => {
-  // Add company logo
-  addCompanyLogo(doc);
-  
-  // Company information
-  doc.setTextColor(...PDF_COLORS.white);
-  doc.setFontSize(PDF_FONTS.large);
-  doc.text('3BI', 55, 20);
-  
-  doc.setFontSize(PDF_FONTS.small);
-  doc.text('Email: support@3bi.io', 55, 28);
-  doc.text('Phone: +1 (817) 757-2828', 55, 34);
-  doc.text('Location: Texas, USA', 55, 40);
-  
-  // Proposal title
-  doc.setFontSize(PDF_FONTS.medium);
-  doc.text(`Professional Proposal for ${data.contactName}`, 20, 45);
-};
 
 export const addClientInformation = (doc: jsPDF, data: PDFData): number => {
   let yPosition = 70;
@@ -143,15 +125,4 @@ export const addPaymentInformation = (doc: jsPDF, startY: number): number => {
   doc.text('(QR code will redirect here)', 70, yPosition + 30);
   
   return yPosition + 40;
-};
-
-export const addFooterContent = (doc: jsPDF) => {
-  const pageHeight = doc.internal.pageSize.height;
-  
-  doc.setTextColor(...PDF_COLORS.white);
-  doc.setFontSize(PDF_FONTS.normal);
-  doc.text('3BI', 20, pageHeight - 25);
-  doc.setFontSize(PDF_FONTS.small);
-  doc.text('support@3bi.io | +1 (817) 757-2828 | Texas, USA', 20, pageHeight - 15);
-  doc.text('Thank you for considering our AI solutions!', 20, pageHeight - 5);
 };

@@ -1,15 +1,15 @@
 
 import { jsPDF } from 'jspdf';
 import { applyHeaderStyle, applyFooterStyle } from './pdf/pdfStyles';
+import { addHeaderContent } from './pdf/pdfHeader';
+import { addFooterContent } from './pdf/pdfFooter';
 import { 
-  addHeaderContent, 
   addClientInformation, 
   addServiceInformation, 
   addServiceDetails, 
   addPersonalMessage, 
-  addPaymentInformation, 
-  addFooterContent 
-} from './pdf/pdfContent';
+  addPaymentInformation
+} from './pdf/pdfSections';
 
 interface PDFData {
   contactName: string;
