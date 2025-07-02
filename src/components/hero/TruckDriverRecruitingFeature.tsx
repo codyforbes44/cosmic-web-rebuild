@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Users, Target, TrendingUp } from 'lucide-react';
+import { Users, Target, TrendingUp, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-const TruckDriverRecruitingFeature = () => {
+const RecruitmentMarketingFeature = () => {
   return (
     <section className="py-16 bg-gradient-to-r from-space-deep-blue/50 to-space-dark-blue/80 border-t border-gray-800">
       <div className="container mx-auto px-4">
@@ -17,13 +17,13 @@ const TruckDriverRecruitingFeature = () => {
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center mb-4">
-            <Truck className="text-orange-500 mr-3" size={32} />
+            <Building className="text-orange-500 mr-3" size={32} />
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Truck Driver Recruiting Solutions
+              Professional Recruitment Solutions
             </h2>
           </div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Solve your driver shortage with our specialized recruiting campaigns designed for trucking companies
+            Solve your talent shortage with our specialized recruiting campaigns designed for businesses across all industries
           </p>
         </motion.div>
 
@@ -36,9 +36,9 @@ const TruckDriverRecruitingFeature = () => {
             className="bg-space-deep-blue/40 p-6 rounded-xl border border-orange-500/20"
           >
             <Users className="text-orange-500 mb-4" size={48} />
-            <h3 className="text-xl font-bold mb-3 text-white">Qualified CDL Drivers</h3>
+            <h3 className="text-xl font-bold mb-3 text-white">Qualified Candidates</h3>
             <p className="text-gray-300">
-              Target experienced commercial drivers with valid CDLs and clean driving records
+              Target experienced professionals with relevant skills and clean backgrounds across all industries
             </p>
           </motion.div>
 
@@ -52,7 +52,7 @@ const TruckDriverRecruitingFeature = () => {
             <Target className="text-orange-500 mb-4" size={48} />
             <h3 className="text-xl font-bold mb-3 text-white">Targeted Campaigns</h3>
             <p className="text-gray-300">
-              Multi-channel recruitment strategies across job boards, social media, and industry platforms
+              Multi-channel recruitment strategies across job boards, social media, and industry-specific platforms
             </p>
           </motion.div>
 
@@ -66,7 +66,7 @@ const TruckDriverRecruitingFeature = () => {
             <TrendingUp className="text-orange-500 mb-4" size={48} />
             <h3 className="text-xl font-bold mb-3 text-white">Proven Results</h3>
             <p className="text-gray-300">
-              Reduce cost-per-hire by up to 40% while improving driver quality and retention
+              Reduce cost-per-hire by up to 40% while improving candidate quality and retention rates
             </p>
           </motion.div>
         </div>
@@ -77,7 +77,7 @@ const TruckDriverRecruitingFeature = () => {
               size="lg"
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3"
             >
-              Learn More About Driver Recruiting
+              Learn More About Professional Recruiting
             </Button>
           </Link>
         </div>
@@ -86,4 +86,4 @@ const TruckDriverRecruitingFeature = () => {
   );
 };
 
-export default TruckDriverRecruitingFeature;
+export default RecruitmentMarketingFeature;

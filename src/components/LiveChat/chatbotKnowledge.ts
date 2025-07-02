@@ -19,8 +19,8 @@ const knowledgeBase: Record<string, KnowledgeCategory> = {
       /company info/i
     ],
     responses: [
-      "ƷBI is a technology solutions company specializing in enterprise software for the transportation and logistics industry. We focus on driver management, retention, and operational efficiency solutions.",
-      "We're ƷBI, a technology company that builds specialized enterprise software for trucking companies. Our solutions help improve driver retention, streamline operations, and enhance overall business performance."
+      "ƷBI is a technology solutions company that builds specialized enterprise software for businesses across all industries. We focus on improving operational efficiency, employee management, and overall business performance.",
+      "We're ƷBI, a technology company that creates comprehensive business solutions. Our services help companies streamline operations, enhance productivity, and achieve sustainable growth through innovative technology."
     ]
   },
   
@@ -32,8 +32,8 @@ const knowledgeBase: Record<string, KnowledgeCategory> = {
       /what can (I|we) use/i
     ],
     responses: [
-      "ƷBI offers several enterprise products: 3BI Connect for driver management and retention, Carrier Partner Network for connecting with qualified drivers, TruckOnboard for digital driver onboarding, and Drivers Matter for driver advocacy.",
-      "Our main products include 3BI Connect (comprehensive driver management), Carrier Partner Network (driver recruitment), TruckOnboard (digital onboarding), and Drivers Matter (driver advocacy and support)."
+      "ƷBI offers several enterprise products: AI Chatbots for customer service automation, Analytics Platform for business intelligence, Voice AI Assistant for hands-free operations, and Custom Development solutions tailored to your specific needs.",
+      "Our main products include AI-powered Chatbots, comprehensive Analytics Platform, Voice AI Assistant, and Custom Development services designed to enhance business operations across all industries."
     ]
   },
   
@@ -45,8 +45,8 @@ const knowledgeBase: Record<string, KnowledgeCategory> = {
       /how can you help/i
     ],
     responses: [
-      "ƷBI offers various services including Strategic Consulting, Recruitment Marketing, Digital Marketing, Social Media Marketing, Custom Development, Web & Mobile Apps, Data Analytics, and AI & Machine Learning solutions.",
-      "Our services span from strategic consulting and marketing solutions to custom development, web/mobile apps, and advanced data analytics and AI/ML solutions tailored for the transportation industry."
+      "ƷBI offers various services including Strategic Consulting, Recruitment Marketing, Digital Marketing, Social Media Marketing, Custom Development, Web & Mobile Apps, Data Analytics, and AI & Machine Learning solutions for businesses across all sectors.",
+      "Our services span from strategic consulting and marketing solutions to custom development, web/mobile apps, and advanced data analytics and AI/ML solutions tailored for modern businesses."
     ]
   },
   

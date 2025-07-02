@@ -13,15 +13,15 @@ export const faqCategories = [
     items: [
       {
         question: "What services does Ʒʙɪ offer?",
-        answer: "Ʒʙɪ provides comprehensive digital solutions including Strategic Consulting, Recruitment Marketing (specialized for trucking companies), Digital Marketing campaigns, Social Media Management, Web & Mobile App Development, Data Analytics, AI & Machine Learning solutions, and Custom Development services."
+        answer: "Ʒʙɪ provides comprehensive digital solutions including Strategic Consulting, Recruitment Marketing, Digital Marketing campaigns, Social Media Management, Web & Mobile App Development, Data Analytics, AI & Machine Learning solutions, and Custom Development services for businesses across all industries."
       },
       {
         question: "What sets Ʒʙɪ apart from other technology and marketing firms?",
-        answer: "Ʒʙɪ specializes in the transportation and logistics industry with deep expertise in driver recruitment and retention. We combine cutting-edge AI technology with industry-specific knowledge to deliver personalized solutions that address the unique challenges of trucking companies and logistics providers."
+        answer: "Ʒʙɪ combines cutting-edge AI technology with industry expertise to deliver personalized solutions that address the unique challenges of modern businesses. We focus on data-driven strategies and proven methodologies to maximize ROI and drive sustainable growth."
       },
       {
-        question: "What industries does Ʒʙɪ primarily serve?",
-        answer: "While we serve clients across various industries, we specialize in transportation, logistics, and trucking companies. Our recruitment marketing services are specifically designed for driver recruitment and retention in the commercial transportation sector."
+        question: "What industries does Ʒʙɪ serve?",
+        answer: "We serve clients across all industries including technology, healthcare, finance, manufacturing, retail, professional services, and more. Our solutions are designed to be adaptable to any business sector's unique needs and challenges."
       },
       {
         question: "How can I get in touch with Ʒʙɪ?",
@@ -35,12 +35,12 @@ export const faqCategories = [
     icon: "⚙️",
     items: [
       {
-        question: "What is Recruitment Marketing and how does it help trucking companies?",
-        answer: "Recruitment Marketing is our specialized service for attracting and converting qualified truck drivers. We create multi-channel campaigns across social media, search engines, and job boards, develop driver personas, and optimize conversion processes to reduce cost-per-hire by up to 40% while improving driver quality and retention."
+        question: "What is Recruitment Marketing and how does it help businesses?",
+        answer: "Recruitment Marketing is our specialized service for attracting and converting qualified candidates across all industries. We create multi-channel campaigns across social media, search engines, job boards, and industry websites, develop candidate personas, and optimize conversion processes to reduce cost-per-hire by up to 40% while improving candidate quality and retention."
       },
       {
-        question: "How do your AI solutions benefit transportation companies?",
-        answer: "Our AI solutions include predictive maintenance systems, route optimization, demand forecasting, and automated customer service chatbots. These technologies help reduce downtime, lower operational costs, improve efficiency, and enhance customer satisfaction in the transportation industry."
+        question: "How do your AI solutions benefit businesses?",
+        answer: "Our AI solutions include predictive analytics, process automation, customer behavior analysis, and intelligent chatbots. These technologies help reduce operational costs, improve efficiency, enhance customer satisfaction, and provide valuable insights for strategic decision-making across various business functions."
       },
       {
         question: "What does Strategic Consulting include?",
@@ -48,11 +48,11 @@ export const faqCategories = [
       },
       {
         question: "How do you measure the success of recruitment marketing campaigns?",
-        answer: "We track key metrics including cost-per-hire, application quality scores, conversion rates from application to hire, driver retention rates, and overall ROI. Our clients typically see 200-300% increases in qualified applications and 25-40% improvements in retention rates."
+        answer: "We track key metrics including cost-per-hire, application quality scores, conversion rates from application to hire, employee retention rates, and overall ROI. Our clients typically see 200-300% increases in qualified applications and 25-40% improvements in retention rates."
       },
       {
-        question: "What makes your web development different for logistics companies?",
-        answer: "We develop responsive websites and mobile applications specifically designed for the logistics industry, including driver portals, load tracking systems, and customer dashboards. Our solutions are optimized for mobile use by drivers and dispatchers in the field."
+        question: "What makes your web development different?",
+        answer: "We develop responsive websites and applications specifically designed for your industry needs, including customer portals, management systems, and analytics dashboards. Our solutions are optimized for mobile use and seamlessly integrate with your existing business processes."
       },
       {
         question: "Do you provide ongoing support and maintenance?",
@@ -67,15 +67,15 @@ export const faqCategories = [
     items: [
       {
         question: "What are AI Chatbots and how do they help my business?",
-        answer: "Our AI Chatbots are intelligent conversational interfaces that can handle customer inquiries, driver support, and lead qualification 24/7. They integrate with your existing systems and can be customized for logistics-specific scenarios like load status updates and driver assistance."
+        answer: "Our AI Chatbots are intelligent conversational interfaces that can handle customer inquiries, lead qualification, and support requests 24/7. They integrate with your existing systems and can be customized for industry-specific scenarios like order status updates, appointment scheduling, and customer assistance."
       },
       {
         question: "What does the Analytics Platform include?",
-        answer: "Our Analytics Platform provides real-time dashboards, predictive analytics, performance tracking, and comprehensive reporting tools. It includes driver performance metrics, recruitment analytics, operational efficiency reports, and customizable KPI tracking for transportation companies."
+        answer: "Our Analytics Platform provides real-time dashboards, predictive analytics, performance tracking, and comprehensive reporting tools. It includes customer behavior metrics, marketing analytics, operational efficiency reports, and customizable KPI tracking for businesses across all sectors."
       },
       {
         question: "How does the Voice AI Assistant work?",
-        answer: "Our Voice AI Assistant enables hands-free interaction for drivers and dispatchers, allowing voice commands for status updates, route information, and communication while maintaining safety compliance. It integrates with existing fleet management systems and mobile applications."
+        answer: "Our Voice AI Assistant enables hands-free interaction for employees and customers, allowing voice commands for status updates, information retrieval, and communication while maintaining productivity and accessibility. It integrates with existing business systems and applications."
       },
       {
         question: "Can these products integrate with our existing systems?",
