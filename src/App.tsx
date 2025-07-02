@@ -46,6 +46,7 @@ import VoiceInterface from "./pages/VoiceInterface";
 import ElevenLabsEmbed from "./pages/ElevenLabsEmbed";
 import Maps from "./pages/Maps";
 import ChatbotProducts from "./pages/ChatbotProducts";
+import SalesPresentationGenerator from "./pages/SalesPresentationGenerator";
 
 // Import new service pages
 import DigitalMarketing from "./pages/DigitalMarketing";
@@ -92,6 +93,9 @@ function App() {
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/demo" element={<Demo />} />
+                
+                {/* Sales Tools - Unlinked */}
+                <Route path="/sales-presentation-generator" element={<SalesPresentationGenerator />} />
                 
                 {/* Individual Service Pages */}
                 <Route path="/digital-marketing" element={<DigitalMarketing />} />
