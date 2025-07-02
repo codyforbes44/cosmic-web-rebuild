@@ -2,30 +2,19 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, ArrowRight, Calendar, Phone, Mail, Zap, Shield, Clock, Star, Users } from 'lucide-react';
+import { CheckCircle, Calendar, Shield, Clock, Users } from 'lucide-react';
 import DemoRequestModal from '@/components/products/DemoRequestModal';
 
 const DemoCTA: React.FC = () => {
-  const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setIsSubmitted(true);
-      console.log('Demo request submitted for:', email);
-    }
-  };
 
   const handleScheduleDemo = () => {
     setIsCalendlyOpen(true);
   };
 
   const benefits = [
-    { icon: Zap, text: 'Setup in under 5 minutes', color: 'text-yellow-400' },
     { icon: Shield, text: 'Enterprise-grade security', color: 'text-green-400' },
     { icon: Clock, text: '24/7 expert support included', color: 'text-blue-400' },
     { icon: Users, text: 'Unlimited team collaboration', color: 'text-purple-400' }
@@ -93,49 +82,9 @@ const DemoCTA: React.FC = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Quick Start Card */}
-            <Card className="bg-card/20 backdrop-blur-sm border-white/10 hover:bg-card/30 transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="text-white text-xl flex items-center gap-2">
-                  <Zap className="h-5 w-5 text-accent" />
-                  Get Started Instantly
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Input
-                      type="email"
-                      placeholder="Enter your business email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="bg-black/20 border-white/20 text-white placeholder:text-gray-400"
-                      required
-                    />
-                  </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-accent hover:bg-accent/80 text-white"
-                  >
-                    Start Free Trial
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </form>
-                
-                <div className="mt-6 space-y-3">
-                  {benefits.slice(0, 2).map((benefit, index) => (
-                    <div key={index} className="flex items-center gap-3 text-sm">
-                      <benefit.icon className={`h-4 w-4 ${benefit.color}`} />
-                      <span className="text-gray-300">{benefit.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Schedule Demo Card */}
-            <Card className="bg-gradient-to-br from-accent/20 to-accent/5 border-accent/20 hover:from-accent/30 hover:to-accent/10 transition-all duration-300">
+          <div className="flex justify-center max-w-6xl mx-auto">
+            {/* Schedule Demo Card - Centered */}
+            <Card className="bg-gradient-to-br from-accent/20 to-accent/5 border-accent/20 hover:from-accent/30 hover:to-accent/10 transition-all duration-300 max-w-md">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-white text-xl flex items-center gap-2">
@@ -161,7 +110,7 @@ const DemoCTA: React.FC = () => {
                 </Button>
 
                 <div className="mt-6 space-y-3">
-                  {benefits.slice(2, 4).map((benefit, index) => (
+                  {benefits.map((benefit, index) => (
                     <div key={index} className="flex items-center gap-3 text-sm">
                       <benefit.icon className={`h-4 w-4 ${benefit.color}`} />
                       <span className="text-gray-300">{benefit.text}</span>
