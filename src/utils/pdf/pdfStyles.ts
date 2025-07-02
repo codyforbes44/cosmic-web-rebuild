@@ -44,7 +44,7 @@ export const addCompanyLogo = (doc: jsPDF) => {
     doc.rect(15, 10, PDF_DIMENSIONS.logoWidth, PDF_DIMENSIONS.logoHeight, 'F');
     doc.setTextColor(...PDF_COLORS.primary);
     doc.setFontSize(PDF_FONTS.tiny);
-    doc.text('ƷBɪ LOGO', 20, 22);
+    doc.text('3BI LOGO', 20, 22);
   } catch (error) {
     console.log('Logo loading error:', error);
   }

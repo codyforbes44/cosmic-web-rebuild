@@ -1,4 +1,3 @@
-
 import { jsPDF } from 'jspdf';
 import { PDF_COLORS, PDF_FONTS, addCompanyLogo, addQRCodePlaceholder } from './pdfStyles';
 import { getServiceDetails } from './serviceDetails';
@@ -25,7 +24,7 @@ export const addHeaderContent = (doc: jsPDF, data: PDFData) => {
   // Company information
   doc.setTextColor(...PDF_COLORS.white);
   doc.setFontSize(PDF_FONTS.large);
-  doc.text('Ʒʙɪ | Business Intelligence : AI Solutions', 55, 20);
+  doc.text('3BI', 55, 20);
   
   doc.setFontSize(PDF_FONTS.small);
   doc.text('Email: support@3bi.io', 55, 28);
@@ -151,7 +150,7 @@ export const addFooterContent = (doc: jsPDF) => {
   
   doc.setTextColor(...PDF_COLORS.white);
   doc.setFontSize(PDF_FONTS.normal);
-  doc.text('Ʒʙɪ | Business Intelligence : AI Solutions', 20, pageHeight - 25);
+  doc.text('3BI', 20, pageHeight - 25);
   doc.setFontSize(PDF_FONTS.small);
   doc.text('support@3bi.io | +1 (817) 757-2828 | Texas, USA', 20, pageHeight - 15);
   doc.text('Thank you for considering our AI solutions!', 20, pageHeight - 5);
