@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, Star, TrendingUp, Users, Target, BarChart } from 'lucide-react';
@@ -24,7 +23,7 @@ interface Package {
 const packages: Package[] = [
   {
     name: "Starter Growth",
-    price: "$1,299",
+    price: "$325",
     period: "/month",
     description: "Perfect for small businesses ready to establish their digital presence",
     icon: Target,
@@ -43,7 +42,7 @@ const packages: Package[] = [
   },
   {
     name: "Professional Scale",
-    price: "$2,499",
+    price: "$625",
     period: "/month",
     description: "Comprehensive digital marketing for growing businesses",
     icon: TrendingUp,
@@ -63,7 +62,7 @@ const packages: Package[] = [
   },
   {
     name: "Enterprise Domination",
-    price: "$4,999",
+    price: "$1,250",
     period: "/month",
     description: "Full-service digital marketing for industry leaders",
     icon: Users,
