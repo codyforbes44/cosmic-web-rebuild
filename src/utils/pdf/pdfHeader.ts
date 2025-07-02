@@ -1,6 +1,6 @@
 
 import { jsPDF } from 'jspdf';
-import { PDF_COLORS, PDF_FONTS, addCompanyLogo } from './pdfStyles';
+import { PDF_COLORS, PDF_FONTS } from './pdfStyles';
 
 interface PDFData {
   contactName: string;
@@ -18,17 +18,14 @@ interface PDFData {
 }
 
 export const addHeaderContent = (doc: jsPDF, data: PDFData) => {
-  // Add company logo
-  addCompanyLogo(doc);
-  
-  // Company information
+  // Company information (no logo)
   doc.setTextColor(...PDF_COLORS.white);
   doc.setFontSize(PDF_FONTS.large);
-  doc.text('3BI', 55, 20);
+  doc.text('3BI', 20, 20);
   
   doc.setFontSize(PDF_FONTS.small);
-  doc.text('Email: support@3bi.io', 55, 28);
-  doc.text('Phone: +1 (817) 757-2828', 55, 34);
+  doc.text('Email: support@3bi.io', 20, 28);
+  doc.text('Phone: +1 (817) 757-2828', 20, 34);
   
   // Proposal title
   doc.setFontSize(PDF_FONTS.medium);

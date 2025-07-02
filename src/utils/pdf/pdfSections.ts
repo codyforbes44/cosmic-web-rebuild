@@ -1,6 +1,6 @@
 
 import { jsPDF } from 'jspdf';
-import { PDF_COLORS, PDF_FONTS, addQRCodePlaceholder } from './pdfStyles';
+import { PDF_COLORS, PDF_FONTS } from './pdfStyles';
 import { getServiceDetails } from './serviceDetails';
 
 interface PDFData {
@@ -86,43 +86,4 @@ export const addServiceDetails = (doc: jsPDF, data: PDFData, startY: number): nu
   });
   
   return yPosition;
-};
-
-export const addPersonalMessage = (doc: jsPDF, data: PDFData, startY: number): number => {
-  if (!data.personalMessage) return startY;
-  
-  let yPosition = startY + 15;
-  doc.setFontSize(14);
-  doc.text('Personal Message:', 20, yPosition);
-  
-  yPosition += 10;
-  doc.setFontSize(PDF_FONTS.small);
-  const splitMessage = doc.splitTextToSize(data.personalMessage, 170);
-  doc.text(splitMessage, 20, yPosition);
-  yPosition += splitMessage.length * 5;
-  
-  return yPosition;
-};
-
-export const addPaymentInformation = (doc: jsPDF, startY: number): number => {
-  let yPosition = startY + 20;
-  doc.setFontSize(14);
-  doc.text('Payment Information:', 20, yPosition);
-  
-  yPosition += 10;
-  doc.setFontSize(PDF_FONTS.small);
-  doc.text('Scan the QR code below to proceed with payment:', 20, yPosition);
-  
-  // QR Code placeholder
-  yPosition += 10;
-  addQRCodePlaceholder(doc, yPosition);
-  
-  // Payment link text
-  doc.setTextColor(...PDF_COLORS.black);
-  doc.setFontSize(PDF_FONTS.small);
-  doc.text('Stripe Payment Link:', 70, yPosition + 10);
-  doc.text('https://stripe.com/payment-link', 70, yPosition + 20);
-  doc.text('(QR code will redirect here)', 70, yPosition + 30);
-  
-  return yPosition + 40;
 };

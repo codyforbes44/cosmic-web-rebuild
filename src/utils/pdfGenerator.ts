@@ -6,9 +6,7 @@ import { addFooterContent } from './pdf/pdfFooter';
 import { 
   addClientInformation, 
   addServiceInformation, 
-  addServiceDetails, 
-  addPersonalMessage, 
-  addPaymentInformation
+  addServiceDetails
 } from './pdf/pdfSections';
 
 interface PDFData {
@@ -36,9 +34,7 @@ export const generatePDF = async (data: PDFData) => {
   // Add main content sections
   const clientSectionEnd = addClientInformation(doc, data);
   const serviceSectionEnd = addServiceInformation(doc, data, clientSectionEnd);
-  const detailsSectionEnd = addServiceDetails(doc, data, serviceSectionEnd);
-  const messageSectionEnd = addPersonalMessage(doc, data, detailsSectionEnd);
-  addPaymentInformation(doc, messageSectionEnd);
+  addServiceDetails(doc, data, serviceSectionEnd);
   
   // Apply footer styling and content
   const pageHeight = doc.internal.pageSize.height;
