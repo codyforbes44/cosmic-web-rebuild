@@ -5,6 +5,7 @@ import MainContent from "@/components/home/MainContent";
 import WebServicesSection from "@/components/home/WebServicesSection";
 import AdvancedFeatures from "@/components/home/AdvancedFeatures";
 import NewsletterSection from "@/components/home/NewsletterSection";
+import CTASection from "@/components/CTASection";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <MainContent />
       <WebServicesSection />
       <AdvancedFeatures />
+      <CTASection />
       <NewsletterSection />
     </HomeLayout>
   );
