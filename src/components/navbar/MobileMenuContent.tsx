@@ -2,8 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import MobileNavLink from "./MobileNavLink";
-import MobileServicesMenu from "./MobileServicesMenu";
-import { navigationItems, productCategories, securePages } from "./constants";
+import { navigationItems, productCategories, securePages, serviceCategories } from "./constants";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import UserMenu from "../auth/UserMenu";
@@ -21,7 +20,26 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose })
     <div className="px-4 py-4 space-y-4">
       {navigationItems.map((item) => {
         if (item.name === "Services") {
-          return <MobileServicesMenu key={item.name} onClose={onClose} onItemClick={handleItemClick} />;
+          return (
+            <Collapsible key={item.name}>
+              <CollapsibleTrigger className="flex items-center justify-between w-full text-left text-white hover:text-orange-500 py-2">
+                Services
+                <ChevronDown className="h-4 w-4" />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pl-4 space-y-2">
+                {serviceCategories.map((service) => (
+                  <Link
+                    key={service.title}
+                    to={service.href}
+                    onClick={handleItemClick}
+                    className="block text-gray-300 hover:text-orange-500 py-2 text-sm"
+                  >
+                    {service.title}
+                  </Link>
+                ))}
+              </CollapsibleContent>
+            </Collapsible>
+          );
         }
         
         if (item.name === "Products") {
