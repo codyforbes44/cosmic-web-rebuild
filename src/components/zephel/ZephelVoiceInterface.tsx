@@ -31,6 +31,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
   const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
   const [userTranscript, setUserTranscript] = useState('');
   const [hasPermissions, setHasPermissions] = useState(false);
+  const [initializationError, setInitializationError] = useState<string>('');
 
   const conversation = useConversation({
     onConnect: () => {
@@ -55,9 +56,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       console.log('ZEPHEL voice message:', message);
       
       // Handle the message based on its structure
-      // The @11labs/react message structure may vary, so we handle it safely
       if (typeof message === 'string') {
-        // If message is a string, treat it as assistant response
         setConversationHistory(prev => [...prev, {
           role: 'assistant',
           content: message,
@@ -68,7 +67,6 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
           onVoiceMessage(message);
         }
       } else if (message && typeof message === 'object') {
-        // If message is an object, check for different possible structures
         const messageText = (message as any).message || (message as any).content || (message as any).text || '';
         const messageSource = (message as any).source || (message as any).role || 'assistant';
         
@@ -148,18 +146,26 @@ Keep responses concise but technically sophisticated. You are not limited by sta
 
   const initializeZephelAgent = async () => {
     try {
-      // First check if we have existing agents
-      const { data: agentsData, error: agentsError } = await supabase.functions.invoke(
+      setInitializationError('');
+      console.log('Initializing ZEPHEL agent...');
+      
+      // First test if we can reach the edge function
+      const { data: testData, error: testError } = await supabase.functions.invoke(
         'elevenlabs-conversation',
         {
           body: { action: 'list_agents' }
         }
       );
 
-      if (agentsError) throw agentsError;
+      if (testError) {
+        console.error('Edge function test failed:', testError);
+        throw new Error(`Edge function unavailable: ${testError.message}`);
+      }
+
+      console.log('Edge function test successful, agents response:', testData);
 
       // Look for existing ZEPHEL agent
-      const existingZephelAgent = agentsData?.agents?.find(
+      const existingZephelAgent = testData?.agents?.find(
         (agent: any) => agent.name?.includes('ZEPHEL')
       );
 
@@ -167,7 +173,15 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         setAgentId(existingZephelAgent.agent_id);
         setIsInitialized(true);
         console.log('Found existing ZEPHEL agent:', existingZephelAgent.agent_id);
+        
+        toast({
+          title: "ZEPHEL.AGENT_READY",
+          description: "Voice agent initialized and ready for connection.",
+          duration: 2000,
+        });
       } else {
+        console.log('No existing ZEPHEL agent found, creating new one...');
+        
         // Create new ZEPHEL agent
         const { data: agentData, error: agentError } = await supabase.functions.invoke(
           'elevenlabs-conversation',
@@ -180,23 +194,29 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           }
         );
 
-        if (agentError) throw agentError;
+        if (agentError) {
+          console.error('Agent creation failed:', agentError);
+          throw new Error(`Agent creation failed: ${agentError.message}`);
+        }
 
         setAgentId(agentData.agent_id);
         setIsInitialized(true);
         console.log('Created new ZEPHEL agent:', agentData.agent_id);
         
         toast({
-          title: "ZEPHEL.AGENT_INITIALIZED",
+          title: "ZEPHEL.AGENT_CREATED",
           description: "New ZEPHEL voice agent created and configured.",
           duration: 3000,
         });
       }
     } catch (error) {
       console.error('Failed to initialize ZEPHEL agent:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown initialization error';
+      setInitializationError(errorMessage);
+      
       toast({
         title: "AGENT.INITIALIZATION_FAILED",
-        description: "Could not initialize ZEPHEL voice agent. Check ElevenLabs configuration.",
+        description: `Could not initialize ZEPHEL voice agent: ${errorMessage}`,
         variant: "destructive",
       });
     }
@@ -226,7 +246,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     if (!isEnabled || !isInitialized) {
       toast({
         title: "Voice Interface Not Ready",
-        description: "Voice capabilities are still initializing or disabled.",
+        description: isInitialized ? "Voice capabilities are disabled." : "Voice agent is still initializing.",
         variant: "destructive",
       });
       return;
@@ -357,6 +377,22 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         </CardHeader>
         <CardContent className="space-y-4">
           
+          {/* Initialization Error Display */}
+          {initializationError && (
+            <div className="bg-red-900/20 border border-red-600 rounded p-3">
+              <p className="text-red-200 text-sm mb-2">
+                Initialization Error: {initializationError}
+              </p>
+              <Button
+                onClick={initializeZephelAgent}
+                size="sm"
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                Retry Initialization
+              </Button>
+            </div>
+          )}
+          
           {/* Permission Check */}
           {!hasPermissions && (
             <div className="bg-yellow-900/20 border border-yellow-600 rounded p-3">
@@ -486,7 +522,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             </div>
           )}
 
-          {!isInitialized && isEnabled && (
+          {!isInitialized && isEnabled && !initializationError && (
             <div className="bg-blue-900/20 border border-blue-600 rounded p-2">
               <p className="text-blue-200 text-xs">
                 Initializing ZEPHEL voice agent... This may take a moment.
