@@ -17,7 +17,7 @@ const GetQuote = () => {
       <SEO 
         title="Get a Quote" 
         description="Request a personalized quote for ƷBI's business and technology services. Our team will provide a detailed proposal tailored to your needs."
-        image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=630&fit=crop&crop=center"
+        image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
         type="website"
       />
       <Navbar />

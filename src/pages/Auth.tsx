@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import AuthLayout from '@/components/auth/AuthLayout';
 import SignInForm from '@/components/auth/SignInForm';
-import SEO from '@/components/SEO';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -32,22 +31,14 @@ const Auth = () => {
   }
 
   return (
-    <>
-      <SEO
-        title="Sign In to Your Account"
-        description="Access your ƷBI account to unlock advanced features, project management tools, and personalized AI solutions."
-        keywords="sign in, login, authentication, user account, secure access"
-        image="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=630&fit=crop&crop=center"
+    <AuthLayout>
+      <SignInForm 
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
       />
-      <AuthLayout>
-        <SignInForm 
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-        />
-      </AuthLayout>
-    </>
+    </AuthLayout>
   );
 };
 

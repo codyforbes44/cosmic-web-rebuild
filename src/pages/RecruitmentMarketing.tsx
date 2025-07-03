@@ -22,7 +22,7 @@ const RecruitmentMarketing: React.FC = () => {
         title="Professional Recruitment Marketing Services" 
         description="Powerful recruitment campaigns for businesses across all industries. Attract, engage and convert qualified candidates while reducing cost-per-hire by up to 40%."
         keywords="recruitment marketing, talent acquisition, candidate recruitment, hiring solutions, professional recruiting, recruitment campaigns, talent sourcing"
-        image="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&h=630&fit=crop&crop=center"
+        image={service.image}
       />
       <Navbar />
       <StarBackground />

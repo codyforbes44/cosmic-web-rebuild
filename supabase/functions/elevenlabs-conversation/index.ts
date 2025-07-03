@@ -1,4 +1,3 @@
-
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const corsHeaders = {
@@ -20,14 +19,10 @@ serve(async (req) => {
     }
 
     const { action, agentId, ...params } = await req.json()
-    console.log(`ElevenLabs action: ${action}`, { agentId, ...params })
 
     switch (action) {
       case 'get_signed_url': {
-        if (!agentId) {
-          throw new Error('Agent ID is required for signed URL generation')
-        }
-
+        // Generate signed URL for conversational AI
         const response = await fetch(
           `https://api.elevenlabs.io/v1/convai/conversation/get_signed_url?agent_id=${agentId}`,
           {
@@ -40,13 +35,12 @@ serve(async (req) => {
         )
 
         if (!response.ok) {
-          const errorText = await response.text()
-          console.error('ElevenLabs signed URL error:', errorText)
-          throw new Error(`Failed to get signed URL: ${response.status} - ${errorText}`)
+          const error = await response.text()
+          console.error('ElevenLabs API Error:', error)
+          throw new Error(`Failed to get signed URL: ${response.status}`)
         }
 
         const data = await response.json()
-        console.log('Signed URL generated successfully')
         
         return new Response(
           JSON.stringify(data),
@@ -57,6 +51,7 @@ serve(async (req) => {
       }
 
       case 'create_agent': {
+        // Create a new conversational AI agent
         const { name, prompt, voice_id, language } = params
         
         const agentConfig = {
@@ -72,8 +67,6 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             voice_id: voice_id || 'onwK4e9ZLuTAKqWW03F9', // Daniel - sophisticated male voice
             stability: 0.7,
             similarity_boost: 0.8,
-            style: 0.2,
-            use_speaker_boost: true,
           },
           conversation_config: {
             turn_detection: {
@@ -84,8 +77,6 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             }
           }
         }
-
-        console.log('Creating agent with config:', JSON.stringify(agentConfig, null, 2))
 
         const response = await fetch(
           'https://api.elevenlabs.io/v1/convai/agents',
@@ -100,13 +91,12 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         )
 
         if (!response.ok) {
-          const errorText = await response.text()
-          console.error('ElevenLabs agent creation error:', errorText)
-          throw new Error(`Failed to create agent: ${response.status} - ${errorText}`)
+          const error = await response.text()
+          console.error('ElevenLabs Agent Creation Error:', error)
+          throw new Error(`Failed to create agent: ${response.status}`)
         }
 
         const agent = await response.json()
-        console.log('Agent created successfully:', agent.agent_id)
         
         return new Response(
           JSON.stringify(agent),
@@ -117,6 +107,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
       }
 
       case 'list_agents': {
+        // List existing conversational AI agents
         const response = await fetch(
           'https://api.elevenlabs.io/v1/convai/agents',
           {
@@ -129,13 +120,12 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         )
 
         if (!response.ok) {
-          const errorText = await response.text()
-          console.error('ElevenLabs list agents error:', errorText)
-          throw new Error(`Failed to list agents: ${response.status} - ${errorText}`)
+          const error = await response.text()
+          console.error('ElevenLabs List Agents Error:', error)
+          throw new Error(`Failed to list agents: ${response.status}`)
         }
 
         const agents = await response.json()
-        console.log(`Retrieved ${agents.length || 0} agents`)
         
         return new Response(
           JSON.stringify(agents),
@@ -146,6 +136,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
       }
 
       case 'text_to_speech': {
+        // Direct text-to-speech conversion
         const { text, voice_id } = params
         
         if (!text) {
@@ -175,52 +166,22 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         )
 
         if (!response.ok) {
-          const errorText = await response.text()
-          console.error('ElevenLabs TTS error:', errorText)
-          throw new Error(`Failed to generate speech: ${response.status} - ${errorText}`)
+          const error = await response.text()
+          console.error('ElevenLabs TTS Error:', error)
+          throw new Error(`Failed to generate speech: ${response.status}`)
         }
 
+        // Return audio as base64
         const audioBuffer = await response.arrayBuffer()
         const base64Audio = btoa(
           String.fromCharCode(...new Uint8Array(audioBuffer))
         )
-
-        console.log('TTS generated successfully')
 
         return new Response(
           JSON.stringify({ 
             audioContent: base64Audio,
             mimeType: 'audio/mpeg'
           }),
-          {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          }
-        )
-      }
-
-      case 'get_voices': {
-        const response = await fetch(
-          'https://api.elevenlabs.io/v1/voices',
-          {
-            method: 'GET',
-            headers: {
-              'xi-api-key': elevenlabsApiKey,
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-
-        if (!response.ok) {
-          const errorText = await response.text()
-          console.error('ElevenLabs voices error:', errorText)
-          throw new Error(`Failed to get voices: ${response.status} - ${errorText}`)
-        }
-
-        const voices = await response.json()
-        console.log(`Retrieved ${voices.voices?.length || 0} voices`)
-        
-        return new Response(
-          JSON.stringify(voices),
           {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
@@ -237,8 +198,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     return new Response(
       JSON.stringify({ 
         error: error.message,
-        timestamp: new Date().toISOString(),
-        stack: error.stack
+        timestamp: new Date().toISOString()
       }),
       {
         status: 400,

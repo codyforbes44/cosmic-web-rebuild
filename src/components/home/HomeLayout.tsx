@@ -14,6 +14,10 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
     <div className="min-h-screen relative">
       <StarBackground />
       <div className="min-h-screen relative z-10">
+        <SEO 
+          title="ƷBI - Business Technology Solutions"
+          description="ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth."
+        />
         <Navbar />
         {children}
         <Footer />

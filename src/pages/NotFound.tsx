@@ -21,7 +21,6 @@ const NotFound = () => {
       <SEO 
         title="Page Not Found | ƷBI"
         description="The page you're looking for doesn't exist. Return to our homepage to explore our services."
-        image="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&h=630&fit=crop&crop=center"
       />
       <Navbar />
       <StarBackground />

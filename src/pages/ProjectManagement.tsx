@@ -10,10 +10,9 @@ const ProjectManagement = () => {
   return (
     <>
       <SEO
-        title="Project Management Solutions"
-        description="Manage your projects efficiently with advanced task tracking, team collaboration tools, and comprehensive project planning features."
-        keywords="project management, task tracking, team collaboration, project planning, productivity tools"
-        image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&fit=crop&crop=center"
+        title="Project Management - ZepTech"
+        description="Manage your projects, track progress, and collaborate with your team efficiently."
+        keywords="project management, task tracking, team collaboration, project planning"
       />
       <Navbar />
       <StarBackground />

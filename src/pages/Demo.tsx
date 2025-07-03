@@ -13,9 +13,9 @@ const Demo: React.FC = () => {
   return (
     <>
       <SEO 
-        title="Interactive Analytics Platform Demo"
+        title="Interactive Demo - Advanced Analytics Platform"
         description="Experience our powerful analytics and reporting platform with real-time data visualization, customizable dashboards, and comprehensive business intelligence tools."
-        keywords="analytics demo, business intelligence, data visualization, reporting tools, dashboard demo, interactive demo"
+        keywords="analytics demo, business intelligence, data visualization, reporting tools, dashboard demo"
         image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&crop=center"
       />
       <div className="min-h-screen bg-gradient-to-br from-space-dark-blue via-space-deep-blue to-space-dark-blue">
