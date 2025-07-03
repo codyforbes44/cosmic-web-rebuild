@@ -13,10 +13,10 @@ const Contact = () => {
   return (
     <>
       <SEO 
-        title="Contact Us" 
-        description="Get in touch with ƷBI's team of experts. We'd love to hear about your business challenges and how we can help."
-        image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
-        type="website"
+        title="Contact Our Expert Team" 
+        description="Get in touch with ƷBI's team of technology experts. We'd love to hear about your business challenges and discuss how we can help transform your operations."
+        keywords="contact us, technology consulting, business support, expert consultation, get in touch"
+        image="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1200&h=630&fit=crop&crop=center"
       />
       <Navbar />
       <StarBackground />

@@ -14,9 +14,10 @@ const Partners: React.FC = () => {
   return (
     <>
       <SEO
-        title="Our Partners"
-        description="Meet the strategic partners that help ƷBI deliver exceptional technology solutions and services to our clients."
-        image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
+        title="Strategic Technology Partners"
+        description="Meet the strategic partners that help ƷBI deliver exceptional technology solutions and services to our clients worldwide."
+        keywords="technology partners, strategic alliances, business partnerships, collaboration, technology ecosystem"
+        image="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&h=630&fit=crop&crop=center"
       />
       
       <Navbar />

@@ -1,5 +1,6 @@
 
 import React, { useEffect } from 'react';
+import SEO from '@/components/SEO';
 
 const ElevenLabsEmbed = () => {
   useEffect(() => {
@@ -9,23 +10,6 @@ const ElevenLabsEmbed = () => {
     script.async = true;
     script.type = 'text/javascript';
     document.head.appendChild(script);
-
-    // Set page title and meta for voice interface
-    document.title = "Voice AI Assistant - ElevenLabs Integration | ƷBI";
-    
-    // Add meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Interactive voice AI assistant powered by ElevenLabs. Experience natural conversations with advanced voice technology.');
-    }
-
-    // Add og:image for voice/audio theme
-    const ogImage = document.querySelector('meta[property="og:image"]') || document.createElement('meta');
-    ogImage.setAttribute('property', 'og:image');
-    ogImage.setAttribute('content', 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=1200&h=630&fit=crop&crop=center');
-    if (!document.querySelector('meta[property="og:image"]')) {
-      document.head.appendChild(ogImage);
-    }
 
     return () => {
       // Cleanup script on unmount
@@ -40,10 +24,18 @@ const ElevenLabsEmbed = () => {
   `;
 
   return (
-    <div 
-      className="min-h-screen w-full"
-      dangerouslySetInnerHTML={{ __html: embedHTML }}
-    />
+    <>
+      <SEO 
+        title="ElevenLabs Voice AI Assistant"
+        description="Interactive voice AI assistant powered by ElevenLabs. Experience natural conversations with advanced voice technology and real-time speech synthesis."
+        keywords="ElevenLabs, voice AI, conversational AI, speech synthesis, voice assistant, AI chat"
+        image="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=1200&h=630&fit=crop&crop=center"
+      />
+      <div 
+        className="min-h-screen w-full"
+        dangerouslySetInnerHTML={{ __html: embedHTML }}
+      />
+    </>
   );
 };
 
