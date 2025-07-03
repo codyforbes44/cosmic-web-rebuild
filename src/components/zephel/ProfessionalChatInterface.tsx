@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MessageSquare, Lock, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -26,35 +26,6 @@ export const ProfessionalChatInterface: React.FC<ProfessionalChatInterfaceProps>
 }) => {
   return (
     <div className="space-y-4">
-      <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <MessageSquare className="w-5 h-5 text-accent" />
-          <h3 className="text-white text-lg font-medium">ƷBI Professional Assistant</h3>
-        </div>
-        <div className="space-y-4">
-          <p className="text-gray-300 text-sm">
-            Welcome to ƷBI's professional business technology consultant. I can help you with:
-          </p>
-          <ul className="text-gray-400 text-sm space-y-2 ml-4">
-            <li>• Web Development Services ($2,500-$25,000+)</li>
-            <li>• AI Solutions & Integration ($5,000-$50,000+)</li>
-            <li>• Digital Marketing Services ($1,500-$7,500/month)</li>
-            <li>• Strategy Consulting ($10,000-$100,000+)</li>
-            <li>• Social Media Management ($1,200-$5,000/month)</li>
-          </ul>
-          <div className="bg-green-900/20 border border-green-600 rounded p-3 mt-4">
-            <p className="text-green-200 text-sm font-medium">Ready to get started?</p>
-            <p className="text-green-300 text-xs mt-1">
-              Schedule your FREE consultation to discuss your specific needs and receive customized project recommendations.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-gray-500 mt-4">
-            <Lock className="w-3 h-3" />
-            <span>Enhanced architect features require authentication</span>
-          </div>
-        </div>
-      </div>
-
       {/* Chat Messages */}
       <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-4">
         <div className="h-64 overflow-y-auto space-y-3 mb-4">
