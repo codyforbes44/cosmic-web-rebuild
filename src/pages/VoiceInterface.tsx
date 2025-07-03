@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { EnhancedVoiceInterface } from '@/components/zephel/EnhancedVoiceInterface';
-import { Mic, Volume2, Settings, Zap, Activity } from 'lucide-react';
+import { ZephelVoiceInterface } from '@/components/zephel/ZephelVoiceInterface';
+import { Mic, Volume2, Zap, Activity } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -11,9 +11,9 @@ const VoiceInterface = () => {
   return (
     <>
       <SEO 
-        title="ƷBI Voice Interface | AI Voice Communication"
-        description="Experience advanced voice interaction with ƷBI through sovereign voice synthesis technology powered by ElevenLabs AI."
-        keywords="voice AI, voice interface, AI communication, ElevenLabs, voice synthesis"
+        title="ZEPHEL Voice Interface | Sovereign AI Voice Communication"
+        description="Experience direct voice interaction with ZEPHEL through browser-native speech recognition and synthesis technology."
+        keywords="voice AI, voice interface, AI communication, ZEPHEL, speech recognition, voice synthesis"
         image="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=1200&h=630&fit=crop&crop=center"
       />
       <div className="min-h-screen bg-gradient-to-br from-space-dark-blue via-space-deep-blue to-black">
@@ -28,11 +28,11 @@ const VoiceInterface = () => {
                 </div>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                ƷBI Voice Interface
+                ZEPHEL Voice Interface
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Advanced voice interaction system powered by ElevenLabs AI. 
-                Experience direct conversation with ƷBI through sovereign voice synthesis technology.
+                Sovereign voice interaction system with direct ZEPHEL knowledge base integration. 
+                Experience conversational AI through browser-native speech technology.
               </p>
             </div>
 
@@ -43,12 +43,12 @@ const VoiceInterface = () => {
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Volume2 className="w-5 h-5 text-accent" />
-                      Voice Communication Portal
+                      Sovereign Voice Communication Portal
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="bg-black/40 rounded-lg p-6 border border-gray-600">
-                      <EnhancedVoiceInterface 
+                      <ZephelVoiceInterface 
                         onVoiceMessage={(message) => console.log('Voice message:', message)}
                         isEnabled={true}
                       />
@@ -70,7 +70,11 @@ const VoiceInterface = () => {
                     <div className="text-sm text-gray-300 space-y-2">
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Real-time voice synthesis</span>
+                        <span>Browser-native speech recognition</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span>Real-time ZEPHEL processing</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -78,19 +82,15 @@ const VoiceInterface = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Advanced speech recognition</span>
+                        <span>Advanced speech synthesis</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Encrypted communication</span>
+                        <span>No external dependencies</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Conversational AI agents</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Voice volume control</span>
+                        <span>Direct knowledge base access</span>
                       </div>
                     </div>
                   </CardContent>
@@ -103,20 +103,20 @@ const VoiceInterface = () => {
                   <CardContent>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-400">ElevenLabs API</span>
-                        <span className="text-xs text-green-400">CONNECTED</span>
+                        <span className="text-xs text-gray-400">Speech Recognition</span>
+                        <span className="text-xs text-green-400">BROWSER NATIVE</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-400">Voice Engine</span>
-                        <span className="text-xs text-green-400">ENHANCED</span>
+                        <span className="text-xs text-gray-400">Voice Synthesis</span>
+                        <span className="text-xs text-green-400">INTEGRATED</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-400">Audio Quality</span>
-                        <span className="text-xs text-green-400">HIGH-DEF</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-400">Conversation AI</span>
+                        <span className="text-xs text-gray-400">ZEPHEL Core</span>
                         <span className="text-xs text-green-400">ACTIVE</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-gray-400">Knowledge Base</span>
+                        <span className="text-xs text-green-400">SOVEREIGN</span>
                       </div>
                     </div>
                   </CardContent>
@@ -125,27 +125,27 @@ const VoiceInterface = () => {
                 <Card className="bg-space-deep-blue/90 border-gray-700">
                   <CardHeader>
                     <CardTitle className="text-white text-sm flex items-center gap-2">
-                      <Settings className="w-4 h-4" />
+                      <Mic className="w-4 h-4" />
                       Voice Configuration
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="text-xs text-gray-300 space-y-2">
                       <div className="flex justify-between">
-                        <span>Voice Model:</span>
-                        <span className="text-accent">Daniel (Premium)</span>
+                        <span>Engine:</span>
+                        <span className="text-accent">Browser Native</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Language:</span>
-                        <span className="text-accent">English</span>
+                        <span className="text-accent">English (US)</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Quality:</span>
-                        <span className="text-accent">Multilingual v2</span>
+                        <span>Mode:</span>
+                        <span className="text-accent">Continuous Recognition</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Latency:</span>
-                        <span className="text-accent">Ultra-Low</span>
+                        <span className="text-accent">Real-time</span>
                       </div>
                     </div>
                   </CardContent>
@@ -155,7 +155,7 @@ const VoiceInterface = () => {
 
             <div className="mt-8 text-center">
               <p className="text-gray-400 text-sm">
-                Full ElevenLabs integration with real-time voice conversation capabilities
+                Sovereign voice interface powered by ZEPHEL knowledge base with browser-native speech technology
               </p>
             </div>
           </div>
