@@ -1,3 +1,4 @@
+
 import { useCallback } from 'react';
 import { useConversation } from '@11labs/react';
 import { useToast } from '@/hooks/use-toast';
@@ -58,19 +59,32 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
     try {
       console.log('Starting conversation with agent:', agentId || currentAgentId);
       
-      // Request microphone access first
+      // Request and maintain microphone access
+      let microphoneStream: MediaStream | null = null;
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        console.log('Microphone access granted');
-        // Stop the stream immediately as we just needed permission
-        stream.getTracks().forEach(track => track.stop());
+        console.log('Requesting microphone access...');
+        microphoneStream = await navigator.mediaDevices.getUserMedia({ 
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          } 
+        });
+        console.log('Microphone access granted and stream obtained');
+        
+        // Don't stop the stream - let ElevenLabs use it
+        // The conversation will handle the microphone stream
       } catch (micError) {
         console.error('Microphone access denied:', micError);
-        throw new Error('Microphone access is required for voice conversation');
+        throw new Error('Microphone access is required for voice conversation. Please allow microphone access and try again.');
       }
 
       const targetAgentId = agentId || currentAgentId;
       if (!targetAgentId) {
+        // Clean up microphone stream if we error out
+        if (microphoneStream) {
+          microphoneStream.getTracks().forEach(track => track.stop());
+        }
         throw new Error('No agent ID available for conversation');
       }
 
@@ -78,25 +92,26 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
       const url = await getSignedUrl(targetAgentId);
       setSignedUrl(url);
       
-      console.log('Starting conversation session...');
+      console.log('Starting ElevenLabs conversation session...');
       const newConversationId = await conversation.startSession({ 
         signedUrl: url
       });
 
       console.log('Conversation started successfully with ID:', newConversationId);
       setConversationId(newConversationId);
+      
+      // The connection success will be handled by onConnect callback
       return newConversationId;
     } catch (error) {
       console.error('Failed to start conversation:', error);
       setIsConnected(false);
+      setIsLoading(false);
       toast({
         title: "Conversation Failed",
         description: error instanceof Error ? error.message : "Failed to start voice conversation",
         variant: "destructive",
       });
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   }, [currentAgentId, conversation, getSignedUrl, toast, isConnected, isLoading, conversationId, setIsLoading, setIsConnected, setSignedUrl, setConversationId]);
 

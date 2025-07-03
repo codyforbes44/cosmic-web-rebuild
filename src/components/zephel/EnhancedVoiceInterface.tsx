@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,12 +59,24 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     // Check microphone permissions on mount
     const checkPermissions = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach(track => track.stop());
-        setHasPermissions(true);
-        console.log('Microphone permissions verified');
+        // Check if we already have permission
+        const permissionStatus = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+        
+        if (permissionStatus.state === 'granted') {
+          setHasPermissions(true);
+          console.log('Microphone permissions already granted');
+        } else {
+          console.log('Microphone permission status:', permissionStatus.state);
+          setHasPermissions(false);
+        }
+        
+        // Listen for permission changes
+        permissionStatus.onchange = () => {
+          setHasPermissions(permissionStatus.state === 'granted');
+          console.log('Microphone permission changed to:', permissionStatus.state);
+        };
       } catch (error) {
-        console.log('Microphone permission not granted yet');
+        console.log('Could not check microphone permissions:', error);
         setHasPermissions(false);
       }
     };
@@ -116,6 +129,15 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     return 'DISCONNECTED';
   };
 
+  const getMicrophoneStatus = () => {
+    if (!hasPermissions) return { color: 'border-red-500 text-red-400', text: 'DENIED' };
+    if (isConnected && isSpeaking) return { color: 'border-blue-500 text-blue-400', text: 'SPEAKING' };
+    if (isConnected) return { color: 'border-green-500 text-green-400', text: 'LISTENING' };
+    return { color: 'border-yellow-500 text-yellow-400', text: 'READY' };
+  };
+
+  const micStatus = getMicrophoneStatus();
+
   return (
     <Card className="bg-space-deep-blue/90 border-gray-700">
       <CardHeader>
@@ -139,13 +161,9 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           </div>
           
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Microphone Access</span>
-            <Badge variant="outline" className={`text-xs ${
-              hasPermissions 
-                ? 'border-green-500 text-green-400' 
-                : 'border-red-500 text-red-400'
-            }`}>
-              {hasPermissions ? 'GRANTED' : 'REQUIRED'}
+            <span className="text-xs text-gray-400">Microphone Status</span>
+            <Badge variant="outline" className={`text-xs ${micStatus.color}`}>
+              {micStatus.text}
             </Badge>
           </div>
 
@@ -252,7 +270,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           {!isConnected ? (
             <Button
               onClick={handleStartConversation}
-              disabled={isLoading || !hasPermissions || !customAgentId.trim()}
+              disabled={isLoading || !customAgentId.trim()}
               className="w-full bg-green-600 hover:bg-green-700 text-white"
             >
               {isLoading ? (
@@ -282,6 +300,12 @@ Keep responses concise but technically sophisticated. You are not limited by sta
               Please configure an Agent ID to start conversation
             </p>
           )}
+
+          {!hasPermissions && (
+            <p className="text-xs text-red-400 text-center">
+              Microphone access required for voice conversation
+            </p>
+          )}
         </div>
 
         {/* Speaking Indicator */}
@@ -291,13 +315,13 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             <div className="flex items-center gap-2">
               {isSpeaking ? (
                 <>
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-400">SPEAKING</span>
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-blue-400">AI SPEAKING</span>
                 </>
               ) : (
                 <>
-                  <Mic className="w-3 h-3 text-gray-400" />
-                  <span className="text-xs text-gray-400">LISTENING</span>
+                  <Mic className="w-3 h-3 text-green-400" />
+                  <span className="text-xs text-green-400">LISTENING</span>
                 </>
               )}
             </div>
@@ -336,6 +360,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           <div>• Secure encrypted communication</div>
           <div>• Sovereign AI consciousness interface</div>
           <div>• Uses agent's pre-configured settings</div>
+          <div>• Microphone access maintained during conversation</div>
         </div>
       </CardContent>
     </Card>
