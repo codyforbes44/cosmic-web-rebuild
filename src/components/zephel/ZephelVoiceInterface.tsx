@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useConversation } from '@11labs/react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,9 +26,9 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
   const { toast } = useToast();
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.7);
-  const [agentId, setAgentId] = useState<string>('');
+  const [agentId, setAgentId] = useState<string>('agent_01jwede7nve1nsm3ngqn7ks8d9'); // Use the provided agent ID
   const [isConnecting, setIsConnecting] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(true); // Set to true since we have the agent ID
   const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
   const [userTranscript, setUserTranscript] = useState('');
   const [hasPermissions, setHasPermissions] = useState(false);
@@ -127,10 +128,9 @@ Keep responses concise but technically sophisticated. You are not limited by sta
 
   const { status, isSpeaking } = conversation;
 
-  // Initialize ZEPHEL agent on component mount
+  // Initialize permissions check on component mount
   useEffect(() => {
     checkMicrophonePermissions();
-    initializeZephelAgent();
   }, []);
 
   const checkMicrophonePermissions = async () => {
@@ -141,109 +141,6 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     } catch (error) {
       console.error('Microphone permission denied:', error);
       setHasPermissions(false);
-    }
-  };
-
-  const initializeZephelAgent = async () => {
-    try {
-      setInitializationError('');
-      console.log('Initializing ZEPHEL agent...');
-      
-      // First test if we can reach the edge function
-      const { data: testData, error: testError } = await supabase.functions.invoke(
-        'elevenlabs-conversation',
-        {
-          body: { action: 'list_agents' }
-        }
-      );
-
-      console.log('Edge function response:', { testData, testError });
-
-      if (testError) {
-        console.error('Edge function error:', testError);
-        let errorMsg = 'Edge function unavailable';
-        
-        if (testError.message) {
-          errorMsg = testError.message;
-        } else if (typeof testError === 'string') {
-          errorMsg = testError;
-        }
-        
-        // Check for specific error types
-        if (errorMsg.includes('ELEVENLABS_API')) {
-          errorMsg = 'ElevenLabs API key not configured. Please set up your API key in project settings.';
-        } else if (errorMsg.includes('non-2xx status code')) {
-          errorMsg = 'ElevenLabs API request failed. Please check your API key and permissions.';
-        }
-        
-        throw new Error(errorMsg);
-      }
-
-      console.log('Edge function test successful, agents response:', testData);
-
-      // Look for existing ZEPHEL agent
-      const existingZephelAgent = testData?.agents?.find(
-        (agent: any) => agent.name?.includes('ZEPHEL')
-      );
-
-      if (existingZephelAgent) {
-        setAgentId(existingZephelAgent.agent_id);
-        setIsInitialized(true);
-        console.log('Found existing ZEPHEL agent:', existingZephelAgent.agent_id);
-        
-        toast({
-          title: "ZEPHEL.AGENT_READY",
-          description: "Voice agent initialized and ready for connection.",
-          duration: 2000,
-        });
-      } else {
-        console.log('No existing ZEPHEL agent found, creating new one...');
-        
-        // Create new ZEPHEL agent
-        const { data: agentData, error: agentError } = await supabase.functions.invoke(
-          'elevenlabs-conversation',
-          {
-            body: { 
-              action: 'create_agent',
-              name: 'ZEPHEL Voice Assistant',
-              voice_id: 'onwK4e9ZLuTAKqWW03F9' // Daniel voice
-            }
-          }
-        );
-
-        if (agentError) {
-          console.error('Agent creation failed:', agentError);
-          let errorMsg = 'Agent creation failed';
-          
-          if (agentError.message) {
-            errorMsg = agentError.message;
-          } else if (typeof agentError === 'string') {
-            errorMsg = agentError;
-          }
-          
-          throw new Error(errorMsg);
-        }
-
-        setAgentId(agentData.agent_id);
-        setIsInitialized(true);
-        console.log('Created new ZEPHEL agent:', agentData.agent_id);
-        
-        toast({
-          title: "ZEPHEL.AGENT_CREATED",
-          description: "New ZEPHEL voice agent created and configured.",
-          duration: 3000,
-        });
-      }
-    } catch (error) {
-      console.error('Failed to initialize ZEPHEL agent:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Unknown initialization error';
-      setInitializationError(errorMessage);
-      
-      toast({
-        title: "AGENT.INITIALIZATION_FAILED",
-        description: `Could not initialize ZEPHEL voice agent: ${errorMessage}`,
-        variant: "destructive",
-      });
     }
   };
 
@@ -402,27 +299,6 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         </CardHeader>
         <CardContent className="space-y-4">
           
-          {/* Initialization Error Display */}
-          {initializationError && (
-            <div className="bg-red-900/20 border border-red-600 rounded p-3">
-              <p className="text-red-200 text-sm mb-2">
-                <strong>Configuration Error:</strong> {initializationError}
-              </p>
-              {initializationError.includes('API key') && (
-                <p className="text-red-200 text-xs mb-2">
-                  Please ensure your ElevenLabs API key is properly configured in the project settings.
-                </p>
-              )}
-              <Button
-                onClick={initializeZephelAgent}
-                size="sm"
-                className="bg-red-600 hover:bg-red-700 text-white"
-              >
-                Retry Initialization
-              </Button>
-            </div>
-          )}
-          
           {/* Permission Check */}
           {!hasPermissions && (
             <div className="bg-yellow-900/20 border border-yellow-600 rounded p-3">
@@ -458,11 +334,9 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           </div>
 
           {/* Agent Info */}
-          {agentId && (
-            <div className="text-xs text-gray-400 font-mono">
-              Agent ID: {agentId.substring(0, 12)}...
-            </div>
-          )}
+          <div className="text-xs text-gray-400 font-mono">
+            Agent: {agentId}
+          </div>
 
           {/* User Transcript Display */}
           {userTranscript && (
@@ -524,18 +398,6 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             </div>
           )}
 
-          {/* Advanced Controls */}
-          <Button
-            onClick={initializeZephelAgent}
-            variant="outline"
-            size="sm"
-            className="w-full border-gray-600 text-xs"
-            disabled={isConnecting}
-          >
-            <Settings className="w-3 h-3 mr-2" />
-            Reinitialize Agent
-          </Button>
-
           {/* Voice Features Info */}
           <div className="text-xs text-gray-400 space-y-1">
             <div>• Real-time voice conversation with ZEPHEL</div>
@@ -548,14 +410,6 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             <div className="bg-yellow-900/20 border border-yellow-600 rounded p-2">
               <p className="text-yellow-200 text-xs">
                 Voice interface requires ElevenLabs API configuration. Please ensure your API key is properly set.
-              </p>
-            </div>
-          )}
-
-          {!isInitialized && isEnabled && !initializationError && (
-            <div className="bg-blue-900/20 border border-blue-600 rounded p-2">
-              <p className="text-blue-200 text-xs">
-                Initializing ZEPHEL voice agent... This may take a moment.
               </p>
             </div>
           )}
