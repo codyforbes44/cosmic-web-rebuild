@@ -1,12 +1,21 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import PageHeader from '@/components/PageHeader';
 import StarBackground from '@/components/StarBackground';
 import SEO from '@/components/SEO';
 import { ZephelVoiceInterface } from '@/components/zephel/ZephelVoiceInterface';
-import { Mic } from 'lucide-react';
+import { EnhancedVoiceControls } from '@/components/zephel/EnhancedVoiceControls';
+import { Mic, Settings, Headphones } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const VoiceInterface = () => {
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [voiceMessages, setVoiceMessages] = useState<string[]>([]);
+
+  const handleVoiceMessage = (message: string) => {
+    setVoiceMessages(prev => [...prev, message]);
+  };
+
   return (
     <div className="min-h-screen relative">
       <StarBackground />
@@ -24,8 +33,137 @@ const VoiceInterface = () => {
         />
         
         <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-center">
-            <ZephelVoiceInterface />
+          <div className="max-w-6xl mx-auto">
+            <Tabs defaultValue="interface" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-2 bg-space-deep-blue/90 border-gray-700">
+                <TabsTrigger 
+                  value="interface" 
+                  className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-black"
+                >
+                  <Mic className="w-4 h-4" />
+                  Voice Interface
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="controls"
+                  className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-black"
+                >
+                  <Settings className="w-4 h-4" />
+                  Voice Controls
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="interface" className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2">
+                    <ZephelVoiceInterface
+                      onVoiceMessage={handleVoiceMessage}
+                      isEnabled={voiceEnabled}
+                    />
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {/* Quick Stats */}
+                    <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-4">
+                      <h3 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
+                        <Headphones className="w-4 h-4" />
+                        Session Stats
+                      </h3>
+                      <div className="space-y-2 text-xs text-gray-400">
+                        <div className="flex justify-between">
+                          <span>Voice Messages:</span>
+                          <span className="text-accent">{voiceMessages.length}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Status:</span>
+                          <span className={voiceEnabled ? 'text-green-400' : 'text-red-400'}>
+                            {voiceEnabled ? 'ACTIVE' : 'DISABLED'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Engine:</span>
+                          <span className="text-cyan-400">ElevenLabs</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Recent Messages */}
+                    {voiceMessages.length > 0 && (
+                      <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-4">
+                        <h3 className="text-white text-sm font-medium mb-3">Recent Responses</h3>
+                        <div className="space-y-2 max-h-40 overflow-y-auto">
+                          {voiceMessages.slice(-5).map((message, index) => (
+                            <div
+                              key={index}
+                              className="bg-green-900/20 border border-green-600 rounded p-2"
+                            >
+                              <p className="text-green-200 text-xs">{message}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="controls" className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <EnhancedVoiceControls
+                    onVoiceToggle={setVoiceEnabled}
+                    voiceEnabled={voiceEnabled}
+                  />
+                  
+                  <div className="space-y-4">
+                    {/* Configuration Guide */}
+                    <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-4">
+                      <h3 className="text-white text-sm font-medium mb-3">Setup Guide</h3>
+                      <div className="space-y-3 text-xs text-gray-400">
+                        <div className="flex items-start gap-2">
+                          <div className="w-5 h-5 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">1</div>
+                          <div>
+                            <div className="text-white">ElevenLabs API Key</div>
+                            <div>Configure your API key in project settings</div>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <div className="w-5 h-5 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">2</div>
+                          <div>
+                            <div className="text-white">Create Voice Agent</div>
+                            <div>Set up your conversational AI agent</div>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <div className="w-5 h-5 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">3</div>
+                          <div>
+                            <div className="text-white">Enable Microphone</div>
+                            <div>Grant browser permission for voice input</div>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <div className="w-5 h-5 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">4</div>
+                          <div>
+                            <div className="text-white">Start Conversation</div>
+                            <div>Connect and begin voice interaction</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Technical Info */}
+                    <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-4">
+                      <h3 className="text-white text-sm font-medium mb-3">Technical Details</h3>
+                      <div className="space-y-2 text-xs text-gray-400">
+                        <div><span className="text-white">Engine:</span> ElevenLabs Conversational AI</div>
+                        <div><span className="text-white">Model:</span> Eleven Multilingual v2</div>
+                        <div><span className="text-white">Protocol:</span> WebSocket + Signed URLs</div>
+                        <div><span className="text-white">Latency:</span> ~200-500ms response time</div>
+                        <div><span className="text-white">Security:</span> Encrypted end-to-end</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
