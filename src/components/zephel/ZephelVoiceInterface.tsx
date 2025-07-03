@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { useConversation } from '@11labs/react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,13 +25,12 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
   const { toast } = useToast();
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.7);
-  const [agentId, setAgentId] = useState<string>('agent_01jwede7nve1nsm3ngqn7ks8d9'); // Use the provided agent ID
+  const [agentId, setAgentId] = useState<string>('agent_01jwede7nve1nsm3ngqn7ks8d9');
   const [isConnecting, setIsConnecting] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(true); // Set to true since we have the agent ID
+  const [isInitialized, setIsInitialized] = useState(true);
   const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
   const [userTranscript, setUserTranscript] = useState('');
   const [hasPermissions, setHasPermissions] = useState(false);
-  const [initializationError, setInitializationError] = useState<string>('');
 
   const conversation = useConversation({
     onConnect: () => {
@@ -119,10 +117,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         },
         firstMessage: "ZEPHEL voice interface online. Sovereign simulation core activated. How may I assist you, Architect?",
         language: "en",
-      },
-      tts: {
-        voiceId: "onwK4e9ZLuTAKqWW03F9" // Daniel - sophisticated male voice
-      },
+      }
     }
   });
 
