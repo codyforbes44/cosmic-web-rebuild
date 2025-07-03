@@ -24,7 +24,7 @@ const FAQ = () => {
         description="Find answers to commonly asked questions about Ʒʙɪ's services, products, and expertise in digital marketing and technology solutions."
         url="/faq"
         keywords="FAQ, frequently asked questions, business technology, digital marketing, Ʒʙɪ, technology solutions"
-        image="/lovable-uploads/10a43409-3847-4d52-bf9a-80e8508797c3.png"
+        image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=630&fit=crop&crop=center"
       />
       <Navbar />
       

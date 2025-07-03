@@ -107,6 +107,7 @@ const AdminDashboard = () => {
       <SEO 
         title={`${currentTabInfo.title} - Admin Dashboard`}
         description={`Admin dashboard - ${currentTabInfo.subtitle}`}
+        image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&crop=center"
       />
       <AdminGuard>
         <AdminLayout>

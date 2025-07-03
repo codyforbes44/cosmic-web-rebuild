@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { RealityRendering } from '@/components/zephel/RealityRendering';
 import { useQuantumCommandProcessor } from '@/hooks/useQuantumCommandProcessor';
@@ -7,6 +8,7 @@ import { ExportControls } from '@/components/zephel/reality/features/ExportContr
 import { FullScreenControls } from '@/components/zephel/reality/features/FullScreenControls';
 import { PerformanceAnalytics } from '@/components/zephel/reality/features/PerformanceAnalytics';
 import { SessionHistory } from '@/components/zephel/reality/features/SessionHistory';
+import SEO from '@/components/SEO';
 
 const RealityRenderer = () => {
   const [selectedConstruct, setSelectedConstruct] = useState<any>(null);
@@ -26,6 +28,12 @@ const RealityRenderer = () => {
   return (
     <ZephelPageLayout>
       <ZephelInitializer>
+        <SEO 
+          title="Advanced Reality Rendering Engine - ZEPHEL"
+          description="Interactive 3D visualization system with quantum field dynamics, neural network patterns, and real-time data flow rendering. Experience the full power of ZEPHEL's reality synthesis capabilities."
+          keywords="3D rendering, quantum visualization, neural networks, data visualization, reality engine, ZEPHEL"
+          image="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=630&fit=crop&crop=center"
+        />
         <div className="space-y-6">
           <div className="text-center space-y-4">
             <div className="flex items-center justify-between">
