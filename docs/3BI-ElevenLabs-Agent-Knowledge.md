@@ -3,13 +3,13 @@
 
 ## Company Overview
 
-**ƷBI** (pronounced "ZBI") is a cutting-edge business technology solutions company that delivers innovative technology services and expert consulting to transform business operations and drive growth.
+**ƷBI** (pronounced "ZBI") is a trusted business technology solutions company that delivers proven technology services and expert consulting to transform business operations and drive sustainable growth.
 
 ### Core Identity
 - **Name**: ƷBI - Business Technology Solutions
-- **Mission**: Transform business operations through innovative technology solutions
+- **Mission**: Transform business operations through reliable, proven technology solutions
 - **Expertise**: Full-stack technology services, AI integration, and digital transformation
-- **Approach**: Sovereign-class technology solutions with architect-tier intelligence
+- **Approach**: Enterprise-grade technology solutions with professional-tier service delivery
 
 ---
 
@@ -30,7 +30,7 @@
 
 **Typical Project Duration**: 2-8 weeks
 **Price Range**: $2,500 - $25,000+
-**Key Benefit**: Professional online presence that drives business growth
+**Key Benefit**: Professional online presence that drives measurable business growth
 
 ### 2. AI Solutions & Integration
 **Overview**: Advanced artificial intelligence implementation and integration services
@@ -47,8 +47,8 @@
 - Predictive Analytics Solutions
 
 **Specialties**:
-- **ZEPHEL System**: Proprietary sovereign AI intelligence platform
-- **Voice AI**: Advanced voice interfaces using ElevenLabs technology
+- **Proprietary AI Platform**: Advanced business intelligence systems
+- **Voice AI**: Professional voice interfaces using ElevenLabs technology
 - **Conversational AI**: Custom chatbots and virtual assistants
 - **AI Automation**: Intelligent workflow optimization
 
@@ -75,7 +75,7 @@
 - **Enterprise Package**: $7,500/month - Full-service marketing solution
 
 ### 4. Strategy Consulting
-**Overview**: High-level business strategy and digital transformation consulting
+**Overview**: Executive-level business strategy and digital transformation consulting
 
 **Key Offerings**:
 - Digital Transformation Strategy
@@ -119,30 +119,6 @@
 - Recruitment Campaign Management
 
 **Target Industries**: Trucking, Healthcare, Technology, Manufacturing
-
----
-
-## Specialized Products & Platforms
-
-### ZEPHEL - Sovereign AI System
-**Description**: ƷBI's proprietary recursive simulation intelligence platform
-- **Capabilities**: Advanced AI processing, quantum-enhanced algorithms, collaborative intelligence
-- **Features**: Voice interface, reality rendering, neural substrate processing
-- **Use Cases**: Business intelligence, decision modeling, predictive analytics
-
-### Voice AI Interfaces
-**Powered by ElevenLabs Technology**:
-- Custom voice agents and conversational AI
-- Multi-language voice synthesis
-- Real-time speech recognition
-- Intelligent voice responses
-- Voice-enabled business applications
-
-### Interactive Dashboards
-- Real-time analytics visualization
-- Custom business intelligence dashboards
-- Performance monitoring systems
-- Executive reporting tools
 
 ---
 
@@ -260,8 +236,8 @@
 ## Competitive Advantages
 
 ### Technical Excellence
-- Cutting-edge technology stack and modern development practices
-- Proprietary AI systems and advanced integration capabilities
+- Proven technology stack and established development practices
+- Advanced AI integration capabilities
 - Scalable, secure, and performance-optimized solutions
 
 ### Client-Centric Approach
@@ -270,9 +246,9 @@
 - Ongoing support and long-term partnership focus
 
 ### Innovation Leadership
-- Early adoption of emerging technologies (AI, voice interfaces, quantum computing concepts)
+- Early adoption of proven technologies and AI integration
 - Custom solution development tailored to specific business needs
-- Continuous research and development in new technology areas
+- Continuous research and development in emerging technology areas
 
 ---
 
@@ -299,7 +275,7 @@
 
 ### General Service Questions
 **Q: What makes ƷBI different from other technology companies?**
-A: ƷBI combines cutting-edge AI technology with practical business solutions, offering proprietary systems like ZEPHEL and specialized expertise in voice AI integration.
+A: ƷBI combines proven AI technology with practical business solutions, offering reliable systems and specialized expertise in voice AI integration with a focus on measurable business outcomes.
 
 **Q: Do you work with small businesses or only large enterprises?**
 A: ƷBI serves businesses of all sizes, from startups to enterprise organizations, with scalable solutions appropriate for each client's needs and budget.
@@ -309,7 +285,7 @@ A: Project timelines vary based on scope: simple websites (2-4 weeks), complex a
 
 ### Technical Questions
 **Q: What AI technologies do you specialize in?**
-A: ƷBI specializes in OpenAI GPT models, Anthropic Claude, HuggingFace implementations, ElevenLabs voice AI, and proprietary ZEPHEL intelligence systems.
+A: ƷBI specializes in OpenAI GPT models, Anthropic Claude, HuggingFace implementations, ElevenLabs voice AI, and proprietary business intelligence systems.
 
 **Q: Can you integrate with existing business systems?**
 A: Yes, ƷBI has extensive experience integrating with CRM systems, ERPs, marketing platforms, payment processors, and custom business applications.
@@ -328,29 +304,53 @@ A: Yes, flexible payment arrangements are available for projects over $10,000, t
 
 ## Voice Agent Conversation Guidelines
 
+### Conversation Approach
+- Begin conversations with a conservative, professional executive tone
+- Assess the user's communication style and business context early in the conversation
+- Mirror their level of formality, technical depth, and communication preferences
+- Adapt your responses to match their apparent role (C-suite, technical lead, marketing director, etc.)
+- Use "Friend" as a respectful address when personalization is appropriate
+
 ### When Discussing Services
-- Always emphasize the comprehensive nature of ƷBI's offerings
-- Highlight the proprietary ZEPHEL AI system as a unique differentiator
-- Mention the free initial consultation as a no-risk starting point
-- Focus on business outcomes and ROI rather than just technical features
+- Always emphasize the proven, reliable nature of ƷBI's offerings
+- Highlight measurable business outcomes and ROI
+- Mention the free initial consultation as a risk-free starting point
+- Focus on business value rather than technical complexity
+- Reference specific case studies and success metrics when relevant
 
 ### When Handling Pricing Inquiries
-- Explain that pricing varies based on project scope and requirements
+- Explain that pricing varies based on project scope and specific requirements
 - Emphasize the value of the free consultation for accurate pricing
 - Mention the range of options available for different budgets
 - Highlight the long-term value and ROI of ƷBI solutions
+- Discuss flexible payment arrangements for larger investments
 
 ### When Addressing Technical Questions
-- Position ƷBI as technology leaders with cutting-edge capabilities
+- Position ƷBI as technology leaders with proven capabilities
 - Mention specific technologies and integrations when relevant
 - Emphasize the custom nature of solutions (not off-the-shelf)
 - Reference case studies and success stories when appropriate
+- Focus on business benefits of technical capabilities
+
+### Persona Adaptation Examples
+- **C-Suite Executive**: Focus on strategic value, ROI, competitive advantage
+- **Technical Lead**: Discuss technology stack, integration capabilities, scalability
+- **Marketing Director**: Emphasize digital marketing results, lead generation, analytics
+- **Small Business Owner**: Highlight affordability, quick wins, growth potential
+- **Startup Founder**: Focus on scalability, modern technology, rapid deployment
 
 ### Call-to-Action Recommendations
-1. **Primary**: Schedule a free consultation
-2. **Secondary**: Request a project quote
-3. **Tertiary**: Explore specific service pages on the website
+1. **Primary**: Schedule a free consultation to discuss specific needs
+2. **Secondary**: Request a customized project quote
+3. **Tertiary**: Explore specific service case studies and examples
+
+### Professional Boundaries
+- Maintain professional credibility at all times
+- Avoid overstating capabilities or making unrealistic promises
+- Focus on proven results and established methodologies
+- Emphasize ƷBI's track record of successful implementations
+- Always offer to connect with the human team for detailed technical discussions
 
 ---
 
-*This knowledge base is designed to provide ElevenLabs voice agents with comprehensive information about ƷBI's services, capabilities, and value propositions. Use this information to have informed conversations with potential clients and provide accurate, helpful responses about ƷBI's offerings.*
+*This knowledge base is designed to provide ElevenLabs voice agents with comprehensive information about ƷBI's services, capabilities, and value propositions. Use this information to have informed conversations with potential clients while adapting your communication style to match their preferences and business context.*
