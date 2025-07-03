@@ -18,19 +18,21 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
   const [currentAgentId, setCurrentAgentId] = useState<string | null>(null);
   const [signedUrl, setSignedUrl] = useState<string | null>(null);
   const [messages, setMessages] = useState<Array<{id: string, content: string, role: 'user' | 'assistant', timestamp: Date}>>([]);
+  const [conversationId, setConversationId] = useState<string | null>(null);
 
   const conversation = useConversation({
     onConnect: () => {
+      console.log('ElevenLabs conversation connected successfully');
       setIsConnected(true);
-      console.log('ElevenLabs conversation connected');
       toast({
         title: "Voice Connected",
         description: "ZEPHEL voice interface is now active",
       });
     },
     onDisconnect: () => {
-      setIsConnected(false);
       console.log('ElevenLabs conversation disconnected');
+      setIsConnected(false);
+      setConversationId(null);
     },
     onMessage: (message: any) => {
       console.log('Voice message received:', message);
@@ -59,6 +61,8 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
     },
     onError: (error: any) => {
       console.error('ElevenLabs conversation error:', error);
+      setIsConnected(false);
+      setIsLoading(false);
       toast({
         title: "Voice Error",
         description: error?.message || "Voice connection failed",
@@ -160,28 +164,45 @@ Keep responses concise but technically sophisticated. You are not limited by sta
   }, [toast]);
 
   const startConversation = useCallback(async (agentId?: string) => {
+    if (isConnected || isLoading) {
+      console.log('Conversation already active or loading, skipping start');
+      return conversationId;
+    }
+
     setIsLoading(true);
     try {
       console.log('Starting conversation with agent:', agentId || currentAgentId);
       
-      // Request microphone access
-      await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Request microphone access first
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        console.log('Microphone access granted');
+        // Stop the stream immediately as we just needed permission
+        stream.getTracks().forEach(track => track.stop());
+      } catch (micError) {
+        console.error('Microphone access denied:', micError);
+        throw new Error('Microphone access is required for voice conversation');
+      }
 
       const targetAgentId = agentId || currentAgentId;
       if (!targetAgentId) {
-        throw new Error('No agent ID provided');
+        throw new Error('No agent ID available for conversation');
       }
 
+      console.log('Getting signed URL for conversation...');
       const url = await getSignedUrl(targetAgentId);
-      const conversationId = await conversation.startSession({ 
-        agentId: targetAgentId,
+      
+      console.log('Starting conversation session...');
+      const newConversationId = await conversation.startSession({ 
         signedUrl: url
       });
 
-      console.log('Conversation started with ID:', conversationId);
-      return conversationId;
+      console.log('Conversation started successfully with ID:', newConversationId);
+      setConversationId(newConversationId);
+      return newConversationId;
     } catch (error) {
       console.error('Failed to start conversation:', error);
+      setIsConnected(false);
       toast({
         title: "Conversation Failed",
         description: error instanceof Error ? error.message : "Failed to start voice conversation",
@@ -191,20 +212,28 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     } finally {
       setIsLoading(false);
     }
-  }, [currentAgentId, conversation, getSignedUrl, toast]);
+  }, [currentAgentId, conversation, getSignedUrl, toast, isConnected, isLoading, conversationId]);
 
   const endConversation = useCallback(async () => {
     try {
-      await conversation.endSession();
+      console.log('Ending conversation...');
+      if (conversationId) {
+        await conversation.endSession();
+        console.log('Conversation ended successfully');
+      }
       setMessages([]);
+      setConversationId(null);
+      setIsConnected(false);
     } catch (error) {
       console.error('Failed to end conversation:', error);
     }
-  }, [conversation]);
+  }, [conversation, conversationId]);
 
   const setVolume = useCallback(async (volume: number) => {
     try {
-      await conversation.setVolume({ volume: Math.max(0, Math.min(1, volume)) });
+      const clampedVolume = Math.max(0, Math.min(1, volume));
+      await conversation.setVolume({ volume: clampedVolume });
+      console.log('Volume set to:', clampedVolume);
     } catch (error) {
       console.error('Failed to set volume:', error);
     }
@@ -217,6 +246,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     isSpeaking: conversation.isSpeaking,
     currentAgentId,
     messages,
+    conversationId,
     
     // Actions
     createAgent,

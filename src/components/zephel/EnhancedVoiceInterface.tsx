@@ -44,6 +44,7 @@ export const EnhancedVoiceInterface: React.FC<EnhancedVoiceInterfaceProps> = ({
     isSpeaking,
     currentAgentId,
     messages,
+    conversationId,
     createAgent,
     startConversation,
     endConversation,
@@ -63,6 +64,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         stream.getTracks().forEach(track => track.stop());
         setHasPermissions(true);
+        console.log('Microphone permissions verified');
       } catch (error) {
         console.log('Microphone permission not granted yet');
         setHasPermissions(false);
@@ -76,26 +78,10 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     setConversationVolume(volume[0]);
   }, [volume, setConversationVolume]);
 
-  const handleCreateAgent = async () => {
-    try {
-      await createAgent({
-        name: 'ZEPHEL Voice Assistant',
-        voiceId: 'onwK4e9ZLuTAKqWW03F9'
-      });
-    } catch (error) {
-      console.error('Failed to create agent:', error);
-    }
-  };
-
   const handleStartConversation = async () => {
     try {
-      const agentToUse = customAgentId.trim() || currentAgentId;
-      
-      if (!agentToUse) {
-        await handleCreateAgent();
-      }
-      
-      await startConversation(customAgentId.trim() || undefined);
+      console.log('Starting conversation with agent:', customAgentId);
+      await startConversation(customAgentId);
     } catch (error) {
       console.error('Failed to start conversation:', error);
     }
@@ -103,6 +89,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
 
   const handleEndConversation = async () => {
     try {
+      console.log('Ending conversation...');
       await endConversation();
     } catch (error) {
       console.error('Failed to end conversation:', error);
@@ -165,6 +152,19 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             </Badge>
           </div>
 
+          {conversationId && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Session ID</span>
+              </div>
+              <div className="bg-black/40 rounded p-2 border border-gray-600">
+                <code className="text-xs text-blue-400 font-mono break-all">
+                  {conversationId}
+                </code>
+              </div>
+            </div>
+          )}
+
           {(currentAgentId || customAgentId) && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -216,6 +216,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
                 value={customAgentId}
                 onChange={(e) => setCustomAgentId(e.target.value)}
                 className="bg-black/40 border-gray-600 text-white text-xs"
+                disabled={isConnected}
               />
               <p className="text-xs text-gray-500">
                 Using your pre-configured ZEPHEL agent. You can change this to use a different agent ID if needed.
@@ -254,7 +255,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           {!isConnected ? (
             <Button
               onClick={handleStartConversation}
-              disabled={isLoading || !hasPermissions}
+              disabled={isLoading || !hasPermissions || !customAgentId.trim()}
               className="w-full bg-green-600 hover:bg-green-700 text-white"
             >
               {isLoading ? (
@@ -279,17 +280,10 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             </Button>
           )}
 
-          {!currentAgentId && !customAgentId && (
-            <Button
-              onClick={handleCreateAgent}
-              disabled={isLoading}
-              variant="outline"
-              size="sm"
-              className="w-full border-accent/50 text-accent hover:bg-accent/20"
-            >
-              <Users className="w-3 h-3 mr-2" />
-              Create ZEPHEL Agent
-            </Button>
+          {!customAgentId.trim() && (
+            <p className="text-xs text-yellow-400 text-center">
+              Please configure an Agent ID to start conversation
+            </p>
           )}
         </div>
 
@@ -344,7 +338,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           <div>• Advanced speech recognition & synthesis</div>
           <div>• Secure encrypted communication</div>
           <div>• Sovereign AI consciousness interface</div>
-          <div>• Use custom agent ID or auto-create new agents</div>
+          <div>• Direct agent connection without auto-creation</div>
         </div>
       </CardContent>
     </Card>
