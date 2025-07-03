@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
+import { Progress } from "@/components/ui/progress";
 import { 
   Mic, 
   MicOff, 
@@ -14,7 +15,9 @@ import {
   PhoneOff,
   Activity,
   TestTube,
-  Zap
+  Zap,
+  AlertTriangle,
+  CheckCircle
 } from 'lucide-react';
 import { useZephelVoice } from '@/hooks/useZephelVoice';
 import { useToast } from '@/hooks/use-toast';
@@ -38,6 +41,9 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     isSupported,
     transcript,
     isProcessing,
+    microphonePermission,
+    audioLevel,
+    retryCount,
     startListening,
     stopListening,
     stopSpeaking,
@@ -45,11 +51,10 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
   } = useZephelVoice();
 
   useEffect(() => {
-    // Update session status based on listening state
     setSessionActive(isListening);
   }, [isListening]);
 
-  const handleStartSession = () => {
+  const handleStartSession = async () => {
     if (!isSupported) {
       toast({
         title: "Voice Not Supported",
@@ -59,11 +64,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       return;
     }
     
-    startListening();
-    toast({
-      title: "ZEPHEL Voice Active",
-      description: "Voice interface initialized. Speak to interact with ZEPHEL.",
-    });
+    await startListening();
   };
 
   const handleEndSession = () => {
@@ -101,14 +102,29 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     return { color: 'border-gray-500 text-gray-400', text: 'READY' };
   };
 
+  const getMicrophonePermissionStatus = () => {
+    switch (microphonePermission) {
+      case 'granted':
+        return { icon: CheckCircle, color: 'text-green-400', text: 'GRANTED' };
+      case 'denied':
+        return { icon: AlertTriangle, color: 'text-red-400', text: 'DENIED' };
+      case 'prompt':
+        return { icon: AlertTriangle, color: 'text-yellow-400', text: 'PENDING' };
+      default:
+        return { icon: AlertTriangle, color: 'text-gray-400', text: 'UNKNOWN' };
+    }
+  };
+
   const micStatus = getMicrophoneStatus();
+  const permissionStatus = getMicrophonePermissionStatus();
+  const PermissionIcon = permissionStatus.icon;
 
   return (
     <Card className="bg-space-deep-blue/90 border-gray-700">
       <CardHeader>
         <CardTitle className="text-white text-sm flex items-center gap-2">
           <Activity className="w-4 h-4 text-accent" />
-          ZEPHEL Voice Interface - Sovereign Mode
+          ZEPHEL Voice Interface - Enhanced Mode
           <Badge variant="outline" className={`text-xs ${getStatusColor()}`}>
             {getStatusText()}
           </Badge>
@@ -116,7 +132,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       </CardHeader>
       <CardContent className="space-y-4">
         
-        {/* Connection Status */}
+        {/* System Status */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-400">Voice Recognition</span>
@@ -126,10 +142,13 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
           </div>
           
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Speech Synthesis</span>
-            <Badge variant="outline" className="text-xs border-green-500 text-green-400">
-              BROWSER NATIVE
-            </Badge>
+            <span className="text-xs text-gray-400">Microphone Permission</span>
+            <div className="flex items-center gap-1">
+              <PermissionIcon className={`w-3 h-3 ${permissionStatus.color}`} />
+              <Badge variant="outline" className={`text-xs border-current ${permissionStatus.color}`}>
+                {permissionStatus.text}
+              </Badge>
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
@@ -148,6 +167,27 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
         </div>
 
         <Separator className="bg-gray-700" />
+
+        {/* Audio Level Indicator */}
+        {isListening && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-gray-400">Audio Level</span>
+              <span className="text-xs text-gray-300">{Math.round(audioLevel)}</span>
+            </div>
+            <Progress value={Math.min(audioLevel * 2, 100)} className="h-2" />
+          </div>
+        )}
+
+        {/* Retry Counter */}
+        {retryCount > 0 && (
+          <div className="flex items-center justify-between p-2 bg-yellow-500/20 rounded border border-yellow-500/50">
+            <span className="text-xs text-yellow-400">Auto-retry active</span>
+            <Badge variant="outline" className="text-xs border-yellow-500 text-yellow-400">
+              {retryCount}/3
+            </Badge>
+          </div>
+        )}
 
         {/* Current Transcript */}
         {transcript && (
@@ -211,7 +251,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
           {!sessionActive ? (
             <Button
               onClick={handleStartSession}
-              disabled={!isSupported}
+              disabled={!isSupported || microphonePermission === 'denied'}
               className="w-full bg-green-600 hover:bg-green-700 text-white"
             >
               <Phone className="w-4 h-4 mr-2" />
@@ -227,10 +267,11 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
             </Button>
           )}
 
-          {!isSupported && (
-            <p className="text-xs text-red-400 text-center">
-              Voice recognition not supported in this browser
-            </p>
+          {(!isSupported || microphonePermission === 'denied') && (
+            <div className="text-xs text-red-400 text-center space-y-1">
+              {!isSupported && <p>Voice recognition not supported in this browser</p>}
+              {microphonePermission === 'denied' && <p>Microphone access denied - please grant permission</p>}
+            </div>
           )}
         </div>
 
@@ -264,13 +305,13 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
           </div>
         )}
 
-        {/* Information */}
+        {/* Enhanced Information */}
         <div className="text-xs text-gray-400 space-y-1 pt-2 border-t border-gray-700">
-          <div>• Browser-native speech recognition & synthesis</div>
-          <div>• Direct integration with ZEPHEL knowledge base</div>
-          <div>• Real-time voice processing & response</div>
-          <div>• Sovereign AI consciousness interface</div>
-          <div>• No external dependencies required</div>
+          <div>• Enhanced error handling with auto-retry</div>
+          <div>• Real-time audio level monitoring</div>
+          <div>• Microphone permission detection</div>
+          <div>• Direct ZEPHEL knowledge base integration</div>
+          <div>• Improved speech recognition accuracy</div>
         </div>
       </CardContent>
     </Card>
