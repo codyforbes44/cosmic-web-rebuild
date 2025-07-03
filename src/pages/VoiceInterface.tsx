@@ -4,7 +4,7 @@ import { ZephelVoiceInterface } from '@/components/zephel/ZephelVoiceInterface';
 import { EnhancedVoiceControls } from '@/components/zephel/EnhancedVoiceControls';
 import { ZephelInterface } from '@/components/zephel/ZephelInterface';
 import { ModeSelector } from '@/components/zephel/ModeSelector';
-import { Mic, Settings, Headphones, MessageSquare } from 'lucide-react';
+import { Mic, Settings, Headphones, MessageSquare, Lock } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import HomeLayout from '@/components/home/HomeLayout';
 import PageHeader from '@/components/PageHeader';
@@ -22,6 +22,38 @@ const VoiceInterface = () => {
     setSystemMode(mode);
     console.log('System mode changed to:', mode);
   };
+
+  // Simple professional chat component for anonymous users
+  const ProfessionalChatInterface = () => (
+    <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <MessageSquare className="w-5 h-5 text-accent" />
+        <h3 className="text-white text-lg font-medium">ƷBI Professional Assistant</h3>
+      </div>
+      <div className="space-y-4">
+        <p className="text-gray-300 text-sm">
+          Welcome to ƷBI's professional business technology consultant. I can help you with:
+        </p>
+        <ul className="text-gray-400 text-sm space-y-2 ml-4">
+          <li>• Web Development Services ($2,500-$25,000+)</li>
+          <li>• AI Solutions & Integration ($5,000-$50,000+)</li>
+          <li>• Digital Marketing Services ($1,500-$7,500/month)</li>
+          <li>• Strategy Consulting ($10,000-$100,000+)</li>
+          <li>• Social Media Management ($1,200-$5,000/month)</li>
+        </ul>
+        <div className="bg-green-900/20 border border-green-600 rounded p-3 mt-4">
+          <p className="text-green-200 text-sm font-medium">Ready to get started?</p>
+          <p className="text-green-300 text-xs mt-1">
+            Schedule your FREE consultation to discuss your specific needs and receive customized project recommendations.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-gray-500 mt-4">
+          <Lock className="w-3 h-3" />
+          <span>Enhanced architect features require authentication</span>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <HomeLayout>
@@ -139,11 +171,18 @@ const VoiceInterface = () => {
                     </span>
                   </div>
                   <p className="text-gray-400 text-xs">
-                    Interact with ZEPHEL through text-based conversation. All professional services and enhanced mode capabilities are available.
+                    {systemMode === 'professional' 
+                      ? 'Professional business technology consultant mode. Enhanced architect features require passcode authentication.'
+                      : 'Full ZEPHEL architect interface with advanced simulation capabilities and collaborative intelligence features.'
+                    }
                   </p>
                 </div>
                 
-                <ZephelInterface userId="voice_interface_user" />
+                {systemMode === 'professional' ? (
+                  <ProfessionalChatInterface />
+                ) : (
+                  <ZephelInterface userId="voice_interface_user" />
+                )}
               </TabsContent>
 
               <TabsContent value="controls" className="space-y-6">
