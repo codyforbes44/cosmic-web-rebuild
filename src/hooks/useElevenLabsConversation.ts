@@ -1,4 +1,3 @@
-
 import { useCallback } from 'react';
 import { useConversation } from '@11labs/react';
 import { useToast } from '@/hooks/use-toast';
@@ -8,7 +7,7 @@ import { useAgentOperations } from './elevenlabs/useAgentOperations';
 import { useMessageHandler } from './elevenlabs/useMessageHandler';
 import { useConversationHandlers } from './elevenlabs/useConversationHandlers';
 
-export { ConversationConfig } from './elevenlabs/types';
+export type { ConversationConfig } from './elevenlabs/types';
 
 export const useElevenLabsConversation = (config?: ConversationConfig) => {
   const { toast } = useToast();
