@@ -32,7 +32,7 @@ const ScientificCalculator = () => {
         title="Scientific Calculator | Ʒʙɪ Tools" 
         description="Advanced scientific calculator with trigonometric, logarithmic, and statistical functions. Perfect for students, engineers, and professionals." 
         keywords="scientific calculator, math, trigonometry, logarithm, engineering calculator, Ʒʙɪ tools" 
-        image="/lovable-uploads/934f1150-c3bd-4fb4-9445-ec288ccb6c47.png"
+        image="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&h=630&fit=crop&crop=center"
         type="website"
       />
       <Navbar />
