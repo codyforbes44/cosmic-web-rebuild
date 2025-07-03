@@ -3,12 +3,18 @@ import React from 'react';
 import PageHeader from '@/components/PageHeader';
 import StarBackground from '@/components/StarBackground';
 import HuggingFacePlayground from '@/components/ai/HuggingFacePlayground';
+import SEO from '@/components/SEO';
 
 const HuggingFace = () => {
   return (
     <div className="min-h-screen relative">
       <StarBackground />
       <div className="relative z-10">
+        <SEO 
+          title="Hugging Face AI Models"
+          description="Explore and test various AI models from Hugging Face's extensive library"
+          image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=630&fit=crop&crop=center"
+        />
         <PageHeader
           title="Hugging Face AI Models"
           description="Explore and test various AI models from Hugging Face's extensive library"

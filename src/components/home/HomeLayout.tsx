@@ -17,6 +17,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
         <SEO 
           title="ƷBI - Business Technology Solutions"
           description="ƷBI delivers innovative business technology solutions and expert consulting services to transform your operations and drive growth."
+          image="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=630&fit=crop&crop=center"
         />
         <Navbar />
         {children}

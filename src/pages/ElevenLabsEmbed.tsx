@@ -22,7 +22,7 @@ const ElevenLabsEmbed = () => {
     // Add og:image for voice/audio theme
     const ogImage = document.querySelector('meta[property="og:image"]') || document.createElement('meta');
     ogImage.setAttribute('property', 'og:image');
-    ogImage.setAttribute('content', 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=1200&h=630&fit=crop&crop=center');
+    ogImage.setAttribute('content', 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&h=630&fit=crop&crop=center');
     if (!document.querySelector('meta[property="og:image"]')) {
       document.head.appendChild(ogImage);
     }

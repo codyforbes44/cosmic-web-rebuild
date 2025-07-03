@@ -18,6 +18,7 @@ const NewsPageLayout: React.FC<NewsPageLayoutProps> = ({ children }) => {
         title="Business Insights" 
         description="Stay informed with the latest industry insights, technology trends and success stories from ƷBI's business experts."
         keywords="business technology, digital transformation, custom software, data analytics, AI solutions, web development"
+        image="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=630&fit=crop&crop=center"
       />
       <Navbar />
       <StarBackground />

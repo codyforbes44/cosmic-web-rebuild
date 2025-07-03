@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import AuthLayout from '@/components/auth/AuthLayout';
 import SignInForm from '@/components/auth/SignInForm';
+import SEO from '@/components/SEO';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -31,14 +32,21 @@ const Auth = () => {
   }
 
   return (
-    <AuthLayout>
-      <SignInForm 
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
+    <>
+      <SEO 
+        title="Sign In - Secure Authentication"
+        description="Access your account with secure authentication and personalized dashboard features."
+        image="https://images.unsplash.com/photo-1633265486064-086b219458ec?w=1200&h=630&fit=crop&crop=center"
       />
-    </AuthLayout>
+      <AuthLayout>
+        <SignInForm 
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+        />
+      </AuthLayout>
+    </>
   );
 };
 
