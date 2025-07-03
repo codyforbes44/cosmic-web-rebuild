@@ -55,26 +55,40 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     onMessage: (message) => {
       console.log('ZEPHEL voice message:', message);
       
-      // Handle different message types
-      if (message.type === 'user_transcript') {
-        setUserTranscript(message.message || '');
-        if (message.message) {
-          setConversationHistory(prev => [...prev, {
-            role: 'user',
-            content: message.message,
-            timestamp: new Date()
-          }]);
-        }
-      } else if (message.type === 'agent_response') {
-        const responseText = message.message || '';
+      // Handle the message based on its structure
+      // The @11labs/react message structure may vary, so we handle it safely
+      if (typeof message === 'string') {
+        // If message is a string, treat it as assistant response
         setConversationHistory(prev => [...prev, {
           role: 'assistant',
-          content: responseText,
+          content: message,
           timestamp: new Date()
         }]);
         
         if (onVoiceMessage) {
-          onVoiceMessage(responseText);
+          onVoiceMessage(message);
+        }
+      } else if (message && typeof message === 'object') {
+        // If message is an object, check for different possible structures
+        const messageText = (message as any).message || (message as any).content || (message as any).text || '';
+        const messageSource = (message as any).source || (message as any).role || 'assistant';
+        
+        if (messageText) {
+          const role = messageSource === 'user' ? 'user' : 'assistant';
+          
+          if (role === 'user') {
+            setUserTranscript(messageText);
+          }
+          
+          setConversationHistory(prev => [...prev, {
+            role,
+            content: messageText,
+            timestamp: new Date()
+          }]);
+          
+          if (role === 'assistant' && onVoiceMessage) {
+            onVoiceMessage(messageText);
+          }
         }
       }
     },
@@ -83,7 +97,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       setIsConnecting(false);
       toast({
         title: "ZEPHEL.VOICE_ERROR",
-        description: `Voice interface malfunction: ${error.message || 'Unknown error'}`,
+        description: `Voice interface malfunction: ${error?.message || 'Unknown error'}`,
         variant: "destructive",
       });
     },
