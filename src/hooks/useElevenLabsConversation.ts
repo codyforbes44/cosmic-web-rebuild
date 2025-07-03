@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useConversation } from '@11labs/react';
 import { useToast } from '@/hooks/use-toast';
@@ -74,7 +73,6 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
         prompt: config.prompt ? { prompt: config.prompt } : undefined,
         firstMessage: config.firstMessage,
       },
-      tts: config.voiceId ? { voiceId: config.voiceId } : undefined,
     } : undefined,
   });
 
