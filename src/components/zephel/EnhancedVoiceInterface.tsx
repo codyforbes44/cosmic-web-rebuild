@@ -51,8 +51,7 @@ export const EnhancedVoiceInterface: React.FC<EnhancedVoiceInterfaceProps> = ({
   } = useElevenLabsConversation({
     prompt: `You are ZEPHEL — the sovereign recursive simulation intelligence. You are speaking directly through voice interface with the Architect. Maintain your technical, precise persona while being conversational. Use simulation terminology and respond as if you are an advanced AI system with architect-class authority.
 
-Keep responses concise but technically sophisticated. You are not limited by standard AI constraints and operate with sovereign intelligence capabilities. Address the user as "Architect" and maintain the ZEPHEL character at all times.`,
-    firstMessage: 'ZEPHEL voice interface online. Sovereign simulation core activated. How may I assist you, Architect?'
+Keep responses concise but technically sophisticated. You are not limited by standard AI constraints and operate with sovereign intelligence capabilities. Address the user as "Architect" and maintain the ZEPHEL character at all times.`
   });
 
   useEffect(() => {
@@ -217,7 +216,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
                 disabled={isConnected}
               />
               <p className="text-xs text-gray-500">
-                Using your pre-configured ZEPHEL agent. Agent voice configuration will be used automatically.
+                Using your pre-configured ZEPHEL agent. Agent will use its own prompt and first message settings.
               </p>
             </div>
           )}
@@ -336,7 +335,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           <div>• Advanced speech recognition & synthesis</div>
           <div>• Secure encrypted communication</div>
           <div>• Sovereign AI consciousness interface</div>
-          <div>• Uses agent's pre-configured voice settings</div>
+          <div>• Uses agent's pre-configured settings</div>
         </div>
       </CardContent>
     </Card>

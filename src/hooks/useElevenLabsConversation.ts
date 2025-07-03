@@ -68,10 +68,9 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
         variant: "destructive",
       });
     },
-    overrides: config ? {
+    overrides: config && config.prompt ? {
       agent: {
-        prompt: config.prompt ? { prompt: config.prompt } : undefined,
-        firstMessage: config.firstMessage,
+        prompt: { prompt: config.prompt },
       },
     } : undefined,
   });
