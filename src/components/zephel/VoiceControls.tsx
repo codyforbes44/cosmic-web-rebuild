@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,11 +15,11 @@ export const VoiceControls: React.FC<VoiceControlsProps> = ({
   onVoiceToggle,
   voiceEnabled = false
 }) => {
-  const { isPlaying, isSupported, stop } = useZephelVoice();
+  const { isSpeaking, isSupported, stopSpeaking } = useZephelVoice();
 
   const handleToggleVoice = () => {
-    if (isPlaying) {
-      stop();
+    if (isSpeaking) {
+      stopSpeaking();
     }
     onVoiceToggle?.(!voiceEnabled);
   };
@@ -71,9 +72,9 @@ export const VoiceControls: React.FC<VoiceControlsProps> = ({
               )}
             </Button>
 
-            {isPlaying && (
+            {isSpeaking && (
               <Button
-                onClick={stop}
+                onClick={stopSpeaking}
                 variant="outline"
                 size="sm"
                 className="w-full border-red-500 text-red-400 hover:bg-red-500/20"
@@ -86,11 +87,11 @@ export const VoiceControls: React.FC<VoiceControlsProps> = ({
             <div className="flex items-center justify-between">
               <span className="text-xs text-gray-400">Status</span>
               <Badge variant="outline" className={`text-xs ${
-                isPlaying 
+                isSpeaking 
                   ? 'border-yellow-500 text-yellow-400' 
                   : 'border-gray-500 text-gray-400'
               }`}>
-                {isPlaying ? 'SPEAKING' : 'IDLE'}
+                {isSpeaking ? 'SPEAKING' : 'IDLE'}
               </Badge>
             </div>
           </>
@@ -100,8 +101,8 @@ export const VoiceControls: React.FC<VoiceControlsProps> = ({
         <div className="border-t border-gray-700 pt-3">
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-400">Voice Input</span>
-            <Badge variant="outline" className="text-xs border-gray-500 text-gray-400">
-              COMING SOON
+            <Badge variant="outline" className="text-xs border-green-500 text-green-400">
+              ZEPHEL ACTIVE
             </Badge>
           </div>
           <Button

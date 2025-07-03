@@ -1,23 +1,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Mic, 
-  MicOff, 
-  Volume2, 
-  VolumeX, 
-  Phone, 
-  PhoneOff,
-  Activity,
-  TestTube,
-  Zap
-} from 'lucide-react';
+import { Activity } from 'lucide-react';
 import { useZephelVoice } from '@/hooks/useZephelVoice';
 import { useToast } from '@/hooks/use-toast';
+import { VoiceStatusPanel } from './voice/VoiceStatusPanel';
+import { AudioLevelIndicator } from './voice/AudioLevelIndicator';
+import { RetryCounter } from './voice/RetryCounter';
+import { TranscriptDisplay } from './voice/TranscriptDisplay';
+import { VolumeControls } from './voice/VolumeControls';
+import { SessionControls } from './voice/SessionControls';
+import { VoiceActivityIndicator } from './voice/VoiceActivityIndicator';
+import { VoiceInterfaceInfo } from './voice/VoiceInterfaceInfo';
 
 interface ZephelVoiceInterfaceProps {
   onVoiceMessage?: (message: string) => void;
@@ -38,18 +34,19 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     isSupported,
     transcript,
     isProcessing,
+    microphonePermission,
+    audioLevel,
+    retryCount,
     startListening,
     stopListening,
-    stopSpeaking,
-    testVoice
+    stopSpeaking
   } = useZephelVoice();
 
   useEffect(() => {
-    // Update session status based on listening state
     setSessionActive(isListening);
   }, [isListening]);
 
-  const handleStartSession = () => {
+  const handleStartSession = async () => {
     if (!isSupported) {
       toast({
         title: "Voice Not Supported",
@@ -59,11 +56,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       return;
     }
     
-    startListening();
-    toast({
-      title: "ZEPHEL Voice Active",
-      description: "Voice interface initialized. Speak to interact with ZEPHEL.",
-    });
+    await startListening();
   };
 
   const handleEndSession = () => {
@@ -73,10 +66,6 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       title: "Voice Session Ended",
       description: "ZEPHEL voice interface deactivated.",
     });
-  };
-
-  const handleTestVoice = () => {
-    testVoice();
   };
 
   const getStatusColor = () => {
@@ -93,22 +82,12 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     return 'READY';
   };
 
-  const getMicrophoneStatus = () => {
-    if (!isSupported) return { color: 'border-red-500 text-red-400', text: 'UNSUPPORTED' };
-    if (isSpeaking) return { color: 'border-blue-500 text-blue-400', text: 'ZEPHEL SPEAKING' };
-    if (isListening) return { color: 'border-green-500 text-green-400', text: 'LISTENING' };
-    if (isProcessing) return { color: 'border-yellow-500 text-yellow-400', text: 'PROCESSING' };
-    return { color: 'border-gray-500 text-gray-400', text: 'READY' };
-  };
-
-  const micStatus = getMicrophoneStatus();
-
   return (
     <Card className="bg-space-deep-blue/90 border-gray-700">
       <CardHeader>
         <CardTitle className="text-white text-sm flex items-center gap-2">
           <Activity className="w-4 h-4 text-accent" />
-          ZEPHEL Voice Interface - Sovereign Mode
+          ZEPHEL Voice Interface - Enhanced Mode
           <Badge variant="outline" className={`text-xs ${getStatusColor()}`}>
             {getStatusText()}
           </Badge>
@@ -116,162 +95,48 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       </CardHeader>
       <CardContent className="space-y-4">
         
-        {/* Connection Status */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Voice Recognition</span>
-            <Badge variant="outline" className={`text-xs ${isSupported ? 'border-green-500 text-green-400' : 'border-red-500 text-red-400'}`}>
-              {isSupported ? 'AVAILABLE' : 'UNAVAILABLE'}
-            </Badge>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Speech Synthesis</span>
-            <Badge variant="outline" className="text-xs border-green-500 text-green-400">
-              BROWSER NATIVE
-            </Badge>
-          </div>
+        <VoiceStatusPanel
+          isSupported={isSupported}
+          microphonePermission={microphonePermission}
+          isListening={isListening}
+          isSpeaking={isSpeaking}
+          isProcessing={isProcessing}
+        />
 
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Microphone Status</span>
-            <Badge variant="outline" className={`text-xs ${micStatus.color}`}>
-              {micStatus.text}
-            </Badge>
-          </div>
+        <AudioLevelIndicator
+          audioLevel={audioLevel}
+          isListening={isListening}
+        />
 
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">ZEPHEL Processor</span>
-            <Badge variant="outline" className={`text-xs ${isProcessing ? 'border-yellow-500 text-yellow-400' : 'border-green-500 text-green-400'}`}>
-              {isProcessing ? 'PROCESSING' : 'ACTIVE'}
-            </Badge>
-          </div>
-        </div>
+        <RetryCounter retryCount={retryCount} />
+
+        <TranscriptDisplay transcript={transcript} />
 
         <Separator className="bg-gray-700" />
 
-        {/* Current Transcript */}
-        {transcript && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-400">Voice Input</span>
-            </div>
-            <div className="bg-black/40 rounded p-2 border border-gray-600">
-              <p className="text-xs text-blue-400 font-mono">
-                {transcript}
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Testing Controls */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Voice Testing</span>
-          </div>
-          
-          <Button
-            onClick={handleTestVoice}
-            variant="outline"
-            size="sm"
-            className="w-full border-blue-600 text-blue-400 hover:bg-blue-600/10"
-            disabled={isSpeaking}
-          >
-            <TestTube className="w-3 h-3 mr-2" />
-            Test ZEPHEL Voice
-          </Button>
-        </div>
+        <VolumeControls
+          volume={volume}
+          onVolumeChange={setVolume}
+        />
 
         <Separator className="bg-gray-700" />
 
-        {/* Voice Controls */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Output Volume</span>
-            <span className="text-xs text-gray-300">{Math.round(volume[0] * 100)}%</span>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <VolumeX className="w-4 h-4 text-gray-400" />
-            <Slider
-              value={volume}
-              onValueChange={setVolume}
-              max={1}
-              min={0}
-              step={0.1}
-              className="flex-1"
-            />
-            <Volume2 className="w-4 h-4 text-gray-400" />
-          </div>
-        </div>
+        <SessionControls
+          sessionActive={sessionActive}
+          isSupported={isSupported}
+          microphonePermission={microphonePermission}
+          onStartSession={handleStartSession}
+          onEndSession={handleEndSession}
+        />
 
-        <Separator className="bg-gray-700" />
+        <VoiceActivityIndicator
+          sessionActive={sessionActive}
+          isSpeaking={isSpeaking}
+          isProcessing={isProcessing}
+          isListening={isListening}
+        />
 
-        {/* Session Controls */}
-        <div className="space-y-2">
-          {!sessionActive ? (
-            <Button
-              onClick={handleStartSession}
-              disabled={!isSupported}
-              className="w-full bg-green-600 hover:bg-green-700 text-white"
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              Start Voice Session
-            </Button>
-          ) : (
-            <Button
-              onClick={handleEndSession}
-              className="w-full bg-red-600 hover:bg-red-700 text-white"
-            >
-              <PhoneOff className="w-4 h-4 mr-2" />
-              End Voice Session
-            </Button>
-          )}
-
-          {!isSupported && (
-            <p className="text-xs text-red-400 text-center">
-              Voice recognition not supported in this browser
-            </p>
-          )}
-        </div>
-
-        {/* Voice Activity Indicator */}
-        {sessionActive && (
-          <div className="flex items-center justify-between p-3 bg-black/40 rounded border border-gray-600">
-            <span className="text-xs text-gray-400">Voice Status</span>
-            <div className="flex items-center gap-2">
-              {isSpeaking ? (
-                <>
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-blue-400">ZEPHEL RESPONDING</span>
-                </>
-              ) : isProcessing ? (
-                <>
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-yellow-400">PROCESSING INPUT</span>
-                </>
-              ) : isListening ? (
-                <>
-                  <Mic className="w-3 h-3 text-green-400" />
-                  <span className="text-xs text-green-400">LISTENING</span>
-                </>
-              ) : (
-                <>
-                  <MicOff className="w-3 h-3 text-gray-400" />
-                  <span className="text-xs text-gray-400">STANDBY</span>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Information */}
-        <div className="text-xs text-gray-400 space-y-1 pt-2 border-t border-gray-700">
-          <div>• Browser-native speech recognition & synthesis</div>
-          <div>• Direct integration with ZEPHEL knowledge base</div>
-          <div>• Real-time voice processing & response</div>
-          <div>• Sovereign AI consciousness interface</div>
-          <div>• No external dependencies required</div>
-        </div>
+        <VoiceInterfaceInfo />
       </CardContent>
     </Card>
   );
