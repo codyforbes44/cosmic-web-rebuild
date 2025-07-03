@@ -29,7 +29,7 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
   const { processInput, isProcessing } = useZephelProcessor();
   const { processQuantumCommand, quantumState } = useQuantumCommandProcessor();
   const { currentSession, messages, saveMessage, setMessages } = useZephelSessions();
-  const { speak, isSpeaking } = useZephelVoice();
+  const { speak, isPlaying } = useZephelVoice();
   const { playSystemBoot, playCommandExecute, playSuccess, playError } = useZephelSounds();
   const { metrics } = useZephelMetrics();
 
@@ -110,7 +110,7 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
         }
         
         // Play voice if enabled
-        if (voiceEnabled && !isSpeaking) {
+        if (voiceEnabled && !isPlaying) {
           speak(responseContent);
         }
         
@@ -149,7 +149,7 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
         setMessages(prev => [...prev, errorMessageObj]);
       }
     }
-  }, [input, isProcessing, currentSession, processQuantumCommand, processInput, saveMessage, voiceEnabled, isSpeaking, speak, playCommandExecute, playSuccess, playError]);
+  }, [input, isProcessing, currentSession, processQuantumCommand, processInput, saveMessage, voiceEnabled, isPlaying, speak, playCommandExecute, playSuccess, playError]);
 
   const handleCommandSelect = useCallback((command: string) => {
     setInput(command);

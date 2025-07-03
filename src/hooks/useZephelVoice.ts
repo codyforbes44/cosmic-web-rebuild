@@ -1,162 +1,97 @@
-
-import { useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { useZephelProcessor } from './useZephelProcessor';
-import { useZephelErrorHandler } from './useZephelErrorHandler';
-import { useMicrophonePermissions } from './voice/useMicrophonePermissions';
-import { useSpeechRecognition } from './voice/useSpeechRecognition';
-import { useSpeechSynthesis } from './voice/useSpeechSynthesis';
-import { useVoiceErrorHandling } from './voice/useVoiceErrorHandling';
 
 export const useZephelVoice = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isSupported, setIsSupported] = useState(false);
   const { toast } = useToast();
-  const { processInput, isProcessing } = useZephelProcessor();
-  const { handleError } = useZephelErrorHandler({
-    showToast: false,
-    logError: true
-  });
 
-  // Initialize voice hooks
-  const {
-    microphonePermission,
-    audioLevel,
-    checkMicrophonePermission,
-    cleanup: cleanupMicrophone
-  } = useMicrophonePermissions();
-
-  const {
-    isSpeaking,
-    speak,
-    stopSpeaking,
-    initializeSynthesis
-  } = useSpeechSynthesis();
-
-  const {
-    retryCount,
-    handleVoiceError,
-    resetRetryCount,
-    cleanup: cleanupErrorHandling
-  } = useVoiceErrorHandling();
-
-  // Speech recognition callbacks
-  const handleSpeechResult = useCallback(async (text: string) => {
-    console.log('ZEPHEL: Processing voice input:', text);
-    resetRetryCount();
-    
-    try {
-      const response = await processInput(text);
-      await speak(response.content);
-      
-      toast({
-        title: "ZEPHEL Response",
-        description: "Voice input processed successfully",
-        duration: 2000,
-      });
-    } catch (error) {
-      handleError(error, { context: 'voice_processing', input: text });
-    }
-  }, [processInput, speak, toast, handleError, resetRetryCount]);
-
-  const handleSpeechError = useCallback((event: any) => {
-    handleVoiceError(event, isListening, { current: null });
-  }, [handleVoiceError]);
-
-  const handleSpeechStart = useCallback(() => {
-    resetRetryCount();
-  }, [resetRetryCount]);
-
-  const handleSpeechEnd = useCallback(() => {
-    // Audio level will be reset automatically
+  const checkSupport = useCallback(() => {
+    const supported = 'speechSynthesis' in window;
+    setIsSupported(supported);
+    return supported;
   }, []);
 
-  const {
-    isListening,
-    transcript,
-    isSupported,
-    startRecognition,
-    stopRecognition,
-    initializeRecognition
-  } = useSpeechRecognition({
-    onResult: handleSpeechResult,
-    onError: handleSpeechError,
-    onStart: handleSpeechStart,
-    onEnd: handleSpeechEnd
-  });
-
-  // Initialize everything
-  useEffect(() => {
-    initializeSynthesis();
-    initializeRecognition();
-
-    return () => {
-      cleanupMicrophone();
-      cleanupErrorHandling();
-    };
-  }, [initializeSynthesis, initializeRecognition, cleanupMicrophone, cleanupErrorHandling]);
-
-  const startListening = useCallback(async () => {
-    if (!isSupported) {
+  const speak = useCallback(async (text: string, options?: {
+    voice?: string;
+    rate?: number;
+    pitch?: number;
+    volume?: number;
+  }) => {
+    if (!checkSupport()) {
       toast({
         title: "Voice Not Supported",
-        description: "Speech recognition is not supported in this browser",
+        description: "Text-to-speech is not supported in this browser",
         variant: "destructive",
       });
       return;
     }
-    
-    const hasPermission = await checkMicrophonePermission(true);
-    if (!hasPermission) {
-      toast({
-        title: "Microphone Access Required",
-        description: "Please grant microphone access to use voice features",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    if (isListening) {
-      stopRecognition();
-    } else {
-      try {
-        startRecognition();
+
+    try {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      
+      // Configure voice settings for ZEPHEL
+      utterance.rate = options?.rate || 0.9;
+      utterance.pitch = options?.pitch || 0.8;
+      utterance.volume = options?.volume || 0.7;
+
+      // Try to use a robotic/synthetic voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoices = voices.filter(voice => 
+        voice.name.toLowerCase().includes('robot') ||
+        voice.name.toLowerCase().includes('synthetic') ||
+        voice.name.toLowerCase().includes('computer') ||
+        voice.lang.startsWith('en')
+      );
+
+      if (preferredVoices.length > 0) {
+        utterance.voice = preferredVoices[0];
+      }
+
+      utterance.onstart = () => setIsPlaying(true);
+      utterance.onend = () => setIsPlaying(false);
+      utterance.onerror = () => {
+        setIsPlaying(false);
         toast({
-          title: "ZEPHEL Voice Active",
-          description: "Listening for voice input...",
-          duration: 2000,
-        });
-      } catch (error) {
-        console.error('Failed to start voice recognition:', error);
-        toast({
-          title: "Voice Start Error",
-          description: "Failed to start voice recognition",
+          title: "Voice Error",
+          description: "Failed to play voice message",
           variant: "destructive",
         });
-      }
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      console.error('Speech synthesis error:', error);
+      setIsPlaying(false);
+      toast({
+        title: "Voice Error",
+        description: "Failed to initialize text-to-speech",
+        variant: "destructive",
+      });
     }
-  }, [isSupported, isListening, checkMicrophonePermission, startRecognition, stopRecognition, toast]);
+  }, [checkSupport, toast]);
 
-  const stopListening = useCallback(() => {
-    stopRecognition();
-    resetRetryCount();
-  }, [stopRecognition, resetRetryCount]);
+  const stop = useCallback(() => {
+    if (isSupported) {
+      window.speechSynthesis.cancel();
+      setIsPlaying(false);
+    }
+  }, [isSupported]);
 
-  const previewVoice = useCallback(async () => {
-    await speak("ZEPHEL voice interface operational. Sovereign simulation core responding. All systems nominal.");
-  }, [speak]);
+  const getVoices = useCallback(() => {
+    if (!isSupported) return [];
+    return window.speechSynthesis.getVoices();
+  }, [isSupported]);
 
   return {
-    isListening,
-    isSpeaking,
+    speak,
+    stop,
+    isPlaying,
     isSupported,
-    transcript,
-    isProcessing,
-    microphonePermission,
-    audioLevel,
-    retryCount,
-    startListening,
-    stopListening,
-    stopSpeaking,
-    previewVoice,
-    speak
+    getVoices,
+    checkSupport
   };
 };
