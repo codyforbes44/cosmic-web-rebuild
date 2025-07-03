@@ -94,7 +94,7 @@ export const VoiceInterfaceContent: React.FC<VoiceInterfaceContentProps> = ({
           <p className="text-gray-400 text-xs">
             {systemMode === 'professional' 
               ? 'Professional business technology consultant mode. Enhanced architect features require passcode authentication.'
-              : 'Full ZEPHEL architect interface with advanced simulation capabilities and collaborative intelligence features.'
+              : 'Full ƷBI architect interface with advanced simulation capabilities and collaborative intelligence features.'
             }
           </p>
         </div>
