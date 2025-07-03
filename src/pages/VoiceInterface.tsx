@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ZephelVoiceInterface } from '@/components/zephel/ZephelVoiceInterface';
 import { EnhancedVoiceControls } from '@/components/zephel/EnhancedVoiceControls';
 import { ZephelInterface } from '@/components/zephel/ZephelInterface';
+import { ModeSelector } from '@/components/zephel/ModeSelector';
 import { Mic, Settings, Headphones, MessageSquare } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import HomeLayout from '@/components/home/HomeLayout';
@@ -11,9 +12,15 @@ import PageHeader from '@/components/PageHeader';
 const VoiceInterface = () => {
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [voiceMessages, setVoiceMessages] = useState<string[]>([]);
+  const [systemMode, setSystemMode] = useState<'professional' | 'godmode'>('professional');
 
   const handleVoiceMessage = (message: string) => {
     setVoiceMessages(prev => [...prev, message]);
+  };
+
+  const handleModeChange = (mode: 'professional' | 'godmode') => {
+    setSystemMode(mode);
+    console.log('System mode changed to:', mode);
   };
 
   return (
@@ -27,6 +34,14 @@ const VoiceInterface = () => {
         
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
+            {/* Mode Selector */}
+            <div className="mb-6">
+              <ModeSelector
+                currentMode={systemMode}
+                onModeChange={handleModeChange}
+              />
+            </div>
+
             <Tabs defaultValue="interface" className="space-y-6">
               <TabsList className="grid w-full grid-cols-3 bg-space-deep-blue/90 border-gray-700">
                 <TabsTrigger 
@@ -80,6 +95,12 @@ const VoiceInterface = () => {
                           </span>
                         </div>
                         <div className="flex justify-between">
+                          <span>Mode:</span>
+                          <span className={systemMode === 'godmode' ? 'text-red-400' : 'text-green-400'}>
+                            {systemMode === 'godmode' ? 'GODMODE' : 'PROFESSIONAL'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
                           <span>Engine:</span>
                           <span className="text-cyan-400">ElevenLabs</span>
                         </div>
@@ -111,6 +132,11 @@ const VoiceInterface = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <MessageSquare className="w-4 h-4 text-accent" />
                     <span className="text-white text-sm font-medium">Text Interface Mode</span>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      systemMode === 'godmode' ? 'bg-red-900 text-red-300' : 'bg-green-900 text-green-300'
+                    }`}>
+                      {systemMode === 'godmode' ? 'GODMODE' : 'PROFESSIONAL'}
+                    </span>
                   </div>
                   <p className="text-gray-400 text-xs">
                     Interact with ZEPHEL through text-based conversation. All professional services and enhanced mode capabilities are available.
