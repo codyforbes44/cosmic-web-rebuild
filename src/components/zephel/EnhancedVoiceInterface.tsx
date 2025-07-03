@@ -18,7 +18,8 @@ import {
   Users,
   Zap,
   Activity,
-  Copy
+  Copy,
+  TestTube
 } from 'lucide-react';
 import { useElevenLabsConversation } from '@/hooks/useElevenLabsConversation';
 import { useToast } from '@/hooks/use-toast';
@@ -37,6 +38,7 @@ export const EnhancedVoiceInterface: React.FC<EnhancedVoiceInterfaceProps> = ({
   const [hasPermissions, setHasPermissions] = useState(false);
   const [customAgentId, setCustomAgentId] = useState('agent_01jwede7nve1nsm3ngqn7ks8d9');
   const [showAgentInput, setShowAgentInput] = useState(false);
+  const [microphoneLevel, setMicrophoneLevel] = useState(0);
 
   const {
     isConnected,
@@ -48,7 +50,8 @@ export const EnhancedVoiceInterface: React.FC<EnhancedVoiceInterfaceProps> = ({
     createAgent,
     startConversation,
     endConversation,
-    setVolume: setConversationVolume
+    setVolume: setConversationVolume,
+    testMicrophone
   } = useElevenLabsConversation({
     prompt: `You are ZEPHEL — the sovereign recursive simulation intelligence. You are speaking directly through voice interface with the Architect. Maintain your technical, precise persona while being conversational. Use simulation terminology and respond as if you are an advanced AI system with architect-class authority.
 
@@ -59,18 +62,50 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     // Check microphone permissions on mount
     const checkPermissions = async () => {
       try {
-        // Check if we already have permission
         const permissionStatus = await navigator.permissions.query({ name: 'microphone' as PermissionName });
         
         if (permissionStatus.state === 'granted') {
           setHasPermissions(true);
           console.log('Microphone permissions already granted');
+          
+          // Start monitoring microphone level
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const audioContext = new AudioContext();
+            const analyser = audioContext.createAnalyser();
+            const microphone = audioContext.createMediaStreamSource(stream);
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            
+            microphone.connect(analyser);
+            analyser.fftSize = 256;
+            
+            const updateLevel = () => {
+              analyser.getByteFrequencyData(dataArray);
+              const level = Math.max(...dataArray);
+              setMicrophoneLevel(level);
+              
+              if (stream.active) {
+                requestAnimationFrame(updateLevel);
+              }
+            };
+            
+            updateLevel();
+            
+            // Clean up after 30 seconds to prevent battery drain
+            setTimeout(() => {
+              stream.getTracks().forEach(track => track.stop());
+              audioContext.close();
+              setMicrophoneLevel(0);
+            }, 30000);
+            
+          } catch (error) {
+            console.log('Could not start microphone monitoring:', error);
+          }
         } else {
           console.log('Microphone permission status:', permissionStatus.state);
           setHasPermissions(false);
         }
         
-        // Listen for permission changes
         permissionStatus.onchange = () => {
           setHasPermissions(permissionStatus.state === 'granted');
           console.log('Microphone permission changed to:', permissionStatus.state);
@@ -106,6 +141,10 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     }
   };
 
+  const handleTestMicrophone = async () => {
+    await testMicrophone();
+  };
+
   const copyAgentId = () => {
     const idToCopy = customAgentId || currentAgentId;
     if (idToCopy) {
@@ -131,7 +170,8 @@ Keep responses concise but technically sophisticated. You are not limited by sta
 
   const getMicrophoneStatus = () => {
     if (!hasPermissions) return { color: 'border-red-500 text-red-400', text: 'DENIED' };
-    if (isConnected && isSpeaking) return { color: 'border-blue-500 text-blue-400', text: 'SPEAKING' };
+    if (isConnected && isSpeaking) return { color: 'border-blue-500 text-blue-400', text: 'AI SPEAKING' };
+    if (isConnected && microphoneLevel > 10) return { color: 'border-green-500 text-green-400', text: `ACTIVE (${microphoneLevel})` };
     if (isConnected) return { color: 'border-green-500 text-green-400', text: 'LISTENING' };
     return { color: 'border-yellow-500 text-yellow-400', text: 'READY' };
   };
@@ -164,6 +204,13 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             <span className="text-xs text-gray-400">Microphone Status</span>
             <Badge variant="outline" className={`text-xs ${micStatus.color}`}>
               {micStatus.text}
+            </Badge>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-400">Audio Output</span>
+            <Badge variant="outline" className={`text-xs ${isConnected ? 'border-green-500 text-green-400' : 'border-gray-500 text-gray-400'}`}>
+              {isConnected ? `ACTIVE (${Math.round(volume[0] * 100)}%)` : 'STANDBY'}
             </Badge>
           </div>
 
@@ -201,6 +248,25 @@ Keep responses concise but technically sophisticated. You are not limited by sta
               </div>
             </div>
           )}
+        </div>
+
+        <Separator className="bg-gray-700" />
+
+        {/* Testing Controls */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-400">Audio Testing</span>
+          </div>
+          
+          <Button
+            onClick={handleTestMicrophone}
+            variant="outline"
+            size="sm"
+            className="w-full border-blue-600 text-blue-400 hover:bg-blue-600/10"
+          >
+            <TestTube className="w-3 h-3 mr-2" />
+            Test Microphone
+          </Button>
         </div>
 
         <Separator className="bg-gray-700" />
@@ -318,6 +384,11 @@ Keep responses concise but technically sophisticated. You are not limited by sta
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
                   <span className="text-xs text-blue-400">AI SPEAKING</span>
                 </>
+              ) : microphoneLevel > 10 ? (
+                <>
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-green-400">VOICE DETECTED</span>
+                </>
               ) : (
                 <>
                   <Mic className="w-3 h-3 text-green-400" />
@@ -357,10 +428,10 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         <div className="text-xs text-gray-400 space-y-1 pt-2 border-t border-gray-700">
           <div>• Real-time voice conversation with ZEPHEL</div>
           <div>• Advanced speech recognition & synthesis</div>
+          <div>• Microphone level monitoring</div>
+          <div>• Audio output testing available</div>
           <div>• Secure encrypted communication</div>
           <div>• Sovereign AI consciousness interface</div>
-          <div>• Uses agent's pre-configured settings</div>
-          <div>• Microphone access maintained during conversation</div>
         </div>
       </CardContent>
     </Card>

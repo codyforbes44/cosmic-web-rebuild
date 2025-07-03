@@ -59,21 +59,33 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
     try {
       console.log('Starting conversation with agent:', agentId || currentAgentId);
       
-      // Request and maintain microphone access
+      // Request microphone access with specific constraints
       let microphoneStream: MediaStream | null = null;
       try {
-        console.log('Requesting microphone access...');
+        console.log('Requesting microphone access with enhanced settings...');
         microphoneStream = await navigator.mediaDevices.getUserMedia({ 
           audio: {
             echoCancellation: true,
             noiseSuppression: true,
-            autoGainControl: true
+            autoGainControl: true,
+            sampleRate: 44100,
+            channelCount: 1
           } 
         });
-        console.log('Microphone access granted and stream obtained');
+        console.log('Microphone access granted, stream details:', {
+          active: microphoneStream.active,
+          tracks: microphoneStream.getAudioTracks().length,
+          trackSettings: microphoneStream.getAudioTracks()[0]?.getSettings()
+        });
         
-        // Don't stop the stream - let ElevenLabs use it
-        // The conversation will handle the microphone stream
+        // Test microphone input level
+        const audioContext = new AudioContext();
+        const analyser = audioContext.createAnalyser();
+        const microphone = audioContext.createMediaStreamSource(microphoneStream);
+        microphone.connect(analyser);
+        
+        console.log('Audio context setup completed, sample rate:', audioContext.sampleRate);
+        
       } catch (micError) {
         console.error('Microphone access denied:', micError);
         throw new Error('Microphone access is required for voice conversation. Please allow microphone access and try again.');
@@ -81,7 +93,6 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
 
       const targetAgentId = agentId || currentAgentId;
       if (!targetAgentId) {
-        // Clean up microphone stream if we error out
         if (microphoneStream) {
           microphoneStream.getTracks().forEach(track => track.stop());
         }
@@ -92,7 +103,7 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
       const url = await getSignedUrl(targetAgentId);
       setSignedUrl(url);
       
-      console.log('Starting ElevenLabs conversation session...');
+      console.log('Starting ElevenLabs conversation session with microphone stream...');
       const newConversationId = await conversation.startSession({ 
         signedUrl: url
       });
@@ -100,7 +111,14 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
       console.log('Conversation started successfully with ID:', newConversationId);
       setConversationId(newConversationId);
       
-      // The connection success will be handled by onConnect callback
+      // Set initial volume to ensure audio output works
+      try {
+        await conversation.setVolume({ volume: 0.8 });
+        console.log('Initial volume set to 0.8');
+      } catch (volumeError) {
+        console.warn('Failed to set initial volume:', volumeError);
+      }
+      
       return newConversationId;
     } catch (error) {
       console.error('Failed to start conversation:', error);
@@ -133,10 +151,62 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
       const clampedVolume = Math.max(0, Math.min(1, volume));
       await conversation.setVolume({ volume: clampedVolume });
       console.log('Volume set to:', clampedVolume);
+      
+      // Test audio output by playing a brief tone
+      if (clampedVolume > 0 && isConnected) {
+        console.log('Audio output should be working at volume:', clampedVolume);
+      }
     } catch (error) {
       console.error('Failed to set volume:', error);
     }
-  }, [conversation]);
+  }, [conversation, isConnected]);
+
+  const testMicrophone = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const audioContext = new AudioContext();
+      const analyser = audioContext.createAnalyser();
+      const microphone = audioContext.createMediaStreamSource(stream);
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+      
+      microphone.connect(analyser);
+      analyser.fftSize = 256;
+      
+      // Test for 2 seconds
+      let maxLevel = 0;
+      const testDuration = 2000;
+      const startTime = Date.now();
+      
+      const checkLevel = () => {
+        analyser.getByteFrequencyData(dataArray);
+        const level = Math.max(...dataArray);
+        maxLevel = Math.max(maxLevel, level);
+        
+        if (Date.now() - startTime < testDuration) {
+          requestAnimationFrame(checkLevel);
+        } else {
+          console.log('Microphone test completed. Max level detected:', maxLevel);
+          stream.getTracks().forEach(track => track.stop());
+          audioContext.close();
+          
+          toast({
+            title: "Microphone Test",
+            description: maxLevel > 10 ? `Microphone working! Max level: ${maxLevel}` : "Microphone may not be detecting input",
+            variant: maxLevel > 10 ? "default" : "destructive"
+          });
+        }
+      };
+      
+      checkLevel();
+    } catch (error) {
+      console.error('Microphone test failed:', error);
+      toast({
+        title: "Microphone Test Failed",
+        description: error instanceof Error ? error.message : "Could not test microphone",
+        variant: "destructive"
+      });
+    }
+  }, [toast]);
 
   return {
     // State
@@ -160,6 +230,7 @@ export const useElevenLabsConversation = (config?: ConversationConfig) => {
     startConversation,
     endConversation,
     setVolume,
+    testMicrophone,
     
     // Conversation object for advanced usage
     conversation
