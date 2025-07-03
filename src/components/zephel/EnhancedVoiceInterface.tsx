@@ -35,7 +35,7 @@ export const EnhancedVoiceInterface: React.FC<EnhancedVoiceInterfaceProps> = ({
   const { toast } = useToast();
   const [volume, setVolume] = useState([0.7]);
   const [hasPermissions, setHasPermissions] = useState(false);
-  const [customAgentId, setCustomAgentId] = useState('');
+  const [customAgentId, setCustomAgentId] = useState('agent_01jwede7nve1nsm3ngqn7ks8d9');
   const [showAgentInput, setShowAgentInput] = useState(false);
 
   const {
@@ -91,7 +91,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
     try {
       const agentToUse = customAgentId.trim() || currentAgentId;
       
-      if (!agentToUse && !customAgentId.trim()) {
+      if (!agentToUse) {
         await handleCreateAgent();
       }
       
@@ -110,8 +110,9 @@ Keep responses concise but technically sophisticated. You are not limited by sta
   };
 
   const copyAgentId = () => {
-    if (currentAgentId) {
-      navigator.clipboard.writeText(currentAgentId);
+    const idToCopy = customAgentId || currentAgentId;
+    if (idToCopy) {
+      navigator.clipboard.writeText(idToCopy);
       toast({
         title: "Copied",
         description: "Agent ID copied to clipboard",
@@ -164,7 +165,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
             </Badge>
           </div>
 
-          {currentAgentId && (
+          {(currentAgentId || customAgentId) && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">Current Agent ID</span>
@@ -180,7 +181,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
               </div>
               <div className="bg-black/40 rounded p-2 border border-gray-600">
                 <code className="text-xs text-accent font-mono break-all">
-                  {currentAgentId}
+                  {customAgentId || currentAgentId}
                 </code>
               </div>
             </div>
@@ -207,7 +208,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           {showAgentInput && (
             <div className="space-y-2">
               <Label htmlFor="agentId" className="text-xs text-gray-300">
-                Custom Agent ID (optional)
+                Agent ID
               </Label>
               <Input
                 id="agentId"
@@ -217,7 +218,7 @@ Keep responses concise but technically sophisticated. You are not limited by sta
                 className="bg-black/40 border-gray-600 text-white text-xs"
               />
               <p className="text-xs text-gray-500">
-                Leave empty to auto-create a new agent, or paste an existing agent ID from your ElevenLabs dashboard.
+                Using your pre-configured ZEPHEL agent. You can change this to use a different agent ID if needed.
               </p>
             </div>
           )}
