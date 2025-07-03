@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { ZephelVoiceInterface } from '@/components/zephel/ZephelVoiceInterface';
 import { EnhancedVoiceControls } from '@/components/zephel/EnhancedVoiceControls';
-import { Mic, Settings, Headphones } from 'lucide-react';
+import { ZephelInterface } from '@/components/zephel/ZephelInterface';
+import { Mic, Settings, Headphones, MessageSquare } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import HomeLayout from '@/components/home/HomeLayout';
 import PageHeader from '@/components/PageHeader';
@@ -27,13 +28,20 @@ const VoiceInterface = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <Tabs defaultValue="interface" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-2 bg-space-deep-blue/90 border-gray-700">
+              <TabsList className="grid w-full grid-cols-3 bg-space-deep-blue/90 border-gray-700">
                 <TabsTrigger 
                   value="interface" 
                   className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-black"
                 >
                   <Mic className="w-4 h-4" />
                   Voice Interface
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="text"
+                  className="flex items-center gap-2 data-[state=active]:bg-accent data-[state=active]:text-black"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Text Interface
                 </TabsTrigger>
                 <TabsTrigger 
                   value="controls"
@@ -96,6 +104,20 @@ const VoiceInterface = () => {
                     )}
                   </div>
                 </div>
+              </TabsContent>
+
+              <TabsContent value="text" className="space-y-6">
+                <div className="bg-space-deep-blue/90 border border-gray-700 rounded-lg p-4 mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <MessageSquare className="w-4 h-4 text-accent" />
+                    <span className="text-white text-sm font-medium">Text Interface Mode</span>
+                  </div>
+                  <p className="text-gray-400 text-xs">
+                    Interact with ZEPHEL through text-based conversation. All professional services and enhanced mode capabilities are available.
+                  </p>
+                </div>
+                
+                <ZephelInterface userId="voice_interface_user" />
               </TabsContent>
 
               <TabsContent value="controls" className="space-y-6">
