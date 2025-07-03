@@ -67,8 +67,9 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
           onVoiceMessage(message);
         }
       } else if (message && typeof message === 'object') {
-        const messageText = (message as any).message || (message as any).content || (message as any).text || '';
-        const messageSource = (message as any).source || (message as any).role || 'assistant';
+        const messageObj = message as any;
+        const messageText = messageObj.message || messageObj.content || messageObj.text || '';
+        const messageSource = messageObj.source || messageObj.role || 'assistant';
         
         if (messageText) {
           const role = messageSource === 'user' ? 'user' : 'assistant';
@@ -97,10 +98,9 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       let errorMessage = 'Unknown error';
       if (typeof error === 'string') {
         errorMessage = error;
-      } else if (error && typeof error === 'object' && 'message' in error) {
-        errorMessage = (error as any).message;
       } else if (error && typeof error === 'object') {
-        errorMessage = JSON.stringify(error);
+        const errorObj = error as any;
+        errorMessage = errorObj.message || errorObj.error || JSON.stringify(error);
       }
       
       toast({
@@ -157,9 +157,26 @@ Keep responses concise but technically sophisticated. You are not limited by sta
         }
       );
 
+      console.log('Edge function response:', { testData, testError });
+
       if (testError) {
-        console.error('Edge function test failed:', testError);
-        throw new Error(`Edge function unavailable: ${testError.message}`);
+        console.error('Edge function error:', testError);
+        let errorMsg = 'Edge function unavailable';
+        
+        if (testError.message) {
+          errorMsg = testError.message;
+        } else if (typeof testError === 'string') {
+          errorMsg = testError;
+        }
+        
+        // Check for specific error types
+        if (errorMsg.includes('ELEVENLABS_API')) {
+          errorMsg = 'ElevenLabs API key not configured. Please set up your API key in project settings.';
+        } else if (errorMsg.includes('non-2xx status code')) {
+          errorMsg = 'ElevenLabs API request failed. Please check your API key and permissions.';
+        }
+        
+        throw new Error(errorMsg);
       }
 
       console.log('Edge function test successful, agents response:', testData);
@@ -196,7 +213,15 @@ Keep responses concise but technically sophisticated. You are not limited by sta
 
         if (agentError) {
           console.error('Agent creation failed:', agentError);
-          throw new Error(`Agent creation failed: ${agentError.message}`);
+          let errorMsg = 'Agent creation failed';
+          
+          if (agentError.message) {
+            errorMsg = agentError.message;
+          } else if (typeof agentError === 'string') {
+            errorMsg = agentError;
+          }
+          
+          throw new Error(errorMsg);
         }
 
         setAgentId(agentData.agent_id);
@@ -381,8 +406,13 @@ Keep responses concise but technically sophisticated. You are not limited by sta
           {initializationError && (
             <div className="bg-red-900/20 border border-red-600 rounded p-3">
               <p className="text-red-200 text-sm mb-2">
-                Initialization Error: {initializationError}
+                <strong>Configuration Error:</strong> {initializationError}
               </p>
+              {initializationError.includes('API key') && (
+                <p className="text-red-200 text-xs mb-2">
+                  Please ensure your ElevenLabs API key is properly configured in the project settings.
+                </p>
+              )}
               <Button
                 onClick={initializeZephelAgent}
                 size="sm"
