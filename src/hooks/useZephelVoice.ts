@@ -140,6 +140,10 @@ export const useZephelVoice = () => {
     resetRetryCount();
   }, [stopRecognition, resetRetryCount]);
 
+  const previewVoice = useCallback(async () => {
+    await speak("ZEPHEL voice interface operational. Sovereign simulation core responding. All systems nominal.");
+  }, [speak]);
+
   return {
     isListening,
     isSpeaking,
@@ -152,6 +156,7 @@ export const useZephelVoice = () => {
     startListening,
     stopListening,
     stopSpeaking,
+    previewVoice,
     speak
   };
 };

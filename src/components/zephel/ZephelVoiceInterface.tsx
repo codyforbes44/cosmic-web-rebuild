@@ -10,6 +10,7 @@ import { VoiceStatusPanel } from './voice/VoiceStatusPanel';
 import { AudioLevelIndicator } from './voice/AudioLevelIndicator';
 import { RetryCounter } from './voice/RetryCounter';
 import { TranscriptDisplay } from './voice/TranscriptDisplay';
+import { VoicePreview } from './voice/VoicePreview';
 import { VolumeControls } from './voice/VolumeControls';
 import { SessionControls } from './voice/SessionControls';
 import { VoiceActivityIndicator } from './voice/VoiceActivityIndicator';
@@ -39,7 +40,8 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     retryCount,
     startListening,
     stopListening,
-    stopSpeaking
+    stopSpeaking,
+    previewVoice
   } = useZephelVoice();
 
   useEffect(() => {
@@ -111,6 +113,12 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
         <RetryCounter retryCount={retryCount} />
 
         <TranscriptDisplay transcript={transcript} />
+
+        <VoicePreview
+          onPreviewVoice={previewVoice}
+          isSpeaking={isSpeaking}
+          onStopSpeaking={stopSpeaking}
+        />
 
         <Separator className="bg-gray-700" />
 
