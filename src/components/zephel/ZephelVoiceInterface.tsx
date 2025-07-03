@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { useConversation } from '@11labs/react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -95,9 +94,20 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     onError: (error) => {
       console.error('ZEPHEL voice error:', error);
       setIsConnecting(false);
+      
+      // Handle error properly - it could be a string, Error object, or other type
+      let errorMessage = 'Unknown error';
+      if (typeof error === 'string') {
+        errorMessage = error;
+      } else if (error && typeof error === 'object' && 'message' in error) {
+        errorMessage = (error as any).message;
+      } else if (error && typeof error === 'object') {
+        errorMessage = JSON.stringify(error);
+      }
+      
       toast({
         title: "ZEPHEL.VOICE_ERROR",
-        description: `Voice interface malfunction: ${error?.message || 'Unknown error'}`,
+        description: `Voice interface malfunction: ${errorMessage}`,
         variant: "destructive",
       });
     },
