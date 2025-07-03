@@ -24,7 +24,7 @@ export const VoiceActivityIndicator: React.FC<VoiceActivityIndicatorProps> = ({
         {isSpeaking ? (
           <>
             <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-            <span className="text-xs text-blue-400">ZEPHEL RESPONDING</span>
+            <span className="text-xs text-blue-400">ƷBI RESPONDING</span>
           </>
         ) : isProcessing ? (
           <>

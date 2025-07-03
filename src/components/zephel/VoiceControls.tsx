@@ -102,7 +102,7 @@ export const VoiceControls: React.FC<VoiceControlsProps> = ({
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-400">Voice Input</span>
             <Badge variant="outline" className="text-xs border-green-500 text-green-400">
-              ZEPHEL ACTIVE
+              ƷBI ACTIVE
             </Badge>
           </div>
           <Button

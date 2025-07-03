@@ -7,7 +7,7 @@ export const VoiceInterfaceInfo: React.FC = () => {
       <div>• Enhanced error handling with auto-retry</div>
       <div>• Real-time audio level monitoring</div>
       <div>• Microphone permission detection</div>
-      <div>• Direct ZEPHEL knowledge base integration</div>
+      <div>• Direct ƷBI knowledge base integration</div>
       <div>• Improved speech recognition accuracy</div>
     </div>
   );

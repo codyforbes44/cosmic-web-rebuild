@@ -20,7 +20,7 @@ export const useSpeechSynthesis = () => {
     
     const utterance = new SpeechSynthesisUtterance(text);
     
-    // Configure voice settings for ZEPHEL-like voice
+    // Configure voice settings for ƷBI-like voice
     utterance.rate = 0.85;
     utterance.pitch = 0.7;
     utterance.volume = 0.8;
@@ -39,17 +39,17 @@ export const useSpeechSynthesis = () => {
     }
     
     utterance.onstart = () => {
-      console.log('ZEPHEL: Speaking started');
+      console.log('ƷBI: Speaking started');
       setIsSpeaking(true);
     };
     
     utterance.onend = () => {
-      console.log('ZEPHEL: Speaking ended');
+      console.log('ƷBI: Speaking ended');
       setIsSpeaking(false);
     };
     
     utterance.onerror = (error) => {
-      console.error('ZEPHEL: Speech synthesis error:', error);
+      console.error('ƷBI: Speech synthesis error:', error);
       setIsSpeaking(false);
     };
     

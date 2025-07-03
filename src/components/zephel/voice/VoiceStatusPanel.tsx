@@ -21,7 +21,7 @@ export const VoiceStatusPanel: React.FC<VoiceStatusPanelProps> = ({
 }) => {
   const getMicrophoneStatus = () => {
     if (!isSupported) return { color: 'border-red-500 text-red-400', text: 'UNSUPPORTED' };
-    if (isSpeaking) return { color: 'border-blue-500 text-blue-400', text: 'ZEPHEL SPEAKING' };
+    if (isSpeaking) return { color: 'border-blue-500 text-blue-400', text: 'ƷBI SPEAKING' };
     if (isListening) return { color: 'border-green-500 text-green-400', text: 'LISTENING' };
     if (isProcessing) return { color: 'border-yellow-500 text-yellow-400', text: 'PROCESSING' };
     return { color: 'border-gray-500 text-gray-400', text: 'READY' };
@@ -71,7 +71,7 @@ export const VoiceStatusPanel: React.FC<VoiceStatusPanelProps> = ({
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-xs text-gray-400">ZEPHEL Processor</span>
+        <span className="text-xs text-gray-400">ƷBI Processor</span>
         <Badge variant="outline" className={`text-xs ${isProcessing ? 'border-yellow-500 text-yellow-400' : 'border-green-500 text-green-400'}`}>
           {isProcessing ? 'PROCESSING' : 'ACTIVE'}
         </Badge>

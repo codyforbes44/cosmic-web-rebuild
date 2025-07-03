@@ -40,7 +40,7 @@ export const useZephelVoice = () => {
 
   // Speech recognition callbacks
   const handleSpeechResult = useCallback(async (text: string) => {
-    console.log('ZEPHEL: Processing voice input:', text);
+    console.log('ƷBI: Processing voice input:', text);
     resetRetryCount();
     
     try {
@@ -48,7 +48,7 @@ export const useZephelVoice = () => {
       await speak(response.content);
       
       toast({
-        title: "ZEPHEL Response",
+        title: "ƷBI Response",
         description: "Voice input processed successfully",
         duration: 2000,
       });
@@ -120,7 +120,7 @@ export const useZephelVoice = () => {
       try {
         startRecognition();
         toast({
-          title: "ZEPHEL Voice Active",
+          title: "ƷBI Voice Active",
           description: "Listening for voice input...",
           duration: 2000,
         });

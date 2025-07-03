@@ -64,7 +64,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     stopSpeaking();
     toast({
       title: "Voice Session Ended",
-      description: "ZEPHEL voice interface deactivated.",
+      description: "ƷBI voice interface deactivated.",
     });
   };
 
@@ -87,7 +87,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       <CardHeader>
         <CardTitle className="text-white text-sm flex items-center gap-2">
           <Activity className="w-4 h-4 text-accent" />
-          ZEPHEL Voice Interface - Enhanced Mode
+          ƷBI Voice Interface - Enhanced Mode
           <Badge variant="outline" className={`text-xs ${getStatusColor()}`}>
             {getStatusText()}
           </Badge>
