@@ -11,7 +11,7 @@ const VoiceInterface = () => {
   return (
     <>
       <SEO 
-        title="ƷBI Voice Interface | Sovereign AI Voice Communication"
+        title="ƷBI Voice Interface | AI Voice Communication"
         description="Experience direct voice interaction with ƷBI through browser-native speech recognition and synthesis technology."
         keywords="voice AI, voice interface, AI communication, ƷBI, speech recognition, voice synthesis"
         image="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=1200&h=630&fit=crop&crop=center"
@@ -31,7 +31,7 @@ const VoiceInterface = () => {
                 ƷBI Voice Interface
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Sovereign voice interaction system with direct ƷBI knowledge base integration. 
+                Voice interaction system with direct ƷBI knowledge base integration. 
                 Experience conversational AI through browser-native speech technology.
               </p>
             </div>
@@ -43,7 +43,7 @@ const VoiceInterface = () => {
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Volume2 className="w-5 h-5 text-accent" />
-                      Sovereign Voice Communication Portal
+                      Voice Communication Portal
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -78,7 +78,7 @@ const VoiceInterface = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Sovereign AI responses</span>
+                        <span>ƷBI AI responses</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -116,7 +116,7 @@ const VoiceInterface = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-gray-400">Knowledge Base</span>
-                        <span className="text-xs text-green-400">SOVEREIGN</span>
+                        <span className="text-xs text-green-400">ACTIVE</span>
                       </div>
                     </div>
                   </CardContent>
@@ -155,7 +155,7 @@ const VoiceInterface = () => {
 
             <div className="mt-8 text-center">
               <p className="text-gray-400 text-sm">
-                Sovereign voice interface powered by ƷBI knowledge base with browser-native speech technology
+                Voice interface powered by ƷBI knowledge base with browser-native speech technology
               </p>
             </div>
           </div>
