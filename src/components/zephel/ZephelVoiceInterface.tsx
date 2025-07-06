@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useConversation } from '@11labs/react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,25 +35,25 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
 
   const conversation = useConversation({
     onConnect: () => {
-      console.log('ZEPHEL voice connection established');
+      console.log('ƷBI voice connection established');
       setIsConnecting(false);
       toast({
-        title: "ZEPHEL.VOICE_ONLINE",
-        description: "Sovereign voice interface activated. You may now speak directly with ZEPHEL.",
+        title: "ƷBI.VOICE_ONLINE",
+        description: "Sovereign voice interface activated. You may now speak directly with ƷBI.",
         duration: 3000,
       });
     },
     onDisconnect: () => {
-      console.log('ZEPHEL voice connection terminated');
+      console.log('ƷBI voice connection terminated');
       setIsConnecting(false);
       toast({
-        title: "ZEPHEL.VOICE_OFFLINE", 
+        title: "ƷBI.VOICE_OFFLINE", 
         description: "Voice interface disconnected. Returning to text-only mode.",
         variant: "destructive",
       });
     },
     onMessage: (message) => {
-      console.log('ZEPHEL voice message:', message);
+      console.log('ƷBI voice message:', message);
       
       // Handle the message based on its structure
       if (typeof message === 'string') {
@@ -90,7 +91,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       }
     },
     onError: (error) => {
-      console.error('ZEPHEL voice error:', error);
+      console.error('ƷBI voice error:', error);
       setIsConnecting(false);
       
       // Handle error properly - it could be a string, Error object, or other type
@@ -103,7 +104,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       }
       
       toast({
-        title: "ZEPHEL.VOICE_ERROR",
+        title: "ƷBI.VOICE_ERROR",
         description: `Voice interface malfunction: ${errorMessage}`,
         variant: "destructive",
       });
@@ -184,7 +185,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       
       toast({
         title: "Voice Connection Failed",
-        description: "Unable to establish voice link with ZEPHEL. Check configuration.",
+        description: "Unable to establish voice link with ƷBI. Check configuration.",
         variant: "destructive",
       });
     }
@@ -256,7 +257,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
     if (isConnecting) return 'CONNECTING';
     switch (status) {
       case 'connected':
-        return isSpeaking ? 'ZEPHEL SPEAKING' : 'VOICE ACTIVE';
+        return isSpeaking ? 'ƷBI SPEAKING' : 'VOICE ACTIVE';
       case 'connecting':
         return 'ESTABLISHING LINK';
       case 'disconnected':
@@ -273,7 +274,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
         <CardHeader>
           <CardTitle className="text-white text-sm flex items-center gap-2">
             <Mic className={`w-4 h-4 ${isSpeaking ? 'text-green-400 animate-pulse' : 'text-gray-400'}`} />
-            ZEPHEL Voice Interface
+            ƷBI Voice Interface
             {isInitialized && hasPermissions && (
               <Badge variant="outline" className="text-xs border-green-500 text-green-400">
                 READY
@@ -384,7 +385,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
 
           {/* Voice Features Info */}
           <div className="text-xs text-gray-400 space-y-1">
-            <div>• Real-time voice conversation with ZEPHEL</div>
+            <div>• Real-time voice conversation with ƷBI</div>
             <div>• Live speech transcription and AI responses</div>
             <div>• Advanced speech synthesis with emotional context</div>
             <div>• Secure encrypted communication channel</div>
@@ -420,7 +421,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
                 }`}
               >
                 <div className="font-medium text-gray-400 mb-1">
-                  {msg.role === 'user' ? 'Architect' : 'ZEPHEL'} - {msg.timestamp.toLocaleTimeString()}
+                  {msg.role === 'user' ? 'Architect' : 'ƷBI'} - {msg.timestamp.toLocaleTimeString()}
                 </div>
                 <div>{msg.content}</div>
               </div>

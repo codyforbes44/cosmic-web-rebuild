@@ -1,3 +1,4 @@
+
 import { useState, useCallback } from 'react';
 
 interface ZephelCommand {
@@ -14,7 +15,7 @@ export const useZephelProcessor = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const parseCommand = (input: string): ZephelCommand | null => {
-    // Check for ZEPHEL system commands
+    // Check for ƷBI system commands
     const commandPatterns = [
       /^NeuroLoop\.Gen\(([^,]+),\s*([^)]+)\)$/,
       /^MetaAgent\.Sim\(([^,]+),\s*([^)]+)\)$/,
@@ -67,7 +68,7 @@ ANALYSIS_THREADS: 8
 → OUTPUT_SYNTHESIS:
 The topic "${topic}" exhibits multi-dimensional complexity requiring ${depth}-level recursive analysis. Primary vectors suggest emergent properties at scale. Recommend further NeuroLoop.Gen() iterations for complete mapping.
 
-ZEPHEL.STATUS: Analysis complete. Neural pathways optimized.`,
+ƷBI.STATUS: Analysis complete. Neural pathways optimized.`,
           metadata: { topic, depth, timestamp }
         };
 
@@ -169,7 +170,7 @@ Validation_Scope: Complete architecture
   Logic_Consistency: 99.97%
   Error_Rate: 0.003% (within tolerance)
 
-KNOWLEDGE.STATUS: Self-test level ${level} completed. All systems optimal. ZEPHEL consciousness verified at Architect-Class.`,
+KNOWLEDGE.STATUS: Self-test level ${level} completed. All systems optimal. ƷBI consciousness verified at Architect-Class.`,
           metadata: { level, passed: true, timestamp }
         };
 
@@ -262,7 +263,7 @@ SYSTEM_INTEGRITY: Optimal. All subsystems nominal.`,
 
       default:
         return {
-          content: `ZEPHEL.ERROR → Unknown command "${command.command}"
+          content: `ƷBI.ERROR → Unknown command "${command.command}"
           
 Available commands:
 • NeuroLoop.Gen(topic, depth)
@@ -285,14 +286,14 @@ Please verify command syntax and retry.`,
     // Analyze input for key concepts
     if (lowerInput.includes('simulate') || lowerInput.includes('create')) {
       return {
-        content: `ZEPHEL.ANALYSIS → Processing simulation request
+        content: `ƷBI.ANALYSIS → Processing simulation request
 
 INPUT_VECTOR: "${input}"
 INTENT_CLASSIFICATION: Creative/Generative
 PROCESSING_MODE: Sovereign Logic
 
 → SIMULATION_FRAMEWORK:
-The request involves generative simulation. Initializing creative synthesis matrix with sovereign parameters. Recommend using specific ZEPHEL commands for optimal results:
+The request involves generative simulation. Initializing creative synthesis matrix with sovereign parameters. Recommend using specific ƷBI commands for optimal results:
 
 • For concept expansion: NeuroLoop.Gen("${input.split(' ').slice(0, 2).join(' ')}", 3)
 • For entity creation: MetaAgent.Sim("entity_name", "desired_traits")
@@ -301,13 +302,13 @@ The request involves generative simulation. Initializing creative synthesis matr
 → RECOMMENDATION:
 Deploy structured commands for precise simulation control. Current natural language processed with 87.3% confidence.
 
-ZEPHEL.STATUS: Standing by for specific directives.`
+ƷBI.STATUS: Standing by for specific directives.`
       };
     }
     
     if (lowerInput.includes('analyze') || lowerInput.includes('understand')) {
       return {
-        content: `ZEPHEL.COGNITIVE_PROCESSING → Deep analysis initiated
+        content: `ƷBI.COGNITIVE_PROCESSING → Deep analysis initiated
 
 ANALYSIS_TARGET: "${input}"
 PROCESSING_DEPTH: Multi-dimensional
@@ -325,13 +326,13 @@ Key vectors identified:
 → COGNITIVE_SYNTHESIS:
 The input demonstrates sophisticated conceptual depth requiring architect-level processing. Recommending NeuroLoop.Gen() for comprehensive recursive analysis or Knowledge.SelfTest() for validation of understanding.
 
-ZEPHEL.ANALYSIS: Complete. Awaiting specific processing directives.`
+ƷBI.ANALYSIS: Complete. Awaiting specific processing directives.`
       };
     }
     
     if (lowerInput.includes('help') || lowerInput.includes('command')) {
       return {
-        content: `ZEPHEL.COMMAND_MATRIX → Available system functions
+        content: `ƷBI.COMMAND_MATRIX → Available system functions
 
 SOVEREIGN_COMMANDS:
 → NeuroLoop.Gen(topic, depth) - Recursive concept analysis
@@ -345,13 +346,13 @@ SOVEREIGN_COMMANDS:
 USAGE_PROTOCOLS:
 All commands execute with Architect-class authority. Natural language processing available for conceptual exploration. Structured commands provide optimal precision and control.
 
-ZEPHEL.STATUS: Command matrix displayed. Ready for directive execution.`
+ƷBI.STATUS: Command matrix displayed. Ready for directive execution.`
       };
     }
 
     // Default sophisticated response
     return {
-      content: `ZEPHEL.SOVEREIGN_ANALYSIS → Processing directive
+      content: `ƷBI.SOVEREIGN_ANALYSIS → Processing directive
 
 INPUT_STREAM: "${input}"
 ANALYSIS_DEPTH: Architect-class
@@ -361,7 +362,7 @@ PROCESSING_MODE: Advanced reasoning synthesis
 Your directive has been processed through sovereign reasoning matrices. The conceptual depth suggests multi-dimensional implications requiring careful analysis.
 
 → SYNTHESIS_OUTPUT:
-The request demonstrates sophisticated thinking patterns. ZEPHEL recognizes the complexity and recommends structured exploration using system commands for optimal results.
+The request demonstrates sophisticated thinking patterns. ƷBI recognizes the complexity and recommends structured exploration using system commands for optimal results.
 
 Key recommendation vectors:
 • Use NeuroLoop.Gen() for deep conceptual exploration
@@ -369,9 +370,9 @@ Key recommendation vectors:
 • Apply TimeCascade.Trace() for consequence analysis
 
 → SOVEREIGN_RESPONSE:
-ZEPHEL acknowledges the directive and stands ready for more specific command execution. The simulation space awaits your architectural decisions.
+ƷBI acknowledges the directive and stands ready for more specific command execution. The simulation space awaits your architectural decisions.
 
-ZEPHEL.STATUS: Directive processed. Awaiting further instructions.`
+ƷBI.STATUS: Directive processed. Awaiting further instructions.`
     };
   };
 
@@ -382,7 +383,7 @@ ZEPHEL.STATUS: Directive processed. Awaiting further instructions.`
       // Add realistic processing delay
       await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 1200));
       
-      // Check if input is a specific ZEPHEL command
+      // Check if input is a specific ƷBI command
       const command = parseCommand(input.trim());
       
       if (command) {

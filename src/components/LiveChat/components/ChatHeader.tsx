@@ -38,7 +38,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
       <div className="flex items-center space-x-2">
         <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
         <span className="font-medium">
-          {zephelState?.isActive ? '🧠 ZEPHEL Active' : 'ƷBI Assistant'}
+          {zephelState?.isActive ? '🧠 ƷBI Active' : 'ƷBI Assistant'}
         </span>
         {zephelState?.isActive && (
           <button
