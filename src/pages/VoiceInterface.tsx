@@ -51,7 +51,7 @@ const VoiceInterface = () => {
                   <div className="flex items-center justify-between bg-space-dark-blue/50 p-4 rounded-lg border border-gray-700">
                     <div>
                       <p className="text-white font-semibold text-lg">(214) 888-4394</p>
-                      <p className="text-gray-400 text-sm">Direct dial • Available during business hours</p>
+                      <p className="text-gray-400 text-sm">Direct dial • Available 24/7</p>
                     </div>
                     <Button
                       onClick={() => window.open('tel:+12148884394', '_self')}
