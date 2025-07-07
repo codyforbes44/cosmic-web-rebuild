@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { ModeSelector } from '@/components/zephel/ModeSelector';
 import { VoiceInterfaceContent } from '@/components/zephel/VoiceInterfaceContent';
 import { Mic, Phone } from 'lucide-react';
 import HomeLayout from '@/components/home/HomeLayout';
@@ -64,13 +63,6 @@ const VoiceInterface = () => {
                   </div>
                 </CardContent>
               </Card>
-            </div>
-
-            <div className="mb-6">
-              <ModeSelector
-                currentMode={systemMode}
-                onModeChange={handleModeChange}
-              />
             </div>
 
             <VoiceInterfaceContent
