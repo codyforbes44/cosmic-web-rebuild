@@ -2,6 +2,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MinimizedVoiceChat } from './home/MinimizedVoiceChat';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Phone } from 'lucide-react';
 
 const CTASection: React.FC = () => {
   return (
@@ -31,8 +34,39 @@ const CTASection: React.FC = () => {
             </p>
           </div>
           
-          <div className="max-w-2xl mx-auto">
-            <MinimizedVoiceChat />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Direct Dial Option */}
+            <Card className="bg-space-deep-blue/90 border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-white text-lg flex items-center gap-2">
+                  <Phone className="w-5 h-5 text-accent" />
+                  Direct Connect
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-gray-300 text-sm">
+                  For immediate assistance or technical support, connect directly with our team:
+                </p>
+                <div className="flex items-center justify-between bg-space-dark-blue/50 p-4 rounded-lg border border-gray-700">
+                  <div>
+                    <p className="text-white font-semibold text-lg">(214) 888-4394</p>
+                    <p className="text-gray-400 text-sm">Direct dial • Available 24/7</p>
+                  </div>
+                  <Button
+                    onClick={() => window.open('tel:+12148884394', '_self')}
+                    className="bg-accent hover:bg-accent/80 text-black"
+                  >
+                    <Phone className="w-4 h-4 mr-2" />
+                    Call Now
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Voice Interface */}
+            <div>
+              <MinimizedVoiceChat />
+            </div>
           </div>
         </motion.div>
       </div>
