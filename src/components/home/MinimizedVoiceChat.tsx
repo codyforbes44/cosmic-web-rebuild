@@ -13,7 +13,7 @@ export const MinimizedVoiceChat: React.FC = () => {
   const { toast } = useToast();
   const [isConnecting, setIsConnecting] = useState(false);
   const [agentId] = useState<string>('agent_01jwede7nve1nsm3ngqn7ks8d9');
-  const [hasPermissions, setHasPermissions] = useState(true);
+  const [hasPermissions, setHasPermissions] = useState<boolean | null>(null); // null = not checked yet
 
   const conversation = useConversation({
     onConnect: () => {
@@ -59,13 +59,23 @@ export const MinimizedVoiceChat: React.FC = () => {
     return data.signed_url;
   };
 
+  const checkMicrophonePermissions = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(track => track.stop());
+      setHasPermissions(true);
+      return true;
+    } catch (error) {
+      setHasPermissions(false);
+      return false;
+    }
+  };
+
   const startVoiceChat = async () => {
-    if (!hasPermissions) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach(track => track.stop());
-        setHasPermissions(true);
-      } catch (error) {
+    // Check permissions only when user tries to start conversation
+    if (hasPermissions === null || hasPermissions === false) {
+      const granted = await checkMicrophonePermissions();
+      if (!granted) {
         toast({
           title: "Microphone Required",
           description: "Please allow microphone access for voice chat.",

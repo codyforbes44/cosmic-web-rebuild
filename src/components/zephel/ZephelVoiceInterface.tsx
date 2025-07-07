@@ -31,7 +31,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
   const [isInitialized, setIsInitialized] = useState(true);
   const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
   const [userTranscript, setUserTranscript] = useState('');
-  const [hasPermissions, setHasPermissions] = useState(false);
+  const [hasPermissions, setHasPermissions] = useState<boolean | null>(null); // null = not checked yet
 
   const conversation = useConversation({
     onConnect: () => {
@@ -113,19 +113,18 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
 
   const { status, isSpeaking } = conversation;
 
-  // Initialize permissions check on component mount
-  useEffect(() => {
-    checkMicrophonePermissions();
-  }, []);
-
+  // Don't check permissions on mount - only when user tries to use voice
+  
   const checkMicrophonePermissions = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       stream.getTracks().forEach(track => track.stop()); // Stop immediately after checking
       setHasPermissions(true);
+      return true;
     } catch (error) {
       console.error('Microphone permission denied:', error);
       setHasPermissions(false);
+      return false;
     }
   };
 
@@ -159,13 +158,17 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
       return;
     }
 
-    if (!hasPermissions) {
-      toast({
-        title: "Microphone Access Required",
-        description: "Please allow microphone access to use voice features.",
-        variant: "destructive",
-      });
-      return;
+    // Check permissions only when user tries to start conversation
+    if (hasPermissions === null || hasPermissions === false) {
+      const granted = await checkMicrophonePermissions();
+      if (!granted) {
+        toast({
+          title: "Microphone Access Required",
+          description: "Please allow microphone access to use voice features.",
+          variant: "destructive",
+        });
+        return;
+      }
     }
 
     try {
@@ -223,15 +226,13 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
   }, [conversation, isMuted]);
 
   const requestMicrophonePermission = useCallback(async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      stream.getTracks().forEach(track => track.stop());
-      setHasPermissions(true);
+    const granted = await checkMicrophonePermissions();
+    if (granted) {
       toast({
         title: "Microphone Access Granted",
         description: "Voice interface is now ready for use.",
       });
-    } catch (error) {
+    } else {
       toast({
         title: "Microphone Access Denied",
         description: "Please enable microphone access in your browser settings.",
@@ -275,7 +276,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
           <CardTitle className="text-white text-sm flex items-center gap-2">
             <Mic className={`w-4 h-4 ${isSpeaking ? 'text-green-400 animate-pulse' : 'text-gray-400'}`} />
             ƷBI Voice Interface
-            {isInitialized && hasPermissions && (
+            {isInitialized && (
               <Badge variant="outline" className="text-xs border-green-500 text-green-400">
                 READY
               </Badge>
@@ -284,8 +285,8 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
         </CardHeader>
         <CardContent className="space-y-4">
           
-          {/* Permission Check */}
-          {!hasPermissions && (
+          {/* Permission Check - only show if permissions were denied */}
+          {hasPermissions === false && (
             <div className="bg-yellow-900/20 border border-yellow-600 rounded p-3">
               <p className="text-yellow-200 text-sm mb-2">
                 Microphone access required for voice interaction
@@ -345,7 +346,7 @@ export const ZephelVoiceInterface: React.FC<ZephelVoiceInterfaceProps> = ({
               <Button
                 onClick={startVoiceConversation}
                 className="bg-accent hover:bg-accent/80 text-black"
-                disabled={isConnecting || !isEnabled || !isInitialized || !hasPermissions}
+                disabled={isConnecting || !isEnabled || !isInitialized}
               >
                 <Phone className="w-4 h-4 mr-2" />
                 {isConnecting ? 'Connecting...' : 'Connect Voice'}
