@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -47,6 +46,7 @@ import ElevenLabsEmbed from "./pages/ElevenLabsEmbed";
 import Maps from "./pages/Maps";
 import ChatbotProducts from "./pages/ChatbotProducts";
 import SalesPresentationGenerator from "./pages/SalesPresentationGenerator";
+import Onboarding from "./pages/Onboarding";
 
 // Import new service pages
 import DigitalMarketing from "./pages/DigitalMarketing";
@@ -81,6 +81,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/get-quote" element={<GetQuote />} />
+                <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsOfService />} />
