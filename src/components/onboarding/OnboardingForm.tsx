@@ -10,8 +10,9 @@ import PersonalInfoSection from './sections/PersonalInfoSection';
 import BusinessInfoSection from './sections/BusinessInfoSection';
 import ProjectInfoSection from './sections/ProjectInfoSection';
 import PreferencesSection from './sections/PreferencesSection';
+import { generateOnboardingPDF } from '@/utils/onboardingPdfGenerator';
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Download } from 'lucide-react';
 
 const OnboardingForm = () => {
   const { isSubmitting, submitOnboarding } = useOnboardingSubmission();
@@ -40,6 +41,21 @@ const OnboardingForm = () => {
 
   const onSubmit = async (data: OnboardingFormData) => {
     await submitOnboarding(data, () => form.reset());
+  };
+
+  const handleDownloadPDF = () => {
+    const formData = form.getValues();
+    
+    // Basic validation to ensure required fields are filled
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'companyName', 'industry', 'companySize'];
+    const missingFields = requiredFields.filter(field => !formData[field as keyof OnboardingFormData]);
+    
+    if (missingFields.length > 0 || formData.primaryGoals.length === 0 || !formData.budget || !formData.timeline) {
+      form.trigger(); // Show validation errors
+      return;
+    }
+
+    generateOnboardingPDF(formData);
   };
 
   const nextStep = () => {
@@ -92,12 +108,25 @@ const OnboardingForm = () => {
               </div>
             ))}
           </div>
-          <h3 className="text-xl font-semibold text-white">
-            Step {currentStep}: {steps[currentStep - 1].title}
-          </h3>
-          <p className="text-gray-400 text-sm">
-            Complete all steps to get started with ƷBI services
-          </p>
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-xl font-semibold text-white">
+                Step {currentStep}: {steps[currentStep - 1].title}
+              </h3>
+              <p className="text-gray-400 text-sm">
+                Complete all steps to get started with ƷBI services
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleDownloadPDF}
+              className="border-gray-600 text-white hover:bg-gray-700"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download PDF
+            </Button>
+          </div>
         </div>
 
         <Form {...form}>
