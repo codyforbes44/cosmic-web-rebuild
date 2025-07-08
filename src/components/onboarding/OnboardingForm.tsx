@@ -1,4 +1,3 @@
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Form } from "@/components/ui/form";
@@ -11,8 +10,9 @@ import BusinessInfoSection from './sections/BusinessInfoSection';
 import ProjectInfoSection from './sections/ProjectInfoSection';
 import PreferencesSection from './sections/PreferencesSection';
 import { generateOnboardingPDF } from '@/utils/onboardingPdfGenerator';
+import { generateBlankOnboardingPDF } from '@/utils/blankOnboardingPdfGenerator';
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check, Download } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Download, FileText } from 'lucide-react';
 
 const OnboardingForm = () => {
   const { isSubmitting, submitOnboarding } = useOnboardingSubmission();
@@ -41,6 +41,10 @@ const OnboardingForm = () => {
 
   const onSubmit = async (data: OnboardingFormData) => {
     await submitOnboarding(data, () => form.reset());
+  };
+
+  const handleDownloadBlankPDF = () => {
+    generateBlankOnboardingPDF();
   };
 
   const handleDownloadPDF = () => {
@@ -117,15 +121,26 @@ const OnboardingForm = () => {
                 Complete all steps to get started with ƷBI services
               </p>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleDownloadPDF}
-              className="border-gray-600 text-white hover:bg-gray-700"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download PDF
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleDownloadBlankPDF}
+                className="border-gray-600 text-white hover:bg-gray-700"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Blank Form
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleDownloadPDF}
+                className="border-gray-600 text-white hover:bg-gray-700"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download PDF
+              </Button>
+            </div>
           </div>
         </div>
 
