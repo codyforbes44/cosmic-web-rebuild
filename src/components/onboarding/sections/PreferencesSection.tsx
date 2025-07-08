@@ -8,8 +8,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { OnboardingFormData } from '../types/formSchema';
 
 interface PreferencesSectionProps {
@@ -32,83 +33,92 @@ const PreferencesSection: React.FC<PreferencesSectionProps> = ({ control }) => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField
-          control={control}
-          name="preferredContact"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-white">Preferred Contact Method</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="bg-space-deep-blue border-gray-600 text-white">
-                    <SelectValue placeholder="Select method" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {contactMethods.map((method) => (
-                    <SelectItem key={method.value} value={method.value}>
+      <FormField
+        control={control}
+        name="preferredContact"
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormLabel className="text-white">Preferred Contact Method</FormLabel>
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="flex flex-col space-y-2"
+              >
+                {contactMethods.map((method) => (
+                  <div key={method.value} className="flex items-center space-x-2">
+                    <RadioGroupItem 
+                      value={method.value} 
+                      id={method.value}
+                      className="text-accent border-gray-600"
+                    />
+                    <Label 
+                      htmlFor={method.value} 
+                      className="text-gray-300 font-normal cursor-pointer"
+                    >
                       {method.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-        <FormField
-          control={control}
-          name="communicationFrequency"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-white">Communication Frequency</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="bg-space-deep-blue border-gray-600 text-white">
-                    <SelectValue placeholder="Select frequency" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {frequencies.map((frequency) => (
-                    <SelectItem key={frequency.value} value={frequency.value}>
+      <FormField
+        control={control}
+        name="communicationFrequency"
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormLabel className="text-white">Communication Frequency</FormLabel>
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="flex flex-col space-y-2"
+              >
+                {frequencies.map((frequency) => (
+                  <div key={frequency.value} className="flex items-center space-x-2">
+                    <RadioGroupItem 
+                      value={frequency.value} 
+                      id={frequency.value}
+                      className="text-accent border-gray-600"
+                    />
+                    <Label 
+                      htmlFor={frequency.value} 
+                      className="text-gray-300 font-normal cursor-pointer"
+                    >
                       {frequency.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
       <FormField
         control={control}
         name="termsAccepted"
         render={({ field }) => (
-          <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4 border border-gray-600 rounded-lg">
+          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
             <FormControl>
               <Checkbox
                 checked={field.value}
                 onCheckedChange={field.onChange}
+                className="border-gray-600 data-[state=checked]:bg-accent data-[state=checked]:text-black"
               />
             </FormControl>
             <div className="space-y-1 leading-none">
               <FormLabel className="text-white">
                 I accept the terms and conditions
               </FormLabel>
-              <p className="text-sm text-gray-400">
-                By checking this box, you agree to our{' '}
-                <a href="/terms" className="text-accent hover:underline">
-                  Terms of Service
-                </a>{' '}
-                and{' '}
-                <a href="/privacy" className="text-accent hover:underline">
-                  Privacy Policy
-                </a>
-                .
+              <p className="text-xs text-gray-400">
+                By checking this box, you agree to our Terms of Service and Privacy Policy.
               </p>
             </div>
             <FormMessage />

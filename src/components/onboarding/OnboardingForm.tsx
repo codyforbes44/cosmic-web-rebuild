@@ -1,3 +1,4 @@
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Form } from "@/components/ui/form";
@@ -32,6 +33,7 @@ const OnboardingForm = () => {
       website: '',
       primaryGoals: [],
       budget: '',
+      monthlyMarketingBudget: '',
       timeline: '',
       preferredContact: 'email',
       communicationFrequency: 'weekly',
@@ -51,7 +53,7 @@ const OnboardingForm = () => {
     const formData = form.getValues();
     
     // Basic validation to ensure required fields are filled
-    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'companyName', 'industry', 'companySize'];
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'companyName', 'industry', 'companySize', 'monthlyMarketingBudget'];
     const missingFields = requiredFields.filter(field => !formData[field as keyof OnboardingFormData]);
     
     if (missingFields.length > 0 || formData.primaryGoals.length === 0 || !formData.budget || !formData.timeline) {

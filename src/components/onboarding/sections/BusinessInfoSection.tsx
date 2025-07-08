@@ -21,12 +21,16 @@ const BusinessInfoSection: React.FC<BusinessInfoSectionProps> = ({ control }) =>
     'Technology',
     'Healthcare',
     'Finance',
-    'Manufacturing',
-    'Retail',
-    'Real Estate',
-    'Transportation',
     'Education',
-    'Consulting',
+    'Retail',
+    'Manufacturing',
+    'Real Estate',
+    'Professional Services',
+    'Non-Profit',
+    'Government',
+    'Transportation',
+    'Entertainment',
+    'Food & Beverage',
     'Other'
   ];
 
@@ -48,9 +52,9 @@ const BusinessInfoSection: React.FC<BusinessInfoSectionProps> = ({ control }) =>
             <FormLabel className="text-white">Company Name</FormLabel>
             <FormControl>
               <Input 
-                placeholder="Your Company LLC" 
+                placeholder="Acme Corporation" 
                 {...field} 
-                className="bg-space-deep-blue border-gray-600 text-white"
+                className="bg-space-deep-blue border-gray-600 text-white placeholder:text-gray-400"
               />
             </FormControl>
             <FormMessage />
@@ -93,7 +97,7 @@ const BusinessInfoSection: React.FC<BusinessInfoSectionProps> = ({ control }) =>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="bg-space-deep-blue border-gray-600 text-white">
-                    <SelectValue placeholder="Select size" />
+                    <SelectValue placeholder="Select company size" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -118,9 +122,28 @@ const BusinessInfoSection: React.FC<BusinessInfoSectionProps> = ({ control }) =>
             <FormLabel className="text-white">Website (Optional)</FormLabel>
             <FormControl>
               <Input 
-                placeholder="https://yourcompany.com" 
+                placeholder="https://www.example.com" 
+                type="url"
                 {...field} 
-                className="bg-space-deep-blue border-gray-600 text-white"
+                className="bg-space-deep-blue border-gray-600 text-white placeholder:text-gray-400"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={control}
+        name="monthlyMarketingBudget"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="text-white">Monthly Marketing Budget</FormLabel>
+            <FormControl>
+              <Input 
+                placeholder="e.g., $5,000 or Not applicable" 
+                {...field} 
+                className="bg-space-deep-blue border-gray-600 text-white placeholder:text-gray-400"
               />
             </FormControl>
             <FormMessage />

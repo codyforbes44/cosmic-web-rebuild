@@ -23,6 +23,8 @@ export const formSchema = z.object({
     .min(1, { message: "Please select at least one primary goal." }),
   budget: z.string()
     .min(1, { message: "Please select a budget range." }),
+  monthlyMarketingBudget: z.string()
+    .min(1, { message: "Please enter your monthly marketing budget." }),
   timeline: z.string()
     .min(1, { message: "Please select a timeline." }),
   preferredContact: z.enum(['email', 'phone', 'both']),

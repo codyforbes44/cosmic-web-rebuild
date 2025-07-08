@@ -82,6 +82,11 @@ export const generateBlankOnboardingPDF = () => {
   // Website
   doc.text('Website (Optional):', margin, yPosition);
   doc.line(margin + 40, yPosition, pageWidth - margin, yPosition);
+  yPosition += 12;
+  
+  // Monthly Marketing Budget
+  doc.text('Monthly Marketing Budget:', margin, yPosition);
+  doc.line(margin + 55, yPosition, pageWidth - margin, yPosition);
   yPosition += 20;
 
   // Project Information Section

@@ -26,6 +26,7 @@ export const useOnboardingSubmission = () => {
           website: data.website || null,
           primary_goals: data.primaryGoals,
           budget: data.budget,
+          monthly_marketing_budget: data.monthlyMarketingBudget,
           timeline: data.timeline,
           preferred_contact: data.preferredContact,
           communication_frequency: data.communicationFrequency,

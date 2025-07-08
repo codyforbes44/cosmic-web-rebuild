@@ -55,6 +55,7 @@ export const generateOnboardingPDF = (data: OnboardingFormData) => {
     doc.text(`Website: ${data.website}`, margin, yPosition);
     yPosition += 8;
   }
+  doc.text(`Monthly Marketing Budget: ${data.monthlyMarketingBudget}`, margin, yPosition);
   yPosition += 12;
 
   // Project Information Section
