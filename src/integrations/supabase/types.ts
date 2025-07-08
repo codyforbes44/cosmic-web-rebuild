@@ -71,6 +71,66 @@ export type Database = {
         }
         Relationships: []
       }
+      onboarding_submissions: {
+        Row: {
+          budget: string
+          communication_frequency: string
+          company_name: string
+          company_size: string
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          industry: string
+          last_name: string
+          phone: string
+          preferred_contact: string
+          primary_goals: string[]
+          terms_accepted: boolean
+          timeline: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          budget: string
+          communication_frequency: string
+          company_name: string
+          company_size: string
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          industry: string
+          last_name: string
+          phone: string
+          preferred_contact: string
+          primary_goals: string[]
+          terms_accepted?: boolean
+          timeline: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          budget?: string
+          communication_frequency?: string
+          company_name?: string
+          company_size?: string
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          industry?: string
+          last_name?: string
+          phone?: string
+          preferred_contact?: string
+          primary_goals?: string[]
+          terms_accepted?: boolean
+          timeline?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
