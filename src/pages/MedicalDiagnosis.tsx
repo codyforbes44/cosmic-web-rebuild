@@ -232,25 +232,50 @@ const MedicalDiagnosis = () => {
                       {/* Possible Conditions */}
                       {result.possibleConditions?.length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold text-white mb-4">Possible Conditions</h3>
-                          <div className="space-y-3">
+                          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <Heart className="w-5 h-5 text-accent" />
+                            Possible Conditions
+                          </h3>
+                          <div className="space-y-4">
                             {result.possibleConditions.map((condition, index) => (
                               <div
                                 key={index}
-                                className={`p-4 rounded-lg border ${getUrgencyColor(condition.urgency)}`}
+                                className={`p-4 rounded-lg border-l-4 bg-white/5 backdrop-blur-sm ${
+                                  condition.urgency?.toLowerCase() === 'emergency' 
+                                    ? 'border-l-red-500' 
+                                    : condition.urgency?.toLowerCase() === 'urgent'
+                                    ? 'border-l-orange-500'
+                                    : condition.urgency?.toLowerCase() === 'routine'
+                                    ? 'border-l-blue-500'
+                                    : 'border-l-green-500'
+                                }`}
                               >
-                                <div className="flex justify-between items-start mb-2">
-                                  <h4 className="font-semibold">{condition.condition}</h4>
+                                <div className="flex justify-between items-start mb-3">
+                                  <h4 className="font-semibold text-white text-lg">{condition.condition}</h4>
                                   <div className="flex gap-2">
-                                    <span className={`text-xs px-2 py-1 rounded ${getLikelihoodColor(condition.likelihood)} bg-white`}>
-                                      {condition.likelihood}
+                                    <span className={`text-xs px-3 py-1 rounded-full font-medium ${
+                                      condition.likelihood?.toLowerCase() === 'high' 
+                                        ? 'bg-red-100 text-red-800' 
+                                        : condition.likelihood?.toLowerCase() === 'medium'
+                                        ? 'bg-orange-100 text-orange-800'
+                                        : 'bg-green-100 text-green-800'
+                                    }`}>
+                                      {condition.likelihood} Likelihood
                                     </span>
-                                    <span className="text-xs px-2 py-1 rounded bg-white text-gray-700">
+                                    <span className={`text-xs px-3 py-1 rounded-full font-medium ${
+                                      condition.urgency?.toLowerCase() === 'emergency' 
+                                        ? 'bg-red-500 text-white' 
+                                        : condition.urgency?.toLowerCase() === 'urgent'
+                                        ? 'bg-orange-500 text-white'
+                                        : condition.urgency?.toLowerCase() === 'routine'
+                                        ? 'bg-blue-500 text-white'
+                                        : 'bg-green-500 text-white'
+                                    }`}>
                                       {condition.urgency}
                                     </span>
                                   </div>
                                 </div>
-                                <p className="text-sm">{condition.description}</p>
+                                <p className="text-gray-300 leading-relaxed">{condition.description}</p>
                               </div>
                             ))}
                           </div>
@@ -260,23 +285,28 @@ const MedicalDiagnosis = () => {
                       {/* Recommendations */}
                       {result.recommendations?.length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold text-white mb-4">Recommendations</h3>
-                          <ul className="space-y-2">
-                            {result.recommendations.map((rec, index) => (
-                              <li key={index} className="text-gray-300 flex items-start gap-2">
-                                <span className="text-accent mt-1">•</span>
-                                {rec}
-                              </li>
-                            ))}
-                          </ul>
+                          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <Stethoscope className="w-5 h-5 text-accent" />
+                            Medical Recommendations
+                          </h3>
+                          <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10">
+                            <ul className="space-y-3">
+                              {result.recommendations.map((rec, index) => (
+                                <li key={index} className="text-gray-300 flex items-start gap-3 leading-relaxed">
+                                  <span className="text-accent mt-1 font-bold">•</span>
+                                  <span>{rec}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
                       )}
 
                       {/* Disclaimer */}
                       {result.disclaimer && (
-                        <Alert className="border-blue-500 bg-blue-50">
-                          <AlertTriangle className="h-4 w-4" />
-                          <AlertDescription className="text-blue-700">
+                        <Alert className="border-amber-500 bg-amber-50/10 backdrop-blur-sm">
+                          <AlertTriangle className="h-4 w-4 text-amber-500" />
+                          <AlertDescription className="text-amber-200">
                             {result.disclaimer}
                           </AlertDescription>
                         </Alert>
