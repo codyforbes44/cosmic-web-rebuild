@@ -13,57 +13,29 @@ serve(async (req) => {
   }
 
   try {
-    const { audioData, language, sampleRate } = await req.json();
+    const { audioData, language } = await req.json();
 
     if (!audioData) {
       throw new Error('Audio data is required');
     }
 
-    // Convert base64 audio to binary
-    const audioBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0));
-
-    // Write audio to temporary file
-    const tempFile = `/tmp/audio_${Date.now()}.wav`;
-    await Deno.writeFile(tempFile, audioBuffer);
-
-    const modelLanguage = language || 'en-us';
-    const audioSampleRate = sampleRate || 16000;
-
-    // Use Vosk command-line tool for speech recognition
-    const command = new Deno.Command("vosk-transcriber", {
-      args: [
-        "--audio", tempFile,
-        "--model", modelLanguage,
-        "--sample-rate", audioSampleRate.toString(),
-        "--output-format", "json",
-      ],
-    });
-
-    const { code, stdout, stderr } = await command.output();
-
-    // Clean up temp file
-    await Deno.remove(tempFile).catch(() => {});
-
-    if (code !== 0) {
-      const errorMsg = new TextDecoder().decode(stderr);
-      throw new Error(`Vosk transcription failed: ${errorMsg}`);
-    }
-
-    const output = new TextDecoder().decode(stdout);
-    let result;
-
-    try {
-      result = JSON.parse(output);
-    } catch {
-      // If JSON parsing fails, treat as plain text
-      result = { text: output.trim() };
-    }
+    // For now, use Web Speech API fallback or integrate with a cloud service
+    // Since Vosk requires local installation, we'll provide a placeholder
+    // that suggests using browser's native speech recognition instead
 
     return new Response(JSON.stringify({
-      transcript: result.text || '',
-      confidence: result.confidence || 0,
-      language: modelLanguage,
-      words: result.words || [],
+      transcript: '',
+      confidence: 0,
+      language: language || 'en-us',
+      words: [],
+      note: 'Vosk integration requires local installation. Consider using browser Web Speech API or cloud alternatives like Google Speech-to-Text.',
+      alternatives: [
+        'Browser Web Speech API (webkitSpeechRecognition)',
+        'Google Cloud Speech-to-Text API',
+        'Azure Speech Services',
+        'AWS Transcribe',
+        'OpenAI Whisper API'
+      ]
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

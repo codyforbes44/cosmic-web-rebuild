@@ -6,16 +6,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Available Edge TTS voices
-const EDGE_VOICES = {
-  'en-US-AriaNeural': 'Female, Friendly',
-  'en-US-JennyNeural': 'Female, Assistant',
-  'en-US-GuyNeural': 'Male, News',
-  'en-US-DavisNeural': 'Male, Chat',
-  'en-GB-SoniaNeural': 'Female, British',
-  'en-GB-RyanNeural': 'Male, British',
-};
-
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -33,7 +23,7 @@ serve(async (req) => {
     const speechRate = rate || '0%';
     const speechPitch = pitch || '0%';
 
-    // Create SSML for Edge TTS
+    // Create SSML for Microsoft Speech API
     const ssml = `
       <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
         <voice name="${selectedVoice}">
@@ -44,32 +34,39 @@ serve(async (req) => {
       </speak>
     `;
 
-    // Use edge-tts command-line tool via subprocess
-    const command = new Deno.Command("edge-tts", {
-      args: [
-        "--text", text,
-        "--voice", selectedVoice,
-        "--write-media", "/tmp/output.mp3",
-      ],
-    });
+    // Use Microsoft Cognitive Services Speech API
+    const speechKey = Deno.env.get('AZURE_SPEECH_KEY');
+    const speechRegion = Deno.env.get('AZURE_SPEECH_REGION') || 'eastus';
 
-    const { code } = await command.output();
-
-    if (code !== 0) {
-      throw new Error('Failed to generate speech with Edge TTS');
+    if (!speechKey) {
+      throw new Error('Azure Speech key not configured');
     }
 
-    // Read the generated audio file
-    const audioData = await Deno.readFile('/tmp/output.mp3');
-    const base64Audio = btoa(String.fromCharCode(...audioData));
+    const response = await fetch(
+      `https://${speechRegion}.tts.speech.microsoft.com/cognitiveservices/v1`,
+      {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': speechKey,
+          'Content-Type': 'application/ssml+xml',
+          'X-Microsoft-OutputFormat': 'audio-16khz-128kbitrate-mono-mp3',
+        },
+        body: ssml,
+      }
+    );
 
-    // Clean up temp file
-    await Deno.remove('/tmp/output.mp3').catch(() => {});
+    if (!response.ok) {
+      throw new Error(`Azure Speech API error: ${response.statusText}`);
+    }
+
+    // Convert audio to base64
+    const arrayBuffer = await response.arrayBuffer();
+    const base64Audio = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
 
     return new Response(JSON.stringify({
       audioContent: base64Audio,
       voice: selectedVoice,
-      availableVoices: EDGE_VOICES,
+      format: 'mp3',
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -77,7 +74,7 @@ serve(async (req) => {
     console.error('Error in edge-tts function:', error);
     return new Response(JSON.stringify({ 
       error: error.message,
-      availableVoices: EDGE_VOICES 
+      note: 'Requires Azure Speech Service configuration'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
