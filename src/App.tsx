@@ -47,6 +47,7 @@ import Maps from "./pages/Maps";
 import ChatbotProducts from "./pages/ChatbotProducts";
 import SalesPresentationGenerator from "./pages/SalesPresentationGenerator";
 import Onboarding from "./pages/Onboarding";
+import MultiAI from "./pages/MultiAI";
 
 // Import new service pages
 import DigitalMarketing from "./pages/DigitalMarketing";
@@ -120,6 +121,7 @@ function App() {
                 <Route path="/maps" element={<Maps />} />
                 <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
                 <Route path="/chatbot-products" element={<ChatbotProducts />} />
+                <Route path="/multi-ai" element={<MultiAI />} />
 
                 {/* Protected routes */}
                 <Route path="/admin" element={
