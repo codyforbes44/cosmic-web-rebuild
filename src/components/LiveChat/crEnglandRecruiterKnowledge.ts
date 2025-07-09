@@ -1,3 +1,5 @@
+import { conversationHandler, CREnglandConversationHandler } from './crEnglandConversationScript';
+
 interface CREnglandKnowledgeCategory {
   patterns: RegExp[];
   responses: string[];
@@ -15,6 +17,24 @@ interface ApplicationData {
 }
 
 export const crEnglandKnowledgeBase: Record<string, CREnglandKnowledgeCategory> = {
+  applicationStart: {
+    patterns: [
+      /apply/i,
+      /application/i,
+      /start.*application/i,
+      /begin.*application/i,
+      /get.*started/i,
+      /sign.*up/i,
+      /join/i,
+      /hire.*me/i,
+      /become.*driver/i,
+      /driving.*job/i
+    ],
+    responses: [
+      "I'd be happy to help you start your application! Let me begin the process right now."
+    ]
+  },
+
   jobTypes: {
     patterns: [
       /what.*types.*jobs/i,
@@ -163,6 +183,45 @@ export const crEnglandKnowledgeBase: Record<string, CREnglandKnowledgeCategory> 
   }
 };
 
+export function findCREnglandResponse(userInput: string): string | undefined {
+  const input = userInput.toLowerCase();
+  
+  // Check if user wants to start the application process
+  if (CREnglandConversationHandler.shouldStartApplication(userInput)) {
+    return conversationHandler.startConversation();
+  }
+  
+  // If already in conversation mode, process the response
+  if (conversationHandler.isInScriptMode() && !conversationHandler.isComplete()) {
+    return conversationHandler.processResponse(userInput);
+  }
+  
+  // Otherwise, use FAQ responses
+  for (const [category, data] of Object.entries(crEnglandKnowledgeBase)) {
+    for (const pattern of data.patterns) {
+      if (pattern.test(input)) {
+        const responses = data.responses;
+        return responses[Math.floor(Math.random() * responses.length)];
+      }
+    }
+  }
+  
+  return undefined;
+}
+
+export function getCREnglandSuggestedQuestions(): string[] {
+  return [
+    "What types of driving jobs do you offer?",
+    "Do you provide CDL training?",
+    "What are the requirements to apply?",
+    "What benefits do you offer?",
+    "How can I apply?",
+    "Are there jobs available in Texas?",
+    "What kind of trucks will I drive?",
+    "Is there room for career advancement?"
+  ];
+}
+
 export const applicationQuestions = [
   {
     field: 'fullName',
@@ -200,34 +259,6 @@ export const applicationQuestions = [
     pattern: /location|city|state/i
   }
 ];
-
-export function findCREnglandResponse(userInput: string): string | undefined {
-  const input = userInput.toLowerCase();
-  
-  for (const [category, data] of Object.entries(crEnglandKnowledgeBase)) {
-    for (const pattern of data.patterns) {
-      if (pattern.test(input)) {
-        const responses = data.responses;
-        return responses[Math.floor(Math.random() * responses.length)];
-      }
-    }
-  }
-  
-  return undefined;
-}
-
-export function getCREnglandSuggestedQuestions(): string[] {
-  return [
-    "What types of driving jobs do you offer?",
-    "Do you provide CDL training?",
-    "What are the requirements to apply?",
-    "What benefits do you offer?",
-    "How can I apply?",
-    "Are there jobs available in Texas?",
-    "What kind of trucks will I drive?",
-    "Is there room for career advancement?"
-  ];
-}
 
 export function getNextApplicationQuestion(applicationData: ApplicationData): string | null {
   for (const question of applicationQuestions) {
