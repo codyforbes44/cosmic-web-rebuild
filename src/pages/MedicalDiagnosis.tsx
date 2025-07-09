@@ -101,7 +101,7 @@ const MedicalDiagnosis = () => {
   return <>
       <Helmet>
         <title>Medical Diagnosis Assistant | AI-Powered Symptom Analysis</title>
-        <meta name="description" content="Get AI-powered medical condition suggestions based on your symptoms. Educational tool to help understand potential health conditions." />
+        <meta name="description" content="Get AI-powered medical condition suggestions based on your symptoms." />
       </Helmet>
       
       <div className="min-h-screen bg-space-dark-blue">
@@ -120,9 +120,7 @@ const MedicalDiagnosis = () => {
                 Medical Diagnosis Assistant
               </h1>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                AI-powered symptom analysis to help you understand potential medical conditions. 
-                Always consult with healthcare professionals for proper diagnosis.
-              </p>
+                AI-powered symptom analysis to help you understand potential medical conditions. </p>
             </div>
 
             {/* Important Disclaimer */}
