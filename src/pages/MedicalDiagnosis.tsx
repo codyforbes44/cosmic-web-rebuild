@@ -234,12 +234,7 @@ const MedicalDiagnosis = () => {
                         </div>}
 
                       {/* Disclaimer */}
-                      {result.disclaimer && <Alert className="border-amber-500 bg-amber-50/10 backdrop-blur-sm">
-                          <AlertTriangle className="h-4 w-4 text-amber-500" />
-                          <AlertDescription className="text-amber-200">
-                            {result.disclaimer}
-                          </AlertDescription>
-                        </Alert>}
+                      {result.disclaimer}
                     </div>}
                 </CardContent>
               </Card>
