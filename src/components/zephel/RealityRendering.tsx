@@ -1,29 +1,8 @@
 import React from 'react';
-import { AdvancedRealityRenderer } from './reality/AdvancedRealityRenderer';
+import { RealityRenderer } from '@/components/reality/RealityRenderer';
+import { Construct, QuantumField } from '@/types/reality';
 
-// Legacy interface for backward compatibility
-interface Construct {
-  id: string;
-  name: string;
-  type: 'cube' | 'sphere' | 'torus' | 'complex';
-  position: [number, number, number];
-  rotation: [number, number, number];
-  scale: [number, number, number];
-  color: string;
-  metadata: {
-    created: string;
-    stability: number;
-    quantum_signature: string;
-  };
-}
-
-interface QuantumField {
-  intensity: number;
-  phase: number;
-  harmonics: number[];
-}
-
-// Legacy Reality Rendering Component - now using Advanced Renderer
+// Legacy Reality Rendering Component - now using new RealityRenderer
 interface RealityRenderingProps {
   constructs?: Construct[];
   onConstructSelect?: (construct: Construct) => void;
@@ -36,7 +15,7 @@ export const RealityRendering: React.FC<RealityRenderingProps> = ({
   quantumField = { intensity: 0.5, phase: 1.0, harmonics: [1, 2, 3] }
 }) => {
   return (
-    <AdvancedRealityRenderer
+    <RealityRenderer
       quantumField={quantumField}
       onModeChange={(mode) => console.log('Rendering mode changed to:', mode)}
       metrics={{
