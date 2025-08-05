@@ -23,7 +23,7 @@ const INITIAL_STATE: WeatherState = {
   data: null,
   loading: true,
   error: null,
-  locationStatus: 'Getting your location...'
+  locationStatus: 'Generating weather data...'
 };
 
 const WeatherWidget = ({ 
@@ -42,23 +42,15 @@ const WeatherWidget = ({
       updateState({ 
         loading: true, 
         error: null, 
-        locationStatus: 'Getting your location...' 
+        locationStatus: 'Generating weather data...' 
       });
       
       const data = await fetchWeatherData(units);
       
       if (data) {
-        let error = null;
-        
-        if (data.current.location === 'Demo City') {
-          error = 'Unable to fetch local weather - showing demo data';
-        } else if (data.current.location === 'Irving, TX') {
-          error = 'Using default location - allow location access for local weather';
-        }
-        
         updateState({ 
           data, 
-          error, 
+          error: null,
           locationStatus: '',
           loading: false 
         });
@@ -93,15 +85,13 @@ const WeatherWidget = ({
   const renderError = () => state.error && (
     <div className="flex justify-between items-center mb-2">
       <WeatherError error={state.error} />
-      {state.error.includes('default location') && (
-        <button
-          onClick={handleRetry}
-          className="text-brand-gold hover:text-yellow-300 transition-colors p-1"
-          title="Retry location detection"
-        >
-          <RefreshCw size={14} />
-        </button>
-      )}
+      <button
+        onClick={handleRetry}
+        className="text-brand-gold hover:text-yellow-300 transition-colors p-1"
+        title="Retry weather generation"
+      >
+        <RefreshCw size={14} />
+      </button>
     </div>
   );
 

@@ -8,12 +8,6 @@ interface WeatherErrorProps {
 
 const WeatherError = ({ error }: WeatherErrorProps) => {
   const getIcon = () => {
-    if (error.includes('location') || error.includes('default location')) {
-      return <MapPin size={16} className="text-amber-400" />;
-    }
-    if (error.includes('demo data')) {
-      return <Info size={16} className="text-amber-400" />;
-    }
     if (error.includes('Failed to load')) {
       return <WifiOff size={16} className="text-amber-400" />;
     }
@@ -21,12 +15,6 @@ const WeatherError = ({ error }: WeatherErrorProps) => {
   };
 
   const getDisplayText = () => {
-    if (error.includes('default location')) {
-      return 'Enable location for local weather';
-    }
-    if (error.includes('demo data')) {
-      return 'Demo data';
-    }
     if (error.includes('Failed to load')) {
       return 'Weather unavailable';
     }

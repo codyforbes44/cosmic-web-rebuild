@@ -1,9 +1,7 @@
 
 import { WeatherResponse } from './types';
 import { getCachedWeather, cacheWeatherData } from './CacheService';
-import { fetchLocation } from './LocationService';
-import { fetchWeatherByLocation } from './WeatherApiService';
-import { generateFallbackWeatherData } from './DemoDataService';
+import { fetchOpenAIWeather } from './OpenAIWeatherService';
 
 const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes in milliseconds
 
@@ -20,21 +18,16 @@ export const fetchWeatherData = async (units: 'imperial' | 'metric'): Promise<We
       }
     }
     
-    // Fetch fresh data
-    const location = await fetchLocation();
-    const weatherData = await fetchWeatherByLocation(location, units);
+    // Generate weather data using OpenAI
+    const weatherData = await fetchOpenAIWeather(units);
     
     // Cache the weather data
     cacheWeatherData(weatherData, units);
     return weatherData;
     
   } catch (err) {
-    console.error('Weather fetch error:', err);
-    
-    // Only use demo data as absolute last resort
-    console.warn('Falling back to demo data - API services unavailable');
-    const fallbackData = generateFallbackWeatherData(units);
-    return fallbackData;
+    console.error('Weather generation error:', err);
+    throw err;
   }
 };
 
