@@ -7,9 +7,18 @@ interface GeolocationPosition {
   };
 }
 
+interface LocationResponse {
+  city?: string;
+  region?: string;
+  state?: string;
+  name?: string;
+}
+
+const LOCATION_TIMEOUT = 10000; // 10 seconds
+const POSITION_CACHE_TIME = 300000; // 5 minutes
+
 const reverseGeocode = async (lat: number, lon: number): Promise<string> => {
   try {
-    // Use OpenWeatherMap's reverse geocoding API
     const response = await fetch(
       `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=9de243494c0b295cca9337e1e96b00e2`
     );
@@ -22,82 +31,74 @@ const reverseGeocode = async (lat: number, lon: number): Promise<string> => {
       }
     }
   } catch (err) {
-    console.log('Reverse geocoding failed:', err);
+    // Silent fail - will return coordinates as fallback
   }
   
   return `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
 };
 
-const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
+const getCurrentPosition = (): Promise<GeolocationPosition> => {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      reject(new Error('Geolocation is not supported by this browser'));
+      reject(new Error('Geolocation not supported'));
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) => resolve(position),
-      (error) => reject(error),
+      resolve,
+      reject,
       {
         enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 300000 // Cache position for 5 minutes
+        timeout: LOCATION_TIMEOUT,
+        maximumAge: POSITION_CACHE_TIME
       }
     );
   });
 };
 
-export const fetchLocation = async (): Promise<string> => {
-  let userLocation: string | null = null;
-  
-  // First attempt: Browser Geolocation API (most accurate)
+const fetchIPLocation = async (url: string): Promise<string | null> => {
   try {
-    console.log('LocationService: Attempting to get precise location...');
-    const position = await getCurrentPositionPromise();
-    const { latitude, longitude } = position.coords;
+    const response = await fetch(url);
+    if (!response.ok) return null;
     
-    console.log('LocationService: Got coordinates:', { latitude, longitude });
-    userLocation = await reverseGeocode(latitude, longitude);
-    console.log('LocationService: Got location from GPS:', userLocation);
+    const data: LocationResponse = await response.json();
     
-    if (userLocation) return userLocation;
-  } catch (err) {
-    console.log('LocationService: GPS location failed:', err.message);
+    // Validate data quality
+    if (!data.city || data.city === 'undefined') return null;
+    
+    return data.region || data.state 
+      ? `${data.city}, ${data.region || data.state}` 
+      : data.city;
+  } catch {
+    return null;
   }
-  
-  // Second attempt: ipapi.co (same service used by visitor tracking)
-  try {
-    console.log('LocationService: Trying IP-based location...');
-    const geoResponse = await fetch('https://ipapi.co/json/');
-    if (geoResponse.ok) {
-      const geoData = await geoResponse.json();
-      // Use city, state format for better weather API results
-      userLocation = geoData.region ? `${geoData.city}, ${geoData.region}` : geoData.city;
-      console.log('LocationService: Got location from ipapi.co:', userLocation);
-      
-      if (userLocation && userLocation !== 'undefined, undefined') return userLocation;
-    }
-  } catch (err) {
-    console.log('LocationService: Primary IP service failed:', err);
-  }
+};
 
-  // Third attempt: alternative geo API if first one fails
+export const fetchLocation = async (): Promise<string> => {
+  // Try GPS location first
   try {
-    console.log('LocationService: Trying backup IP service...');
-    const backupGeoResponse = await fetch('https://geolocation-db.com/json/');
-    if (backupGeoResponse.ok) {
-      const backupGeoData = await backupGeoResponse.json();
-      userLocation = backupGeoData.state ? `${backupGeoData.city}, ${backupGeoData.state}` : backupGeoData.city;
-      console.log('LocationService: Got location from backup service:', userLocation);
-      
-      if (userLocation && userLocation !== 'undefined, undefined') return userLocation;
+    const position = await getCurrentPosition();
+    const { latitude, longitude } = position.coords;
+    const location = await reverseGeocode(latitude, longitude);
+    
+    if (location && !location.includes(',') === false) {
+      return location;
     }
-  } catch (err) {
-    console.log('LocationService: Secondary IP service failed:', err);
+  } catch {
+    // Continue to IP-based fallbacks
   }
   
-  // If all attempts fail, use a default city
-  const finalLocation = userLocation || 'Irving, TX';
-  console.log('LocationService: Final location (using fallback):', finalLocation);
-  return finalLocation;
+  // Try IP-based location services
+  const ipServices = [
+    'https://ipapi.co/json/',
+    'https://geolocation-db.com/json/'
+  ];
+  
+  for (const serviceUrl of ipServices) {
+    const location = await fetchIPLocation(serviceUrl);
+    if (location) return location;
+  }
+  
+  // Final fallback
+  return 'Irving, TX';
 };
