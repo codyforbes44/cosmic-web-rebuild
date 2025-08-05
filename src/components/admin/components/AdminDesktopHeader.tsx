@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Settings, Bell, Menu, User, LogOut, Shield } from 'lucide-react';
-import { useAuth } from '@/components/auth/AuthProvider';
+import { RefreshCw, Settings, Bell, Menu } from 'lucide-react';
 import { useSidebar } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
@@ -14,6 +13,7 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
+import UserMenu from '@/components/auth/UserMenu';
 
 interface AdminDesktopHeaderProps {
   title: string;
@@ -30,23 +30,13 @@ export const AdminDesktopHeader: React.FC<AdminDesktopHeaderProps> = ({
   activeTab,
   isLoading = false
 }) => {
-  const { user, signOut } = useAuth();
   const { toggleSidebar } = useSidebar();
   const navigate = useNavigate();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
-  };
-
   const handleSettingsClick = () => {
     // Navigate to system settings tab
     navigate('/admin?tab=system');
-  };
-
-  const handleProfileClick = () => {
-    navigate('/profile');
   };
 
   return (
@@ -146,59 +136,9 @@ export const AdminDesktopHeader: React.FC<AdminDesktopHeaderProps> = ({
             </div>
 
             {/* User Menu */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="flex items-center space-x-3 pl-4 border-l border-gray-700 cursor-pointer hover:bg-gray-700/50 rounded-lg p-2 transition-colors">
-                  <div className="text-right hidden lg:block">
-                    <p className="text-sm font-medium text-white">Admin User</p>
-                    <p className="text-xs text-gray-400">{user?.email}</p>
-                  </div>
-                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                    <span className="text-sm font-bold text-white">
-                      {user?.email?.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-gray-800 border-gray-700" align="end">
-                <DropdownMenuLabel className="text-white">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium">Admin User</p>
-                    <p className="text-xs text-gray-400">{user?.email}</p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-gray-700" />
-                <DropdownMenuItem 
-                  onClick={handleProfileClick}
-                  className="text-gray-300 hover:bg-gray-700 focus:bg-gray-700"
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  Profile Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => navigate('/admin?tab=security')}
-                  className="text-gray-300 hover:bg-gray-700 focus:bg-gray-700"
-                >
-                  <Shield className="w-4 h-4 mr-2" />
-                  Security Center
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={handleSettingsClick}
-                  className="text-gray-300 hover:bg-gray-700 focus:bg-gray-700"
-                >
-                  <Settings className="w-4 h-4 mr-2" />
-                  System Settings
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-gray-700" />
-                <DropdownMenuItem 
-                  onClick={handleSignOut}
-                  className="text-red-400 hover:bg-gray-700 focus:bg-gray-700"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="pl-4 border-l border-gray-700">
+              <UserMenu />
+            </div>
           </div>
         </div>
       </div>
