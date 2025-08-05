@@ -27,3 +27,9 @@ export {
   cleanupAuthState,
   validateSessionSecurity
 } from './authSecurity';
+
+// Content Security Policy
+export {
+  applyCSPHeaders,
+  initializeSecurityHeaders
+} from './csp';

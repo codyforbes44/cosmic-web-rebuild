@@ -13,10 +13,25 @@ serve(async (req) => {
   }
 
   try {
-    const { audioData, language } = await req.json();
+    const body = await req.json();
+    const { audioData, language } = body;
 
+    // Enhanced input validation
     if (!audioData) {
       throw new Error('Audio data is required');
+    }
+    
+    if (typeof audioData !== 'string') {
+      throw new Error('Audio data must be a string');
+    }
+    
+    if (language && typeof language !== 'string') {
+      throw new Error('Language must be a string');
+    }
+    
+    // Validate language format if provided
+    if (language && !/^[a-z]{2}(-[a-z]{2})?$/i.test(language)) {
+      throw new Error('Invalid language format');
     }
 
     // For now, use Web Speech API fallback or integrate with a cloud service

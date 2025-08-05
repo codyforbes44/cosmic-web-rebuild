@@ -35,14 +35,27 @@ const ElevenLabsEmbed = () => {
     };
   }, []);
 
-  const embedHTML = `
-    <elevenlabs-convai agent-id="agent_01jwedntnjf7tt0qma00a2276r"></elevenlabs-convai>
-  `;
+  // Safe implementation without dangerouslySetInnerHTML
+  useEffect(() => {
+    const convaiElement = document.createElement('elevenlabs-convai');
+    convaiElement.setAttribute('agent-id', 'agent_01jwedntnjf7tt0qma00a2276r');
+    
+    const container = document.getElementById('elevenlabs-container');
+    if (container) {
+      container.appendChild(convaiElement);
+    }
+
+    return () => {
+      if (container && convaiElement.parentNode) {
+        container.removeChild(convaiElement);
+      }
+    };
+  }, []);
 
   return (
     <div 
+      id="elevenlabs-container" 
       className="min-h-screen w-full"
-      dangerouslySetInnerHTML={{ __html: embedHTML }}
     />
   );
 };

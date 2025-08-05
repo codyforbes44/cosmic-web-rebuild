@@ -3,6 +3,12 @@ import { useState } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { FormData } from '../types/formSchema';
+import { 
+  sanitizeInput, 
+  isValidEmail, 
+  detectInjection, 
+  checkRateLimit 
+} from '@/utils/security';
 
 export const useQuoteSubmission = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -11,9 +17,45 @@ export const useQuoteSubmission = () => {
     setIsSubmitting(true);
     
     try {
+      // Rate limiting check
+      const rateLimitCheck = checkRateLimit('quote_request', 3, 15 * 60 * 1000);
+      if (!rateLimitCheck.allowed) {
+        toast.error("Too many quote requests. Please wait before submitting again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Validate email format
+      if (!isValidEmail(data.email)) {
+        toast.error("Please enter a valid email address.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Check for injection attempts
+      const fieldsToCheck = [data.fullName, data.companyName, data.projectDescription];
+      if (fieldsToCheck.some(field => field && detectInjection(field))) {
+        toast.error("Invalid input detected. Please check your submission.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Sanitize input data and map to database schema
+      const sanitizedData = {
+        full_name: sanitizeInput(data.fullName),
+        company_name: sanitizeInput(data.companyName),
+        project_description: sanitizeInput(data.projectDescription),
+        email: sanitizeInput(data.email),
+        phone: data.phone ? sanitizeInput(data.phone) : data.phone,
+        service_type: data.serviceType,
+        budget: data.budget,
+        timeline: data.timeline,
+        terms_accepted: data.termsAccepted,
+      };
+
       const { error } = await supabase
         .from('quote_requests')
-        .insert([data]);
+        .insert([sanitizedData]);
       
       if (error) {
         console.error('Error submitting quote request:', error);
@@ -23,7 +65,6 @@ export const useQuoteSubmission = () => {
       }
       
       toast.success("Thank you for your request! We'll get back to you with a quote within 1-2 business days.");
-      console.log("Form submitted:", data);
       resetForm();
     } catch (err) {
       console.error('Exception when submitting quote request:', err);
