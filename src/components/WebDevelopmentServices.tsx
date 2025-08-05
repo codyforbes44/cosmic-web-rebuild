@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, Star, Code, Smartphone, Globe, Zap } from 'lucide-react';
+import { ArrowRight, Code, Smartphone, Globe, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
@@ -37,62 +36,6 @@ const WebDevelopmentServices = () => {
     }
   ];
 
-  const pricingTiers = [
-    {
-      name: "Starter Website",
-      price: "$497",
-      originalPrice: "$1,500",
-      description: "Perfect for small businesses getting started online",
-      features: [
-        "5-page responsive website",
-        "Mobile-optimized design",
-        "Contact form integration",
-        "Basic SEO optimization",
-        "1 month free support",
-        "Free SSL certificate"
-      ],
-      popular: false,
-      color: "from-blue-500 to-blue-600"
-    },
-    {
-      name: "Professional Suite",
-      price: "$997",
-      originalPrice: "$3,500",
-      description: "Complete solution for growing businesses",
-      features: [
-        "Up to 15 pages",
-        "Custom design & branding",
-        "CMS integration",
-        "Advanced SEO package",
-        "Analytics dashboard",
-        "3 months free support",
-        "Payment gateway setup",
-        "Social media integration"
-      ],
-      popular: true,
-      color: "from-purple-500 to-purple-600"
-    },
-    {
-      name: "Enterprise Platform",
-      price: "$1,997",
-      originalPrice: "$8,000",
-      description: "Full-scale web application for large organizations",
-      features: [
-        "Unlimited pages",
-        "Custom web application",
-        "User authentication system",
-        "Database integration",
-        "API development",
-        "6 months free support",
-        "Performance optimization",
-        "Security implementation",
-        "Third-party integrations"
-      ],
-      popular: false,
-      color: "from-green-500 to-green-600"
-    }
-  ];
-
   return (
     <section className="py-24 bg-gradient-to-br from-space-deep-blue/20 to-space-dark-blue/40 relative overflow-hidden">
       {/* Background Elements */}
@@ -116,15 +59,11 @@ const WebDevelopmentServices = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <span className="inline-block text-accent mb-4 text-sm md:text-base tracking-wider font-medium px-4 py-2 bg-accent/10 rounded-full border border-accent/20">
-              LIMITED TIME OFFER - SAVE UP TO 75%
-            </span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Professional Web Development
             </h2>
             <p className="text-gray-300 max-w-3xl mx-auto text-lg mb-8">
-              Launch your digital presence with our expert web development services. 
-              <span className="text-accent block mt-2">Introductory pricing available for the first 50 clients!</span>
+              Launch your digital presence with our expert web development services.
             </p>
           </motion.div>
         </div>
@@ -154,73 +93,6 @@ const WebDevelopmentServices = () => {
           ))}
         </div>
 
-        {/* Pricing Section */}
-        <div className="text-center mb-16">
-          <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-            Introductory Pricing
-          </h3>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-            Get professional web development at unbeatable prices. Limited time offer for new clients.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {pricingTiers.map((tier, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className={`relative ${tier.popular ? 'lg:scale-105' : ''}`}
-            >
-              {tier.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                  <span className="bg-gradient-to-r from-accent to-yellow-500 text-black px-4 py-2 rounded-full text-sm font-bold flex items-center">
-                    <Star className="h-4 w-4 mr-1" />
-                    MOST POPULAR
-                  </span>
-                </div>
-              )}
-              
-              <Card className={`bg-space-deep-blue/60 backdrop-blur-sm border-2 ${tier.popular ? 'border-accent' : 'border-gray-800'} hover:border-gray-600 transition-all duration-300 h-full`}>
-                <CardHeader className="text-center pb-6">
-                  <CardTitle className="text-2xl font-bold text-white mb-2">{tier.name}</CardTitle>
-                  <div className="mb-4">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <span className="text-4xl font-bold text-white">{tier.price}</span>
-                      <span className="text-gray-400 line-through text-xl">{tier.originalPrice}</span>
-                    </div>
-                    <div className="text-accent font-semibold">
-                      Save {Math.round((1 - parseInt(tier.price.replace('$', '').replace(',', '')) / parseInt(tier.originalPrice.replace('$', '').replace(',', ''))) * 100)}%
-                    </div>
-                  </div>
-                  <p className="text-gray-300">{tier.description}</p>
-                </CardHeader>
-                
-                <CardContent>
-                  <ul className="space-y-3 mb-8">
-                    {tier.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start">
-                        <Check className="h-5 w-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-200 text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <Button 
-                    className={`w-full bg-gradient-to-r ${tier.color} hover:opacity-90 text-white py-6 text-lg font-semibold`}
-                    onClick={() => setDemoModalOpen(true)}
-                  >
-                    Get Started Today
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -233,8 +105,7 @@ const WebDevelopmentServices = () => {
             Ready to Launch Your Website?
           </h3>
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join hundreds of satisfied clients who have transformed their business with our web development services. 
-            Limited spots available at these introductory prices!
+            Join hundreds of satisfied clients who have transformed their business with our web development services.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
