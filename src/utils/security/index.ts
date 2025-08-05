@@ -33,3 +33,9 @@ export {
   applyCSPHeaders,
   initializeSecurityHeaders
 } from './csp';
+
+// Security logging
+export {
+  securityLogger,
+  type SecurityEvent
+} from './securityLogger';

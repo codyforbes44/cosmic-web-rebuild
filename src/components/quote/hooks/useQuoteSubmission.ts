@@ -7,7 +7,8 @@ import {
   sanitizeInput, 
   isValidEmail, 
   detectInjection, 
-  checkRateLimit 
+  checkRateLimit,
+  securityLogger 
 } from '@/utils/security';
 
 export const useQuoteSubmission = () => {
@@ -20,6 +21,7 @@ export const useQuoteSubmission = () => {
       // Rate limiting check
       const rateLimitCheck = checkRateLimit('quote_request', 3, 15 * 60 * 1000);
       if (!rateLimitCheck.allowed) {
+        securityLogger.logRateLimitViolation('quote_request', 3);
         toast.error("Too many quote requests. Please wait before submitting again.");
         setIsSubmitting(false);
         return;
@@ -27,6 +29,12 @@ export const useQuoteSubmission = () => {
 
       // Validate email format
       if (!isValidEmail(data.email)) {
+        securityLogger.logEvent({
+          type: 'input_validation',
+          severity: 'low',
+          message: 'Invalid email format in quote submission',
+          details: { email: data.email.substring(0, 10) + '...' }
+        });
         toast.error("Please enter a valid email address.");
         setIsSubmitting(false);
         return;
@@ -34,10 +42,13 @@ export const useQuoteSubmission = () => {
 
       // Check for injection attempts
       const fieldsToCheck = [data.fullName, data.companyName, data.projectDescription];
-      if (fieldsToCheck.some(field => field && detectInjection(field))) {
-        toast.error("Invalid input detected. Please check your submission.");
-        setIsSubmitting(false);
-        return;
+      for (const field of fieldsToCheck) {
+        if (field && detectInjection(field)) {
+          securityLogger.logInjectionAttempt(field, 'form_input');
+          toast.error("Invalid input detected. Please check your submission.");
+          setIsSubmitting(false);
+          return;
+        }
       }
 
       // Sanitize input data and map to database schema

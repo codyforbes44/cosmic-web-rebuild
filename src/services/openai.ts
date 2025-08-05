@@ -64,13 +64,9 @@ export class OpenAIService {
   }
 
   private getApiKey(): string {
-    // In a production app, this would come from environment variables
-    // For now, we'll throw an error if not available
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      throw new Error('OpenAI API key not configured');
-    }
-    return apiKey;
+    // Security fix: This service should only be used server-side
+    // Frontend clients should not directly access OpenAI API
+    throw new Error('OpenAI API access should be handled server-side via edge functions for security');
   }
 }
 
