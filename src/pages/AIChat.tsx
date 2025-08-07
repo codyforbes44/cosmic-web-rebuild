@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import StarBackground from '@/components/StarBackground';
@@ -8,6 +8,33 @@ import BreadcrumbNav from '@/components/BreadcrumbNav';
 import { MessageCircle } from 'lucide-react';
 
 const AIChat: React.FC = () => {
+  useEffect(() => {
+    // Load ElevenLabs ConvAI widget script
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+    script.async = true;
+    script.type = 'text/javascript';
+    document.head.appendChild(script);
+
+    // Create the custom element after script loads
+    const timer = setTimeout(() => {
+      const container = document.getElementById('elevenlabs-container');
+      if (container) {
+        const convaiElement = document.createElement('elevenlabs-convai');
+        convaiElement.setAttribute('agent-id', 'agent_3001k1v7zbqdf80txwzf51e209rm');
+        container.appendChild(convaiElement);
+      }
+    }, 1000);
+
+    return () => {
+      // Cleanup script on unmount
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+      clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <>
       <SEO 
@@ -29,14 +56,7 @@ const AIChat: React.FC = () => {
           />
 
           <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-6 shadow-lg">
-            <iframe 
-              src="https://c0d5057c-7049-4b5c-9591-da32aadaf3c4.lovableproject.com/ai-chat" 
-              width="100%" 
-              height="600" 
-              frameBorder="0" 
-              title="AIApply AI Chat"
-              className="w-full rounded-lg"
-            />
+            <div id="elevenlabs-container" className="min-h-[600px] w-full" />
           </div>
         </div>
       </main>
