@@ -55,7 +55,6 @@ import WebDevelopment from "./pages/WebDevelopment";
 import AISolutions from "./pages/AISolutions";
 import StrategyConsulting from "./pages/StrategyConsulting";
 import SocialMediaManagement from "./pages/SocialMediaManagement";
-import AIChat from "./pages/AIChat";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -123,7 +122,6 @@ function App() {
                 <Route path="/elevenlabs" element={<ElevenLabsEmbed />} />
                 <Route path="/chatbot-products" element={<ChatbotProducts />} />
                 <Route path="/multi-ai" element={<MultiAI />} />
-                <Route path="/ai-chat" element={<AIChat />} />
 
                 {/* Protected routes */}
                 <Route path="/admin" element={
