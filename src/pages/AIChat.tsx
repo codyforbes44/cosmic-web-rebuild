@@ -30,7 +30,7 @@ const AIChat: React.FC = () => {
 
           <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-6 shadow-lg">
             <iframe 
-              src="https://c0d5057c-7049-4b5c-9591-da32aadaf3c4.lovableproject.com/ai-chat" 
+              src="https://aiapply.dev/ai-chat" 
               width="100%" 
               height="600" 
               frameBorder="0" 
