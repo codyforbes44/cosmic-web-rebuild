@@ -33,6 +33,11 @@ export const useAudioPlayer = () => {
         .getPublicUrl(audioRecord.storage_path);
       
       const publicUrl = data.publicUrl;
+      
+      // Validate the URL before setting it
+      if (!publicUrl || publicUrl.includes('undefined') || publicUrl.includes('null')) {
+        throw new Error('Invalid audio file URL generated');
+      }
 
       // Clear any existing audio source first
       if (audioRef.current) {
@@ -42,6 +47,12 @@ export const useAudioPlayer = () => {
       }
 
       console.log('Setting audio URL:', publicUrl);
+      
+      // Validate audio record and storage path
+      if (!audioRecord.storage_path) {
+        throw new Error('Audio file storage path is missing');
+      }
+      
       setAudioUrl(publicUrl);
       setCurrentAudioRecord(audioRecord);
       setAudioFile(null); // Clear the file object since this is from storage
@@ -51,6 +62,19 @@ export const useAudioPlayer = () => {
         if (audioRef.current) {
           console.log('Audio element ready state:', audioRef.current.readyState);
           console.log('Audio src set to:', audioRef.current.src);
+          
+          // Test if the URL is accessible
+          fetch(publicUrl, { method: 'HEAD' })
+            .then(response => {
+              if (!response.ok) {
+                console.warn('Audio file may not be accessible:', response.status, response.statusText);
+              } else {
+                console.log('Audio file is accessible:', response.status);
+              }
+            })
+            .catch(error => {
+              console.warn('Could not verify audio file accessibility:', error);
+            });
         }
       }, 100);
 

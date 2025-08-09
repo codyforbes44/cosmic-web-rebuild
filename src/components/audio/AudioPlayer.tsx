@@ -90,18 +90,56 @@ const AudioPlayer = ({
             onLoadedMetadata={onLoadedMetadata}
             onEnded={onAudioEnded}
             onError={(e) => {
-              console.error('Audio element error:', e);
+              const target = e.currentTarget;
+              const errorCode = target.error?.code;
+              const errorMessage = target.error?.message;
+              
+              console.error('Audio element error details:', {
+                errorCode,
+                errorMessage,
+                src: target.src,
+                readyState: target.readyState,
+                networkState: target.networkState
+              });
+              
+              let userMessage = "Failed to load audio file.";
+              switch (errorCode) {
+                case 1: // MEDIA_ERR_ABORTED
+                  userMessage = "Audio loading was aborted.";
+                  break;
+                case 2: // MEDIA_ERR_NETWORK
+                  userMessage = "Network error occurred while loading audio.";
+                  break;
+                case 3: // MEDIA_ERR_DECODE
+                  userMessage = "Audio file is corrupted or unsupported format.";
+                  break;
+                case 4: // MEDIA_ERR_SRC_NOT_SUPPORTED
+                  userMessage = "Audio format not supported by your browser.";
+                  break;
+                default:
+                  userMessage = "Unable to load audio file.";
+              }
+              
               toast({
                 title: "Audio Error",
-                description: "Failed to load audio file. Please try a different file.",
+                description: userMessage,
                 variant: "destructive",
               });
             }}
             onLoadStart={() => {
-              console.log('Audio loading started');
+              console.log('Audio loading started for:', audioUrl);
             }}
             onCanPlay={() => {
-              console.log('Audio can play');
+              console.log('Audio can play:', audioUrl);
+            }}
+            onLoadedData={() => {
+              console.log('Audio data loaded successfully');
+            }}
+            onStalled={() => {
+              console.warn('Audio loading stalled');
+            }}
+            onSuspend={() => {
+              console.log('Audio loading suspended');
             }}
             className="hidden"
             preload="metadata"
