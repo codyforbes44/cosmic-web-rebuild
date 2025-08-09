@@ -54,13 +54,37 @@ const AudioPlayer = ({
     }
   };
 
-  const handlePlaySpecificAudio = () => {
+  const handlePlaySpecificAudio = async () => {
     try {
       if (audioRef.current) {
+        // Clear any existing source first
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        
         // Set the specific audio URL
-        audioRef.current.src = 'https://strixttogzthapdhuczm.supabase.co/storage/v1/object/public/audio-files/fd1c3b77-cca4-426a-b91a-68a1d197a2ef/fWJ02UgfAAlNlgeyoa9JJ.mp3';
+        const specificAudioUrl = 'https://strixttogzthapdhuczm.supabase.co/storage/v1/object/public/audio-files/fd1c3b77-cca4-426a-b91a-68a1d197a2ef/fWJ02UgfAAlNlgeyoa9JJ.mp3';
+        audioRef.current.src = specificAudioUrl;
         audioRef.current.load();
-        audioRef.current.play();
+        
+        // Wait for the audio to be ready before playing
+        await new Promise((resolve, reject) => {
+          const handleCanPlay = () => {
+            audioRef.current?.removeEventListener('canplay', handleCanPlay);
+            audioRef.current?.removeEventListener('error', handleError);
+            resolve(void 0);
+          };
+          
+          const handleError = () => {
+            audioRef.current?.removeEventListener('canplay', handleCanPlay);
+            audioRef.current?.removeEventListener('error', handleError);
+            reject(new Error('Failed to load audio'));
+          };
+          
+          audioRef.current?.addEventListener('canplay', handleCanPlay);
+          audioRef.current?.addEventListener('error', handleError);
+        });
+        
+        await audioRef.current.play();
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unable to play audio file. Please try again.';
