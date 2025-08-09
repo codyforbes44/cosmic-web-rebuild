@@ -42,12 +42,25 @@ const WeatherIcon = ({ condition, size = 28, isDay = true }: WeatherIconProps) =
     case 'scattered clouds':
     case 'broken clouds':
     case 'clouds':
-    case 'cloudy':
-    case 'partly cloudy':
-    case 'sunny':
       return isDay ? 
         <Cloud size={size} className="text-gray-400" /> :
         <Cloud size={size} className="text-gray-300" />;
+    
+    // Cloudy conditions
+    case 'cloudy':
+      return <Cloud size={size} className="text-gray-500" />;
+    
+    // Partly cloudy - mix of sun and clouds
+    case 'partly cloudy':
+      return isDay ? 
+        <CloudSun size={size} className="text-yellow-300" /> : 
+        <Cloud size={size} className="text-blue-300" />;
+    
+    // Sunny - clear sunny conditions
+    case 'sunny':
+      return isDay ? 
+        <Sun size={size} className="text-yellow-400" /> :
+        <Moon size={size} className="text-blue-200" />;
     
     // Overcast clouds (85-100%)
     case 'overcast clouds':
