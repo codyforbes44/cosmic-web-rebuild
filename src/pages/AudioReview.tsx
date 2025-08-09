@@ -33,7 +33,14 @@ const AudioReview = () => {
     handleAudioEnded,
   } = useAudioPlayer();
 
-  const { audioHistory, loadAudioHistory, deleteAudioFile } = useAudioHistory();
+  const handleLoadHistoricalAudio = async (audioRecord: any) => {
+    const result = await loadHistoricalAudio(audioRecord);
+    if (!result.success) {
+      throw new Error('Failed to load audio file');
+    }
+  };
+
+  const { audioHistory, loadAudioHistory, deleteAudioFile } = useAudioHistory(handleLoadHistoricalAudio);
 
   const handleUploadSuccess = (file: File, audioRecord: any) => {
     loadLocalAudio(file, audioRecord);
@@ -42,13 +49,6 @@ const AudioReview = () => {
   const handleNotesUpdate = (notes: string) => {
     // Refresh history to update the notes display
     loadAudioHistory();
-  };
-
-  const handleLoadHistoricalAudio = async (audioRecord: any) => {
-    const result = await loadHistoricalAudio(audioRecord);
-    if (!result.success) {
-      throw new Error('Failed to load audio file');
-    }
   };
 
   const handleDeleteAudio = async (audioRecord: any) => {

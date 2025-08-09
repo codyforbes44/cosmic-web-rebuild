@@ -41,9 +41,18 @@ export const useAudioPlayer = () => {
         audioRef.current.load(); // Reset the audio element
       }
 
+      console.log('Setting audio URL:', publicUrl);
       setAudioUrl(publicUrl);
       setCurrentAudioRecord(audioRecord);
       setAudioFile(null); // Clear the file object since this is from storage
+      
+      // Wait a moment for the audio element to be ready
+      setTimeout(() => {
+        if (audioRef.current) {
+          console.log('Audio element ready state:', audioRef.current.readyState);
+          console.log('Audio src set to:', audioRef.current.src);
+        }
+      }, 100);
 
       return { success: true };
     } catch (error) {
@@ -53,27 +62,42 @@ export const useAudioPlayer = () => {
   };
 
   const togglePlayPause = () => {
+    console.log('Toggle play/pause called. audioUrl:', audioUrl, 'isPlaying:', isPlaying);
     if (audioRef.current && audioUrl) {
+      console.log('Audio element state:', {
+        readyState: audioRef.current.readyState,
+        src: audioRef.current.src,
+        duration: audioRef.current.duration,
+        currentTime: audioRef.current.currentTime
+      });
+      
       if (isPlaying) {
         audioRef.current.pause();
+        setIsPlaying(false);
       } else {
         // Ensure audio source is loaded before playing
         if (audioRef.current.readyState >= 2) { // HAVE_CURRENT_DATA
+          console.log('Audio ready, attempting to play');
           audioRef.current.play().catch(error => {
             console.error('Audio play error:', error);
             throw new Error('Unable to play audio file. Please try again.');
           });
+          setIsPlaying(true);
         } else {
+          console.log('Audio not ready, waiting for canplay event');
           // Wait for audio to load
           audioRef.current.addEventListener('canplay', () => {
+            console.log('Audio canplay event fired, attempting to play');
             audioRef.current?.play().catch(error => {
               console.error('Audio play error:', error);
               throw new Error('Unable to play audio file. Please try again.');
             });
+            setIsPlaying(true);
           }, { once: true });
         }
       }
-      setIsPlaying(!isPlaying);
+    } else {
+      console.warn('Cannot play: audioRef.current =', !!audioRef.current, 'audioUrl =', audioUrl);
     }
   };
 
