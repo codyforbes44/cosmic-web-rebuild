@@ -62,7 +62,7 @@ const ReviewNotes = ({ currentAudioRecord, onNotesUpdate }: ReviewNotesProps) =>
         <textarea
           value={reviewNotes}
           onChange={(e) => setReviewNotes(e.target.value)}
-          className="w-full h-32 p-3 border border-border rounded-md bg-background text-foreground resize-none"
+          className="w-full h-32 p-3 border border-border rounded-md bg-background text-foreground resize-none whitespace-pre-wrap break-words"
           placeholder="Enter your review notes here..."
         />
         <div className="mt-4 flex gap-2">
