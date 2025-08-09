@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, RotateCcw } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { AudioFile } from '@/types/audio';
 
@@ -147,24 +147,11 @@ const AudioPlayer = ({
 
           <div className="flex items-center gap-4">
             <Button
-              onClick={handlePlayPause}
-              disabled={!audioUrl}
-              size="lg"
-              className="bg-primary hover:bg-primary/90"
-            >
-              {isPlaying ? (
-                <Pause className="h-5 w-5" />
-              ) : (
-                <Play className="h-5 w-5" />
-              )}
-            </Button>
-            
-            <Button
               onClick={onReset}
               variant="outline"
               size="sm"
             >
-              <RotateCcw className="h-4 w-4" />
+              <Play className="h-4 w-4" />
             </Button>
 
             <div className="flex-1 space-y-2">
