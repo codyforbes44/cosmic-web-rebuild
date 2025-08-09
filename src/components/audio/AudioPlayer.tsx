@@ -54,6 +54,24 @@ const AudioPlayer = ({
     }
   };
 
+  const handlePlaySpecificAudio = () => {
+    try {
+      if (audioRef.current) {
+        // Set the specific audio URL
+        audioRef.current.src = 'https://strixttogzthapdhuczm.supabase.co/storage/v1/object/public/audio-files/fd1c3b77-cca4-426a-b91a-68a1d197a2ef/fWJ02UgfAAlNlgeyoa9JJ.mp3';
+        audioRef.current.load();
+        audioRef.current.play();
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unable to play audio file. Please try again.';
+      toast({
+        title: "Playback Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
+  };
+
   if (!audioFile && !currentAudioRecord) {
     return null;
   }
@@ -147,7 +165,7 @@ const AudioPlayer = ({
 
           <div className="flex items-center gap-4">
             <Button
-              onClick={onReset}
+              onClick={handlePlaySpecificAudio}
               variant="outline"
               size="sm"
             >
