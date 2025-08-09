@@ -361,7 +361,25 @@ const AudioReview = () => {
         <meta property="og:description" content="Upload and review audio files with our professional audio review tool." />
       </Helmet>
 
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background relative overflow-hidden">
+        {/* Animated Star Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute bg-white rounded-full animate-pulse opacity-70"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${Math.random() * 3 + 1}px`,
+                height: `${Math.random() * 3 + 1}px`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${Math.random() * 2 + 2}s`,
+              }}
+            />
+          ))}
+        </div>
+        
         <Navbar />
         
         <main className="container mx-auto px-4 pt-20 pb-16">
