@@ -1,0 +1,164 @@
+import { useState, useRef } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { AudioFile } from '@/types/audio';
+
+export const useAudioPlayer = () => {
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [currentAudioRecord, setCurrentAudioRecord] = useState<AudioFile | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const loadLocalAudio = (file: File, audioRecord: AudioFile) => {
+    setAudioFile(file);
+    setCurrentAudioRecord(audioRecord);
+    const url = URL.createObjectURL(file);
+    setAudioUrl(url);
+    setCurrentTime(0);
+    setIsPlaying(false);
+  };
+
+  const loadHistoricalAudio = async (audioRecord: AudioFile) => {
+    try {
+      // Reset current state first
+      setIsPlaying(false);
+      setCurrentTime(0);
+      setDuration(0);
+      
+      // Since bucket is now public, use getPublicUrl method
+      const { data } = supabase.storage
+        .from('audio-files')
+        .getPublicUrl(audioRecord.storage_path);
+      
+      const publicUrl = data.publicUrl;
+
+      // Clear any existing audio source first
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+        audioRef.current.load(); // Reset the audio element
+      }
+
+      setAudioUrl(publicUrl);
+      setCurrentAudioRecord(audioRecord);
+      setAudioFile(null); // Clear the file object since this is from storage
+
+      return { success: true };
+    } catch (error) {
+      console.error('Error loading historical audio:', error);
+      return { success: false, error };
+    }
+  };
+
+  const togglePlayPause = () => {
+    if (audioRef.current && audioUrl) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        // Ensure audio source is loaded before playing
+        if (audioRef.current.readyState >= 2) { // HAVE_CURRENT_DATA
+          audioRef.current.play().catch(error => {
+            console.error('Audio play error:', error);
+            throw new Error('Unable to play audio file. Please try again.');
+          });
+        } else {
+          // Wait for audio to load
+          audioRef.current.addEventListener('canplay', () => {
+            audioRef.current?.play().catch(error => {
+              console.error('Audio play error:', error);
+              throw new Error('Unable to play audio file. Please try again.');
+            });
+          }, { once: true });
+        }
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const resetAudio = () => {
+    if (audioRef.current && audioUrl) {
+      audioRef.current.currentTime = 0;
+      setCurrentTime(0);
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = async () => {
+    if (audioRef.current && currentAudioRecord) {
+      const audioDuration = audioRef.current.duration;
+      setDuration(audioDuration);
+      
+      // Update duration in database if not already set
+      if (!currentAudioRecord.duration) {
+        try {
+          await supabase
+            .from('audio_files')
+            .update({ duration: audioDuration })
+            .eq('id', currentAudioRecord.id);
+        } catch (error) {
+          console.error('Error updating audio duration:', error);
+        }
+      }
+    }
+  };
+
+  const handleSeek = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = parseFloat(event.target.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
+  const clearAudio = () => {
+    // Stop and reset audio element first
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = '';
+      audioRef.current.load();
+    }
+    
+    setAudioFile(null);
+    setAudioUrl(null);
+    setCurrentAudioRecord(null);
+    setCurrentTime(0);
+    setDuration(0);
+    setIsPlaying(false);
+  };
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  return {
+    audioFile,
+    audioUrl,
+    currentAudioRecord,
+    isPlaying,
+    currentTime,
+    duration,
+    audioRef,
+    loadLocalAudio,
+    loadHistoricalAudio,
+    togglePlayPause,
+    resetAudio,
+    handleTimeUpdate,
+    handleLoadedMetadata,
+    handleSeek,
+    clearAudio,
+    formatTime,
+  };
+};
