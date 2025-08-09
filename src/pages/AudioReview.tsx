@@ -139,21 +139,46 @@ const AudioReview = () => {
   };
 
   const togglePlayPause = () => {
-    if (audioRef.current) {
+    if (audioRef.current && audioUrl) {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        // Ensure audio source is loaded before playing
+        if (audioRef.current.readyState >= 2) { // HAVE_CURRENT_DATA
+          audioRef.current.play().catch(error => {
+            console.error('Audio play error:', error);
+            toast({
+              title: "Playback Error",
+              description: "Unable to play audio file. Please try again.",
+              variant: "destructive",
+            });
+          });
+        } else {
+          // Wait for audio to load
+          audioRef.current.addEventListener('canplay', () => {
+            audioRef.current?.play().catch(error => {
+              console.error('Audio play error:', error);
+              toast({
+                title: "Playback Error", 
+                description: "Unable to play audio file. Please try again.",
+                variant: "destructive",
+              });
+            });
+          }, { once: true });
+        }
       }
       setIsPlaying(!isPlaying);
     }
   };
 
   const resetAudio = () => {
-    if (audioRef.current) {
+    if (audioRef.current && audioUrl) {
       audioRef.current.currentTime = 0;
       setCurrentTime(0);
-      setIsPlaying(false);
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -230,6 +255,11 @@ const AudioReview = () => {
 
   const loadHistoricalAudio = async (audioRecord: AudioFile) => {
     try {
+      // Reset current state first
+      setIsPlaying(false);
+      setCurrentTime(0);
+      setDuration(0);
+      
       // Get signed URL for the audio file
       const { data, error } = await supabase.storage
         .from('audio-files')
@@ -237,11 +267,16 @@ const AudioReview = () => {
 
       if (error) throw error;
 
+      // Clear any existing audio source first
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+        audioRef.current.load(); // Reset the audio element
+      }
+
       setAudioUrl(data.signedUrl);
       setCurrentAudioRecord(audioRecord);
       setReviewNotes(audioRecord.review_notes || '');
-      setCurrentTime(0);
-      setIsPlaying(false);
       setAudioFile(null); // Clear the file object since this is from storage
 
       toast({
@@ -298,6 +333,13 @@ const AudioReview = () => {
   };
 
   const clearAudio = () => {
+    // Stop and reset audio element first
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = '';
+      audioRef.current.load();
+    }
+    
     setAudioFile(null);
     setAudioUrl(null);
     setCurrentAudioRecord(null);
@@ -390,23 +432,40 @@ const AudioReview = () => {
                       </Button>
                     </div>
 
-                    {audioUrl && (
-                      <div className="space-y-4">
-                        <audio
-                          ref={audioRef}
-                          src={audioUrl}
-                          onTimeUpdate={handleTimeUpdate}
-                          onLoadedMetadata={handleLoadedMetadata}
-                          onEnded={() => setIsPlaying(false)}
-                          className="hidden"
-                        />
+                        {audioUrl && (
+                          <div className="space-y-4">
+                            <audio
+                              ref={audioRef}
+                              src={audioUrl}
+                              onTimeUpdate={handleTimeUpdate}
+                              onLoadedMetadata={handleLoadedMetadata}
+                              onEnded={() => setIsPlaying(false)}
+                              onError={(e) => {
+                                console.error('Audio element error:', e);
+                                toast({
+                                  title: "Audio Error",
+                                  description: "Failed to load audio file. Please try a different file.",
+                                  variant: "destructive",
+                                });
+                                setIsPlaying(false);
+                              }}
+                              onLoadStart={() => {
+                                console.log('Audio loading started');
+                              }}
+                              onCanPlay={() => {
+                                console.log('Audio can play');
+                              }}
+                              className="hidden"
+                              preload="metadata"
+                            />
 
-                        <div className="flex items-center gap-4">
-                          <Button
-                            onClick={togglePlayPause}
-                            size="lg"
-                            className="bg-primary hover:bg-primary/90"
-                          >
+                            <div className="flex items-center gap-4">
+                              <Button
+                                onClick={togglePlayPause}
+                                disabled={!audioUrl}
+                                size="lg"
+                                className="bg-primary hover:bg-primary/90"
+                              >
                             {isPlaying ? (
                               <Pause className="h-5 w-5" />
                             ) : (
