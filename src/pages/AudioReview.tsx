@@ -30,6 +30,7 @@ const AudioReview = () => {
     handleSeek,
     clearAudio,
     formatTime,
+    handleAudioEnded,
   } = useAudioPlayer();
 
   const { audioHistory, loadAudioHistory, deleteAudioFile } = useAudioHistory();
@@ -118,13 +119,14 @@ const AudioReview = () => {
                     onLoadedMetadata={handleLoadedMetadata}
                     onSeek={handleSeek}
                     onClear={clearAudio}
+                    onAudioEnded={handleAudioEnded}
                     formatTime={formatTime}
                   />
                 )}
               </CardContent>
             </Card>
 
-            <ReviewNotes 
+            <ReviewNotes
               currentAudioRecord={currentAudioRecord}
               onNotesUpdate={handleNotesUpdate}
             />

@@ -99,13 +99,16 @@ export const useAudioPlayer = () => {
       const audioDuration = audioRef.current.duration;
       setDuration(audioDuration);
       
-      // Update duration in database if not already set
+      // Only try to update duration in database if user is authenticated
       if (!currentAudioRecord.duration) {
         try {
-          await supabase
-            .from('audio_files')
-            .update({ duration: audioDuration })
-            .eq('id', currentAudioRecord.id);
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            await supabase
+              .from('audio_files')
+              .update({ duration: audioDuration })
+              .eq('id', currentAudioRecord.id);
+          }
         } catch (error) {
           console.error('Error updating audio duration:', error);
         }
@@ -143,6 +146,11 @@ export const useAudioPlayer = () => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+    console.log('Audio playback ended, isPlaying set to false');
+  };
+
   return {
     audioFile,
     audioUrl,
@@ -160,5 +168,6 @@ export const useAudioPlayer = () => {
     handleSeek,
     clearAudio,
     formatTime,
+    handleAudioEnded,
   };
 };

@@ -18,6 +18,7 @@ interface AudioPlayerProps {
   onLoadedMetadata: () => void;
   onSeek: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
+  onAudioEnded: () => void;
   formatTime: (time: number) => string;
 }
 
@@ -35,6 +36,7 @@ const AudioPlayer = ({
   onLoadedMetadata,
   onSeek,
   onClear,
+  onAudioEnded,
   formatTime,
 }: AudioPlayerProps) => {
   const { toast } = useToast();
@@ -86,7 +88,7 @@ const AudioPlayer = ({
             src={audioUrl}
             onTimeUpdate={onTimeUpdate}
             onLoadedMetadata={onLoadedMetadata}
-            onEnded={() => {}}
+            onEnded={onAudioEnded}
             onError={(e) => {
               console.error('Audio element error:', e);
               toast({
