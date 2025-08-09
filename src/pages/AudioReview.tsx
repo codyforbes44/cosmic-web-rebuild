@@ -260,12 +260,12 @@ const AudioReview = () => {
       setCurrentTime(0);
       setDuration(0);
       
-      // Get signed URL for the audio file
-      const { data, error } = await supabase.storage
+      // Since bucket is now public, use getPublicUrl method
+      const { data } = supabase.storage
         .from('audio-files')
-        .createSignedUrl(audioRecord.storage_path, 3600); // 1 hour expiry
-
-      if (error) throw error;
+        .getPublicUrl(audioRecord.storage_path);
+      
+      const publicUrl = data.publicUrl;
 
       // Clear any existing audio source first
       if (audioRef.current) {
@@ -274,7 +274,7 @@ const AudioReview = () => {
         audioRef.current.load(); // Reset the audio element
       }
 
-      setAudioUrl(data.signedUrl);
+      setAudioUrl(publicUrl);
       setCurrentAudioRecord(audioRecord);
       setReviewNotes(audioRecord.review_notes || '');
       setAudioFile(null); // Clear the file object since this is from storage
