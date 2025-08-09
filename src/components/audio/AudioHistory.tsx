@@ -94,7 +94,7 @@ const AudioHistory = ({
                       {new Date(record.created_at).toLocaleDateString()}
                     </p>
                     {record.review_notes && (
-                      <p className="text-sm text-muted-foreground mt-1 truncate">
+                      <p className="text-sm text-muted-foreground mt-1 break-words whitespace-pre-wrap">
                         Notes: {record.review_notes}
                       </p>
                     )}
