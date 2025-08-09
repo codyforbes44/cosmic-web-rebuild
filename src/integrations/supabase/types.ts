@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      audio_files: {
+        Row: {
+          created_at: string
+          duration: number | null
+          file_size: number
+          filename: string
+          id: string
+          mime_type: string
+          original_name: string
+          review_notes: string | null
+          storage_path: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          duration?: number | null
+          file_size: number
+          filename: string
+          id?: string
+          mime_type: string
+          original_name: string
+          review_notes?: string | null
+          storage_path: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          duration?: number | null
+          file_size?: number
+          filename?: string
+          id?: string
+          mime_type?: string
+          original_name?: string
+          review_notes?: string | null
+          storage_path?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
