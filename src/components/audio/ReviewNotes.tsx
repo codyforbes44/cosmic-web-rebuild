@@ -17,7 +17,7 @@ const ReviewNotes = ({ currentAudioRecord, onNotesUpdate }: ReviewNotesProps) =>
   const { toast } = useToast();
 
   useEffect(() => {
-    setReviewNotes(currentAudioRecord?.review_notes || '');
+    setReviewNotes('');
   }, [currentAudioRecord]);
 
   const saveReviewNotes = async () => {
