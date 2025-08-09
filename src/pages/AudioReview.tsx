@@ -363,7 +363,7 @@ const AudioReview = () => {
 
       <div className="min-h-screen bg-background relative overflow-hidden">
         {/* Animated Star Background */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none z-0">
           {[...Array(50)].map((_, i) => (
             <div
               key={i}
@@ -382,7 +382,7 @@ const AudioReview = () => {
         
         <Navbar />
         
-        <main className="container mx-auto px-4 pt-20 pb-16">
+        <main className="container mx-auto px-4 pt-20 pb-16 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
               <h1 className="text-4xl font-bold text-foreground mb-4">
