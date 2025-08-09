@@ -20,8 +20,7 @@ export const applyCSPHeaders = () => {
       "media-src 'self' https: blob:",
       "object-src 'none'",
       "base-uri 'self'",
-      "form-action 'self'",
-      "frame-ancestors 'none'"
+      "form-action 'self'"
     ].join('; ');
     
     // Remove existing CSP meta tag if present
@@ -40,21 +39,9 @@ export const applyCSPHeaders = () => {
 export const initializeSecurityHeaders = () => {
   applyCSPHeaders();
   
-  // Additional security headers via meta tags
+  // Additional security headers via meta tags (only those supported)
   if (typeof document !== 'undefined') {
-    // X-Content-Type-Options
-    const noSniff = document.createElement('meta');
-    noSniff.httpEquiv = 'X-Content-Type-Options';
-    noSniff.content = 'nosniff';
-    document.head.appendChild(noSniff);
-    
-    // X-Frame-Options
-    const frameOptions = document.createElement('meta');
-    frameOptions.httpEquiv = 'X-Frame-Options';
-    frameOptions.content = 'DENY';
-    document.head.appendChild(frameOptions);
-    
-    // Referrer Policy
+    // Referrer Policy (this one is supported via meta tag)
     const referrerPolicy = document.createElement('meta');
     referrerPolicy.name = 'referrer';
     referrerPolicy.content = 'strict-origin-when-cross-origin';
