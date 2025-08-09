@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { RotateCcw } from 'lucide-react';
+import { Play, Pause, RotateCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { AudioFile } from '@/types/audio';
 
@@ -12,6 +12,7 @@ interface AudioPlayerProps {
   currentTime: number;
   duration: number;
   audioRef: React.RefObject<HTMLAudioElement>;
+  onTogglePlayPause: () => void;
   onReset: () => void;
   onTimeUpdate: () => void;
   onLoadedMetadata: () => void;
@@ -29,6 +30,7 @@ const AudioPlayer = ({
   currentTime,
   duration,
   audioRef,
+  onTogglePlayPause,
   onReset,
   onTimeUpdate,
   onLoadedMetadata,
@@ -38,6 +40,19 @@ const AudioPlayer = ({
   formatTime,
 }: AudioPlayerProps) => {
   const { toast } = useToast();
+
+  const handlePlayPause = () => {
+    try {
+      onTogglePlayPause();
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unable to play audio file. Please try again.';
+      toast({
+        title: "Playback Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
+  };
 
   if (!audioFile && !currentAudioRecord) {
     return null;
@@ -131,6 +146,19 @@ const AudioPlayer = ({
           />
 
           <div className="flex items-center gap-4">
+            <Button
+              onClick={handlePlayPause}
+              disabled={!audioUrl}
+              size="lg"
+              className="bg-primary hover:bg-primary/90"
+            >
+              {isPlaying ? (
+                <Pause className="h-5 w-5" />
+              ) : (
+                <Play className="h-5 w-5" />
+              )}
+            </Button>
+            
             <Button
               onClick={onReset}
               variant="outline"
