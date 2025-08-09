@@ -113,7 +113,6 @@ const AudioReview = () => {
                     currentTime={currentTime}
                     duration={duration}
                     audioRef={audioRef}
-                    onTogglePlayPause={togglePlayPause}
                     onReset={resetAudio}
                     onTimeUpdate={handleTimeUpdate}
                     onLoadedMetadata={handleLoadedMetadata}
