@@ -147,7 +147,7 @@ const FeaturedProducts = () => {
           {/* Additional Info */}
           <div className="text-center">
             <p className="text-gray-400 text-sm">
-              Powered by advanced AI technology including GPT-4, ElevenLabs voice AI, and real-time analytics
+              Powered by advanced AI technology including GPT-5 and real-time analytics
             </p>
           </div>
         </div>
