@@ -6,7 +6,7 @@ import { ExternalLink, Mic, Brain, Zap, Users } from "lucide-react";
 
 const FeaturedProducts = () => {
   const featuredProduct = {
-    title: "AIApply.dev",
+    title: "Apply AI",
     subtitle: "AI-Powered Recruitment Platform",
     description: "Experience instant AI interviews with voice technology, real-time analysis, and bias-free evaluation. Skip traditional applications and connect directly with opportunities.",
     features: [
@@ -127,7 +127,7 @@ const FeaturedProducts = () => {
                 >
                   <a href={featuredProduct.url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2" />
-                    Try AIApply.dev
+                    Try Apply AI
                   </a>
                 </Button>
                 <Button 

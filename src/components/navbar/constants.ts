@@ -49,7 +49,7 @@ export const serviceCategories = [
 
 export const productCategories = [
   {
-    title: "AIApply.dev",
+    title: "Apply AI",
     href: "https://aiapply.dev",
     description: "AI-powered recruitment platform with voice interviews",
     external: true
