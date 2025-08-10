@@ -1,14 +1,10 @@
 
+import React from "react";
 import SEO from "@/components/SEO";
 import HomeLayout from "@/components/home/HomeLayout";
-import MainContent from "@/components/home/MainContent";
-import WebServicesSection from "@/components/home/WebServicesSection";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import AdvancedFeatures from "@/components/home/AdvancedFeatures";
-import NewsletterSection from "@/components/home/NewsletterSection";
-import CTASection from "@/components/CTASection";
+import HomePage from "@/components/home/HomePage";
 
-const Index = () => {
+const Index: React.FC = () => {
   return (
     <HomeLayout>
       <SEO 
@@ -17,12 +13,7 @@ const Index = () => {
         keywords="web development, AI solutions, digital marketing, custom websites, business automation, recruitment software"
         image="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=630&fit=crop&crop=center"
       />
-      <MainContent />
-      <WebServicesSection />
-      <FeaturedProducts />
-      <AdvancedFeatures />
-      <CTASection />
-      <NewsletterSection />
+      <HomePage />
     </HomeLayout>
   );
 };
