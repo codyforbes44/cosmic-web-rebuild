@@ -49,6 +49,12 @@ export const serviceCategories = [
 
 export const productCategories = [
   {
+    title: "AIApply.dev",
+    href: "https://aiapply.dev",
+    description: "AI-powered recruitment platform with voice interviews",
+    external: true
+  },
+  {
     title: "AI Chatbots",
     href: "/chatbot-products",
     description: "Intelligent chatbot solutions for your website"
