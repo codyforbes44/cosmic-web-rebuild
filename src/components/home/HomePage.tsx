@@ -1,8 +1,6 @@
 import React from "react";
 import HeroSection from "../HeroSection";
 import RecruitmentMarketingSection from "./RecruitmentMarketingSection";
-import ClientTestimonials from "./ClientTestimonials";
-import WebServicesSection from "./WebServicesSection";
 import FeaturedProducts from "./FeaturedProducts";
 import AdvancedFeatures from "./AdvancedFeatures";
 import CTASection from "../CTASection";
@@ -16,12 +14,6 @@ const HomePage: React.FC = () => {
       
       {/* Recruitment Marketing */}
       <RecruitmentMarketingSection />
-      
-      {/* Client Testimonials */}
-      <ClientTestimonials />
-      
-      {/* Web Services */}
-      <WebServicesSection />
       
       {/* Featured Products */}
       <FeaturedProducts />
