@@ -16,9 +16,11 @@ export const applyCSPHeaders = () => {
     meta.httpEquiv = 'Content-Security-Policy';
     meta.content = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://unpkg.com",
+      "script-src 'self' 'unsafe-inline' https://unpkg.com blob: data:",
+      "script-src-elem 'self' 'unsafe-inline' https://unpkg.com blob: data:",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
+      "worker-src 'self' blob:",
       "img-src 'self' data: https:",
       "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.elevenlabs.io wss://api.elevenlabs.io",
       "media-src 'self' https: blob:",
