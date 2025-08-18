@@ -40,12 +40,25 @@ const About = () => {
                   Our team of technology experts and business consultants brings decades of combined experience across various industries, allowing us to deliver tailored solutions that address the unique challenges and opportunities facing each of our clients.
                 </p>
               </div>
-              <div className="overflow-hidden rounded-xl order-first lg:order-last">
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1019&q=80" 
-                  alt="ƷBI team collaboration"
-                  className="w-full h-auto rounded-lg"
-                />
+              <div className="space-card p-6 sm:p-8 rounded-xl order-first lg:order-last bg-gradient-to-br from-accent/10 via-primary/5 to-secondary/10 border border-accent/20">
+                <div className="grid grid-cols-2 gap-4 sm:gap-6 h-full">
+                  <div className="bg-background/50 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-center border border-border/50">
+                    <div className="text-2xl sm:text-3xl font-bold text-accent mb-2">10+</div>
+                    <div className="text-sm text-muted-foreground">Years Experience</div>
+                  </div>
+                  <div className="bg-background/50 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-center border border-border/50">
+                    <div className="text-2xl sm:text-3xl font-bold text-accent mb-2">50+</div>
+                    <div className="text-sm text-muted-foreground">Projects Delivered</div>
+                  </div>
+                  <div className="bg-background/50 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-center border border-border/50">
+                    <div className="text-2xl sm:text-3xl font-bold text-accent mb-2">24/7</div>
+                    <div className="text-sm text-muted-foreground">Support Available</div>
+                  </div>
+                  <div className="bg-background/50 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-center border border-border/50">
+                    <div className="text-2xl sm:text-3xl font-bold text-accent mb-2">100%</div>
+                    <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
