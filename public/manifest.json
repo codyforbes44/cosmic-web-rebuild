@@ -1,13 +1,17 @@
 
 {
-  "name": "ƷBI Technology Solutions",
-  "short_name": "ƷBI",
-  "description": "Professional technology solutions and expert consulting services",
+  "name": "ZBI - Recruitment Marketing Platform",
+  "short_name": "ZBI",
+  "description": "Professional recruitment marketing services that help you find qualified candidates faster and more cost-effectively.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0F172A",
-  "theme_color": "#0F172A",
+  "theme_color": "#E85D2A",
   "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "recruitment"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
   "icons": [
     {
       "src": "https://img.icons8.com/color/192/000000/circuit.png",
@@ -22,7 +26,45 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["business", "productivity", "technology"],
-  "lang": "en",
-  "dir": "ltr"
+  "screenshots": [
+    {
+      "src": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1280&h=720&fit=crop&crop=center",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "features": [
+    "Cross Platform",
+    "fast",
+    "simple"
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Weather",
+      "short_name": "Weather",
+      "description": "Check current weather conditions",
+      "url": "/weather",
+      "icons": [
+        {
+          "src": "https://img.icons8.com/color/96/000000/partly-cloudy-day--v1.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Portfolio",
+      "short_name": "Portfolio", 
+      "description": "View our work portfolio",
+      "url": "/portfolio",
+      "icons": [
+        {
+          "src": "https://img.icons8.com/color/96/000000/portfolio.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
 }
