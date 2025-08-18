@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import ScrollToTopLink from '@/components/ScrollToTopLink';
 import StarBackground from '@/components/StarBackground';
 
 interface AuthLayoutProps {
@@ -17,13 +17,13 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
       
       <div className="w-full max-w-md relative z-10">
         <div className="mb-6">
-          <Link 
+          <ScrollToTopLink 
             to="/" 
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Return to Home
-          </Link>
+          </ScrollToTopLink>
         </div>
         
         <div className="text-center mb-8">

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import ScrollToTopLink from '../ScrollToTopLink';
 import { Button } from '@/components/ui/button';
 
 const ServicesCTA: React.FC = () => {
@@ -12,16 +12,16 @@ const ServicesCTA: React.FC = () => {
           Schedule a free consultation with our team to discuss how our services can help you achieve your business goals.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link to="/get-quote">
+          <ScrollToTopLink to="/get-quote">
             <Button className="bg-accent hover:bg-accent/80 text-white px-6 py-3">
               Get Started
             </Button>
-          </Link>
-          <Link to="/contact">
+          </ScrollToTopLink>
+          <ScrollToTopLink to="/contact">
             <Button variant="outline" className="border-white/20 hover:bg-white/5">
               Contact Us
             </Button>
-          </Link>
+          </ScrollToTopLink>
         </div>
       </div>
     </div>

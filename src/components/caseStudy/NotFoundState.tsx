@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import ScrollToTopLink from '@/components/ScrollToTopLink';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -15,10 +15,10 @@ const NotFoundState: React.FC = () => {
           <h2 className="text-2xl font-bold text-white mb-4">Case Study Not Found</h2>
           <p className="text-gray-300 mb-6">We couldn't find the case study you're looking for.</p>
           <Button asChild>
-            <Link to="/portfolio">
+            <ScrollToTopLink to="/portfolio">
               <ArrowLeft className="mr-2" size={18} />
               Back to Portfolio
-            </Link>
+            </ScrollToTopLink>
           </Button>
         </div>
       </div>

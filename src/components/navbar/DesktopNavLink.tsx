@@ -1,5 +1,6 @@
 
 import React from 'react';
+import ScrollToTopLink from '../ScrollToTopLink';
 
 interface DesktopNavLinkProps {
   to: string;
@@ -10,15 +11,15 @@ interface DesktopNavLinkProps {
 
 const DesktopNavLink: React.FC<DesktopNavLinkProps> = ({ to, isActive, children, onClick }) => {
   return (
-    <a
-      href={to}
+    <ScrollToTopLink
+      to={to}
       onClick={onClick}
       className={`text-white hover:text-orange-500 transition-colors px-3 py-2 ${
         isActive ? 'text-orange-500' : ''
       }`}
     >
       {children}
-    </a>
+    </ScrollToTopLink>
   );
 };
 

@@ -1,6 +1,6 @@
 
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import ScrollToTopLink from '../ScrollToTopLink';
 import { serviceCategories } from './constants';
 
 interface MobileServicesMenuProps {
@@ -30,14 +30,14 @@ const MobileServicesMenu: React.FC<MobileServicesMenuProps> = ({ onClose, onItem
             transition={{ duration: 0.2, delay: 0.05 * index }}
             className="py-1"
           >
-            <Link 
+            <ScrollToTopLink 
               to={service.href} 
               className="block text-center text-base hover:text-white py-1"
               onClick={handleItemClick}
               style={{ color: service.color }}
             >
               {service.title}
-            </Link>
+            </ScrollToTopLink>
           </motion.div>
         ))}
       </div>
