@@ -63,7 +63,7 @@ export function usePerformanceMonitoring(config: Partial<PerformanceConfig> = {}
   }, [finalConfig.sampleRate]);
 
   // Collect performance metrics
-  const collectMetrics = useCallback((): PerformanceMetrics | null => {
+  const collectMetrics = useCallback(async (): Promise<PerformanceMetrics | null> => {
     if (!('performance' in window)) return null;
 
     const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
