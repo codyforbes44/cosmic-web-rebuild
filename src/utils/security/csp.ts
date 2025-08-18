@@ -8,6 +8,10 @@
 export const applyCSPHeaders = () => {
   // Only apply in browser environment
   if (typeof document !== 'undefined') {
+    // Remove all existing CSP meta tags first
+    const existingCSPs = document.querySelectorAll('meta[http-equiv="Content-Security-Policy"]');
+    existingCSPs.forEach(meta => meta.remove());
+    
     const meta = document.createElement('meta');
     meta.httpEquiv = 'Content-Security-Policy';
     meta.content = [
@@ -23,13 +27,8 @@ export const applyCSPHeaders = () => {
       "form-action 'self'"
     ].join('; ');
     
-    // Remove existing CSP meta tag if present
-    const existingCSP = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
-    if (existingCSP) {
-      existingCSP.remove();
-    }
-    
     document.head.appendChild(meta);
+    console.log('CSP applied:', meta.content);
   }
 };
 
