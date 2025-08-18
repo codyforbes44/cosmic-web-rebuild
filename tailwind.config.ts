@@ -20,18 +20,28 @@ export default {
 		},
 		extend: {
 			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
+				border: {
+					DEFAULT: 'hsl(var(--border))',
+					hover: 'hsl(var(--border-hover))'
+				},
+				input: {
+					DEFAULT: 'hsl(var(--input))',
+					focus: 'hsl(var(--input-focus))'
+				},
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					hover: 'hsl(var(--primary-hover))',
+					active: 'hsl(var(--primary-active))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					foreground: 'hsl(var(--secondary-foreground))',
+					hover: 'hsl(var(--secondary-hover))',
+					active: 'hsl(var(--secondary-active))'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -39,7 +49,8 @@ export default {
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+					foreground: 'hsl(var(--muted-foreground))',
+					hover: 'hsl(var(--muted-hover))'
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
@@ -48,6 +59,18 @@ export default {
 					active: 'hsl(var(--accent-active))',
 					muted: 'hsl(var(--accent-muted))',
 					subtle: 'hsl(var(--accent-subtle))'
+				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					foreground: 'hsl(var(--info-foreground))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -96,9 +119,44 @@ export default {
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				DEFAULT: 'var(--radius)',
+				sm: 'var(--radius-sm)',
+				lg: 'var(--radius-lg)',
+				xl: 'var(--radius-xl)',
+				md: 'calc(var(--radius) - 2px)'
+			},
+			fontSize: {
+				xs: ['var(--font-size-xs)', { lineHeight: 'var(--line-height-normal)' }],
+				sm: ['var(--font-size-sm)', { lineHeight: 'var(--line-height-normal)' }],
+				base: ['var(--font-size-base)', { lineHeight: 'var(--line-height-normal)' }],
+				lg: ['var(--font-size-lg)', { lineHeight: 'var(--line-height-normal)' }],
+				xl: ['var(--font-size-xl)', { lineHeight: 'var(--line-height-tight)' }],
+				'2xl': ['var(--font-size-2xl)', { lineHeight: 'var(--line-height-tight)' }],
+				'3xl': ['var(--font-size-3xl)', { lineHeight: 'var(--line-height-tight)' }],
+				'4xl': ['var(--font-size-4xl)', { lineHeight: 'var(--line-height-tight)' }],
+				'5xl': ['var(--font-size-5xl)', { lineHeight: 'var(--line-height-tight)' }],
+				'6xl': ['var(--font-size-6xl)', { lineHeight: 'var(--line-height-tight)' }]
+			},
+			lineHeight: {
+				tight: 'var(--line-height-tight)',
+				snug: 'var(--line-height-snug)',
+				normal: 'var(--line-height-normal)',
+				relaxed: 'var(--line-height-relaxed)',
+				loose: 'var(--line-height-loose)'
+			},
+			boxShadow: {
+				sm: 'var(--shadow-sm)',
+				DEFAULT: 'var(--shadow)',
+				md: 'var(--shadow-md)',
+				lg: 'var(--shadow-lg)',
+				xl: 'var(--shadow-xl)',
+				glow: 'var(--shadow-glow)',
+				accent: 'var(--shadow-accent)'
+			},
+			transitionDuration: {
+				fast: 'var(--transition-fast)',
+				normal: 'var(--transition-normal)',
+				slow: 'var(--transition-slow)'
 			},
 			keyframes: {
 				'accordion-down': {
