@@ -31,13 +31,25 @@
     --muted-foreground: 215 20.2% 65.1%;
     --muted-hover: 217.2 32.6% 20%;
     
-    /* Refined Accent System */
-    --accent: 22 90% 58%;
+    /* Refined Accent System - Sophisticated Orange */
+    --accent: 15 80% 54%;
     --accent-foreground: 210 40% 98%;
-    --accent-hover: 22 85% 55%;
-    --accent-active: 22 80% 52%;
-    --accent-muted: 22 45% 75%;
-    --accent-subtle: 22 30% 90%;
+    --accent-hover: 15 78% 48%;
+    --accent-active: 15 75% 42%;
+    --accent-muted: 15 45% 70%;
+    --accent-subtle: 15 30% 85%;
+    
+    /* Extended Orange Palette */
+    --accent-50: 15 100% 97%;
+    --accent-100: 15 95% 92%;
+    --accent-200: 15 90% 83%;
+    --accent-300: 15 85% 74%;
+    --accent-400: 15 82% 64%;
+    --accent-500: 15 80% 54%;
+    --accent-600: 15 78% 48%;
+    --accent-700: 15 75% 42%;
+    --accent-800: 15 70% 36%;
+    --accent-900: 15 65% 30%;
     
     /* Status Colors */
     --success: 142 76% 36%;
@@ -53,8 +65,8 @@
     --border: 217.2 32.6% 17.5%;
     --border-hover: 217.2 32.6% 25%;
     --input: 217.2 32.6% 17.5%;
-    --input-focus: 22 90% 58%;
-    --ring: 22 90% 58%;
+    --input-focus: 15 80% 54%;
+    --ring: 15 80% 54%;
     
     /* Chart Colors */
     --chart-1: 220 70% 50%;
@@ -241,5 +253,5 @@
 }
 
 .leaflet-control-attribution a {
-  color: #ff6b35 !important;
+  color: hsl(15 80% 54%) !important;
 }
