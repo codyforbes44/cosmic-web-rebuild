@@ -16,7 +16,7 @@ export const applyCSPHeaders = () => {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: https:",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.elevenlabs.io",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.elevenlabs.io wss://api.elevenlabs.io",
       "media-src 'self' https: blob:",
       "object-src 'none'",
       "base-uri 'self'",
