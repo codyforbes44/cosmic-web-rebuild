@@ -1,10 +1,9 @@
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import StarBackground from "@/components/StarBackground";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Briefcase } from "lucide-react";
+import StandardPageLayout from "@/layouts/StandardPageLayout";
 
 const projects = [
   {
@@ -100,134 +99,132 @@ const Portfolio = () => {
   };
 
   return (
-    <>
-      <Navbar />
-      <StarBackground />
-      <main className="min-h-screen pt-20 pb-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mt-12 mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Our Portfolio
-            </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              Explore our successful projects and see how we've helped businesses transform and grow
-            </p>
-          </div>
+    <StandardPageLayout
+      seo={{
+        title: "Our Portfolio - ƷBI Project Showcase",
+        description: "Explore our successful projects and see how we've helped businesses transform and grow through innovative technology solutions.",
+        keywords: "portfolio, case studies, projects, technology solutions, business transformation",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&fit=crop&crop=center"
+      }}
+      breadcrumb={{ label: "Portfolio" }}
+      header={{
+        title: "Our Portfolio",
+        description: "Explore our successful projects and see how we've helped businesses transform and grow",
+        icon: Briefcase
+      }}
+      className="pt-20 pb-24"
+    >
+      {/* Category filters */}
+      <div className="flex flex-wrap justify-center gap-4 mb-16">
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              activeCategory === category.id
+                ? 'bg-accent text-white'
+                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+            }`}
+            onClick={() => setActiveCategory(category.id)}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
 
-          {/* Category filters */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  activeCategory === category.id
-                    ? 'bg-accent text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-                onClick={() => setActiveCategory(category.id)}
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Projects grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
-              <div 
-                key={project.id} 
-                className="space-card overflow-hidden rounded-xl cursor-pointer hover:scale-[1.02] transition-all duration-300"
-                onClick={() => handleProjectClick(project)}
-              >
-                <div className="h-48 overflow-hidden">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <span className="text-xs font-medium text-accent">{project.industry}</span>
-                  <h3 className="text-xl font-bold my-2 text-white">{project.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4">Client: {project.client}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 3).map((tech, index) => (
-                      <span key={index} className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">
-                        +{project.technologies.length - 3}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Project details modal */}
-          {selectedProject && (
-            <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-              <div className="bg-space-deep-blue max-w-4xl w-full rounded-xl overflow-hidden">
-                <div className="h-64 overflow-hidden">
-                  <img 
-                    src={selectedProject.image} 
-                    alt={selectedProject.title} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-8">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <span className="text-sm font-medium text-accent">{selectedProject.industry}</span>
-                      <h2 className="text-2xl md:text-3xl font-bold my-2 text-white">{selectedProject.title}</h2>
-                      <p className="text-gray-400 text-sm">Client: {selectedProject.client}</p>
-                    </div>
-                    <button 
-                      onClick={handleCloseDetails}
-                      className="text-gray-400 hover:text-white"
-                    >
-                      ✕
-                    </button>
-                  </div>
-
-                  <p className="text-gray-300 my-6">{selectedProject.description}</p>
-                  
-                  <div className="mb-6">
-                    <h3 className="text-lg font-medium text-white mb-3">Technologies Used:</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedProject.technologies.map((tech, index) => (
-                        <span key={index} className="text-sm bg-gray-800 text-gray-300 px-3 py-1 rounded-full">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-4">
-                    <Button 
-                      className="bg-accent hover:bg-accent/80 text-white"
-                      onClick={() => {
-                        handleCloseDetails();
-                        handleViewFullCaseStudy(selectedProject.id);
-                      }}
-                    >
-                      Read Full Case Study
-                    </Button>
-                    <Button variant="outline" onClick={handleCloseDetails}>
-                      Close
-                    </Button>
-                  </div>
-                </div>
+      {/* Projects grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredProjects.map((project) => (
+          <div 
+            key={project.id} 
+            className="space-card overflow-hidden rounded-xl cursor-pointer hover:scale-[1.02] transition-all duration-300"
+            onClick={() => handleProjectClick(project)}
+          >
+            <div className="h-48 overflow-hidden">
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-6">
+              <span className="text-xs font-medium text-accent">{project.industry}</span>
+              <h3 className="text-xl font-bold my-2 text-white">{project.title}</h3>
+              <p className="text-gray-400 text-sm mb-4">Client: {project.client}</p>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.slice(0, 3).map((tech, index) => (
+                  <span key={index} className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">
+                    {tech}
+                  </span>
+                ))}
+                {project.technologies.length > 3 && (
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">
+                    +{project.technologies.length - 3}
+                  </span>
+                )}
               </div>
             </div>
-          )}
+          </div>
+        ))}
+      </div>
+
+      {/* Project details modal */}
+      {selectedProject && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+          <div className="bg-space-deep-blue max-w-4xl w-full rounded-xl overflow-hidden">
+            <div className="h-64 overflow-hidden">
+              <img 
+                src={selectedProject.image} 
+                alt={selectedProject.title} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-8">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <span className="text-sm font-medium text-accent">{selectedProject.industry}</span>
+                  <h2 className="text-2xl md:text-3xl font-bold my-2 text-white">{selectedProject.title}</h2>
+                  <p className="text-gray-400 text-sm">Client: {selectedProject.client}</p>
+                </div>
+                <button 
+                  onClick={handleCloseDetails}
+                  className="text-gray-400 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <p className="text-gray-300 my-6">{selectedProject.description}</p>
+              
+              <div className="mb-6">
+                <h3 className="text-lg font-medium text-white mb-3">Technologies Used:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedProject.technologies.map((tech, index) => (
+                    <span key={index} className="text-sm bg-gray-800 text-gray-300 px-3 py-1 rounded-full">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-4">
+                <Button 
+                  className="bg-accent hover:bg-accent/80 text-white"
+                  onClick={() => {
+                    handleCloseDetails();
+                    handleViewFullCaseStudy(selectedProject.id);
+                  }}
+                >
+                  Read Full Case Study
+                </Button>
+                <Button variant="outline" onClick={handleCloseDetails}>
+                  Close
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <Footer />
-    </>
+      )}
+    </StandardPageLayout>
   );
 };
 
