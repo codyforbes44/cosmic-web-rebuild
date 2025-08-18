@@ -133,7 +133,7 @@ export const FeatureCard: React.FC<{
 export const StatCard: React.FC<{
   title: string;
   value: string | number;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   icon?: React.ReactNode;
   trend?: "up" | "down" | "neutral";
   className?: string;
