@@ -13,7 +13,7 @@ const HuggingFace = () => {
         <SEO 
           title="Hugging Face AI Models"
           description="Explore and test various AI models from Hugging Face's extensive library"
-          image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=630&fit=crop&crop=center"
+          image="/og-images/huggingface.png"
         />
         <PageHeader
           title="Hugging Face AI Models"

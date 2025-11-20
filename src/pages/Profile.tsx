@@ -129,7 +129,7 @@ const Profile = () => {
       <SEO 
         title="User Profile - Manage Your Account"
         description="Manage your profile information, preferences, and account settings."
-        image="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&h=630&fit=crop&crop=center"
+        image="/og-images/profile.png"
         type="website"
       />
       <div className="min-h-screen bg-space-dark-blue">

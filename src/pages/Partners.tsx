@@ -16,7 +16,7 @@ const Partners: React.FC = () => {
       <SEO
         title="Our Partners"
         description="Meet the strategic partners that help ƷBI deliver exceptional technology solutions and services to our clients."
-        image="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&h=630&fit=crop&crop=center"
+        image="/og-images/partners.png"
       />
       
       <Navbar />

@@ -23,7 +23,7 @@ const DigitalMarketing: React.FC = () => {
         title="Digital Marketing Services - Grow Your Business Online" 
         description="Strategic digital marketing solutions to attract customers and grow your business. Targeted campaigns, performance analytics, and conversion optimization."
         keywords="digital marketing, online advertising, targeted campaigns, performance analytics, conversion optimization, digital growth"
-        image={service.image}
+        image="/og-images/digital-marketing.png"
       />
       <Navbar />
       <StarBackground />

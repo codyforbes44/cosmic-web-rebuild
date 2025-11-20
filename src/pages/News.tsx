@@ -11,7 +11,7 @@ const News = () => {
         title="Latest News & Updates - Stay Informed"
         description="Stay up to date with the latest news, insights, and announcements from ƷBI. Industry trends, company updates, and expert analysis."
         keywords="business news, technology updates, industry insights, company announcements, tech trends"
-        image="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=630&fit=crop"
+        image="/og-images/news.png"
         type="website"
       />
       <NewsProvider>

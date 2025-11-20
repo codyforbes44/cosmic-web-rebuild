@@ -124,7 +124,7 @@ const Gallery = () => {
         title="Cosmic Gallery - Space & Universe Images"
         description="Explore stunning images of our universe, from neighboring planets to distant galaxies. Browse our collection of celestial photography including nebulae, galaxies, and space technology."
         keywords="space gallery, universe images, cosmic photography, planets, galaxies, nebulae, astronomy, space exploration"
-        image="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1200&h=630&fit=crop"
+        image="/og-images/gallery.png"
         type="website"
       />
       <Navbar />
