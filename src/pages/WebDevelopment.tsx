@@ -23,7 +23,7 @@ const WebDevelopment: React.FC = () => {
         title="Web Development Services - Custom Websites & Apps" 
         description="Modern web and mobile application development. Responsive, user-friendly applications with exceptional user experiences."
         keywords="web development, mobile apps, responsive design, custom websites, user experience, web applications"
-        image={service.image}
+        image="/og-images/web-development.png"
       />
       <Navbar />
       <StarBackground />

@@ -14,7 +14,7 @@ const OpenAI = () => {
         <SEO 
           title="OpenAI Chat Assistant"
           description="Interact with advanced AI models from OpenAI including GPT-4"
-          image="https://images.unsplash.com/photo-1676277791608-ac54d0ed4700?w=1200&h=630&fit=crop&crop=center"
+          image="/og-images/openai.png"
         />
         <PageHeader
           title="OpenAI Chat Assistant"

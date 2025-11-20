@@ -130,7 +130,7 @@ const Planets = () => {
         title="Interactive Solar System Explorer - Explore the Planets"
         description="Discover the wonders of our solar system. Explore detailed information about all eight planets including Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune."
         keywords="solar system, planets, space exploration, astronomy, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, planetary science"
-        image="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=1200&h=630&fit=crop"
+        image="/og-images/planets.png"
         type="website"
       />
       <Navbar />

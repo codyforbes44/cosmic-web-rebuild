@@ -8,6 +8,7 @@ const MultiAI = () => {
       <SEO 
         title="Multi-AI Interface | ƷBI" 
         description="Access multiple AI services including Janitor.ai, 15.ai, Edge TTS, Vosk, and FictionLab from one unified interface."
+        image="/og-images/multi-ai.png"
       />
       
       <PageHeader

@@ -23,7 +23,7 @@ const SocialMediaManagement: React.FC = () => {
         title="Social Media Management Services - Grow Your Online Presence" 
         description="Professional social media strategy and management to build your brand, engage audiences, and drive growth across all platforms."
         keywords="social media management, social media strategy, content creation, community management, social media marketing, brand building"
-        image={service.image}
+        image="/og-images/social-media.png"
       />
       <Navbar />
       <StarBackground />

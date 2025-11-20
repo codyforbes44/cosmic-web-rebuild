@@ -22,7 +22,7 @@ const StrategyConsulting: React.FC = () => {
         title="Strategic Consulting Services - Technology Strategy & Planning" 
         description="Comprehensive technology strategy development and roadmap planning aligned with your business objectives. Expert guidance for digital transformation."
         keywords="strategic consulting, technology strategy, digital transformation, business strategy, technology roadmap, strategic planning"
-        image={service.image}
+        image="/og-images/strategy-consulting.png"
       />
       <Navbar />
       <StarBackground />

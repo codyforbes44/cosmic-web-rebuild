@@ -11,7 +11,7 @@ const Contact = () => {
       seo={{
         title: "Contact Us - Get in Touch with ƷBI",
         description: "Get in touch with ƷBI's team of experts. We'd love to hear about your business challenges and how we can help.",
-        image: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1200&h=630&fit=crop&crop=center",
+        image: "/og-images/contact.png",
         type: "website"
       }}
       breadcrumb={{ label: "Contact Us" }}
