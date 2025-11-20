@@ -1,5 +1,16 @@
 
 import { Helmet } from 'react-helmet-async';
+import { generateBreadcrumbSchema, generateFAQSchema } from '@/utils/seoUtils';
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
 
 interface SEOProps {
   title: string;
@@ -23,6 +34,9 @@ interface SEOProps {
       contactType?: string;
     };
   };
+  breadcrumbs?: BreadcrumbItem[];
+  faqs?: FAQItem[];
+  structuredData?: any[];
 }
 
 const SEO = ({
@@ -40,7 +54,10 @@ const SEO = ({
       telephone: "+1-555-0123",
       contactType: "customer service"
     }
-  }
+  },
+  breadcrumbs,
+  faqs,
+  structuredData = []
 }: SEOProps) => {
   const siteTitle = `${title} | ƷBI - Business Technology Solutions`;
   const siteName = "ƷBI - Business Technology Solutions";
@@ -98,6 +115,13 @@ const SEO = ({
     "articleSection": article.section,
     "keywords": article.tags?.join(', ') || keywords
   } : null;
+
+  // Generate breadcrumb schema if breadcrumbs are provided
+  const breadcrumbSchema = breadcrumbs ? generateBreadcrumbSchema(breadcrumbs) : null;
+
+  // Generate FAQ schema if FAQs are provided
+  const faqSchema = faqs ? generateFAQSchema(faqs) : null;
+
 
   return (
     <Helmet>
@@ -178,6 +202,25 @@ const SEO = ({
           {JSON.stringify(articleSchema)}
         </script>
       )}
+      
+      {breadcrumbSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      )}
+      
+      {faqSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      )}
+      
+      {structuredData.map((data, index) => (
+        <script key={index} type="application/ld+json">
+          {JSON.stringify(data)}
+        </script>
+      ))}
+
       
       {/* Additional meta tags for better indexing */}
       <meta name="rating" content="general" />
