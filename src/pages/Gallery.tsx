@@ -100,6 +100,8 @@ const galleryItems: GalleryItem[] = [
   },
 ];
 
+import SEO from "@/components/SEO";
+
 const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
@@ -118,6 +120,13 @@ const Gallery = () => {
 
   return (
     <>
+      <SEO 
+        title="Cosmic Gallery - Space & Universe Images"
+        description="Explore stunning images of our universe, from neighboring planets to distant galaxies. Browse our collection of celestial photography including nebulae, galaxies, and space technology."
+        keywords="space gallery, universe images, cosmic photography, planets, galaxies, nebulae, astronomy, space exploration"
+        image="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1200&h=630&fit=crop"
+        type="website"
+      />
       <Navbar />
       <StarBackground />
       <main className="min-h-screen pt-20 pb-24">

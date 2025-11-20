@@ -1,5 +1,5 @@
-
 // SEO utility functions
+export * from './seoUtils/advancedSchemas';
 
 export const generateBreadcrumbSchema = (breadcrumbs: Array<{ name: string; url: string }>) => {
   return {
