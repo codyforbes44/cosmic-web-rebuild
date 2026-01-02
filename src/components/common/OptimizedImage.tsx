@@ -1,21 +1,67 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
+/**
+ * Props for the OptimizedImage component
+ */
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  /** Image source URL */
   src: string;
+  /** Alt text for accessibility (required) */
   alt: string;
+  /** Fallback image to show on error */
   fallbackSrc?: string;
+  /** CSS classes for the image element */
   className?: string;
+  /** CSS classes for the container div */
   containerClassName?: string;
+  /** Enable lazy loading with Intersection Observer */
   lazy?: boolean;
+  /** Aspect ratio preset for consistent sizing */
   aspectRatio?: 'square' | 'video' | 'wide' | 'portrait' | 'auto';
+  /** Mark as high priority for LCP optimization */
   priority?: boolean;
+  /** Callback when image finishes loading */
   onLoadComplete?: () => void;
 }
 
 /**
- * OptimizedImage component with lazy loading and intersection observer
- * Improves performance by only loading images when they're in viewport
+ * OptimizedImage - Performance-optimized image component with lazy loading.
+ * 
+ * Features:
+ * - Lazy loading with Intersection Observer (loads images only when in viewport)
+ * - Automatic fallback handling for broken images
+ * - Loading skeleton animation
+ * - Aspect ratio presets for consistent layouts
+ * - Priority loading option for above-the-fold images (LCP optimization)
+ * - Accessible with proper alt text handling
+ * 
+ * @component
+ * @example
+ * // Basic usage with lazy loading
+ * <OptimizedImage 
+ *   src="/images/hero.jpg" 
+ *   alt="Hero banner" 
+ * />
+ * 
+ * @example
+ * // Priority loading for hero images (disables lazy loading)
+ * <OptimizedImage 
+ *   src="/images/hero.jpg" 
+ *   alt="Hero banner"
+ *   priority
+ *   aspectRatio="video"
+ * />
+ * 
+ * @example
+ * // With custom fallback and aspect ratio
+ * <OptimizedImage 
+ *   src={user.avatar} 
+ *   alt={`${user.name}'s avatar`}
+ *   fallbackSrc="/default-avatar.png"
+ *   aspectRatio="square"
+ *   className="rounded-full"
+ * />
  */
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,

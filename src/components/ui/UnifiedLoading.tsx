@@ -4,21 +4,58 @@ import { cn } from '@/lib/utils';
 import { useAccessibility } from '@/hooks/use-accessibility';
 import { Skeleton, SkeletonCard, SkeletonList, SkeletonText } from './skeleton';
 
+/**
+ * Loading state variant options
+ * @typedef {'spinner' | 'dots' | 'pulse' | 'skeleton' | 'inline'} LoadingVariant
+ */
 type LoadingVariant = 'spinner' | 'dots' | 'pulse' | 'skeleton' | 'inline';
+
+/**
+ * Loading state size options
+ * @typedef {'xs' | 'sm' | 'md' | 'lg' | 'xl'} LoadingSize
+ */
 type LoadingSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
+/**
+ * Props for the UnifiedLoading component
+ */
 interface UnifiedLoadingProps {
+  /** Visual variant of the loading indicator */
   variant?: LoadingVariant;
+  /** Size of the loading indicator */
   size?: LoadingSize;
+  /** Accessible message describing what is loading */
   message?: string;
+  /** Whether to display the message visually */
   showMessage?: boolean;
+  /** Additional CSS classes */
   className?: string;
+  /** Whether to center in full screen */
   fullScreen?: boolean;
 }
 
 /**
- * UnifiedLoading component - Single source of truth for all loading states
- * Replaces: LoadingSpinner, EnhancedLoading, and component-specific loading states
+ * UnifiedLoading - Single source of truth for all loading states in the application.
+ * 
+ * This component replaces all previous loading implementations (LoadingSpinner, 
+ * EnhancedLoading, component-specific loading states) to ensure consistent UX.
+ * 
+ * @component
+ * @example
+ * // Basic spinner
+ * <UnifiedLoading />
+ * 
+ * @example
+ * // Full page loading
+ * <UnifiedLoading variant="spinner" size="lg" fullScreen message="Loading page..." />
+ * 
+ * @example
+ * // Inline loading for buttons
+ * <UnifiedLoading variant="inline" size="sm" message="Saving..." />
+ * 
+ * @example
+ * // Skeleton loading for content
+ * <UnifiedLoading variant="skeleton" />
  */
 const UnifiedLoading: React.FC<UnifiedLoadingProps> = ({
   variant = 'spinner',
