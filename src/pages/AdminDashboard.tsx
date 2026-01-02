@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AdminGuard } from '@/components/admin/AdminGuard';
@@ -14,6 +13,7 @@ import { AdminSystemPanel } from '@/components/admin/panels/AdminSystemPanel';
 import { AdminSecurityPanel } from '@/components/admin/panels/AdminSecurityPanel';
 import { AdminDesktopHeader } from '@/components/admin/components/AdminDesktopHeader';
 import SEO from '@/components/SEO';
+import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
 
 const AdminDashboard = () => {
   const [searchParams] = useSearchParams();
@@ -120,7 +120,13 @@ const AdminDashboard = () => {
             />
             <div className="flex-1 overflow-auto p-6">
               <div className="max-w-7xl mx-auto">
-                {renderTabContent()}
+                <QueryErrorBoundary
+                  fallbackTitle="Admin Panel Error"
+                  fallbackDescription="Failed to load this admin panel. Please try again."
+                  compact
+                >
+                  {renderTabContent()}
+                </QueryErrorBoundary>
               </div>
             </div>
           </div>

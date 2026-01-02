@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import { Loader2, User, Mail, Calendar, Save } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import SEO from '@/components/SEO';
+import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
 
 interface UserProfile {
   username: string | null;
@@ -132,9 +132,13 @@ const Profile = () => {
         image="/og-images/profile.png"
         type="website"
       />
-      <div className="min-h-screen bg-space-dark-blue">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-2xl mx-auto">
+      <QueryErrorBoundary
+        fallbackTitle="Profile Error"
+        fallbackDescription="Unable to load your profile. Please try again."
+      >
+        <div className="min-h-screen bg-space-dark-blue">
+          <div className="container mx-auto px-4 py-8">
+            <div className="max-w-2xl mx-auto">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-white mb-2">Profile Settings</h1>
               <p className="text-gray-400">Manage your account information and preferences</p>
@@ -251,9 +255,10 @@ const Profile = () => {
                 </form>
               </CardContent>
             </Card>
+            </div>
           </div>
         </div>
-      </div>
+      </QueryErrorBoundary>
     </>
   );
 };

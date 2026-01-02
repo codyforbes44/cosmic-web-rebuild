@@ -4,6 +4,11 @@
 
 **URL**: https://lovable.dev/projects/2b064041-b594-40d8-9e86-f104f5c81b6c
 
+## Documentation
+
+- **[Architecture Documentation](./ARCHITECTURE.md)** - Comprehensive guide to the codebase structure, patterns, and development guidelines
+- **Component Catalog** - Visit `/component-catalog` in the app to see all UI components with live examples
+
 ## How can I edit this code?
 
 There are several ways of editing your application.

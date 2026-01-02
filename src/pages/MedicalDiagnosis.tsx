@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2, AlertTriangle, Heart, Stethoscope } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
 interface MedicalCondition {
   condition: string;
   likelihood: string;
@@ -106,6 +107,11 @@ const MedicalDiagnosis = () => {
       
       <div className="min-h-screen bg-space-dark-blue">
         <Navbar />
+        
+        <QueryErrorBoundary
+          fallbackTitle="Medical Diagnosis Unavailable"
+          fallbackDescription="Unable to load the medical diagnosis assistant. Please try again."
+        >
         
         <div className="container mx-auto px-4 py-24">
           <div className="max-w-4xl mx-auto">
@@ -239,6 +245,7 @@ const MedicalDiagnosis = () => {
             </div>
           </div>
         </div>
+        </QueryErrorBoundary>
         
         <Footer />
       </div>
