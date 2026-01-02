@@ -10,13 +10,40 @@
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Metric logging helper
+async function logMetric(
+  functionName: string,
+  executionTimeMs: number,
+  statusCode: number,
+  errorMessage?: string
+) {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') || '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
+    );
+    await supabase.from('edge_function_metrics').insert({
+      function_name: functionName,
+      execution_time_ms: executionTimeMs,
+      status_code: statusCode,
+      error_message: errorMessage || null,
+    });
+  } catch (e) {
+    console.error('Failed to log metric:', e);
+  }
+}
+
 serve(async (req) => {
+  const startTime = Date.now();
+  const functionName = 'medical-diagnosis';
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -116,6 +143,7 @@ Please analyze these symptoms and provide potential medical conditions with appr
       console.error('Lovable AI Gateway error:', response.status, errorText);
       
       if (response.status === 429) {
+        await logMetric(functionName, Date.now() - startTime, 429, 'Rate limit exceeded');
         return new Response(JSON.stringify({ 
           error: 'Rate limit exceeded. Please try again later.',
           possibleConditions: [],
@@ -128,6 +156,7 @@ Please analyze these symptoms and provide potential medical conditions with appr
       }
       
       if (response.status === 402) {
+        await logMetric(functionName, Date.now() - startTime, 402, 'Payment required');
         return new Response(JSON.stringify({ 
           error: 'Payment required. Please add credits to your Lovable workspace.',
           possibleConditions: [],
@@ -177,11 +206,14 @@ Please analyze these symptoms and provide potential medical conditions with appr
       parsedAnalysis.disclaimer = 'This is for educational purposes only. Please consult a healthcare provider for proper diagnosis.';
     }
 
+    await logMetric(functionName, Date.now() - startTime, 200);
+
     return new Response(JSON.stringify(parsedAnalysis), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error in medical-diagnosis function:', error);
+    await logMetric(functionName, Date.now() - startTime, 500, error.message);
     return new Response(JSON.stringify({ 
       error: error.message,
       possibleConditions: [],

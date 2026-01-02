@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
@@ -21,7 +22,33 @@ interface ChatRequest {
   stream?: boolean;
 }
 
+// Metric logging helper
+async function logMetric(
+  functionName: string,
+  executionTimeMs: number,
+  statusCode: number,
+  errorMessage?: string
+) {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') || '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
+    );
+    await supabase.from('edge_function_metrics').insert({
+      function_name: functionName,
+      execution_time_ms: executionTimeMs,
+      status_code: statusCode,
+      error_message: errorMessage || null,
+    });
+  } catch (e) {
+    console.error('Failed to log metric:', e);
+  }
+}
+
 serve(async (req) => {
+  const startTime = Date.now();
+  const functionName = 'openai-chat';
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -76,6 +103,7 @@ serve(async (req) => {
         case 429:
           errorMessage = 'Rate limit exceeded. Please wait a moment and try again.';
           errorType = 'rate_limit_error';
+          await logMetric(functionName, Date.now() - startTime, 429, errorMessage);
           return new Response(JSON.stringify({ 
             error: errorMessage,
             type: errorType,
@@ -87,6 +115,7 @@ serve(async (req) => {
         case 402:
           errorMessage = 'Payment required. Please add credits to your Lovable workspace.';
           errorType = 'payment_required_error';
+          await logMetric(functionName, Date.now() - startTime, 402, errorMessage);
           return new Response(JSON.stringify({ 
             error: errorMessage,
             type: errorType,
@@ -113,6 +142,7 @@ serve(async (req) => {
           errorMessage = `AI Gateway error: ${response.status} ${response.statusText}`;
       }
       
+      await logMetric(functionName, Date.now() - startTime, 500, errorMessage);
       return new Response(JSON.stringify({ 
         error: errorMessage,
         type: errorType,
@@ -125,6 +155,8 @@ serve(async (req) => {
 
     // Handle streaming responses
     if (stream) {
+      // For streaming, log metric before returning
+      await logMetric(functionName, Date.now() - startTime, 200);
       return new Response(response.body, {
         headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' },
       });
@@ -137,11 +169,14 @@ serve(async (req) => {
       console.log(`Lovable AI usage: ${data.usage.total_tokens} tokens`);
     }
 
+    await logMetric(functionName, Date.now() - startTime, 200);
+
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error in openai-chat function:', error);
+    await logMetric(functionName, Date.now() - startTime, 500, error.message);
     return new Response(JSON.stringify({ 
       error: error.message,
       type: 'ai_error'
