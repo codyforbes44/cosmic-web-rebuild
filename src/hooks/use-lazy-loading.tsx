@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, ComponentType } from 'react';
-import { EnhancedLoading } from '@/components/ui/enhanced-loading';
+import { SectionLoading } from '@/components/ui/UnifiedLoading';
 import { useAccessibility } from '@/hooks/use-accessibility';
 
 interface LazyComponentOptions {
@@ -54,10 +54,7 @@ export function createLazyComponent<T extends ComponentType<any>>(
     const { reducedMotion } = useAccessibility();
     
     const DefaultFallback = () => (
-      <EnhancedLoading 
-        variant="section" 
-        className={reducedMotion ? '' : 'animate-fade-in'} 
-      />
+      <SectionLoading message="Loading..." />
     );
 
     return (

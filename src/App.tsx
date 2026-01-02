@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +12,7 @@ import VisitorTracker from "@/components/VisitorTracker";
 import CookieConsent from "@/components/CookieConsent";
 import LiveChat from "@/components/LiveChat/LiveChat";
 import { PageLoading } from "@/components/ui/UnifiedLoading";
+import { preloadCriticalRoutes } from "@/utils/routePreloader";
 
 // Eager loaded - critical path
 import Index from "./pages/Index";
@@ -77,6 +78,11 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  // Preload critical routes after initial render
+  useEffect(() => {
+    preloadCriticalRoutes();
+  }, []);
+
   return (
     <ErrorBoundary 
       enableReporting 

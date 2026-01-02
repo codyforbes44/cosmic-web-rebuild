@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -8,7 +8,9 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   className?: string;
   containerClassName?: string;
   lazy?: boolean;
-  aspectRatio?: 'square' | 'video' | 'wide' | 'auto';
+  aspectRatio?: 'square' | 'video' | 'wide' | 'portrait' | 'auto';
+  priority?: boolean;
+  onLoadComplete?: () => void;
 }
 
 /**
@@ -23,15 +25,17 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   containerClassName,
   lazy = true,
   aspectRatio = 'auto',
+  priority = false,
+  onLoadComplete,
   ...props
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(!lazy);
+  const [isInView, setIsInView] = useState(!lazy || priority);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!lazy || !imgRef.current) return;
+    if (!lazy || priority || !imgRef.current) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -43,29 +47,31 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         });
       },
       {
-        rootMargin: '50px',
-        threshold: 0.1,
+        rootMargin: '100px', // Increased for earlier loading
+        threshold: 0.01,
       }
     );
 
     observer.observe(imgRef.current);
 
     return () => observer.disconnect();
-  }, [lazy]);
+  }, [lazy, priority]);
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     setIsLoaded(true);
-  };
+    onLoadComplete?.();
+  }, [onLoadComplete]);
 
-  const handleError = () => {
+  const handleError = useCallback(() => {
     setHasError(true);
     setIsLoaded(true);
-  };
+  }, []);
 
   const aspectRatioClasses = {
     square: 'aspect-square',
     video: 'aspect-video',
     wide: 'aspect-[21/9]',
+    portrait: 'aspect-[3/4]',
     auto: '',
   };
 
@@ -80,7 +86,10 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
     >
       {/* Loading skeleton */}
       {!isLoaded && (
-        <div className="absolute inset-0 bg-muted animate-pulse" />
+        <div 
+          className="absolute inset-0 bg-muted animate-pulse" 
+          aria-hidden="true"
+        />
       )}
       
       {/* Image */}
@@ -95,8 +104,9 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           )}
           onLoad={handleLoad}
           onError={handleError}
-          loading={lazy ? 'lazy' : 'eager'}
+          loading={priority ? 'eager' : (lazy ? 'lazy' : 'eager')}
           decoding="async"
+          fetchPriority={priority ? 'high' : undefined}
           {...props}
         />
       )}

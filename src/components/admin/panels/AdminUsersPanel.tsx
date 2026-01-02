@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { UserPlus, Shield } from 'lucide-react';
@@ -8,8 +8,7 @@ import { useAdminUsers } from '../hooks/useAdminUsers';
 import { UserTable } from '../components/UserTable';
 import { UserSearchBar } from '../components/UserSearchBar';
 import { EmptyUsersState } from '../components/EmptyUsersState';
-import { LoadingState } from '../components/LoadingState';
-import { useEffect } from 'react';
+import { SectionLoading } from '@/components/ui/UnifiedLoading';
 import { supabase } from '@/integrations/supabase/client';
 
 export const AdminUsersPanel: React.FC = () => {
@@ -58,7 +57,7 @@ export const AdminUsersPanel: React.FC = () => {
   };
 
   if (isLoading) {
-    return <LoadingState />;
+    return <SectionLoading message="Loading users..." />;
   }
 
   return (

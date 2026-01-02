@@ -2,6 +2,7 @@ import React from 'react';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAccessibility } from '@/hooks/use-accessibility';
+import { Skeleton, SkeletonCard, SkeletonList, SkeletonText } from './skeleton';
 
 type LoadingVariant = 'spinner' | 'dots' | 'pulse' | 'skeleton' | 'inline';
 type LoadingSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -161,6 +162,85 @@ export const InlineLoading: React.FC<{ message?: string }> = ({ message }) => (
 
 export const ButtonLoading: React.FC = () => (
   <UnifiedLoading variant="spinner" size="xs" showMessage={false} />
+);
+
+// Specialized skeleton components (consolidated from enhanced-loading.tsx)
+export const WeatherSkeleton: React.FC = () => (
+  <div className="space-y-6" role="status" aria-label="Loading weather data">
+    <div className="text-center space-y-4">
+      <Skeleton variant="heading" className="w-48 mx-auto" />
+      <Skeleton className="h-24 w-24 rounded-full mx-auto" />
+      <Skeleton variant="text" className="w-32 mx-auto" />
+    </div>
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="space-y-2 p-4 rounded-lg border border-border/50">
+          <Skeleton variant="text" className="w-16" />
+          <Skeleton className="h-8 w-8" />
+          <Skeleton variant="text" className="w-20" />
+        </div>
+      ))}
+    </div>
+    <span className="sr-only">Loading weather data</span>
+  </div>
+);
+
+export const DashboardSkeleton: React.FC = () => (
+  <div className="space-y-6" role="status" aria-label="Loading dashboard">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="p-6 rounded-lg border border-border/50 space-y-2">
+          <Skeleton variant="text" className="w-24" />
+          <Skeleton variant="heading" className="w-16" />
+          <Skeleton variant="text" className="w-20" />
+        </div>
+      ))}
+    </div>
+    <div className="grid gap-6 md:grid-cols-2">
+      <div className="p-6 rounded-lg border border-border/50 space-y-4">
+        <Skeleton variant="heading" className="w-32" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+      <div className="p-6 rounded-lg border border-border/50 space-y-4">
+        <Skeleton variant="heading" className="w-32" />
+        <SkeletonList items={6} />
+      </div>
+    </div>
+    <span className="sr-only">Loading dashboard</span>
+  </div>
+);
+
+export const PortfolioSkeleton: React.FC = () => (
+  <div className="space-y-8" role="status" aria-label="Loading portfolio">
+    <div className="text-center space-y-4">
+      <Skeleton variant="heading" className="w-64 mx-auto" />
+      <SkeletonText lines={2} className="max-w-2xl mx-auto" />
+    </div>
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: 9 }).map((_, i) => (
+        <div key={i} className="space-y-4">
+          <Skeleton variant="image" />
+          <div className="space-y-2">
+            <Skeleton variant="text" className="w-3/4" />
+            <Skeleton variant="text" className="w-1/2" />
+          </div>
+          <Skeleton variant="button" className="w-24" />
+        </div>
+      ))}
+    </div>
+    <span className="sr-only">Loading portfolio</span>
+  </div>
+);
+
+export const CardLoading: React.FC<{ className?: string }> = ({ className }) => (
+  <SkeletonCard className={className} />
+);
+
+export const ListLoading: React.FC<{ items?: number; className?: string }> = ({ 
+  items = 5, 
+  className 
+}) => (
+  <SkeletonList items={items} className={className} />
 );
 
 export default UnifiedLoading;
