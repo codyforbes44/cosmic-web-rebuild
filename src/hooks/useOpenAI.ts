@@ -1,19 +1,19 @@
-
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import type { OpenAIResponse, OpenAIRequestPayload, AISuccessCallback, AIErrorCallback } from '@/types/ai';
 
 export interface UseOpenAIOptions {
   functionName?: string;
-  onSuccess?: (data: any) => void;
-  onError?: (error: Error) => void;
+  onSuccess?: AISuccessCallback<OpenAIResponse>;
+  onError?: AIErrorCallback;
 }
 
 export interface OpenAIHookResult {
   isLoading: boolean;
   error: string | null;
-  data: any;
-  invoke: (payload: any) => Promise<any>;
+  data: OpenAIResponse | null;
+  invoke: (payload: OpenAIRequestPayload) => Promise<OpenAIResponse>;
   reset: () => void;
 }
 
@@ -21,10 +21,10 @@ export const useOpenAI = (options: UseOpenAIOptions = {}): OpenAIHookResult => {
   const { functionName = 'openai-chat', onSuccess, onError } = options;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<OpenAIResponse | null>(null);
   const { toast } = useToast();
 
-  const invoke = useCallback(async (payload: any) => {
+  const invoke = useCallback(async (payload: OpenAIRequestPayload): Promise<OpenAIResponse> => {
     setIsLoading(true);
     setError(null);
 
@@ -37,9 +37,10 @@ export const useOpenAI = (options: UseOpenAIOptions = {}): OpenAIHookResult => {
         throw new Error(invokeError.message || 'Failed to invoke OpenAI function');
       }
 
-      setData(result);
-      onSuccess?.(result);
-      return result;
+      const typedResult = result as OpenAIResponse;
+      setData(typedResult);
+      onSuccess?.(typedResult);
+      return typedResult;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
       setError(errorMessage);

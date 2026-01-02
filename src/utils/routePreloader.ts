@@ -1,9 +1,11 @@
+import type { ComponentType } from 'react';
+
 /**
  * Route preloading utility for improved navigation performance
  * Preloads lazy-loaded route components on hover/focus for instant transitions
  */
 
-type LazyImport = () => Promise<{ default: React.ComponentType<any> }>;
+type LazyImport = () => Promise<{ default: ComponentType<Record<string, unknown>> }>;
 
 // Map of route paths to their lazy import functions
 const routeImports: Record<string, LazyImport> = {

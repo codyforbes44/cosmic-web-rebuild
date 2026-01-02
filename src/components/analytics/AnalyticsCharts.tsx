@@ -1,15 +1,15 @@
-
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type { DailyVisitorData, DeviceData, CountryData, SourceData } from "@/types/analytics";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
 
 interface AnalyticsChartsProps {
-  dailyVisitors?: any[];
-  deviceData?: any[];
-  countryData?: any[];
-  sourceData?: any[];
+  dailyVisitors?: DailyVisitorData[];
+  deviceData?: DeviceData[];
+  countryData?: CountryData[];
+  sourceData?: SourceData[];
   loading: boolean;
   chartType?: "overview" | "geography" | "sources";
 }

@@ -1,5 +1,5 @@
-
 import { OPENAI_CONFIG, OpenAIModel, SystemPromptType } from '@/config/openai';
+import type { OpenAIRequestPayload, OpenAIResponse, ChatMessage } from '@/types/ai';
 
 export interface AIRequestOptions {
   model?: OpenAIModel;
@@ -11,7 +11,7 @@ export interface AIRequestOptions {
 export const buildOpenAIRequest = (
   userMessage: string,
   options: AIRequestOptions = {}
-) => {
+): OpenAIRequestPayload => {
   const {
     model = 'fast',
     temperature = OPENAI_CONFIG.defaultSettings.temperature,
@@ -23,11 +23,13 @@ export const buildOpenAIRequest = (
     ? OPENAI_CONFIG.systemPrompts[systemPrompt as SystemPromptType]
     : systemPrompt;
 
+  const messages: ChatMessage[] = [
+    { role: 'system', content: resolvedSystemPrompt },
+    { role: 'user', content: userMessage }
+  ];
+
   return {
-    messages: [
-      { role: 'system' as const, content: resolvedSystemPrompt },
-      { role: 'user' as const, content: userMessage }
-    ],
+    messages,
     model: OPENAI_CONFIG.models[model],
     temperature,
     max_tokens: maxTokens
@@ -38,7 +40,7 @@ export const sanitizeInput = (input: string): string => {
   return input.trim().slice(0, 4000); // Limit input length
 };
 
-export const formatAIResponse = (response: any): string => {
+export const formatAIResponse = (response: OpenAIResponse): string => {
   if (!response?.choices?.[0]?.message?.content) {
     throw new Error('Invalid AI response format');
   }
