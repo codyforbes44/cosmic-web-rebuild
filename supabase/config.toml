@@ -67,6 +67,7 @@ enabled = false
 [auth.external.zoom]
 enabled = false
 
+# Edge Functions Configuration
 [functions.email-service]
 verify_jwt = false
 
@@ -81,3 +82,36 @@ verify_jwt = false
 
 [functions.openai-chat]
 verify_jwt = false
+
+[functions.anthropic-chat]
+verify_jwt = false
+
+[functions.medical-diagnosis]
+verify_jwt = false
+
+[functions.janitor-ai]
+verify_jwt = false
+
+[functions.fiction-lab]
+verify_jwt = false
+
+[functions.fifteen-ai]
+verify_jwt = false
+
+[functions.huggingface-inference]
+verify_jwt = false
+
+[functions.generate-weather]
+verify_jwt = false
+
+[functions.edge-tts]
+verify_jwt = false
+
+[functions.vosk-speech]
+verify_jwt = false
+
+[functions.visitor-metadata]
+verify_jwt = false
+
+[functions.admin-users]
+verify_jwt = true

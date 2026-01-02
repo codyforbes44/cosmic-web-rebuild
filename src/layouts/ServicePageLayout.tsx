@@ -9,7 +9,7 @@ import StarBackground from '@/components/StarBackground';
 import SEO from '@/components/SEO';
 import ServiceCaseStudy from '@/components/ServiceCaseStudy';
 import LiveChat from '@/components/LiveChat/LiveChat';
-import type { ServiceDefinition } from '@/types/service';
+import type { ServiceDefinition } from '@/types/services';
 
 interface ServicePageLayoutProps {
   children?: React.ReactNode;
