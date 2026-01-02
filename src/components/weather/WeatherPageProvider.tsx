@@ -1,7 +1,7 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { fetchWeatherData, WeatherResponse } from "@/components/footer/weather/WeatherService";
 import { supabase } from "@/integrations/supabase/client";
+import { isDay } from "@/utils/weatherUtils";
 
 interface WeatherPageContextType {
   weatherData: WeatherResponse | null;
@@ -37,19 +37,6 @@ export const WeatherPageProvider = ({ children }: WeatherPageProviderProps) => {
   const [units, setUnits] = useState<'imperial' | 'metric'>('imperial');
   const [currentLocation, setCurrentLocation] = useState<string>('');
   const [user, setUser] = useState<any | null>(null);
-
-  // Helper function to determine if it's day or night
-  const isDay = (sunrise: string, sunset: string): boolean => {
-    const now = new Date();
-    const currentHour = now.getHours();
-    
-    // Parse sunrise and sunset times (assuming format like "6:45 AM")
-    const sunriseHour = parseInt(sunrise.split(':')[0]) + (sunrise.includes('PM') && !sunrise.startsWith('12') ? 12 : 0);
-    const sunsetHour = parseInt(sunset.split(':')[0]) + (sunset.includes('PM') && !sunset.startsWith('12') ? 12 : 0);
-    
-    return currentHour >= sunriseHour && currentHour < sunsetHour;
-  };
-
   // Check for authentication
   useEffect(() => {
     const fetchUser = async () => {
