@@ -61,21 +61,19 @@ export const WeatherPageProvider = ({ children }: WeatherPageProviderProps) => {
       setError(null);
       
       // Clear cache if force refresh is requested
-      if (forceRefresh) {
-        localStorage.removeItem(`weather_data_${units}`);
-        console.log('Weather cache cleared - forcing fresh data fetch');
+      if (forceRefresh && location) {
+        const normalizedLocation = location.toLowerCase().replace(/\s+/g, '_');
+        localStorage.removeItem(`weather_data_${units}_${normalizedLocation}`);
+        console.log('Weather cache cleared for location:', location);
       }
       
-      const data = await fetchWeatherData(units);
+      // Pass location to fetchWeatherData - it will detect location if not provided
+      const data = await fetchWeatherData(units, location);
       
       if (data) {
         setWeatherData(data);
         setCurrentLocation(data.current.location);
         console.log('WeatherPageProvider: Weather data loaded for location:', data.current.location);
-        // Only show demo warning if this is actually demo data
-        if (data.current.location === 'Demo City') {
-          setError('Unable to fetch real weather data - showing demo data');
-        }
       }
     } catch (err) {
       console.error('Weather page error:', err);

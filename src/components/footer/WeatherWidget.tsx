@@ -23,7 +23,7 @@ const INITIAL_STATE: WeatherState = {
   data: null,
   loading: true,
   error: null,
-  locationStatus: 'Generating weather data...'
+  locationStatus: 'Detecting your location...'
 };
 
 const WeatherWidget = ({ 
@@ -42,9 +42,10 @@ const WeatherWidget = ({
       updateState({ 
         loading: true, 
         error: null, 
-        locationStatus: 'Generating weather data...' 
+        locationStatus: 'Detecting your location...' 
       });
       
+      // fetchWeatherData now handles location detection internally
       const data = await fetchWeatherData(units);
       
       if (data) {
