@@ -1,4 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+/**
+ * 15.ai Voice Synthesis Edge Function
+ * 
+ * @description Text-to-speech functionality
+ * Note: For actual voice synthesis, use the ElevenLabs integration
+ * This endpoint provides a placeholder response and guidance
+ */
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
@@ -7,7 +14,6 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -19,35 +25,59 @@ serve(async (req) => {
       throw new Error('Text is required');
     }
 
-    // 15.ai API endpoint for voice synthesis
-    const response = await fetch('https://api.15.ai/app/getAudio', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Deno.env.get('FIFTEEN_AI_API_KEY')}`,
-      },
-      body: JSON.stringify({
-        text,
-        character: voice || 'twilight_sparkle',
-        emotion: emotion || 'neutral',
-      }),
-    });
+    console.log(`Voice synthesis request: voice=${voice || 'default'}, emotion=${emotion || 'neutral'}`);
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`15.ai API error: ${error}`);
+    // Check for ElevenLabs API key for proper voice synthesis
+    const ELEVENLABS_API = Deno.env.get('ELEVENLABS_API');
+    
+    if (ELEVENLABS_API) {
+      // Use ElevenLabs for actual voice synthesis
+      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', {
+        method: 'POST',
+        headers: {
+          'Accept': 'audio/mpeg',
+          'Content-Type': 'application/json',
+          'xi-api-key': ELEVENLABS_API,
+        },
+        body: JSON.stringify({
+          text,
+          model_id: 'eleven_monolingual_v1',
+          voice_settings: {
+            stability: 0.5,
+            similarity_boost: 0.5,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('ElevenLabs API error:', response.status, errorText);
+        throw new Error(`Voice synthesis error: ${response.status}`);
+      }
+
+      const arrayBuffer = await response.arrayBuffer();
+      const base64Audio = btoa(
+        String.fromCharCode(...new Uint8Array(arrayBuffer))
+      );
+
+      return new Response(JSON.stringify({ 
+        audioContent: base64Audio,
+        voice: voice || 'default',
+        emotion: emotion || 'neutral',
+        provider: 'elevenlabs'
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    // Convert audio to base64
-    const arrayBuffer = await response.arrayBuffer();
-    const base64Audio = btoa(
-      String.fromCharCode(...new Uint8Array(arrayBuffer))
-    );
-
-    return new Response(JSON.stringify({ 
-      audioContent: base64Audio,
-      voice,
-      emotion 
+    // Fallback: Return guidance if no voice synthesis API is configured
+    return new Response(JSON.stringify({
+      message: 'Voice synthesis requires ElevenLabs API configuration.',
+      suggestion: 'Please use the ElevenLabs conversation feature or configure ELEVENLABS_API secret.',
+      text,
+      voice: voice || 'default',
+      emotion: emotion || 'neutral',
+      provider: 'none'
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
