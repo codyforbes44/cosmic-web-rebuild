@@ -3,9 +3,15 @@ import { WeatherResponse } from './types';
 
 const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes in milliseconds
 
-export const getCachedWeather = (units: 'imperial' | 'metric'): WeatherResponse | null => {
+const getCacheKey = (units: 'imperial' | 'metric', location?: string): string => {
+  const normalizedLocation = location?.toLowerCase().replace(/\s+/g, '_') || 'default';
+  return `weather_data_${units}_${normalizedLocation}`;
+};
+
+export const getCachedWeather = (units: 'imperial' | 'metric', location?: string): WeatherResponse | null => {
   try {
-    const cachedDataString = localStorage.getItem(`weather_data_${units}`);
+    const cacheKey = getCacheKey(units, location);
+    const cachedDataString = localStorage.getItem(cacheKey);
     if (!cachedDataString) return null;
     
     const cachedData: WeatherResponse = JSON.parse(cachedDataString);
@@ -23,9 +29,10 @@ export const getCachedWeather = (units: 'imperial' | 'metric'): WeatherResponse 
   }
 };
 
-export const cacheWeatherData = (data: WeatherResponse, units: 'imperial' | 'metric') => {
+export const cacheWeatherData = (data: WeatherResponse, units: 'imperial' | 'metric', location?: string) => {
   try {
-    localStorage.setItem(`weather_data_${units}`, JSON.stringify(data));
+    const cacheKey = getCacheKey(units, location);
+    localStorage.setItem(cacheKey, JSON.stringify(data));
   } catch (err) {
     console.error('Error caching weather data:', err);
   }
