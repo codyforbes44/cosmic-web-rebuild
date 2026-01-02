@@ -1,9 +1,9 @@
-
 import React from 'react';
 import PageHeader from '@/components/PageHeader';
 import StarBackground from '@/components/StarBackground';
 import HuggingFacePlayground from '@/components/ai/HuggingFacePlayground';
 import SEO from '@/components/SEO';
+import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
 
 const HuggingFace = () => {
   return (
@@ -20,11 +20,16 @@ const HuggingFace = () => {
           description="Explore and test various AI models from Hugging Face's extensive library"
         />
         
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-center">
-            <HuggingFacePlayground />
+        <QueryErrorBoundary
+          fallbackTitle="Hugging Face Models Unavailable"
+          fallbackDescription="Unable to load AI models. Please try again."
+        >
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex justify-center">
+              <HuggingFacePlayground />
+            </div>
           </div>
-        </div>
+        </QueryErrorBoundary>
       </div>
     </div>
   );

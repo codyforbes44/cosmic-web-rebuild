@@ -1,10 +1,10 @@
-
 import React from 'react';
 import PageHeader from '@/components/PageHeader';
 import StarBackground from '@/components/StarBackground';
 import OpenAIPlayground from '@/components/ai/OpenAIPlayground';
 import SEO from '@/components/SEO';
 import { Brain } from 'lucide-react';
+import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
 
 const OpenAI = () => {
   return (
@@ -22,11 +22,16 @@ const OpenAI = () => {
           icon={Brain}
         />
         
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-center">
-            <OpenAIPlayground />
+        <QueryErrorBoundary
+          fallbackTitle="AI Chat Unavailable"
+          fallbackDescription="Unable to load the AI chat interface. Please try again."
+        >
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex justify-center">
+              <OpenAIPlayground />
+            </div>
           </div>
-        </div>
+        </QueryErrorBoundary>
       </div>
     </div>
   );

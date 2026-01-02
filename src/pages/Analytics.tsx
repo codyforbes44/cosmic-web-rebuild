@@ -9,6 +9,7 @@ import FormSubmissionsCard from '@/components/analytics/FormSubmissionsCard';
 import { trackVisitor } from '@/utils/visitorTracking';
 import { toast } from '@/hooks/use-toast';
 import UnifiedLoading from '@/components/ui/UnifiedLoading';
+import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
 
 const Analytics: React.FC = () => {
   const { data, loading, error } = useAnalytics();
@@ -27,19 +28,23 @@ const Analytics: React.FC = () => {
   };
   
   return (
-    <StandardPageLayout
-      seo={{
-        title: "Analytics Dashboard | ƷBI",
-        description: "90-day visitor analytics and insights for ƷBI website",
-        keywords: "analytics, visitor data, website metrics, ƷBI"
-      }}
-      breadcrumb={{ label: "Analytics Dashboard" }}
-      header={{
-        title: "Analytics Dashboard",
-        description: "90-day historical visitor insights and website performance metrics",
-        icon: BarChart3
-      }}
+    <QueryErrorBoundary
+      fallbackTitle="Analytics Error"
+      fallbackDescription="Failed to load analytics data. Please try again."
     >
+      <StandardPageLayout
+        seo={{
+          title: "Analytics Dashboard | ƷBI",
+          description: "90-day visitor analytics and insights for ƷBI website",
+          keywords: "analytics, visitor data, website metrics, ƷBI"
+        }}
+        breadcrumb={{ label: "Analytics Dashboard" }}
+        header={{
+          title: "Analytics Dashboard",
+          description: "90-day historical visitor insights and website performance metrics",
+          icon: BarChart3
+        }}
+      >
       {/* Action buttons */}
       <div className="flex justify-end gap-2 mb-8">
         <Button 
@@ -145,7 +150,8 @@ const Analytics: React.FC = () => {
           </CardContent>
         </Card>
       )}
-    </StandardPageLayout>
+      </StandardPageLayout>
+    </QueryErrorBoundary>
   );
 };
 
