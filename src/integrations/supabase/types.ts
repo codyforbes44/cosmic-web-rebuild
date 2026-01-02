@@ -83,6 +83,39 @@ export type Database = {
         }
         Relationships: []
       }
+      edge_function_metrics: {
+        Row: {
+          error_message: string | null
+          execution_time_ms: number
+          function_name: string
+          id: string
+          metadata: Json | null
+          request_timestamp: string
+          status_code: number
+          user_id: string | null
+        }
+        Insert: {
+          error_message?: string | null
+          execution_time_ms: number
+          function_name: string
+          id?: string
+          metadata?: Json | null
+          request_timestamp?: string
+          status_code: number
+          user_id?: string | null
+        }
+        Update: {
+          error_message?: string | null
+          execution_time_ms?: number
+          function_name?: string
+          id?: string
+          metadata?: Json | null
+          request_timestamp?: string
+          status_code?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       favorite_locations: {
         Row: {
           country: string | null
@@ -462,6 +495,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_old_metrics: { Args: never; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
