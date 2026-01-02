@@ -10,20 +10,72 @@ import {
   generateErrorId 
 } from '@/types/errors';
 
+/**
+ * Options for configuring the useUnifiedError hook
+ */
 interface UseUnifiedErrorOptions {
+  /** Show toast notifications by default */
   defaultShowToast?: boolean;
+  /** Log errors to console by default */
   defaultLogErrors?: boolean;
+  /** Custom callback for all errors */
   onError?: (error: AppError) => void;
 }
 
+/**
+ * Return type for the useUnifiedError hook
+ */
 interface UseUnifiedErrorReturn {
+  /** Current error state (null if no error) */
   error: AppError | null;
+  /** Boolean indicating if there is an active error */
   isError: boolean;
+  /** Handle and transform any error into AppError */
   handleError: (error: unknown, options?: ErrorDisplayOptions) => AppError;
+  /** Clear the current error state */
   clearError: () => void;
+  /** Create a new AppError without handling it */
   createError: (code: string, message?: string, context?: Record<string, unknown>) => AppError;
 }
 
+/**
+ * useUnifiedError - Unified error handling hook for consistent error management.
+ * 
+ * Features:
+ * - Automatic error categorization (network, auth, validation, etc.)
+ * - User-friendly error messages
+ * - Toast notification integration
+ * - Structured logging
+ * - Retry detection for transient errors
+ * 
+ * @param options - Configuration options
+ * @returns Error handling utilities
+ * 
+ * @example
+ * // Basic usage
+ * const { handleError, error, clearError } = useUnifiedError();
+ * 
+ * try {
+ *   await fetchData();
+ * } catch (err) {
+ *   handleError(err);
+ * }
+ * 
+ * @example
+ * // With custom options
+ * const { handleError } = useUnifiedError({
+ *   defaultShowToast: true,
+ *   onError: (error) => trackError(error)
+ * });
+ * 
+ * @example
+ * // Custom display options per error
+ * handleError(err, {
+ *   showToast: true,
+ *   duration: 8000,
+ *   action: { label: 'Retry', onClick: refetch }
+ * });
+ */
 export const useUnifiedError = (options: UseUnifiedErrorOptions = {}): UseUnifiedErrorReturn => {
   const { toast } = useToast();
   const { 

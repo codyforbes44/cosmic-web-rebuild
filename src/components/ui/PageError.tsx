@@ -5,21 +5,41 @@ import { EnhancedCard } from './enhanced-card';
 import { AppError, ErrorCategory, ErrorRecoveryAction } from '@/types/errors';
 import { cn } from '@/lib/utils';
 
+/**
+ * Props for the PageError component
+ */
 interface PageErrorProps {
+  /** AppError object, Error, or error message string */
   error?: AppError | Error | string | null;
+  /** Custom error title */
   title?: string;
+  /** Custom error description */
   description?: string;
+  /** Error category for icon/color selection */
   category?: ErrorCategory;
+  /** Show "Go Home" button */
   showHomeButton?: boolean;
+  /** Show "Go Back" button */
   showBackButton?: boolean;
+  /** Show "Retry" button (requires onRetry) */
   showRetry?: boolean;
+  /** Callback for retry action */
   onRetry?: () => void;
+  /** Custom back navigation handler */
   onBack?: () => void;
+  /** Additional recovery actions to display */
   recoveryActions?: ErrorRecoveryAction[];
+  /** Additional CSS classes */
   className?: string;
+  /** Use compact layout for inline errors */
   compact?: boolean;
 }
 
+/**
+ * Gets the appropriate icon component for an error category
+ * @param category - The error category
+ * @returns The Lucide icon component
+ */
 const getCategoryIcon = (category: ErrorCategory) => {
   switch (category) {
     case 'network':
@@ -35,6 +55,11 @@ const getCategoryIcon = (category: ErrorCategory) => {
   }
 };
 
+/**
+ * Gets the appropriate color classes for an error category
+ * @param category - The error category
+ * @returns Tailwind CSS classes for text and background colors
+ */
 const getCategoryColor = (category: ErrorCategory) => {
   switch (category) {
     case 'auth':
@@ -50,6 +75,36 @@ const getCategoryColor = (category: ErrorCategory) => {
   }
 };
 
+/**
+ * PageError - Unified error display component for page-level errors.
+ * 
+ * Provides consistent error UI across the application with:
+ * - Category-specific icons and colors
+ * - Retry, back, and home navigation options
+ * - Compact mode for inline errors
+ * - Custom recovery actions
+ * 
+ * @component
+ * @example
+ * // Basic usage with error object
+ * <PageError error={error} onRetry={refetch} />
+ * 
+ * @example
+ * // Custom error with recovery actions
+ * <PageError
+ *   title="Unable to load data"
+ *   description="The server is not responding"
+ *   category="network"
+ *   onRetry={handleRetry}
+ *   recoveryActions={[
+ *     { label: 'Contact Support', action: openSupport }
+ *   ]}
+ * />
+ * 
+ * @example
+ * // Compact inline error
+ * <PageError error={error} compact onRetry={refetch} />
+ */
 export const PageError: React.FC<PageErrorProps> = ({
   error,
   title,

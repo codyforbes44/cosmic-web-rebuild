@@ -57,6 +57,7 @@ const SalesPresentationGenerator = lazy(() => import("./pages/SalesPresentationG
 const Onboarding = lazy(() => import("./pages/Onboarding"));
 const MultiAI = lazy(() => import("./pages/MultiAI"));
 const AudioReview = lazy(() => import("./pages/AudioReview"));
+const ComponentCatalog = lazy(() => import("./pages/ComponentCatalog"));
 
 // Lazy loaded service pages
 const DigitalMarketing = lazy(() => import("./pages/DigitalMarketing"));
@@ -145,6 +146,9 @@ function App() {
                     <Route path="/chatbot-products" element={<ChatbotProducts />} />
                     <Route path="/multi-ai" element={<MultiAI />} />
                     <Route path="/audio-review" element={<AudioReview />} />
+                    
+                    {/* Developer Tools (unlisted) */}
+                    <Route path="/component-catalog" element={<ComponentCatalog />} />
 
                     {/* Protected routes */}
                     <Route path="/admin" element={
