@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { ZephelError } from '@/types/zephel';
+import { ZephelError, ZephelErrorCode, ZephelErrorContext } from '@/types/zephel';
+import { logger } from '@/utils/logger';
 
 interface ErrorHandlerOptions {
   onError?: (error: ZephelError) => void;
@@ -8,66 +9,81 @@ interface ErrorHandlerOptions {
   logError?: boolean;
 }
 
+// Zephel-specific error messages with themed language
+const ZEPHEL_ERROR_MESSAGES: Record<ZephelErrorCode, string> = {
+  RATE_LIMIT_EXCEEDED: 'Processing capacity exceeded. Neural pathways cooling down. Please retry in 60 seconds.',
+  AUTHENTICATION_FAILED: 'Sovereign credentials invalid. Check system administrator configuration.',
+  SERVICE_UNAVAILABLE: 'External neural substrate temporarily offline. Retrying connection...',
+  NETWORK_ERROR: 'Network connection disrupted. Check your connection and try again.',
+  QUANTUM_PROCESSING_ERROR: 'Quantum processing error detected. Attempting to stabilize quantum field...',
+  REALITY_RENDERING_ERROR: 'Reality rendering engine encountered an error. Restarting visualization...',
+  GENERAL_ERROR: 'Communication link disrupted. Attempting to re-establish sovereign connection...',
+  UNKNOWN_ERROR: 'Unknown anomaly detected in sovereign systems.',
+};
+
 export const useZephelErrorHandler = (options: ErrorHandlerOptions = {}) => {
   const { toast } = useToast();
-  const { onError, showToast = true, logError = true } = options;
+  const { onError, showToast = true, logError: shouldLogError = true } = options;
 
-  const handleError = useCallback((error: unknown, context?: Record<string, any>) => {
-    let zephelError: ZephelError;
+  const handleError = useCallback((error: unknown, context?: ZephelErrorContext) => {
+    const zephelError = createZephelError(error, context);
 
-    if (error instanceof Error) {
-      // Convert regular error to ZephelError
-      const errorText = error.message.toLowerCase();
-      
-      zephelError = {
-        name: 'ZephelError',
-        message: error.message,
-        code: determineErrorCode(errorText),
-        category: determineErrorCategory(errorText),
-        retryable: determineIfRetryable(errorText),
-        context,
-        stack: error.stack
-      } as ZephelError;
-    } else {
-      // Unknown error type
-      zephelError = {
-        name: 'ZephelError',
-        message: 'Unknown error occurred',
-        code: 'UNKNOWN_ERROR',
-        category: 'processing',
-        retryable: false,
-        context
-      } as ZephelError;
+    // Log error using unified logger
+    if (shouldLogError) {
+      logger.error(`ZEPHEL.${zephelError.code}`, zephelError);
     }
 
-    // Log error if enabled
-    if (logError) {
-      console.error('ZEPHEL Error:', zephelError);
-    }
-
-    // Show toast notification if enabled
+    // Show toast notification
     if (showToast) {
-      const errorMessage = getErrorMessage(zephelError);
       toast({
-        title: `ZEPHEL.${zephelError.code}`,
-        description: errorMessage,
+        title: `ƷBI.${zephelError.code}`,
+        description: zephelError.userMessage,
         variant: 'destructive',
         duration: zephelError.retryable ? 5000 : 8000,
       });
     }
 
-    // Call custom error handler if provided
-    if (onError) {
-      onError(zephelError);
-    }
+    // Call custom error handler
+    onError?.(zephelError);
 
     return zephelError;
-  }, [toast, onError, showToast, logError]);
+  }, [toast, onError, showToast, shouldLogError]);
 
   return { handleError };
 };
 
-function determineErrorCode(errorText: string): string {
+/**
+ * Creates a ZephelError from any error type
+ */
+function createZephelError(error: unknown, context?: ZephelErrorContext): ZephelError {
+  if (error instanceof Error) {
+    const errorText = error.message.toLowerCase();
+    const code = determineErrorCode(errorText);
+    
+    return {
+      name: 'ZephelError',
+      message: error.message,
+      code,
+      category: determineErrorCategory(errorText),
+      retryable: determineIfRetryable(code),
+      userMessage: ZEPHEL_ERROR_MESSAGES[code],
+      context,
+      stack: error.stack,
+    };
+  }
+
+  return {
+    name: 'ZephelError',
+    message: 'Unknown error occurred',
+    code: 'UNKNOWN_ERROR',
+    category: 'processing',
+    retryable: false,
+    userMessage: ZEPHEL_ERROR_MESSAGES.UNKNOWN_ERROR,
+    context,
+  };
+}
+
+function determineErrorCode(errorText: string): ZephelErrorCode {
   if (errorText.includes('rate limit') || errorText.includes('429')) {
     return 'RATE_LIMIT_EXCEEDED';
   }
@@ -105,34 +121,11 @@ function determineErrorCategory(errorText: string): ZephelError['category'] {
   return 'processing';
 }
 
-function determineIfRetryable(errorText: string): boolean {
-  // Rate limits and service errors are typically retryable
-  if (errorText.includes('rate limit') || errorText.includes('503') || errorText.includes('network')) {
-    return true;
-  }
-  // Auth errors typically require user intervention
-  if (errorText.includes('auth') || errorText.includes('401')) {
-    return false;
-  }
-  // Default to non-retryable for safety
-  return false;
-}
-
-function getErrorMessage(error: ZephelError): string {
-  switch (error.code) {
-    case 'RATE_LIMIT_EXCEEDED':
-      return 'Processing capacity exceeded. Neural pathways cooling down. Please retry in 60 seconds.';
-    case 'AUTHENTICATION_FAILED':
-      return 'Sovereign credentials invalid. Check system administrator configuration.';
-    case 'SERVICE_UNAVAILABLE':
-      return 'External neural substrate temporarily offline. Retrying connection...';
-    case 'NETWORK_ERROR':
-      return 'Network connection disrupted. Check your connection and try again.';
-    case 'QUANTUM_PROCESSING_ERROR':
-      return 'Quantum processing error detected. Attempting to stabilize quantum field...';
-    case 'REALITY_RENDERING_ERROR':
-      return 'Reality rendering engine encountered an error. Restarting visualization...';
-    default:
-      return error.message || 'Communication link disrupted. Attempting to re-establish sovereign connection...';
-  }
+function determineIfRetryable(code: ZephelErrorCode): boolean {
+  const retryableCodes: ZephelErrorCode[] = [
+    'RATE_LIMIT_EXCEEDED',
+    'SERVICE_UNAVAILABLE',
+    'NETWORK_ERROR',
+  ];
+  return retryableCodes.includes(code);
 }
