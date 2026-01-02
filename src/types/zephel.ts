@@ -137,9 +137,20 @@ export interface ZephelErrorContext {
   [key: string]: string | number | boolean | undefined;
 }
 
+export type ZephelErrorCode = 
+  | 'RATE_LIMIT_EXCEEDED'
+  | 'AUTHENTICATION_FAILED'
+  | 'SERVICE_UNAVAILABLE'
+  | 'NETWORK_ERROR'
+  | 'QUANTUM_PROCESSING_ERROR'
+  | 'REALITY_RENDERING_ERROR'
+  | 'GENERAL_ERROR'
+  | 'UNKNOWN_ERROR';
+
 export interface ZephelError extends Error {
-  code: string;
+  code: ZephelErrorCode;
   category: 'auth' | 'processing' | 'quantum' | 'reality' | 'collaboration';
   retryable: boolean;
+  userMessage: string;
   context?: ZephelErrorContext;
 }
