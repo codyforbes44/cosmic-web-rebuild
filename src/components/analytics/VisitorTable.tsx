@@ -11,9 +11,10 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Globe, MonitorSmartphone, Clock, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { VisitorRecord } from "@/types/analytics";
 
 interface VisitorTableProps {
-  visitorData: any[];
+  visitorData: VisitorRecord[];
   isLoading?: boolean;
   simplified?: boolean;
 }

@@ -9,24 +9,11 @@ import StarBackground from '@/components/StarBackground';
 import SEO from '@/components/SEO';
 import ServiceCaseStudy from '@/components/ServiceCaseStudy';
 import LiveChat from '@/components/LiveChat/LiveChat';
+import type { ServiceDefinition } from '@/types/service';
 
 interface ServicePageLayoutProps {
   children?: React.ReactNode;
-  service: {
-    id: string;
-    name?: string;
-    title?: string;
-    description: string;
-    color: string;
-    image?: string;
-    features?: any[];
-    case_study: {
-      title: string;
-      client: string;
-      description: string;
-      results: any[];
-    };
-  };
+  service: ServiceDefinition;
   heroButtons?: React.ReactNode;
   showFeatures?: boolean;
   showCaseStudy?: boolean;
@@ -104,19 +91,22 @@ const ServicePageLayout: React.FC<ServicePageLayoutProps> = ({
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {service.features.map((feature, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="bg-space-deep-blue/30 p-6 rounded-xl border border-gray-800"
-                  >
-                    {feature.icon && <feature.icon className="w-12 h-12 mb-4" style={{ color: service.color }} />}
-                    <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                    <p className="text-gray-300">{feature.description}</p>
-                  </motion.div>
-                ))}
+                {service.features.map((feature, idx) => {
+                  const IconComponent = typeof feature.icon === 'function' ? feature.icon : null;
+                  return (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      className="bg-space-deep-blue/30 p-6 rounded-xl border border-gray-800"
+                    >
+                      {IconComponent && <IconComponent className="w-12 h-12 mb-4" style={{ color: service.color }} />}
+                      <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                      <p className="text-gray-300">{feature.description}</p>
+                    </motion.div>
+                  );
+                })}
               </div>
             </section>
           )}

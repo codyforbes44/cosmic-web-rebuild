@@ -9,11 +9,19 @@ interface LazyComponentOptions {
   preload?: boolean;
 }
 
+// Type for lazy component with preload method
+interface LazyComponentWithPreload extends React.FC<object> {
+  preload: () => Promise<void>;
+}
+
+// Type for module import
+type ModuleImport = () => Promise<{ default: ComponentType<object> }>;
+
 // Enhanced lazy loading with retry mechanism and performance optimizations
-export function createLazyComponent<T extends ComponentType<any>>(
-  importFn: () => Promise<{ default: T }>,
+export function createLazyComponent(
+  importFn: ModuleImport,
   options: LazyComponentOptions = {}
-) {
+): LazyComponentWithPreload {
   const {
     fallback: CustomFallback,
     delay = 0,
@@ -22,15 +30,15 @@ export function createLazyComponent<T extends ComponentType<any>>(
   } = options;
 
   // Add artificial delay for slower networks (optional)
-  const importWithDelay = () =>
+  const importWithDelay = (): Promise<{ default: ComponentType<object> }> =>
     delay > 0
-      ? new Promise<{ default: T }>((resolve) =>
+      ? new Promise<{ default: ComponentType<object> }>((resolve) =>
           setTimeout(() => importFn().then(resolve), delay)
         )
       : importFn();
 
   // Retry mechanism for failed imports
-  const importWithRetry = async (attempt = 1): Promise<{ default: T }> => {
+  const importWithRetry = async (attempt = 1): Promise<{ default: ComponentType<object> }> => {
     try {
       return await importWithDelay();
     } catch (error) {
@@ -50,8 +58,8 @@ export function createLazyComponent<T extends ComponentType<any>>(
     importWithRetry().catch(console.error);
   }
 
-  const LazyWrapper: React.FC<any> = (props) => {
-    const { reducedMotion } = useAccessibility();
+  const LazyWrapper: React.FC<object> = (props) => {
+    useAccessibility(); // Keep hook for consistency
     
     const DefaultFallback = () => (
       <SectionLoading message="Loading..." />
@@ -65,15 +73,17 @@ export function createLazyComponent<T extends ComponentType<any>>(
   };
 
   // Add preload method to wrapper
-  (LazyWrapper as any).preload = () => importWithRetry().catch(console.error);
+  const preloadFn = async (): Promise<void> => {
+    await importWithRetry().catch(console.error);
+  };
 
-  return LazyWrapper;
+  return Object.assign(LazyWrapper, { preload: preloadFn });
 }
 
 // Lazy loading hook for components
 export function useLazyPreload() {
   const preloadComponent = React.useCallback((
-    importFn: () => Promise<any>,
+    importFn: ModuleImport,
     delay = 0
   ) => {
     if (delay > 0) {
@@ -116,22 +126,30 @@ export function useLazyOnView(
   return setRef;
 }
 
+// Network connection type for performance detection
+interface NetworkInformation {
+  effectiveType: string;
+  downlink: number;
+  rtt: number;
+  saveData: boolean;
+}
+
 // Performance-aware lazy loading
 export function usePerformanceLazyLoad() {
   const [networkSpeed, setNetworkSpeed] = React.useState<'slow' | 'fast'>('fast');
   
   React.useEffect(() => {
     if ('connection' in navigator) {
-      const connection = (navigator as any).connection;
+      const connection = (navigator as unknown as { connection: NetworkInformation }).connection;
       const speed = connection.effectiveType;
       setNetworkSpeed(['slow-2g', '2g', '3g'].includes(speed) ? 'slow' : 'fast');
     }
   }, []);
 
   const createOptimizedLazy = React.useCallback((
-    importFn: () => Promise<{ default: ComponentType<any> }>,
+    importFn: ModuleImport,
     options?: LazyComponentOptions
-  ) => {
+  ): LazyComponentWithPreload => {
     return createLazyComponent(importFn, {
       delay: networkSpeed === 'slow' ? 100 : 0,
       retryCount: networkSpeed === 'slow' ? 5 : 3,

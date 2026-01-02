@@ -18,6 +18,14 @@ export interface ZephelMessage {
   quantum_enhanced?: boolean;
 }
 
+export interface ZephelSessionMetadata {
+  theme?: string;
+  lastCommand?: string;
+  quantumMode?: boolean;
+  collaborativeMode?: boolean;
+  [key: string]: string | boolean | number | undefined;
+}
+
 export interface ZephelSession {
   id: string;
   user_id: string;
@@ -25,7 +33,7 @@ export interface ZephelSession {
   created_at: string;
   updated_at: string;
   is_active: boolean;
-  metadata?: Record<string, any>;
+  metadata?: ZephelSessionMetadata;
 }
 
 export interface QuantumState {
@@ -46,10 +54,17 @@ export interface QuantumEnhancement {
   enhancement_applied: boolean;
 }
 
+export interface ProcessingResultMetadata {
+  processingTime?: number;
+  tokensUsed?: number;
+  modelVersion?: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
 export interface ProcessingResult {
   processedCommand: string;
   quantumEnhancement: QuantumEnhancement;
-  metadata: Record<string, any>;
+  metadata: ProcessingResultMetadata;
 }
 
 export interface ArchitectPresence {
@@ -65,6 +80,14 @@ export interface ArchitectPresence {
   };
 }
 
+export interface RealityConstructProperties {
+  intensity?: number;
+  color?: string;
+  frequency?: number;
+  amplitude?: number;
+  [key: string]: string | number | boolean | undefined;
+}
+
 export interface RealityConstruct {
   id: string;
   type: 'neural_network' | 'quantum_field' | 'data_stream';
@@ -73,7 +96,7 @@ export interface RealityConstruct {
     y: number;
     z: number;
   };
-  properties: Record<string, any>;
+  properties: RealityConstructProperties;
   active: boolean;
 }
 
@@ -89,18 +112,34 @@ export interface ZephelConfig {
   security_level: 'minimal' | 'standard' | 'enhanced' | 'sovereign';
 }
 
+export interface SystemCommandParameters {
+  target?: string;
+  intensity?: number;
+  duration?: number;
+  mode?: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
 export interface SystemCommand {
   id: string;
   command: string;
   description: string;
   category: 'system' | 'quantum' | 'reality' | 'collaboration';
   requires_elevation?: boolean;
-  parameters?: Record<string, any>;
+  parameters?: SystemCommandParameters;
+}
+
+export interface ZephelErrorContext {
+  userId?: string;
+  sessionId?: string;
+  command?: string;
+  timestamp?: string;
+  [key: string]: string | number | boolean | undefined;
 }
 
 export interface ZephelError extends Error {
   code: string;
   category: 'auth' | 'processing' | 'quantum' | 'reality' | 'collaboration';
   retryable: boolean;
-  context?: Record<string, any>;
+  context?: ZephelErrorContext;
 }
