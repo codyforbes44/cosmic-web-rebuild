@@ -1,8 +1,7 @@
-
 import React from 'react';
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
-import { WeatherSkeleton } from "@/components/ui/enhanced-loading";
+import { WeatherSkeleton } from "@/components/ui/UnifiedLoading";
 
 const WeatherLoadingState = () => {
   return (

@@ -9,7 +9,7 @@ import CaseStudyHero from "@/components/caseStudy/CaseStudyHero";
 import CaseStudyContent from "@/components/caseStudy/CaseStudyContent";
 import CaseStudySidebar from "@/components/caseStudy/CaseStudySidebar";
 import RelatedCaseStudies from "@/components/caseStudy/RelatedCaseStudies";
-import LoadingState from "@/components/caseStudy/LoadingState";
+import { PageLoading } from "@/components/ui/UnifiedLoading";
 import NotFoundState from "@/components/caseStudy/NotFoundState";
 
 interface CaseStudyData {
@@ -122,7 +122,15 @@ const CaseStudy: React.FC = () => {
   }, [id, serviceParam]);
 
   if (loading) {
-    return <LoadingState />;
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen pt-24">
+          <PageLoading message="Loading case study..." />
+        </div>
+        <Footer />
+      </>
+    );
   }
 
   if (!caseStudy) {

@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface ServiceImageProps {
   image: string;
@@ -15,13 +15,13 @@ const ServiceImage: React.FC<ServiceImageProps> = ({ image, name }) => {
       transition={{ duration: 0.5 }}
       className="space-card p-4 md:p-6 overflow-hidden rounded-xl shadow-lg"
     >
-      <div className="aspect-square overflow-hidden rounded-lg">
-        <img 
-          src={image} 
-          alt={name} 
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-      </div>
+      <OptimizedImage
+        src={image}
+        alt={name}
+        aspectRatio="square"
+        containerClassName="rounded-lg"
+        className="transition-transform duration-500 hover:scale-105"
+      />
     </motion.div>
   );
 };

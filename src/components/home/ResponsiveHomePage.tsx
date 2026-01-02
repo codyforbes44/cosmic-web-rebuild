@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import OptimizedHeroSection from "./sections/OptimizedHeroSection";
-import { EnhancedLoading } from "../ui/enhanced-loading";
+import { SectionLoading } from "@/components/ui/UnifiedLoading";
 
 // Lazy load non-critical sections for better performance
 const RecruitmentMarketingSection = lazy(() => import("./RecruitmentMarketingSection"));
@@ -19,7 +19,7 @@ const ResponsiveHomePage: React.FC = () => {
       <OptimizedHeroSection />
       
       {/* Lazy loaded sections with loading fallback */}
-      <Suspense fallback={<EnhancedLoading variant="section" />}>
+      <Suspense fallback={<SectionLoading message="Loading content..." />}>
         <div className="space-y-0">
           <RecruitmentMarketingSection />
           <FeaturedProducts />

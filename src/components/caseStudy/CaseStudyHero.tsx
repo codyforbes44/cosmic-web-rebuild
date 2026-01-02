@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Building } from 'lucide-react';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface CaseStudyHeroProps {
   title: string;
@@ -27,9 +27,11 @@ const CaseStudyHero: React.FC<CaseStudyHeroProps> = ({
     <section className="relative">
       <div className="h-96 md:h-[500px] w-full relative overflow-hidden">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
-        <img 
-          src={image} 
-          alt={title} 
+        <OptimizedImage
+          src={image}
+          alt={title}
+          lazy={false}
+          containerClassName="absolute inset-0"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 z-20 flex flex-col justify-center">
