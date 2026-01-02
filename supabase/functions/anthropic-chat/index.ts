@@ -7,6 +7,7 @@
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -26,7 +27,33 @@ interface ChatRequest {
   system?: string;
 }
 
+// Metric logging helper
+async function logMetric(
+  functionName: string,
+  executionTimeMs: number,
+  statusCode: number,
+  errorMessage?: string
+) {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') || '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
+    );
+    await supabase.from('edge_function_metrics').insert({
+      function_name: functionName,
+      execution_time_ms: executionTimeMs,
+      status_code: statusCode,
+      error_message: errorMessage || null,
+    });
+  } catch (e) {
+    console.error('Failed to log metric:', e);
+  }
+}
+
 serve(async (req) => {
+  const startTime = Date.now();
+  const functionName = 'anthropic-chat';
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -66,7 +93,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash', // Default Lovable AI model
+        model: 'google/gemini-2.5-flash',
         messages: formattedMessages,
         max_tokens,
       }),
@@ -83,6 +110,7 @@ serve(async (req) => {
         case 429:
           errorMessage = 'Rate limit exceeded. Please wait a moment and try again.';
           errorType = 'rate_limit_error';
+          await logMetric(functionName, Date.now() - startTime, 429, errorMessage);
           return new Response(JSON.stringify({ 
             error: errorMessage,
             type: errorType,
@@ -94,6 +122,7 @@ serve(async (req) => {
         case 402:
           errorMessage = 'Payment required. Please add credits to your Lovable workspace.';
           errorType = 'payment_required';
+          await logMetric(functionName, Date.now() - startTime, 402, errorMessage);
           return new Response(JSON.stringify({ 
             error: errorMessage,
             type: errorType,
@@ -120,6 +149,7 @@ serve(async (req) => {
           errorMessage = `AI service error: ${response.status} ${response.statusText}`;
       }
       
+      await logMetric(functionName, Date.now() - startTime, 500, errorMessage);
       return new Response(JSON.stringify({ 
         error: errorMessage,
         type: errorType,
@@ -150,11 +180,14 @@ serve(async (req) => {
       console.log(`AI usage: ${(data.usage.prompt_tokens || 0) + (data.usage.completion_tokens || 0)} tokens`);
     }
 
+    await logMetric(functionName, Date.now() - startTime, 200);
+
     return new Response(JSON.stringify(transformedResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error in anthropic-chat function:', error);
+    await logMetric(functionName, Date.now() - startTime, 500, error.message);
     return new Response(JSON.stringify({ 
       error: error.message,
       type: 'ai_error'

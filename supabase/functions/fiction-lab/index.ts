@@ -7,6 +7,7 @@
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -30,7 +31,33 @@ const LENGTH_CONFIGS: Record<string, { maxTokens: number; instruction: string }>
   long: { maxTokens: 3000, instruction: 'Write a detailed story (about 1000-1500 words).' },
 };
 
+// Metric logging helper
+async function logMetric(
+  functionName: string,
+  executionTimeMs: number,
+  statusCode: number,
+  errorMessage?: string
+) {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') || '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
+    );
+    await supabase.from('edge_function_metrics').insert({
+      function_name: functionName,
+      execution_time_ms: executionTimeMs,
+      status_code: statusCode,
+      error_message: errorMessage || null,
+    });
+  } catch (e) {
+    console.error('Failed to log metric:', e);
+  }
+}
+
 serve(async (req) => {
+  const startTime = Date.now();
+  const functionName = 'fiction-lab';
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -87,6 +114,7 @@ Important guidelines:
       console.error('Lovable AI Gateway error:', response.status, errorText);
       
       if (response.status === 429) {
+        await logMetric(functionName, Date.now() - startTime, 429, 'Rate limit exceeded');
         return new Response(JSON.stringify({ 
           error: 'Rate limit exceeded. Please try again later.',
           type: 'rate_limit_error'
@@ -97,6 +125,7 @@ Important guidelines:
       }
       
       if (response.status === 402) {
+        await logMetric(functionName, Date.now() - startTime, 402, 'Payment required');
         return new Response(JSON.stringify({ 
           error: 'Payment required. Please add credits to your workspace.',
           type: 'payment_required'
@@ -120,6 +149,8 @@ Important guidelines:
       console.log(`Fiction Lab usage: ${(data.usage.prompt_tokens || 0) + (data.usage.completion_tokens || 0)} tokens`);
     }
 
+    await logMetric(functionName, Date.now() - startTime, 200);
+
     return new Response(JSON.stringify({
       generatedText,
       metadata: {
@@ -133,6 +164,7 @@ Important guidelines:
     });
   } catch (error) {
     console.error('Error in fiction-lab function:', error);
+    await logMetric(functionName, Date.now() - startTime, 500, error.message);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

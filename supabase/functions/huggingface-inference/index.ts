@@ -1,5 +1,5 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -16,7 +16,33 @@ interface HuggingFaceRequest {
   };
 }
 
+// Metric logging helper
+async function logMetric(
+  functionName: string,
+  executionTimeMs: number,
+  statusCode: number,
+  errorMessage?: string
+) {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') || '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
+    );
+    await supabase.from('edge_function_metrics').insert({
+      function_name: functionName,
+      execution_time_ms: executionTimeMs,
+      status_code: statusCode,
+      error_message: errorMessage || null,
+    });
+  } catch (e) {
+    console.error('Failed to log metric:', e);
+  }
+}
+
 serve(async (req) => {
+  const startTime = Date.now();
+  const functionName = 'huggingface-inference';
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -55,6 +81,7 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Hugging Face API error:', response.status, errorText);
+      await logMetric(functionName, Date.now() - startTime, response.status, `Hugging Face API error: ${response.status}`);
       throw new Error(`Hugging Face API error: ${response.status} ${response.statusText}`);
     }
 
@@ -74,12 +101,14 @@ serve(async (req) => {
     }
 
     console.log('Hugging Face response received successfully');
+    await logMetric(functionName, Date.now() - startTime, 200);
 
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error in huggingface-inference function:', error);
+    await logMetric(functionName, Date.now() - startTime, 500, error.message);
     return new Response(JSON.stringify({ 
       error: error.message,
       type: 'huggingface_error'
