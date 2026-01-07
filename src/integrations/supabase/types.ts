@@ -60,6 +60,7 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          honeypot: string | null
           id: string
           message: string
           name: string
@@ -68,6 +69,7 @@ export type Database = {
         Insert: {
           created_at?: string
           email: string
+          honeypot?: string | null
           id?: string
           message: string
           name: string
@@ -76,6 +78,7 @@ export type Database = {
         Update: {
           created_at?: string
           email?: string
+          honeypot?: string | null
           id?: string
           message?: string
           name?: string
@@ -155,6 +158,7 @@ export type Database = {
           created_at: string
           email: string
           first_name: string
+          honeypot: string | null
           id: string
           industry: string
           last_name: string
@@ -174,6 +178,7 @@ export type Database = {
           created_at?: string
           email: string
           first_name: string
+          honeypot?: string | null
           id?: string
           industry: string
           last_name: string
@@ -193,6 +198,7 @@ export type Database = {
           created_at?: string
           email?: string
           first_name?: string
+          honeypot?: string | null
           id?: string
           industry?: string
           last_name?: string
@@ -237,6 +243,7 @@ export type Database = {
           created_at: string
           email: string
           full_name: string
+          honeypot: string | null
           id: string
           phone: string
           project_description: string
@@ -250,6 +257,7 @@ export type Database = {
           created_at?: string
           email: string
           full_name: string
+          honeypot?: string | null
           id?: string
           phone: string
           project_description: string
@@ -263,6 +271,7 @@ export type Database = {
           created_at?: string
           email?: string
           full_name?: string
+          honeypot?: string | null
           id?: string
           phone?: string
           project_description?: string
