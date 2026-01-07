@@ -1,11 +1,17 @@
+/**
+ * Form Submissions Hook
+ * 
+ * Uses the centralized query factory for consistent data fetching.
+ * Combines contact, quote, and onboarding submissions into a unified list.
+ */
 
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useMemo } from "react";
+import { useFormSubmissionsQuery } from "@/lib/queries/hooks";
 
 interface FormSubmission {
   id: string;
   created_at: string;
-  type: 'contact' | 'quote';
+  type: 'contact' | 'quote' | 'onboarding';
   name?: string;
   full_name?: string;
   subject?: string;
@@ -21,58 +27,63 @@ interface FormSubmission {
 }
 
 export const useFormSubmissions = () => {
-  return useQuery({
-    queryKey: ['form-submissions'],
-    queryFn: async () => {
-      // Fetch contact submissions
-      const { data: contactData, error: contactError } = await supabase
-        .from('contact_submissions')
-        .select('id, created_at, name, subject, email, message')
-        .order('created_at', { ascending: false });
+  const { data: rawData, isLoading, error, refetch } = useFormSubmissionsQuery();
 
-      if (contactError) throw contactError;
+  // Transform the raw data into a combined, sorted list
+  const data = useMemo<FormSubmission[] | undefined>(() => {
+    if (!rawData) return undefined;
 
-      // Fetch quote requests
-      const { data: quoteData, error: quoteError } = await supabase
-        .from('quote_requests')
-        .select('id, created_at, full_name, service_type, email, phone, company_name, project_description, budget, timeline, terms_accepted')
-        .order('created_at', { ascending: false });
+    const combined: FormSubmission[] = [
+      ...(rawData.contact || []).map((item: any) => ({
+        id: item.id,
+        created_at: item.created_at,
+        type: 'contact' as const,
+        name: item.name,
+        subject: item.subject,
+        email: item.email,
+        message: item.message,
+      })),
+      ...(rawData.quotes || []).map((item: any) => ({
+        id: item.id,
+        created_at: item.created_at,
+        type: 'quote' as const,
+        full_name: item.full_name,
+        service_type: item.service_type,
+        email: item.email,
+        phone: item.phone,
+        company_name: item.company_name,
+        project_description: item.project_description,
+        budget: item.budget,
+        timeline: item.timeline,
+        terms_accepted: item.terms_accepted,
+      })),
+      ...(rawData.onboarding || []).map((item: any) => ({
+        id: item.id,
+        created_at: item.created_at,
+        type: 'onboarding' as const,
+        full_name: `${item.first_name} ${item.last_name}`,
+        email: item.email,
+        phone: item.phone,
+        company_name: item.company_name,
+        budget: item.budget,
+        timeline: item.timeline,
+      })),
+    ];
 
-      if (quoteError) throw quoteError;
+    // Sort by date descending
+    return combined.sort((a, b) => 
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+  }, [rawData]);
 
-      // Combine and format submissions
-      const combined: FormSubmission[] = [
-        ...(contactData || []).map(item => ({
-          id: item.id,
-          created_at: item.created_at,
-          type: 'contact' as const,
-          name: item.name,
-          subject: item.subject,
-          email: item.email,
-          message: item.message,
-        })),
-        ...(quoteData || []).map(item => ({
-          id: item.id,
-          created_at: item.created_at,
-          type: 'quote' as const,
-          full_name: item.full_name,
-          service_type: item.service_type,
-          email: item.email,
-          phone: item.phone,
-          company_name: item.company_name,
-          project_description: item.project_description,
-          budget: item.budget,
-          timeline: item.timeline,
-          terms_accepted: item.terms_accepted,
-        })),
-      ];
-
-      // Sort by date and return all real submissions
-      return combined.sort((a, b) => 
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      );
-    },
-  });
+  return {
+    data,
+    isLoading,
+    error,
+    refetch,
+    // Expose raw data for components that need separate lists
+    rawData,
+  };
 };
 
 export type { FormSubmission };

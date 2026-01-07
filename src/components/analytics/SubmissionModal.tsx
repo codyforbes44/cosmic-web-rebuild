@@ -7,32 +7,48 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, FileText, Calendar, User, Mail, Phone, Building } from "lucide-react";
+import { MessageSquare, FileText, Calendar, User, Mail, Phone, Building, ClipboardList } from "lucide-react";
 import { formatDateDisplay } from "@/utils/timezone";
-
-interface FormSubmission {
-  id: string;
-  created_at: string;
-  type: 'contact' | 'quote';
-  name?: string;
-  full_name?: string;
-  subject?: string;
-  service_type?: string;
-  email?: string;
-  phone?: string;
-  company_name?: string;
-  message?: string;
-  project_description?: string;
-  budget?: string;
-  timeline?: string;
-  terms_accepted?: boolean;
-}
+import { FormSubmission } from "./hooks/useFormSubmissions";
 
 interface SubmissionModalProps {
   submission: FormSubmission | null;
   isOpen: boolean;
   onClose: () => void;
 }
+
+const getSubmissionIcon = (type: FormSubmission['type']) => {
+  switch (type) {
+    case 'contact':
+      return <MessageSquare className="w-5 h-5 text-blue-400" />;
+    case 'quote':
+      return <FileText className="w-5 h-5 text-green-400" />;
+    case 'onboarding':
+      return <ClipboardList className="w-5 h-5 text-purple-400" />;
+  }
+};
+
+const getSubmissionLabel = (type: FormSubmission['type']) => {
+  switch (type) {
+    case 'contact':
+      return 'Contact Form';
+    case 'quote':
+      return 'Quote Request';
+    case 'onboarding':
+      return 'Onboarding';
+  }
+};
+
+const getSubmissionBadgeClass = (type: FormSubmission['type']) => {
+  switch (type) {
+    case 'contact':
+      return "bg-blue-500/20 text-blue-400 border-blue-500/50";
+    case 'quote':
+      return "bg-green-500/20 text-green-400 border-green-500/50";
+    case 'onboarding':
+      return "bg-purple-500/20 text-purple-400 border-purple-500/50";
+  }
+};
 
 const SubmissionModal: React.FC<SubmissionModalProps> = ({
   submission,
@@ -48,25 +64,16 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-space-deep-blue border-gray-700">
         <DialogHeader>
           <DialogTitle className="text-white flex items-center gap-2">
-            {submission.type === 'contact' ? (
-              <MessageSquare className="w-5 h-5 text-blue-400" />
-            ) : (
-              <FileText className="w-5 h-5 text-green-400" />
-            )}
-            {submission.type === 'contact' ? 'Contact Form' : 'Quote Request'} Submission
+            {getSubmissionIcon(submission.type)}
+            {getSubmissionLabel(submission.type)} Submission
           </DialogTitle>
         </DialogHeader>
         
         <div className="space-y-6">
           {/* Header Info */}
           <div className="flex items-center justify-between">
-            <Badge 
-              className={submission.type === 'contact' 
-                ? "bg-blue-500/20 text-blue-400 border-blue-500/50" 
-                : "bg-green-500/20 text-green-400 border-green-500/50"
-              }
-            >
-              {submission.type === 'contact' ? 'Contact Form' : 'Quote Request'}
+            <Badge className={getSubmissionBadgeClass(submission.type)}>
+              {getSubmissionLabel(submission.type)}
             </Badge>
             <div className="flex items-center text-sm text-gray-400">
               <Calendar className="w-4 h-4 mr-1" />
@@ -134,7 +141,7 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
                     </div>
                   )}
                 </>
-              ) : (
+              ) : submission.type === 'quote' ? (
                 <>
                   {submission.service_type && (
                     <div>
@@ -164,6 +171,22 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
                     <div>
                       <label className="text-sm text-gray-400">Terms Accepted</label>
                       <p className="text-white">{submission.terms_accepted ? 'Yes' : 'No'}</p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                /* Onboarding submission */
+                <>
+                  {submission.budget && (
+                    <div>
+                      <label className="text-sm text-gray-400">Budget</label>
+                      <p className="text-white">{submission.budget}</p>
+                    </div>
+                  )}
+                  {submission.timeline && (
+                    <div>
+                      <label className="text-sm text-gray-400">Timeline</label>
+                      <p className="text-white">{submission.timeline}</p>
                     </div>
                   )}
                 </>

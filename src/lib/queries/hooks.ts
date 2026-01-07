@@ -132,8 +132,8 @@ export const useFormSubmissionsQuery = () => {
   return useQuery(queries.analytics.formSubmissions());
 };
 
-export const useVisitorAnalyticsQuery = (dateRange?: { start: Date; end: Date }) => {
-  return useQuery(queries.analytics.visitors(dateRange));
+export const useVisitorAnalyticsQuery = (days: number = 90) => {
+  return useQuery(queries.analytics.visitors(days));
 };
 
 // ============================================

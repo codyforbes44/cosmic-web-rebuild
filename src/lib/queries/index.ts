@@ -211,21 +211,18 @@ export const queries = {
       staleTime: 1000 * 60 * 2, // 2 minutes
     }),
     
-    visitors: (dateRange?: { start: Date; end: Date }) => ({
-      queryKey: queryKeys.analytics.visitors(dateRange ? `${dateRange.start.toISOString()}-${dateRange.end.toISOString()}` : 'all'),
+    visitors: (days: number = 90) => ({
+      queryKey: queryKeys.analytics.visitors(`${days}d`),
       queryFn: async () => {
-        let query = supabase
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - days);
+        
+        const { data, error } = await supabase
           .from('visitor_metadata')
           .select('*')
-          .order('visit_timestamp', { ascending: false });
-        
-        if (dateRange) {
-          query = query
-            .gte('visit_timestamp', dateRange.start.toISOString())
-            .lte('visit_timestamp', dateRange.end.toISOString());
-        }
-        
-        const { data, error } = await query.limit(1000);
+          .gte('visit_timestamp', startDate.toISOString())
+          .order('visit_timestamp', { ascending: false })
+          .limit(10000);
         
         if (error) throw error;
         return data || [];
