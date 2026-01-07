@@ -1,8 +1,8 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
+import ConsultationModal from '@/components/common/ConsultationModal';
 
 interface CaseStudySidebarProps {
   client: string;
@@ -17,6 +17,8 @@ const CaseStudySidebar: React.FC<CaseStudySidebarProps> = ({
   date,
   technologies
 }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="lg:col-span-1">
       {/* Project Details */}
@@ -60,13 +62,16 @@ const CaseStudySidebar: React.FC<CaseStudySidebarProps> = ({
         <p className="text-gray-300 mb-4">
           Let's discuss how we can help your business achieve similar success.
         </p>
-        <Button asChild className="w-full bg-accent hover:bg-accent/80 text-white">
-          <Link to="/get-quote">
-            Get a Free Consultation
-            <ChevronRight size={16} />
-          </Link>
+        <Button 
+          className="w-full bg-accent hover:bg-accent/80 text-white"
+          onClick={() => setModalOpen(true)}
+        >
+          Get a Free Consultation
+          <ChevronRight size={16} />
         </Button>
       </div>
+      
+      <ConsultationModal isOpen={modalOpen} onOpenChange={setModalOpen} />
     </div>
   );
 };

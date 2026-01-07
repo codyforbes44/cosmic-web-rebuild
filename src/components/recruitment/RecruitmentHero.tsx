@@ -1,15 +1,18 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import ConsultationModal from '@/components/common/ConsultationModal';
 
 interface RecruitmentHeroProps {
   serviceColor: string;
 }
 
 const RecruitmentHero = ({ serviceColor }: RecruitmentHeroProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <section className="mb-20">
       <div className="max-w-4xl mx-auto text-center">
@@ -44,14 +47,17 @@ const RecruitmentHero = ({ serviceColor }: RecruitmentHeroProps) => {
                 Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link to="/contact">
-              <Button variant="outline" size="lg">
-                Schedule Consultation
-              </Button>
-            </Link>
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => setModalOpen(true)}
+            >
+              Schedule Consultation
+            </Button>
           </div>
         </motion.div>
       </div>
+      <ConsultationModal isOpen={modalOpen} onOpenChange={setModalOpen} />
     </section>
   );
 };

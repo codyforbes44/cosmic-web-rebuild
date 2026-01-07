@@ -1,7 +1,7 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -12,9 +12,11 @@ import ServiceCaseStudy from "@/components/ServiceCaseStudy";
 import SEO from "@/components/SEO";
 import { strategyService } from "@/data/services/strategyService";
 import LiveChat from "@/components/LiveChat/LiveChat";
+import ConsultationModal from "@/components/common/ConsultationModal";
 
 const StrategyConsulting: React.FC = () => {
   const service = strategyService;
+  const [modalOpen, setModalOpen] = useState(false);
   
   return (
     <>
@@ -54,11 +56,13 @@ const StrategyConsulting: React.FC = () => {
                       Start Strategy Session <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
-                  <Link to="/contact">
-                    <Button variant="outline" size="lg">
-                      Schedule Consultation
-                    </Button>
-                  </Link>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={() => setModalOpen(true)}
+                  >
+                    Schedule Consultation
+                  </Button>
                 </div>
               </motion.div>
             </div>
@@ -119,11 +123,13 @@ const StrategyConsulting: React.FC = () => {
                       Get a Quote
                     </Button>
                   </Link>
-                  <Link to="/contact">
-                    <Button variant="outline" size="lg">
-                      Contact Us
-                    </Button>
-                  </Link>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={() => setModalOpen(true)}
+                  >
+                    Schedule Consultation
+                  </Button>
                 </div>
               </div>
             </div>
@@ -133,6 +139,7 @@ const StrategyConsulting: React.FC = () => {
       
       <Footer />
       <LiveChat />
+      <ConsultationModal isOpen={modalOpen} onOpenChange={setModalOpen} />
     </>
   );
 };

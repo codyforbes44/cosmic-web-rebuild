@@ -1,9 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import ScrollToTopLink from '../ScrollToTopLink';
 import { Button } from '@/components/ui/button';
+import ConsultationModal from '@/components/common/ConsultationModal';
 
 const ServicesCTA: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="mt-16 bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-gray-800 rounded-xl p-8 md:p-12">
       <div className="text-center max-w-3xl mx-auto">
@@ -17,13 +20,16 @@ const ServicesCTA: React.FC = () => {
               Get Started
             </Button>
           </ScrollToTopLink>
-          <ScrollToTopLink to="/contact">
-            <Button variant="outline" className="border-white/20 hover:bg-white/5">
-              Contact Us
-            </Button>
-          </ScrollToTopLink>
+          <Button 
+            variant="outline" 
+            className="border-white/20 hover:bg-white/5"
+            onClick={() => setModalOpen(true)}
+          >
+            Schedule Consultation
+          </Button>
         </div>
       </div>
+      <ConsultationModal isOpen={modalOpen} onOpenChange={setModalOpen} />
     </div>
   );
 };
