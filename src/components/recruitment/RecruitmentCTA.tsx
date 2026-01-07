@@ -1,13 +1,16 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import ConsultationModal from '@/components/common/ConsultationModal';
 
 interface RecruitmentCTAProps {
   serviceColor: string;
 }
 
 const RecruitmentCTA = ({ serviceColor }: RecruitmentCTAProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <section className="mt-20">
       <div className="bg-gradient-to-r from-gray-900 to-gray-800 p-8 md:p-12 rounded-2xl border border-gray-700">
@@ -28,14 +31,17 @@ const RecruitmentCTA = ({ serviceColor }: RecruitmentCTAProps) => {
                 Get a Quote
               </Button>
             </Link>
-            <Link to="/contact">
-              <Button variant="outline" size="lg">
-                Contact Us
-              </Button>
-            </Link>
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => setModalOpen(true)}
+            >
+              Schedule Consultation
+            </Button>
           </div>
         </div>
       </div>
+      <ConsultationModal isOpen={modalOpen} onOpenChange={setModalOpen} />
     </section>
   );
 };

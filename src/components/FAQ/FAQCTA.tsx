@@ -1,11 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
+import ConsultationModal from '@/components/common/ConsultationModal';
 
 const FAQCTA: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -19,14 +22,13 @@ const FAQCTA: React.FC = () => {
           Our team is ready to answer any additional questions you might have about our services, products, or how we can help your business succeed.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/contact">
-            <Button 
-              className="bg-accent hover:bg-accent/90 text-white px-8 py-6 h-auto rounded-md font-medium transition-all shadow-lg hover:shadow-accent/20 hover:-translate-y-1 flex items-center"
-            >
-              Contact Us
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <Button 
+            className="bg-accent hover:bg-accent/90 text-white px-8 py-6 h-auto rounded-md font-medium transition-all shadow-lg hover:shadow-accent/20 hover:-translate-y-1 flex items-center"
+            onClick={() => setModalOpen(true)}
+          >
+            Schedule Consultation
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
           <Link to="/get-quote">
             <Button 
               variant="outline"
@@ -59,6 +61,8 @@ const FAQCTA: React.FC = () => {
           ))}
         </div>
       </div>
+      
+      <ConsultationModal isOpen={modalOpen} onOpenChange={setModalOpen} />
     </motion.div>
   );
 };

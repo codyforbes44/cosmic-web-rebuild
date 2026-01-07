@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Code, Smartphone, Globe, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import DemoRequestModal from '../products/DemoRequestModal';
+import ConsultationModal from '../common/ConsultationModal';
 
 const WebServicesSection = () => {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [consultModalOpen, setConsultModalOpen] = useState(false);
 
   const services = [
     {
@@ -43,10 +43,14 @@ const WebServicesSection = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
       </div>
 
-      <DemoRequestModal 
+      <ConsultationModal 
         isOpen={demoModalOpen} 
         onOpenChange={setDemoModalOpen} 
-        productTitle="Web Development Services"
+        title="Start Your Project"
+      />
+      <ConsultationModal 
+        isOpen={consultModalOpen} 
+        onOpenChange={setConsultModalOpen} 
       />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -113,15 +117,14 @@ const WebServicesSection = () => {
               Start Your Project Today
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Link to="/contact">
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-white/20 text-white hover:bg-white/5 px-8 py-6 text-lg w-full sm:w-auto"
-              >
-                Schedule Consultation
-              </Button>
-            </Link>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white/20 text-white hover:bg-white/5 px-8 py-6 text-lg w-full sm:w-auto"
+              onClick={() => setConsultModalOpen(true)}
+            >
+              Schedule Consultation
+            </Button>
           </div>
           
           <div className="mt-8 flex items-center justify-center gap-6 text-sm text-gray-400">
