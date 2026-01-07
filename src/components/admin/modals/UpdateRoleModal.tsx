@@ -1,10 +1,8 @@
-
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from 'react';
+import { FormModal } from '@/components/common/BaseModal';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Shield } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Shield } from 'lucide-react';
 import { UserWithRole } from '../hooks/useAdminUsers';
 
 interface UpdateRoleModalProps {
@@ -22,14 +20,20 @@ export const UpdateRoleModal: React.FC<UpdateRoleModalProps> = ({
 }) => {
   const [selectedRole, setSelectedRole] = useState(user?.role || 'user');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Sync selectedRole when user changes
+  useEffect(() => {
+    if (user) {
+      setSelectedRole(user.role);
+    }
+  }, [user]);
+
+  const handleSubmit = async () => {
     if (!user) return;
 
     setIsLoading(true);
-    setError('');
+    setError(null);
 
     try {
       await onUpdateRole(user.id, selectedRole);
@@ -41,74 +45,55 @@ export const UpdateRoleModal: React.FC<UpdateRoleModalProps> = ({
     }
   };
 
-  const handleClose = () => {
-    setSelectedRole(user?.role || 'user');
-    setError('');
-    onClose();
+  const handleClose = (open: boolean) => {
+    if (!open) {
+      setSelectedRole(user?.role || 'user');
+      setError(null);
+      onClose();
+    }
   };
 
   if (!user) return null;
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-space-deep-blue border-gray-700 text-white">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Update User Role
-          </DialogTitle>
-          <DialogDescription className="text-gray-400">
-            Change the role for {user.full_name || user.email}
-          </DialogDescription>
-        </DialogHeader>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-white font-medium">Current Role: {user.role}</label>
-            <Select value={selectedRole} onValueChange={setSelectedRole}>
-              <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
-                <SelectValue placeholder="Select a role" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-700">
-                <SelectItem value="user" className="text-white hover:bg-gray-700">User</SelectItem>
-                <SelectItem value="moderator" className="text-white hover:bg-gray-700">Moderator</SelectItem>
-                <SelectItem value="admin" className="text-white hover:bg-gray-700">Admin</SelectItem>
-              </SelectContent>
-            </Select>
+    <FormModal
+      isOpen={isOpen}
+      onOpenChange={handleClose}
+      title="Update User Role"
+      description={`Change the role for ${user.full_name || user.email}`}
+      headerContent={
+        <div className="flex items-center gap-2">
+          <Shield className="h-5 w-5 text-primary" />
+          <div>
+            <h2 className="text-xl font-semibold">Update User Role</h2>
+            <p className="text-sm text-muted-foreground">
+              Change the role for {user.full_name || user.email}
+            </p>
           </div>
-
-          {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <div className="flex justify-end space-x-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              className="border-gray-600 text-white hover:bg-gray-700"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={isLoading || selectedRole === user.role}
-              className="bg-accent hover:bg-accent-hover text-accent-foreground"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Updating...
-                </>
-              ) : (
-                'Update Role'
-              )}
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+        </div>
+      }
+      error={error}
+      onRetry={() => setError(null)}
+      isSubmitting={isLoading}
+      submitLabel="Update Role"
+      onSubmit={handleSubmit}
+      submitDisabled={selectedRole === user.role}
+    >
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label className="text-muted-foreground">Current Role: <span className="text-foreground font-medium">{user.role}</span></Label>
+          <Select value={selectedRole} onValueChange={setSelectedRole}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="user">User</SelectItem>
+              <SelectItem value="moderator">Moderator</SelectItem>
+              <SelectItem value="admin">Admin</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    </FormModal>
   );
 };

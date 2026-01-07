@@ -1,12 +1,9 @@
-
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import { FormModal } from '@/components/common/BaseModal';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, User, Mail, Lock, Shield } from 'lucide-react';
+import { User, Mail, Lock, Shield } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -18,7 +15,7 @@ interface AddUserModalProps {
 
 export const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onUserAdded }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,20 +24,18 @@ export const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onU
   });
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setIsLoading(true);
-    setError('');
+    setError(null);
 
     try {
-      // Create the user account
       const { data, error: signUpError } = await supabase.auth.admin.createUser({
         email: formData.email,
         password: formData.password,
         user_metadata: {
           full_name: formData.fullName
         },
-        email_confirm: true // Auto-confirm email for admin-created users
+        email_confirm: true
       });
 
       if (signUpError) {
@@ -48,7 +43,6 @@ export const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onU
       }
 
       if (data.user && formData.role !== 'user') {
-        // Add role if it's not the default 'user' role
         const { error: roleError } = await supabase
           .from('user_roles')
           .insert({
@@ -58,7 +52,6 @@ export const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onU
 
         if (roleError) {
           console.error('Error adding role:', roleError);
-          // Don't throw here as the user was created successfully
         }
       }
 
@@ -67,7 +60,6 @@ export const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onU
         description: `${formData.fullName || formData.email} has been added to the system.`,
       });
 
-      // Reset form and close modal
       setFormData({ email: '', password: '', fullName: '', role: 'user' });
       onUserAdded();
       onClose();
@@ -80,121 +72,100 @@ export const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onU
     }
   };
 
-  const handleClose = () => {
-    setFormData({ email: '', password: '', fullName: '', role: 'user' });
-    setError('');
-    onClose();
+  const handleClose = (open: boolean) => {
+    if (!open) {
+      setFormData({ email: '', password: '', fullName: '', role: 'user' });
+      setError(null);
+      onClose();
+    }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-space-deep-blue border-gray-700 text-white">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
-            Add New User
-          </DialogTitle>
-          <DialogDescription className="text-gray-400">
-            Create a new user account and assign a role
-          </DialogDescription>
-        </DialogHeader>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="fullName" className="text-white">Full Name</Label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                id="fullName"
-                type="text"
-                placeholder="Enter full name"
-                value={formData.fullName}
-                onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                className="pl-10 bg-gray-800 border-gray-600 text-white"
-              />
-            </div>
+    <FormModal
+      isOpen={isOpen}
+      onOpenChange={handleClose}
+      title="Add New User"
+      description="Create a new user account and assign a role"
+      headerContent={
+        <div className="flex items-center gap-2">
+          <User className="h-5 w-5 text-primary" />
+          <div>
+            <h2 className="text-xl font-semibold">Add New User</h2>
+            <p className="text-sm text-muted-foreground">Create a new user account and assign a role</p>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-white">Email Address</Label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter email address"
-                value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                required
-                className="pl-10 bg-gray-800 border-gray-600 text-white"
-              />
-            </div>
+        </div>
+      }
+      error={error}
+      onRetry={() => setError(null)}
+      isSubmitting={isLoading}
+      submitLabel="Create User"
+      onSubmit={handleSubmit}
+      submitDisabled={!formData.email || !formData.password}
+    >
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="fullName">Full Name</Label>
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              id="fullName"
+              type="text"
+              placeholder="Enter full name"
+              value={formData.fullName}
+              onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
+              className="pl-10"
+            />
           </div>
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password" className="text-white">Password</Label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter password"
-                value={formData.password}
-                onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                required
-                minLength={6}
-                className="pl-10 bg-gray-800 border-gray-600 text-white"
-              />
-            </div>
+        <div className="space-y-2">
+          <Label htmlFor="email">Email Address</Label>
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter email address"
+              value={formData.email}
+              onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              required
+              className="pl-10"
+            />
           </div>
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="role" className="text-white">Role</Label>
-            <Select value={formData.role} onValueChange={(value) => setFormData(prev => ({ ...prev, role: value }))}>
-              <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
-                <Shield className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Select a role" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-700">
-                <SelectItem value="user" className="text-white hover:bg-gray-700">User</SelectItem>
-                <SelectItem value="moderator" className="text-white hover:bg-gray-700">Moderator</SelectItem>
-                <SelectItem value="admin" className="text-white hover:bg-gray-700">Admin</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="space-y-2">
+          <Label htmlFor="password">Password</Label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              id="password"
+              type="password"
+              placeholder="Enter password"
+              value={formData.password}
+              onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+              required
+              minLength={6}
+              className="pl-10"
+            />
           </div>
+        </div>
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <div className="flex justify-end space-x-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              className="border-gray-600 text-white hover:bg-gray-700"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="bg-accent hover:bg-accent-hover text-accent-foreground"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating...
-                </>
-              ) : (
-                'Create User'
-              )}
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+        <div className="space-y-2">
+          <Label htmlFor="role">Role</Label>
+          <Select value={formData.role} onValueChange={(value) => setFormData(prev => ({ ...prev, role: value }))}>
+            <SelectTrigger>
+              <Shield className="h-4 w-4 mr-2" />
+              <SelectValue placeholder="Select a role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="user">User</SelectItem>
+              <SelectItem value="moderator">Moderator</SelectItem>
+              <SelectItem value="admin">Admin</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    </FormModal>
   );
 };
