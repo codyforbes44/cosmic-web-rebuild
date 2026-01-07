@@ -17,6 +17,14 @@ export const useQuoteSubmission = () => {
     setIsSubmitting(true);
     
     try {
+      // Honeypot check - reject if filled (bots typically fill this)
+      if (data.honeypot) {
+        console.warn('Honeypot triggered - likely bot submission');
+        toast.error("An error occurred. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
       // Rate limiting check
       const rateLimitCheck = checkRateLimit('quote_request', 3, 15 * 60 * 1000);
       if (!rateLimitCheck.allowed) {
@@ -59,6 +67,7 @@ export const useQuoteSubmission = () => {
         budget: data.budget,
         timeline: data.timeline,
         terms_accepted: data.termsAccepted,
+        honeypot: data.honeypot || '',
       };
 
       const { error } = await supabase

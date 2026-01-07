@@ -38,6 +38,7 @@ const OnboardingForm = () => {
       preferredContact: 'email',
       communicationFrequency: 'weekly',
       termsAccepted: false,
+      honeypot: '',
     },
   });
 

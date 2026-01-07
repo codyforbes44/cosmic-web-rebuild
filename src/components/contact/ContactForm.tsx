@@ -19,6 +19,7 @@ const ContactForm = () => {
       email: '',
       subject: '',
       message: '',
+      honeypot: '',
     },
   });
 
