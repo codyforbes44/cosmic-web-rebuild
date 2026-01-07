@@ -1,6 +1,12 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+/**
+ * Analytics Hook
+ * 
+ * Uses the centralized query factory for consistent data fetching.
+ * Processes raw visitor data into aggregated analytics.
+ */
+
+import { useMemo } from "react";
+import { useVisitorAnalyticsQuery } from "@/lib/queries/hooks";
 
 export interface AnalyticsData {
   visitorData: any[];
@@ -34,138 +40,64 @@ export interface SourceData {
   value: number;
 }
 
-export const useAnalytics = () => {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<AnalyticsData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+export const useAnalytics = (days: number = 90) => {
+  const { 
+    data: visitors = [], 
+    isLoading: loading, 
+    error: queryError,
+    refetch,
+  } = useVisitorAnalyticsQuery(days);
 
-  useEffect(() => {
-    async function fetchAnalyticsData() {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        console.log('Fetching 90 days of historical analytics data from Supabase...');
-        
-        // Calculate date 90 days ago
-        const ninetyDaysAgo = new Date();
-        ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-        
-        console.log('Fetching data from:', ninetyDaysAgo.toISOString());
-        
-        // First, let's check total count
-        const { count, error: countError } = await supabase
-          .from('visitor_metadata')
-          .select('*', { count: 'exact', head: true });
-        
-        if (countError) {
-          console.error('Error checking table:', countError);
-          throw new Error(`Database error: ${countError.message}`);
-        }
-        
-        console.log('Total records in visitor_metadata table:', count);
-        
-        // Fetch visitor data from the last 90 days, up to 10,000 records
-        const { data: visitorData, error: fetchError } = await supabase
-          .from('visitor_metadata')
-          .select('*')
-          .gte('visit_timestamp', ninetyDaysAgo.toISOString())
-          .order('visit_timestamp', { ascending: false })
-          .limit(10000);
-        
-        if (fetchError) {
-          console.error('Supabase fetch error:', fetchError);
-          throw new Error(`Database error: ${fetchError.message}`);
-        }
-        
-        console.log('Fetched visitor data:', visitorData?.length || 0, 'records from last 90 days');
-        console.log('Sample data:', visitorData?.slice(0, 3));
-        
-        // Handle empty data gracefully
-        const visitors = visitorData || [];
-        
-        if (visitors.length === 0) {
-          console.log('No visitor data found in the last 90 days');
-          setData({
-            visitorData: [],
-            dailyVisitors: generateEmptyDailyData(90),
-            deviceData: [],
-            countryData: [],
-            sourceData: [],
-            totalVisitors: 0,
-            totalCountries: 0,
-            avgTimeOnPage: 0,
-            topPage: '/'
-          });
-          return;
-        }
-        
-        // Process daily visitors for 90 days
-        const dailyData = processDailyVisitors(visitors, 90);
-        
-        // Process device data
-        const deviceData = processDeviceData(visitors);
-        
-        // Process country data
-        const countryData = processCountryData(visitors);
-        
-        // Process source data (UTM and referrer)
-        const sourceData = processSourceData(visitors);
-        
-        // Calculate aggregated metrics - use actual fetched data length
-        const totalVisitors = visitors.length;
-        const totalCountries = calculateUniqueCountries(visitors);
-        const avgTimeOnPage = calculateAverageTimeOnPage(visitors);
-        const topPage = findMostPopularPage(visitors);
-
-        console.log('Processed 90-day analytics data:', {
-          totalVisitors,
-          totalCountries,
-          avgTimeOnPage,
-          topPage,
-          dailyData: dailyData.length,
-          deviceData: deviceData.length,
-          countryData: countryData.length,
-          sourceData: sourceData.length,
-          dateRange: visitors.length > 0 ? {
-            earliest: visitors[visitors.length - 1]?.visit_timestamp,
-            latest: visitors[0]?.visit_timestamp
-          } : null
-        });
-
-        // Set the full analytics data
-        setData({
-          visitorData: visitors,
-          dailyVisitors: dailyData,
-          deviceData,
-          countryData,
-          sourceData,
-          totalVisitors,
-          totalCountries,
-          avgTimeOnPage,
-          topPage
-        });
-        
-      } catch (err) {
-        console.error('Error fetching analytics data:', err);
-        const errorMessage = err instanceof Error ? err.message : 'Failed to load analytics data';
-        setError(errorMessage);
-        
-        // Show a more informative toast
-        toast({
-          title: 'Analytics Data Error',
-          description: `${errorMessage}. Check console for details.`,
-          variant: 'destructive',
-        });
-      } finally {
-        setLoading(false);
-      }
+  // Process the raw visitor data into analytics
+  const data = useMemo<AnalyticsData | null>(() => {
+    if (visitors.length === 0) {
+      return {
+        visitorData: [],
+        dailyVisitors: generateEmptyDailyData(days),
+        deviceData: [],
+        countryData: [],
+        sourceData: [],
+        totalVisitors: 0,
+        totalCountries: 0,
+        avgTimeOnPage: 0,
+        topPage: '/'
+      };
     }
-    
-    fetchAnalyticsData();
-  }, []);
 
-  return { data, loading, error };
+    // Process daily visitors
+    const dailyData = processDailyVisitors(visitors, days);
+    
+    // Process device data
+    const deviceData = processDeviceData(visitors);
+    
+    // Process country data
+    const countryData = processCountryData(visitors);
+    
+    // Process source data (UTM and referrer)
+    const sourceData = processSourceData(visitors);
+    
+    // Calculate aggregated metrics
+    const totalVisitors = visitors.length;
+    const totalCountries = calculateUniqueCountries(visitors);
+    const avgTimeOnPage = calculateAverageTimeOnPage(visitors);
+    const topPage = findMostPopularPage(visitors);
+
+    return {
+      visitorData: visitors,
+      dailyVisitors: dailyData,
+      deviceData,
+      countryData,
+      sourceData,
+      totalVisitors,
+      totalCountries,
+      avgTimeOnPage,
+      topPage
+    };
+  }, [visitors, days]);
+
+  const error = queryError ? (queryError as Error).message : null;
+
+  return { data, loading, error, refetch };
 };
 
 // Helper functions for data processing
@@ -240,7 +172,7 @@ function processSourceData(visitors: any[]): SourceData[] {
     
     if (visitor.utm_source) {
       source = visitor.utm_source;
-    } else if (visitor.referrer && visitor.referrer !== window.location.origin) {
+    } else if (visitor.referrer && typeof window !== 'undefined' && visitor.referrer !== window.location.origin) {
       try {
         const referrerUrl = new URL(visitor.referrer);
         source = referrerUrl.hostname;
