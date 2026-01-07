@@ -4,14 +4,22 @@ import { useBotResponses } from './useBotResponses';
 import { useZephelState } from './useZephelState';
 import { calculateTypingDuration } from './chatUtils';
 import { TYPING_SPEED } from './chatStateTypes';
+import { useFloatingButtonContext } from '@/context/FloatingButtonContext';
 
 export const useChatState = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  // Use shared context for state that needs to be accessed by FloatingButtonStack
+  const {
+    isChatOpen: isOpen,
+    toggleChat,
+    isPinned,
+    togglePin,
+    unreadMessages,
+    setUnreadMessages,
+  } = useFloatingButtonContext();
+
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [message, setMessage] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
-  const [unreadMessages, setUnreadMessages] = useState<number>(0);
-  const [isPinned, setIsPinned] = useState<boolean>(false);
   const [isMinimized, setIsMinimized] = useState<boolean>(false);
   const [isSendingFirstMessage, setIsSendingFirstMessage] = useState<boolean>(true);
   const [isThinking, setIsThinking] = useState<boolean>(false);
@@ -40,10 +48,8 @@ export const useChatState = () => {
     // Update unread count if chat is not open
     if (!isOpen && messages.length > 0 && messages[messages.length - 1].sender === 'bot') {
       setUnreadMessages(prev => prev + 1);
-      
-      // Removed toast notification when new message arrives and chat is closed
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, setUnreadMessages]);
 
   useEffect(() => {
     // Show simple welcome message when chat is first opened
@@ -70,36 +76,15 @@ export const useChatState = () => {
     if (isOpen) {
       setUnreadMessages(0);
     }
-  }, [isOpen]);
-
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-    // Reset minimize state when toggling chat
-    if (!isOpen) {
-      setIsMinimized(false);
-    }
-  };
+  }, [isOpen, setUnreadMessages]);
 
   const toggleMinimize = () => {
     setIsMinimized(prev => !prev);
   };
 
-  const togglePin = () => {
-    setIsPinned(prev => !prev);
-    
-    // Ensure chat is open when pinned
-    if (!isOpen) {
-      setIsOpen(true);
-    }
-    
-    // Reset minimize state when pinning
-    setIsMinimized(false);
-  };
-
   const toggleZapierManager = () => {
     // Only allow authenticated users to access Zapier Manager
     if (!isAuthenticated) {
-      // Removed toast notification for authentication requirement
       return;
     }
     
