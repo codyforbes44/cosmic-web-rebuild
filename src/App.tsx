@@ -11,6 +11,7 @@ import { ErrorBoundary } from "@/components/ui/error-boundary";
 import VisitorTracker from "@/components/VisitorTracker";
 import CookieConsent from "@/components/CookieConsent";
 import LiveChat from "@/components/LiveChat/LiveChat";
+import FloatingBookButton from "@/components/common/FloatingBookButton";
 import { PageLoading } from "@/components/ui/UnifiedLoading";
 import { preloadCriticalRoutes } from "@/utils/routePreloader";
 
@@ -183,7 +184,8 @@ function App() {
                 </Suspense>
                 <CookieConsent />
                 
-                {/* Global LiveChat component - appears on all pages */}
+                {/* Global floating components - appear on all pages */}
+                <FloatingBookButton />
                 <LiveChat />
               </AuthProvider>
             </BrowserRouter>
