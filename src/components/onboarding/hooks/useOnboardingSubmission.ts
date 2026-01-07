@@ -13,6 +13,18 @@ export const useOnboardingSubmission = () => {
     setIsSubmitting(true);
     
     try {
+      // Honeypot check - reject if filled (bots typically fill this)
+      if (data.honeypot) {
+        console.warn('Honeypot triggered - likely bot submission');
+        toast({
+          title: "Submission Failed",
+          description: "An error occurred. Please try again.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       const { error } = await supabase
         .from('onboarding_submissions')
         .insert({
@@ -31,6 +43,7 @@ export const useOnboardingSubmission = () => {
           preferred_contact: data.preferredContact,
           communication_frequency: data.communicationFrequency,
           terms_accepted: data.termsAccepted,
+          honeypot: data.honeypot || '',
         });
 
       if (error) throw error;

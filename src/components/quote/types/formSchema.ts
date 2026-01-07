@@ -13,6 +13,7 @@ export const formSchema = z.object({
   termsAccepted: z.boolean().refine(val => val === true, {
     message: "You must accept the terms and conditions.",
   }),
+  honeypot: z.string().optional().default(''),
 });
 
 export type FormData = z.infer<typeof formSchema>;

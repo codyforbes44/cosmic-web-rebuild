@@ -13,6 +13,14 @@ export const useContactSubmission = () => {
     setIsSubmitting(true);
     
     try {
+      // Honeypot check - reject if filled (bots typically fill this)
+      if (data.honeypot) {
+        console.warn('Honeypot triggered - likely bot submission');
+        toast.error("An error occurred. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
       // Rate limiting check
       const clientId = `${data.email}_${navigator.userAgent.slice(0, 50)}`;
       const rateLimitCheck = checkRateLimit(`contact_form_${clientId}`, 3, 3600000); // 3 submissions per hour
@@ -50,6 +58,7 @@ export const useContactSubmission = () => {
         email: data.email.toLowerCase().trim(),
         subject: sanitizeInput(data.subject),
         message: sanitizeInput(data.message).trim(),
+        honeypot: data.honeypot || '',
       };
 
       // Additional validation after sanitization

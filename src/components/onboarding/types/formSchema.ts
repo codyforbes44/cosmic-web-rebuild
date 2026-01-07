@@ -31,6 +31,7 @@ export const formSchema = z.object({
   communicationFrequency: z.enum(['daily', 'weekly', 'biweekly', 'monthly']),
   termsAccepted: z.boolean()
     .refine(val => val === true, { message: "You must accept the terms and conditions." }),
+  honeypot: z.string().optional().default(''),
 });
 
 export type OnboardingFormData = z.infer<typeof formSchema>;

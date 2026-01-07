@@ -119,6 +119,32 @@ const ContactFormFields = ({ control, isFormDisabled }: ContactFormFieldsProps) 
           </FormItem>
         )}
       />
+
+      {/* Honeypot field - hidden from users, catches bots */}
+      <div 
+        style={{ 
+          position: 'absolute', 
+          left: '-9999px',
+          top: '-9999px',
+          opacity: 0,
+          pointerEvents: 'none'
+        }} 
+        aria-hidden="true"
+      >
+        <FormField
+          control={control}
+          name="honeypot"
+          render={({ field }) => (
+            <input
+              {...field}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              placeholder="Leave this field empty"
+            />
+          )}
+        />
+      </div>
     </>
   );
 };

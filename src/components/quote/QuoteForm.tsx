@@ -25,6 +25,7 @@ const QuoteForm = () => {
       projectDescription: '',
       timeline: '',
       termsAccepted: false,
+      honeypot: '',
     },
   });
 
