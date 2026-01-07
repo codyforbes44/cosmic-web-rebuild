@@ -3,8 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useSubscriptionPackagesQuery } from '@/lib/queries/hooks';
 import { Check, Star, Zap, Crown } from 'lucide-react';
 
 interface SubscriptionPackage {
@@ -22,19 +21,7 @@ interface SubscriptionPackage {
 }
 
 export const SubscriptionPackages: React.FC = () => {
-  const { data: packages, isLoading } = useQuery({
-    queryKey: ['subscription-packages'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('subscription_packages')
-        .select('*')
-        .eq('is_active', true)
-        .order('sort_order', { ascending: true });
-      
-      if (error) throw error;
-      return data as SubscriptionPackage[];
-    },
-  });
+  const { data: packages, isLoading } = useSubscriptionPackagesQuery();
 
   const getPackageIcon = (name: string) => {
     switch (name.toLowerCase()) {
