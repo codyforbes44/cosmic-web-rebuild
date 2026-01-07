@@ -28,7 +28,7 @@ export const ZephelInterface: React.FC<ZephelInterfaceProps> = ({ userId = 'arch
   // Hooks for all ZEPHEL features
   const { processInput, isProcessing } = useZephelProcessor();
   const { processQuantumCommand, quantumState } = useQuantumCommandProcessor();
-  const { currentSession, messages, saveMessage, setMessages } = useZephelSessions();
+  const { currentSession, messages, saveMessage, setMessages } = useZephelSessions(userId);
   const { speak, isPlaying } = useZephelVoice();
   const { playSystemBoot, playCommandExecute, playSuccess, playError } = useZephelSounds();
   const { metrics } = useZephelMetrics();

@@ -1,6 +1,12 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useState, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import {
+  useZephelSessionsQuery,
+  useZephelMessagesQuery,
+  useCreateZephelSessionMutation,
+  useDeleteZephelSessionMutation,
+  useAddZephelMessageMutation,
+} from '@/lib/queries/hooks';
 
 export interface ZephelSession {
   id: string;
@@ -19,161 +25,92 @@ export interface ZephelMessage {
   metadata: any;
 }
 
-export const useZephelSessions = () => {
-  const [sessions, setSessions] = useState<ZephelSession[]>([]);
+export const useZephelSessions = (userId?: string) => {
   const [currentSession, setCurrentSession] = useState<ZephelSession | null>(null);
-  const [messages, setMessages] = useState<ZephelMessage[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [localMessages, setLocalMessages] = useState<ZephelMessage[]>([]);
   const { toast } = useToast();
 
-  // Load all sessions for the user
-  const loadSessions = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('zephel_sessions')
-        .select('*')
-        .order('updated_at', { ascending: false });
+  // Queries
+  const {
+    data: sessions = [],
+    isLoading: isLoadingSessions,
+    refetch: refetchSessions,
+  } = useZephelSessionsQuery(userId);
 
-      if (error) throw error;
-      setSessions(data || []);
-    } catch (error) {
-      console.error('Error loading sessions:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load sessions",
-        variant: "destructive",
-      });
+  const {
+    data: dbMessages = [],
+    isLoading: isLoadingMessages,
+    refetch: refetchMessages,
+  } = useZephelMessagesQuery(currentSession?.id);
+
+  // Combine DB messages with local messages for sessionless usage
+  const messages = currentSession ? dbMessages : localMessages;
+
+  // Mutations
+  const createSessionMutation = useCreateZephelSessionMutation(userId);
+  const deleteSessionMutation = useDeleteZephelSessionMutation(userId);
+  const addMessageMutation = useAddZephelMessageMutation();
+
+  // Set messages (for local state when no session)
+  const setMessages = useCallback((updater: ZephelMessage[] | ((prev: ZephelMessage[]) => ZephelMessage[])) => {
+    if (typeof updater === 'function') {
+      setLocalMessages(updater);
+    } else {
+      setLocalMessages(updater);
     }
-  };
-
-  // Load messages for a specific session
-  const loadMessages = async (sessionId: string) => {
-    try {
-      setIsLoading(true);
-      const { data, error } = await supabase
-        .from('zephel_messages')
-        .select('*')
-        .eq('session_id', sessionId)
-        .order('timestamp', { ascending: true });
-
-      if (error) throw error;
-      setMessages(data || []);
-    } catch (error) {
-      console.error('Error loading messages:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load messages",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  }, []);
   // Create a new session
-  const createSession = async (name: string = 'New Session') => {
+  const createSession = useCallback(async (name: string = 'New Session') => {
     try {
-      const { data, error } = await supabase
-        .from('zephel_sessions')
-        .insert([{ session_name: name }])
-        .select()
-        .single();
-
-      if (error) throw error;
-      
-      setSessions(prev => [data, ...prev]);
-      setCurrentSession(data);
-      setMessages([]);
-      
-      toast({
-        title: "Session Created",
-        description: `New session "${name}" created`,
-      });
-      
-      return data;
-    } catch (error) {
-      console.error('Error creating session:', error);
-      toast({
-        title: "Error",
-        description: "Failed to create session",
-        variant: "destructive",
-      });
+      const newSession = await createSessionMutation.mutateAsync(name);
+      setCurrentSession(newSession);
+      return newSession;
+    } catch {
       return null;
     }
-  };
+  }, [createSessionMutation]);
 
   // Save a message to the current session
-  const saveMessage = async (role: 'user' | 'assistant', content: string, metadata: any = {}) => {
+  const saveMessage = useCallback(async (
+    role: 'user' | 'assistant',
+    content: string,
+    metadata: any = {}
+  ) => {
     if (!currentSession) return null;
 
     try {
-      const { data, error } = await supabase
-        .from('zephel_messages')
-        .insert([{
-          session_id: currentSession.id,
-          role,
-          content,
-          metadata
-        }])
-        .select()
-        .single();
-
-      if (error) throw error;
-      
-      setMessages(prev => [...prev, data]);
-      
-      // Update session timestamp
-      await supabase
-        .from('zephel_sessions')
-        .update({ updated_at: new Date().toISOString() })
-        .eq('id', currentSession.id);
-      
-      return data;
-    } catch (error) {
-      console.error('Error saving message:', error);
+      const newMessage = await addMessageMutation.mutateAsync({
+        session_id: currentSession.id,
+        role,
+        content,
+        metadata,
+      });
+      return newMessage;
+    } catch {
       return null;
     }
-  };
+  }, [currentSession, addMessageMutation]);
 
   // Delete a session
-  const deleteSession = async (sessionId: string) => {
+  const deleteSession = useCallback(async (sessionId: string) => {
     try {
-      const { error } = await supabase
-        .from('zephel_sessions')
-        .delete()
-        .eq('id', sessionId);
-
-      if (error) throw error;
-      
-      setSessions(prev => prev.filter(s => s.id !== sessionId));
+      await deleteSessionMutation.mutateAsync(sessionId);
       
       if (currentSession?.id === sessionId) {
         setCurrentSession(null);
-        setMessages([]);
       }
-      
-      toast({
-        title: "Session Deleted",
-        description: "Session has been deleted",
-      });
-    } catch (error) {
-      console.error('Error deleting session:', error);
-      toast({
-        title: "Error",
-        description: "Failed to delete session",
-        variant: "destructive",
-      });
+    } catch {
+      // Error handled by mutation
     }
-  };
+  }, [deleteSessionMutation, currentSession]);
 
   // Switch to a different session
-  const switchSession = async (session: ZephelSession) => {
+  const switchSession = useCallback((session: ZephelSession) => {
     setCurrentSession(session);
-    await loadMessages(session.id);
-  };
+  }, []);
 
   // Export session as JSON
-  const exportSession = (session: ZephelSession) => {
+  const exportSession = useCallback((session: ZephelSession) => {
     const exportData = {
       session: session,
       messages: messages,
@@ -197,24 +134,31 @@ export const useZephelSessions = () => {
       title: "Session Exported",
       description: "Session has been exported to JSON",
     });
-  };
-
-  useEffect(() => {
-    loadSessions();
-  }, []);
+  }, [messages, toast]);
 
   return {
-    sessions,
+    // Data
+    sessions: sessions as ZephelSession[],
     currentSession,
-    messages,
-    isLoading,
-    loadSessions,
-    loadMessages,
+    messages: messages as ZephelMessage[],
+    
+    // Loading states
+    isLoading: isLoadingSessions || isLoadingMessages,
+    isLoadingSessions,
+    isLoadingMessages,
+    isCreating: createSessionMutation.isPending,
+    isDeleting: deleteSessionMutation.isPending,
+    isSavingMessage: addMessageMutation.isPending,
+    
+    // Actions
+    loadSessions: refetchSessions,
+    loadMessages: refetchMessages,
     createSession,
     saveMessage,
     deleteSession,
     switchSession,
     exportSession,
-    setMessages
+    setCurrentSession,
+    setMessages,
   };
 };

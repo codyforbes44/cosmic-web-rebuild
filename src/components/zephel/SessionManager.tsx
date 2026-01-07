@@ -12,6 +12,8 @@ import {
   FolderOpen
 } from 'lucide-react';
 import { ZephelSession, useZephelSessions } from '@/hooks/useZephelSessions';
+import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState as useReactState } from 'react';
 
 interface SessionManagerProps {
   onSessionChange?: (session: ZephelSession | null) => void;
@@ -20,6 +22,13 @@ interface SessionManagerProps {
 export const SessionManager: React.FC<SessionManagerProps> = ({ onSessionChange }) => {
   const [newSessionName, setNewSessionName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+  const [userId, setUserId] = useReactState<string | undefined>(undefined);
+  
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUserId(session?.user?.id);
+    });
+  }, []);
   
   const {
     sessions,
@@ -28,7 +37,7 @@ export const SessionManager: React.FC<SessionManagerProps> = ({ onSessionChange 
     deleteSession,
     switchSession,
     exportSession
-  } = useZephelSessions();
+  } = useZephelSessions(userId);
 
   const handleCreateSession = async () => {
     if (!newSessionName.trim()) return;

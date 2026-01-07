@@ -154,23 +154,54 @@ export const useZephelMessagesQuery = (sessionId: string | undefined) => {
   });
 };
 
-export const useCreateZephelSessionMutation = () => {
+export const useCreateZephelSessionMutation = (userId: string | undefined) => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   
   return useMutation({
-    mutationFn: ({ userId, sessionName }: { userId: string; sessionName?: string }) =>
-      mutations.zephel.createSession(userId, sessionName),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.zephel.sessions(variables.userId) });
+    mutationFn: (sessionName?: string) =>
+      mutations.zephel.createSession(userId || '', sessionName),
+    onSuccess: (data) => {
+      if (userId) {
+        queryClient.invalidateQueries({ queryKey: queryKeys.zephel.sessions(userId) });
+      }
+      toast({
+        title: 'Session Created',
+        description: `New session "${data.session_name}" created`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to create session',
+        variant: 'destructive',
+      });
     },
   });
 };
 
-export const useDeleteZephelSessionMutation = () => {
+export const useDeleteZephelSessionMutation = (userId: string | undefined) => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   
   return useMutation({
     mutationFn: mutations.zephel.deleteSession,
+    onSuccess: () => {
+      if (userId) {
+        queryClient.invalidateQueries({ queryKey: queryKeys.zephel.sessions(userId) });
+      }
+      toast({
+        title: 'Session Deleted',
+        description: 'Session has been deleted',
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to delete session',
+        variant: 'destructive',
+      });
+    },
   });
 };
 
