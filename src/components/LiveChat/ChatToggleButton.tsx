@@ -1,26 +1,30 @@
-
 import React from 'react';
 import { MessageSquare, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ChatToggleButtonProps {
   isOpen: boolean;
   unreadMessages: number;
   onToggle: () => void;
+  className?: string;
 }
 
 const ChatToggleButton: React.FC<ChatToggleButtonProps> = ({
   isOpen,
   unreadMessages,
-  onToggle
+  onToggle,
+  className
 }) => {
   return (
     <button
       onClick={onToggle}
-      className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg transition-all duration-300 z-50 flex items-center justify-center ${
+      className={cn(
+        "w-14 h-14 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center",
         isOpen 
-          ? 'bg-red-500 hover:bg-red-600' 
-          : 'bg-accent hover:bg-accent/90'
-      }`}
+          ? 'bg-destructive hover:bg-destructive/90' 
+          : 'bg-accent hover:bg-accent/90',
+        className
+      )}
       aria-label={isOpen ? 'Close chat' : 'Open chat'}
     >
       {isOpen ? (
@@ -29,7 +33,7 @@ const ChatToggleButton: React.FC<ChatToggleButtonProps> = ({
         <div className="relative">
           <MessageSquare className="w-6 h-6 text-white" />
           {unreadMessages > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
               {unreadMessages > 9 ? '9+' : unreadMessages}
             </span>
           )}
