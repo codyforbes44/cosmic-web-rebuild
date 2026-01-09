@@ -234,3 +234,80 @@ export const generateOfferSchema = (offer: {
     ...(offer.validThrough && { "validThrough": offer.validThrough })
   };
 };
+
+export const generateServiceSchema = (service: {
+  name: string;
+  description: string;
+  provider?: string;
+  areaServed?: string;
+  serviceType?: string;
+  image?: string;
+  url?: string;
+  offers?: {
+    price?: string;
+    priceCurrency?: string;
+  };
+}) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": service.name,
+    "description": service.description,
+    "provider": {
+      "@type": "Organization",
+      "name": service.provider || "ƷBI - Business Technology Solutions",
+      "url": "https://3bi.io"
+    },
+    "areaServed": service.areaServed || "Worldwide",
+    "serviceType": service.serviceType || "Technology Consulting",
+    ...(service.image && { "image": service.image }),
+    ...(service.url && { "url": service.url }),
+    ...(service.offers && {
+      "offers": {
+        "@type": "Offer",
+        "price": service.offers.price,
+        "priceCurrency": service.offers.priceCurrency || "USD"
+      }
+    })
+  };
+};
+
+export const generateSoftwareApplicationSchema = (app: {
+  name: string;
+  description: string;
+  applicationCategory: string;
+  operatingSystem?: string;
+  offers?: {
+    price: string;
+    priceCurrency: string;
+  };
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+  };
+  featureList?: string[];
+}) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": app.name,
+    "description": app.description,
+    "applicationCategory": app.applicationCategory,
+    "operatingSystem": app.operatingSystem || "Web Browser",
+    ...(app.offers && {
+      "offers": {
+        "@type": "Offer",
+        "price": app.offers.price,
+        "priceCurrency": app.offers.priceCurrency
+      }
+    }),
+    ...(app.aggregateRating && {
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": app.aggregateRating.ratingValue,
+        "reviewCount": app.aggregateRating.reviewCount
+      }
+    }),
+    ...(app.featureList && { "featureList": app.featureList })
+  };
+};

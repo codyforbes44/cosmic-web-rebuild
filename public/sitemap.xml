@@ -1,182 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Primary Pages -->
   <url>
-    <loc>https://zbi-consulting.com/</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://3bi.io/</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/services</loc>
-    <lastmod>2026-01-09</lastmod>
+    <loc>https://3bi.io/services</loc>
+    <lastmod>2025-01-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://3bi.io/about</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/contact</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/partners</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
   <!-- Service Pages -->
   <url>
-    <loc>https://zbi-consulting.com/digital-marketing</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://3bi.io/digital-marketing</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/web-development</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/ai-solutions</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/strategy-consulting</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/web-development</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://3bi.io/social-media-management</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/ai-solutions</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://3bi.io/recruitment-marketing</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://zbi-consulting.com/strategy-consulting</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/social-media-management</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/recruitment-marketing</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  
   <!-- Product Pages -->
   <url>
-    <loc>https://zbi-consulting.com/multi-ai</loc>
-    <lastmod>2026-01-09</lastmod>
+    <loc>https://3bi.io/multi-ai</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/chatbot-products</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/voice</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Utility & Info Pages -->
+  <url>
+    <loc>https://3bi.io/demo</loc>
+    <lastmod>2025-01-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/voice</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/chatbot-products</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/audio-review</loc>
-    <lastmod>2026-01-09</lastmod>
+    <loc>https://3bi.io/features</loc>
+    <lastmod>2025-01-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- Main Pages -->
   <url>
-    <loc>https://zbi-consulting.com/portfolio</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://3bi.io/faq</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/news</loc>
-    <lastmod>2026-01-09</lastmod>
+    <loc>https://3bi.io/news</loc>
+    <lastmod>2025-01-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/about</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/contact</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/get-quote</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/onboarding</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/partners</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/faq</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/features</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/gallery</loc>
-    <lastmod>2026-01-09</lastmod>
+    <loc>https://3bi.io/gallery</loc>
+    <lastmod>2025-01-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/calculator</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <!-- Tools -->
-  <url>
-    <loc>https://zbi-consulting.com/weather</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://zbi-consulting.com/maps</loc>
-    <lastmod>2026-01-09</lastmod>
+    <loc>https://3bi.io/portfolio</loc>
+    <lastmod>2025-01-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/drivers-matter</loc>
-    <lastmod>2026-01-09</lastmod>
+    <loc>https://3bi.io/get-quote</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/onboarding</loc>
+    <lastmod>2025-01-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  <!-- Legal Pages -->
+  
+  <!-- Tool Pages -->
   <url>
-    <loc>https://zbi-consulting.com/privacy</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://3bi.io/maps</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/terms</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://3bi.io/weather</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://zbi-consulting.com/accessibility</loc>
-    <lastmod>2026-01-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://3bi.io/planets</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/audio-review</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://3bi.io/calculator</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
   </url>
 </urlset>

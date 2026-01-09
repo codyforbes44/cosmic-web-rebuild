@@ -1,3 +1,5 @@
+# 3BI.io - Business Technology Solutions
+# https://3bi.io
 
 # Allow all search engines to crawl everything
 User-agent: *
@@ -6,9 +8,11 @@ Allow: /
 # Specific rules for major search engines
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -16,11 +20,25 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-# Disallow crawling of utility pages
-Disallow: /11l
+# AI and generative search crawlers
+User-agent: GPTBot
+Allow: /
 
-# Crawl delay for better server performance
-Crawl-delay: 1
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Disallow internal utility pages
+Disallow: /11l
+Disallow: /auth/callback
 
 # Sitemap location
-Sitemap: https://zbi-consulting.com/sitemap.xml
+Sitemap: https://3bi.io/sitemap.xml

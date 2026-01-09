@@ -1,12 +1,23 @@
-
 import React, { useState } from 'react';
 import StandardPageLayout from '@/layouts/StandardPageLayout';
 import { HelpCircle } from 'lucide-react';
-
-// Import refactored components
-import FAQCategories from '@/components/FAQ/FAQCategories';
+import FAQCategories, { faqCategories } from '@/components/FAQ/FAQCategories';
 import FAQTestimonials from '@/components/FAQ/FAQTestimonials';
 import FAQCTA from '@/components/FAQ/FAQCTA';
+
+// Flatten all FAQ items for SEO structured data
+const allFaqItems = faqCategories.flatMap(category => 
+  category.items.map(item => ({
+    question: item.question,
+    answer: item.answer
+  }))
+);
+
+// Breadcrumbs for structured data
+const breadcrumbsSchema = [
+  { name: 'Home', url: 'https://3bi.io/' },
+  { name: 'FAQ', url: 'https://3bi.io/faq' }
+];
 
 const FAQ = () => {
   const [activeTab, setActiveTab] = useState("general");
@@ -14,10 +25,12 @@ const FAQ = () => {
   return (
     <StandardPageLayout
       seo={{
-        title: "Frequently Asked Questions | Ʒʙɪ",
-        description: "Find answers to commonly asked questions about Ʒʙɪ's services, products, and expertise in digital marketing and technology solutions.",
-        keywords: "FAQ, frequently asked questions, business technology, digital marketing, Ʒʙɪ, technology solutions",
-        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=630&fit=crop&crop=center"
+        title: "Frequently Asked Questions | ƷBI",
+        description: "Find answers to commonly asked questions about ƷBI's services, products, and expertise in digital marketing, AI solutions, and technology consulting.",
+        keywords: "FAQ, frequently asked questions, business technology, digital marketing, ƷBI, AI solutions, web development, consulting services",
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=630&fit=crop&crop=center",
+        faqs: allFaqItems,
+        breadcrumbs: breadcrumbsSchema
       }}
       breadcrumb={{ label: "FAQ" }}
       header={{

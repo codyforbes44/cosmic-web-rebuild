@@ -7,6 +7,16 @@ import BreadcrumbNav from '@/components/BreadcrumbNav';
 import PageHeader from '@/components/PageHeader';
 import { LucideIcon } from 'lucide-react';
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface BreadcrumbSchemaItem {
+  name: string;
+  url: string;
+}
+
 interface StandardPageLayoutProps {
   children: React.ReactNode;
   seo?: {
@@ -15,6 +25,16 @@ interface StandardPageLayoutProps {
     keywords?: string;
     image?: string;
     type?: string;
+    faqs?: FAQItem[];
+    breadcrumbs?: BreadcrumbSchemaItem[];
+    structuredData?: object | object[];
+    article?: {
+      publishedTime?: string;
+      modifiedTime?: string;
+      author?: string;
+      section?: string;
+      tags?: string[];
+    };
   };
   breadcrumb?: {
     label: string;
@@ -44,6 +64,10 @@ const StandardPageLayout: React.FC<StandardPageLayoutProps> = ({
           keywords={seo.keywords}
           image={seo.image}
           type={seo.type || "website"}
+          faqs={seo.faqs}
+          breadcrumbs={seo.breadcrumbs}
+          structuredData={seo.structuredData}
+          article={seo.article}
         />
       )}
       <Navbar />
