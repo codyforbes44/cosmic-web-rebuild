@@ -1,4 +1,3 @@
-
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,6 +11,16 @@ import IndustryStats from "@/components/recruitment/IndustryStats";
 import HowItWorks from "@/components/recruitment/HowItWorks";
 import RecruitmentBenefits from "@/components/recruitment/RecruitmentBenefits";
 import RecruitmentCTA from "@/components/recruitment/RecruitmentCTA";
+import { generateServiceSchema } from "@/utils/seoUtils";
+
+// Service schema for generative AI optimization
+const serviceSchema = generateServiceSchema({
+  name: "Recruitment Marketing Services",
+  description: "Powerful recruitment marketing campaigns for businesses across all industries. Attract, engage and convert qualified candidates while reducing cost-per-hire by up to 40% with targeted multi-channel campaigns.",
+  serviceType: "Recruitment Marketing",
+  url: "https://3bi.io/recruitment-marketing",
+  image: "https://3bi.io/og-images/recruitment-marketing.png"
+});
 
 const RecruitmentMarketing: React.FC = () => {
   const service = recruitmentService;
@@ -21,8 +30,14 @@ const RecruitmentMarketing: React.FC = () => {
       <SEO 
         title="Professional Recruitment Marketing Services" 
         description="Powerful recruitment campaigns for businesses across all industries. Attract, engage and convert qualified candidates while reducing cost-per-hire by up to 40%."
-        keywords="recruitment marketing, talent acquisition, candidate recruitment, hiring solutions, professional recruiting, recruitment campaigns, talent sourcing"
+        keywords="recruitment marketing, talent acquisition, candidate recruitment, hiring solutions, professional recruiting, recruitment campaigns, talent sourcing, employer branding"
         image="/og-images/recruitment-marketing.png"
+        structuredData={serviceSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Services', url: 'https://3bi.io/services' },
+          { name: 'Recruitment Marketing', url: 'https://3bi.io/recruitment-marketing' }
+        ]}
       />
       <Navbar />
       <StarBackground />

@@ -1,7 +1,6 @@
-
 import React from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -13,6 +12,16 @@ import SEO from "@/components/SEO";
 import { digitalService } from "@/data/services/digitalService";
 import LiveChat from "@/components/LiveChat/LiveChat";
 import DigitalMarketingPackages from "@/components/services/DigitalMarketingPackages";
+import { generateServiceSchema } from "@/utils/seoUtils";
+
+// Service schema for generative AI optimization
+const serviceSchema = generateServiceSchema({
+  name: "Digital Marketing Services",
+  description: "Strategic digital marketing solutions including targeted advertising campaigns, SEO optimization, performance analytics, and conversion rate optimization to attract customers and grow your business online.",
+  serviceType: "Digital Marketing",
+  url: "https://3bi.io/digital-marketing",
+  image: "https://3bi.io/og-images/digital-marketing.png"
+});
 
 const DigitalMarketing: React.FC = () => {
   const service = digitalService;
@@ -22,8 +31,14 @@ const DigitalMarketing: React.FC = () => {
       <SEO 
         title="Digital Marketing Services - Grow Your Business Online" 
         description="Strategic digital marketing solutions to attract customers and grow your business. Targeted campaigns, performance analytics, and conversion optimization."
-        keywords="digital marketing, online advertising, targeted campaigns, performance analytics, conversion optimization, digital growth"
+        keywords="digital marketing, online advertising, targeted campaigns, performance analytics, conversion optimization, digital growth, SEO, PPC"
         image="/og-images/digital-marketing.png"
+        structuredData={serviceSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Services', url: 'https://3bi.io/services' },
+          { name: 'Digital Marketing', url: 'https://3bi.io/digital-marketing' }
+        ]}
       />
       <Navbar />
       <StarBackground />

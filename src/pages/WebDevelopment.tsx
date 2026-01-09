@@ -1,7 +1,6 @@
-
 import React from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -13,6 +12,16 @@ import SEO from "@/components/SEO";
 import { webService } from "@/data/services/webService";
 import LiveChat from "@/components/LiveChat/LiveChat";
 import WebDevelopmentServices from "@/components/WebDevelopmentServices";
+import { generateServiceSchema } from "@/utils/seoUtils";
+
+// Service schema for generative AI optimization
+const serviceSchema = generateServiceSchema({
+  name: "Web & Mobile Development Services",
+  description: "Modern web and mobile application development with responsive design, exceptional user experiences, and custom functionality. From websites to complex web applications and mobile apps.",
+  serviceType: "Web Development",
+  url: "https://3bi.io/web-development",
+  image: "https://3bi.io/og-images/web-development.png"
+});
 
 const WebDevelopment: React.FC = () => {
   const service = webService;
@@ -21,9 +30,15 @@ const WebDevelopment: React.FC = () => {
     <>
       <SEO 
         title="Web Development Services - Custom Websites & Apps" 
-        description="Modern web and mobile application development. Responsive, user-friendly applications with exceptional user experiences."
-        keywords="web development, mobile apps, responsive design, custom websites, user experience, web applications"
+        description="Modern web and mobile application development. Responsive, user-friendly applications with exceptional user experiences and custom functionality."
+        keywords="web development, mobile apps, responsive design, custom websites, user experience, web applications, React, full-stack development"
         image="/og-images/web-development.png"
+        structuredData={serviceSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Services', url: 'https://3bi.io/services' },
+          { name: 'Web Development', url: 'https://3bi.io/web-development' }
+        ]}
       />
       <Navbar />
       <StarBackground />
