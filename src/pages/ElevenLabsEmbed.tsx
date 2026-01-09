@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import StandardPageLayout from '@/layouts/StandardPageLayout';
 import { Mic } from 'lucide-react';
+import { generateVideoObjectSchema } from '@/utils/seoUtils/advancedSchemas';
 
 const ElevenLabsEmbed = () => {
   useEffect(() => {
@@ -36,12 +37,33 @@ const ElevenLabsEmbed = () => {
     };
   }, []);
 
+  // VideoObject schema for interactive voice AI
+  const videoSchema = generateVideoObjectSchema({
+    name: "ElevenLabs Voice AI Assistant Demo",
+    description: "Interactive demonstration of our AI voice assistant powered by ElevenLabs. Experience natural, real-time voice conversations with advanced speech synthesis technology.",
+    thumbnailUrl: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&h=630&fit=crop&crop=center",
+    uploadDate: "2024-01-01",
+    embedUrl: "https://zephyel.com/elevenlabs-embed"
+  });
+
+  // Breadcrumb schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zephyel.com" },
+      { "@type": "ListItem", "position": 2, "name": "Voice AI", "item": "https://zephyel.com/voice-interface" },
+      { "@type": "ListItem", "position": 3, "name": "ElevenLabs Voice AI", "item": "https://zephyel.com/elevenlabs-embed" }
+    ]
+  };
+
   return (
     <StandardPageLayout
       seo={{
         title: "Voice AI Assistant - ElevenLabs Integration | ƷBI",
         description: "Interactive voice AI assistant powered by ElevenLabs. Experience natural conversations with advanced voice technology.",
-        image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&h=630&fit=crop&crop=center"
+        image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&h=630&fit=crop&crop=center",
+        structuredData: [videoSchema, breadcrumbSchema]
       }}
       breadcrumb={{ label: "ElevenLabs Voice AI" }}
       header={{
