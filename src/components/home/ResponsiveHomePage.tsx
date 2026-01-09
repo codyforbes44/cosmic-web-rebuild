@@ -1,33 +1,42 @@
-import React, { Suspense, lazy } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React from "react";
 import OptimizedHeroSection from "./sections/OptimizedHeroSection";
-import { SectionLoading } from "@/components/ui/UnifiedLoading";
+import { createLazyComponent } from "@/hooks/use-lazy-loading";
 
-// Lazy load non-critical sections for better performance
-const RecruitmentMarketingSection = lazy(() => import("./RecruitmentMarketingSection"));
-const FeaturedProducts = lazy(() => import("./FeaturedProducts"));
-const AdvancedFeatures = lazy(() => import("./AdvancedFeatures"));
-const CTASection = lazy(() => import("../CTASection"));
-const NewsletterSection = lazy(() => import("./NewsletterSection"));
+// Use createLazyComponent with retry logic for resilient loading
+const RecruitmentMarketingSection = createLazyComponent(
+  () => import("./RecruitmentMarketingSection"),
+  { retryCount: 3 }
+);
+const FeaturedProducts = createLazyComponent(
+  () => import("./FeaturedProducts"),
+  { retryCount: 3 }
+);
+const AdvancedFeatures = createLazyComponent(
+  () => import("./AdvancedFeatures"),
+  { retryCount: 3 }
+);
+const CTASection = createLazyComponent(
+  () => import("../CTASection"),
+  { retryCount: 3 }
+);
+const NewsletterSection = createLazyComponent(
+  () => import("./NewsletterSection"),
+  { retryCount: 3 }
+);
 
 const ResponsiveHomePage: React.FC = () => {
-  const isMobile = useIsMobile();
-
   return (
     <div className="w-full">
-      {/* Hero Section - Always loaded immediately */}
       <OptimizedHeroSection />
       
-      {/* Lazy loaded sections with loading fallback */}
-      <Suspense fallback={<SectionLoading message="Loading content..." />}>
-        <div className="space-y-0">
-          <RecruitmentMarketingSection />
-          <FeaturedProducts />
-          <AdvancedFeatures />
-          <CTASection />
-          <NewsletterSection />
-        </div>
-      </Suspense>
+      {/* Components handle their own Suspense internally */}
+      <div className="space-y-0">
+        <RecruitmentMarketingSection />
+        <FeaturedProducts />
+        <AdvancedFeatures />
+        <CTASection />
+        <NewsletterSection />
+      </div>
     </div>
   );
 };
