@@ -9,6 +9,7 @@ import StarBackground from '@/components/StarBackground';
 import SEO from '@/components/SEO';
 import ServiceCaseStudy from '@/components/ServiceCaseStudy';
 import LiveChat from '@/components/LiveChat/LiveChat';
+import { generateServiceSchema } from '@/utils/seoUtils';
 import type { ServiceDefinition } from '@/types/services';
 
 interface ServicePageLayoutProps {
@@ -31,6 +32,16 @@ const ServicePageLayout: React.FC<ServicePageLayoutProps> = ({
   className = ""
 }) => {
   const serviceName = service.title || service.name || '';
+  const serviceSlug = service.id || serviceName.toLowerCase().replace(/\s+/g, '-');
+  
+  // Generate service schema dynamically
+  const serviceSchema = generateServiceSchema({
+    name: serviceName,
+    description: service.description,
+    serviceType: serviceName,
+    url: `https://3bi.io/${serviceSlug}`,
+    image: service.image ? `https://3bi.io${service.image}` : undefined
+  });
   
   return (
     <>
@@ -38,6 +49,12 @@ const ServicePageLayout: React.FC<ServicePageLayoutProps> = ({
         title={`${serviceName} - Professional Technology Solutions`}
         description={service.description}
         image={service.image}
+        structuredData={serviceSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Services', url: 'https://3bi.io/services' },
+          { name: serviceName, url: `https://3bi.io/${serviceSlug}` }
+        ]}
       />
       <Navbar />
       <StarBackground />
