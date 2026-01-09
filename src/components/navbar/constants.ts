@@ -60,11 +60,6 @@ export const productCategories = [
     description: "Intelligent chatbot solutions for your website"
   },
   {
-    title: "Analytics Platform",
-    href: "/demo",
-    description: "Advanced business intelligence tools"
-  },
-  {
     title: "Voice AI Assistant", 
     href: "/voice",
     description: "Natural voice interaction technology"
