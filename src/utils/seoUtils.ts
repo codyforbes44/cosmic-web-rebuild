@@ -70,22 +70,4 @@ export const generateLocalBusinessSchema = () => {
   };
 };
 
-export const generateServiceSchema = (service: {
-  name: string;
-  description: string;
-  provider: string;
-  areaServed?: string;
-}) => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": service.name,
-    "description": service.description,
-    "provider": {
-      "@type": "Organization",
-      "name": service.provider
-    },
-    "areaServed": service.areaServed || "Worldwide",
-    "serviceType": "Technology Consulting"
-  };
-};
+// generateServiceSchema is now exported from advancedSchemas

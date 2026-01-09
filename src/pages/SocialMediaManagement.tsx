@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
@@ -13,6 +12,16 @@ import SEO from "@/components/SEO";
 import { socialService } from "@/data/services/socialService";
 import LiveChat from "@/components/LiveChat/LiveChat";
 import DigitalMarketingPackages from "@/components/services/DigitalMarketingPackages";
+import { generateServiceSchema } from "@/utils/seoUtils";
+
+// Service schema for generative AI optimization
+const serviceSchema = generateServiceSchema({
+  name: "Social Media Management",
+  description: "Professional social media strategy and management to build your brand, engage audiences, and drive growth across all platforms including Facebook, Instagram, LinkedIn, and Twitter.",
+  serviceType: "Social Media Marketing",
+  url: "https://3bi.io/social-media-management",
+  image: "https://3bi.io/og-images/social-media.png"
+});
 
 const SocialMediaManagement: React.FC = () => {
   const service = socialService;
@@ -24,6 +33,12 @@ const SocialMediaManagement: React.FC = () => {
         description="Professional social media strategy and management to build your brand, engage audiences, and drive growth across all platforms."
         keywords="social media management, social media strategy, content creation, community management, social media marketing, brand building"
         image="/og-images/social-media.png"
+        structuredData={serviceSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Services', url: 'https://3bi.io/services' },
+          { name: 'Social Media Management', url: 'https://3bi.io/social-media-management' }
+        ]}
       />
       <Navbar />
       <StarBackground />

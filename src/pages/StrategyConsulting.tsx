@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -13,6 +12,16 @@ import SEO from "@/components/SEO";
 import { strategyService } from "@/data/services/strategyService";
 import LiveChat from "@/components/LiveChat/LiveChat";
 import ConsultationModal from "@/components/common/ConsultationModal";
+import { generateServiceSchema } from "@/utils/seoUtils";
+
+// Service schema for generative AI optimization
+const serviceSchema = generateServiceSchema({
+  name: "Strategic Consulting",
+  description: "Comprehensive technology strategy development and roadmap planning aligned with your business objectives. Expert guidance for digital transformation initiatives.",
+  serviceType: "Business Consulting",
+  url: "https://3bi.io/strategy-consulting",
+  image: "https://3bi.io/og-images/strategy-consulting.png"
+});
 
 const StrategyConsulting: React.FC = () => {
   const service = strategyService;
@@ -25,6 +34,12 @@ const StrategyConsulting: React.FC = () => {
         description="Comprehensive technology strategy development and roadmap planning aligned with your business objectives. Expert guidance for digital transformation."
         keywords="strategic consulting, technology strategy, digital transformation, business strategy, technology roadmap, strategic planning"
         image="/og-images/strategy-consulting.png"
+        structuredData={serviceSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Services', url: 'https://3bi.io/services' },
+          { name: 'Strategic Consulting', url: 'https://3bi.io/strategy-consulting' }
+        ]}
       />
       <Navbar />
       <StarBackground />

@@ -36,7 +36,7 @@ interface SEOProps {
   };
   breadcrumbs?: BreadcrumbItem[];
   faqs?: FAQItem[];
-  structuredData?: any[];
+  structuredData?: object | object[];
 }
 
 const SEO = ({
@@ -57,8 +57,12 @@ const SEO = ({
   },
   breadcrumbs,
   faqs,
-  structuredData = []
+  structuredData
 }: SEOProps) => {
+  // Normalize structuredData to always be an array
+  const structuredDataArray = structuredData 
+    ? (Array.isArray(structuredData) ? structuredData : [structuredData])
+    : [];
   const siteTitle = `${title} | ƷBI - Business Technology Solutions`;
   const siteName = "ƷBI - Business Technology Solutions";
   const baseUrl = "https://3bi.io";
@@ -215,7 +219,7 @@ const SEO = ({
         </script>
       )}
       
-      {structuredData.map((data, index) => (
+      {structuredDataArray.map((data, index) => (
         <script key={index} type="application/ld+json">
           {JSON.stringify(data)}
         </script>

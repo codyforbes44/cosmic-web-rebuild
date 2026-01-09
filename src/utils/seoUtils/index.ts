@@ -3,4 +3,4 @@
 export * from './advancedSchemas';
 export * from './generateSitemap';
 export * from './validateSEO';
-export { generateBreadcrumbSchema, generateFAQSchema, generateLocalBusinessSchema, generateServiceSchema } from '../seoUtils';
+export { generateBreadcrumbSchema, generateFAQSchema, generateLocalBusinessSchema } from '../seoUtils';
