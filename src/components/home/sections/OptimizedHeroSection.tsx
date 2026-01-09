@@ -24,7 +24,7 @@ const OptimizedHeroSection = memo(() => {
       />
 
       <ResponsiveHeroContainer visible={visible} isMobile={isMobile}>
-        <ResponsiveHeroContent isMobile={isMobile} />
+        <ResponsiveHeroContent isMobile={isMobile} onRequestDemo={() => setDemoModalOpen(true)} />
         <ResponsiveHeroOfferCard 
           onRequestDemo={() => setDemoModalOpen(true)} 
           isMobile={isMobile}

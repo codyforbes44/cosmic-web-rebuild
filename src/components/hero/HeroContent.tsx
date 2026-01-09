@@ -1,9 +1,12 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
-import { Link } from "react-router-dom";
 
-const HeroContent = () => {
+interface HeroContentProps {
+  onRequestDemo: () => void;
+}
+
+const HeroContent = ({ onRequestDemo }: HeroContentProps) => {
   return (
     <div>
       <span className="inline-block text-brand-gold mb-4 text-sm md:text-lg tracking-wider font-medium px-3 py-1 bg-brand-gold/10 rounded-full">PROFESSIONAL RECRUITMENT MARKETING</span>
@@ -31,16 +34,12 @@ const HeroContent = () => {
       </ul>
       
       <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-        <Link to="/demo" className="w-full sm:w-auto">
-          <Button className="bg-brand-gold hover:bg-brand-gold/90 text-black font-semibold px-6 py-5 rounded-md w-full text-base">
-            See Live Demo <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
-        <Link to="/quote" className="w-full sm:w-auto">
-          <Button variant="outline" className="border-gray-500 hover:bg-gray-800 text-white px-6 py-5 w-full text-base">
-            Get Free Consultation
-          </Button>
-        </Link>
+        <Button 
+          onClick={onRequestDemo}
+          className="bg-brand-gold hover:bg-brand-gold/90 text-black font-semibold px-6 py-5 rounded-md w-full sm:w-auto text-base"
+        >
+          Get Free Consultation <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
