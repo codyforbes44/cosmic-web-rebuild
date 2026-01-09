@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import StarBackground from '@/components/StarBackground';
 import PageHeader from '@/components/PageHeader';
 import MapInterface from '@/components/maps/MapInterface';
@@ -9,8 +8,25 @@ import LocationSearch from '@/components/maps/LocationSearch';
 import MapControls from '@/components/maps/MapControls';
 import TrafficPanel from '@/components/maps/TrafficPanel';
 import POIPanel from '@/components/maps/POIPanel';
-import { MapPin, Navigation, Route, Layers, Car, MapIcon } from 'lucide-react';
+import { MapPin, Car, MapIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { generateSoftwareApplicationSchema } from '@/utils/seoUtils';
+
+// WebApplication schema for generative AI optimization
+const webAppSchema = generateSoftwareApplicationSchema({
+  name: "ƷBI Maps & Directions",
+  description: "Advanced mapping and navigation tool with turn-by-turn directions, traffic information, nearby places discovery, and multiple map views.",
+  applicationCategory: "NavigationApplication",
+  operatingSystem: "Web Browser",
+  featureList: [
+    "Turn-by-turn directions",
+    "Real-time traffic information",
+    "Multiple map types (roadmap, satellite, hybrid, terrain)",
+    "Nearby places discovery",
+    "Location search",
+    "Route planning"
+  ]
+});
 
 const Maps = () => {
   const [origin, setOrigin] = useState('');
@@ -30,10 +46,18 @@ const Maps = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Maps & Directions - Advanced Navigation</title>
-        <meta name="description" content="Get detailed maps, turn-by-turn directions, and explore locations with our advanced mapping interface." />
-      </Helmet>
+      <SEO
+        title="Maps & Directions - Advanced Navigation Tool"
+        description="Get detailed maps, turn-by-turn directions, traffic updates, and explore nearby places with our advanced mapping interface. Free online navigation tool."
+        keywords="maps, directions, navigation, turn-by-turn, traffic, nearby places, route planning, GPS, location search"
+        image="/og-images/maps.png"
+        structuredData={webAppSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Tools', url: 'https://3bi.io/' },
+          { name: 'Maps & Directions', url: 'https://3bi.io/maps' }
+        ]}
+      />
       
       <div className="min-h-screen bg-space-dark-blue text-white relative">
         <StarBackground />

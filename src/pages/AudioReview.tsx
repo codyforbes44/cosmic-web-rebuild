@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,6 +11,23 @@ import ReviewNotes from '@/components/audio/ReviewNotes';
 import AudioHistory from '@/components/audio/AudioHistory';
 import { useAudioPlayer } from '@/hooks/useAudioPlayer';
 import { useAudioHistory } from '@/hooks/useAudioHistory';
+import { generateSoftwareApplicationSchema } from '@/utils/seoUtils';
+
+// WebApplication schema for generative AI optimization
+const webAppSchema = generateSoftwareApplicationSchema({
+  name: "ƷBI Audio Review Tool",
+  description: "Professional audio review and playback tool for reviewing audio files, adding notes, and managing audio history. Perfect for podcast editing, voice-over review, and audio quality assurance.",
+  applicationCategory: "MultimediaApplication",
+  operatingSystem: "Web Browser",
+  featureList: [
+    "Audio file upload and playback",
+    "Review notes with timestamps",
+    "Audio history management",
+    "Multiple audio format support",
+    "Professional audio player controls",
+    "Cloud-based audio storage"
+  ]
+});
 
 const AudioReview = () => {
   const {
@@ -65,12 +82,18 @@ const AudioReview = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Audio Review - ƷBI</title>
-        <meta name="description" content="Upload and review audio files with our professional audio review tool." />
-        <meta property="og:title" content="Audio Review - ƷBI" />
-        <meta property="og:description" content="Upload and review audio files with our professional audio review tool." />
-      </Helmet>
+      <SEO
+        title="Audio Review Tool - Professional Audio Playback & Notes"
+        description="Upload and review audio files with our professional audio review tool. Add timestamped notes, manage audio history, and streamline your audio review workflow."
+        keywords="audio review, audio player, podcast editing, voice-over review, audio notes, audio quality assurance, audio management"
+        image="/og-images/audio-review.png"
+        structuredData={webAppSchema}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Tools', url: 'https://3bi.io/' },
+          { name: 'Audio Review', url: 'https://3bi.io/audio-review' }
+        ]}
+      />
 
       <div className="min-h-screen bg-background relative overflow-hidden">
         <StarBackground />
