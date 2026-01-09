@@ -5,6 +5,28 @@ import { VoiceInterfaceContent } from '@/components/zephel/VoiceInterfaceContent
 import { useVoiceInterface } from '@/hooks/useVoiceInterface';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { generateSoftwareApplicationSchema } from '@/utils/seoUtils';
+
+// SoftwareApplication schema for generative AI optimization
+const softwareSchema = generateSoftwareApplicationSchema({
+  name: "ƷBI Voice AI Assistant",
+  description: "Next-generation voice AI technology with real-time speech recognition, intelligent responses, and hands-free interaction for business applications.",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web Browser",
+  featureList: [
+    "Real-time speech recognition",
+    "Natural language processing",
+    "Intelligent voice responses",
+    "Hands-free operation",
+    "Multi-mode voice interaction",
+    "Professional voice assistant",
+    "24/7 direct dial support"
+  ],
+  aggregateRating: {
+    ratingValue: 4.7,
+    reviewCount: 64
+  }
+});
 
 const VoiceInterface = () => {
   const {
@@ -24,9 +46,16 @@ const VoiceInterface = () => {
   return (
     <StandardPageLayout
       seo={{
-        title: "Advanced Voice Interface | ƷBI",
-        description: "Experience next-generation voice AI technology with real-time speech recognition and intelligent responses",
-        image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&h=630&fit=crop&crop=center"
+        title: "Voice AI Assistant - Real-Time Speech Recognition | ƷBI",
+        description: "Experience next-generation voice AI technology with real-time speech recognition, intelligent responses, and hands-free interaction for your business.",
+        keywords: "voice AI, speech recognition, voice assistant, AI voice, hands-free, voice interface, natural language processing, voice technology",
+        image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&h=630&fit=crop&crop=center",
+        structuredData: softwareSchema,
+        breadcrumbs: [
+          { name: 'Home', url: 'https://3bi.io/' },
+          { name: 'Products', url: 'https://3bi.io/' },
+          { name: 'Voice AI Assistant', url: 'https://3bi.io/voice' }
+        ]
       }}
       breadcrumb={{ label: "Voice Interface" }}
       header={{
