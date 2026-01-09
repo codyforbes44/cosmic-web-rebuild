@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import BaseModal from "./BaseModal";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Calendar, Clock, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export interface BookingModalProps {
@@ -19,79 +19,70 @@ const BookingModal: React.FC<BookingModalProps> = ({
   title = "Schedule a Call with ƷBI",
   bookingUrl = DEFAULT_BOOKING_URL
 }) => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  useEffect(() => {
-    if (isOpen) {
-      setIsLoading(true);
-      setHasError(false);
-    }
-  }, [isOpen]);
-
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-  };
-
-  const handleOpenInNewTab = () => {
+  const handleOpenBooking = () => {
     window.open(bookingUrl, "_blank", "noopener,noreferrer");
+    onOpenChange(false);
   };
 
-  const handleRetry = () => {
-    setHasError(false);
-    setIsLoading(true);
-  };
+  const features = [
+    { icon: Calendar, text: "Choose a convenient time slot" },
+    { icon: Clock, text: "30-minute consultation" },
+    { icon: Video, text: "Video call via your preferred platform" },
+  ];
 
   return (
     <BaseModal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title={title}
-      size="xl"
-      isLoading={isLoading}
-      loadingMessage="Loading booking calendar..."
-      error={hasError ? "Unable to load the booking calendar." : null}
-      onRetry={handleRetry}
-      className={`p-0 overflow-hidden ${isMobile ? "h-[90vh]" : "h-[700px]"}`}
+      size="md"
     >
-      <div className="calendly-container h-full w-full flex-1 relative -mt-4">
-        {/* Fallback button for errors */}
-        {hasError && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-            <Button onClick={handleOpenInNewTab} className="gap-2">
-              <ExternalLink className="h-4 w-4" />
-              Open in new tab
-            </Button>
-          </div>
-        )}
-        
-        <iframe
-          src={bookingUrl}
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          title={title}
-          className="min-h-[580px]"
-          onLoad={handleIframeLoad}
-          onError={() => setHasError(true)}
-          style={{
-            width: "100%",
-            height: isMobile ? "calc(90vh - 60px)" : "640px",
-            overflow: "hidden",
-          }}
-        />
+      <div className="flex flex-col items-center text-center space-y-6 py-4">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center"
+        >
+          <Calendar className="w-8 h-8 text-primary" />
+        </motion.div>
+
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-foreground">
+            Book Your Free Consultation
+          </h3>
+          <p className="text-sm text-muted-foreground max-w-sm">
+            Let's discuss how we can help transform your business with AI-powered solutions.
+          </p>
+        </div>
+
+        <div className="w-full space-y-3">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.2 + index * 0.1 }}
+              className="flex items-center gap-3 text-left px-4 py-2 rounded-lg bg-muted/50"
+            >
+              <feature.icon className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-sm text-foreground">{feature.text}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        <Button 
+          onClick={handleOpenBooking} 
+          size="lg" 
+          className="w-full gap-2 mt-2"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Open Booking Calendar
+        </Button>
+
+        <p className="text-xs text-muted-foreground">
+          Opens in a new tab for the best experience
+        </p>
       </div>
     </BaseModal>
   );
