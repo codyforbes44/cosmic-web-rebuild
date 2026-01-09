@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import BaseModal from "./BaseModal";
 import { motion } from "framer-motion";
-import { ExternalLink, Calendar, Clock, Video } from "lucide-react";
+import { ExternalLink, Calendar, Clock, Video, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 export interface BookingModalProps {
   isOpen: boolean;
@@ -19,9 +20,22 @@ const BookingModal: React.FC<BookingModalProps> = ({
   title = "Schedule a Call with ƷBI",
   bookingUrl = DEFAULT_BOOKING_URL
 }) => {
+  const [copied, setCopied] = useState(false);
+
   const handleOpenBooking = () => {
     window.open(bookingUrl, "_blank", "noopener,noreferrer");
     onOpenChange(false);
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(bookingUrl);
+      setCopied(true);
+      toast({ title: "Link copied!", description: "Booking link copied to clipboard" });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast({ title: "Failed to copy", variant: "destructive" });
+    }
   };
 
   const features = [
@@ -78,6 +92,16 @@ const BookingModal: React.FC<BookingModalProps> = ({
         >
           <ExternalLink className="w-4 h-4" />
           Open Booking Calendar
+        </Button>
+
+        <Button 
+          onClick={handleCopyLink} 
+          variant="outline"
+          size="sm"
+          className="gap-2"
+        >
+          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          {copied ? "Copied!" : "Copy Booking Link"}
         </Button>
 
         <p className="text-xs text-muted-foreground">
