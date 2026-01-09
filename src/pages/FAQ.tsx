@@ -1,12 +1,6 @@
 
 import React, { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import SEO from '@/components/SEO';
-import LiveChat from '@/components/LiveChat/LiveChat';
-import StarBackground from "@/components/StarBackground";
-import PageHeader from "@/components/PageHeader";
-import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StandardPageLayout from '@/layouts/StandardPageLayout';
 import { HelpCircle } from 'lucide-react';
 
 // Import refactored components
@@ -18,40 +12,26 @@ const FAQ = () => {
   const [activeTab, setActiveTab] = useState("general");
 
   return (
-    <>
-      <SEO
-        title="Frequently Asked Questions | Ʒʙɪ"
-        description="Find answers to commonly asked questions about Ʒʙɪ's services, products, and expertise in digital marketing and technology solutions."
-        url="/faq"
-        keywords="FAQ, frequently asked questions, business technology, digital marketing, Ʒʙɪ, technology solutions"
-        image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=630&fit=crop&crop=center"
-      />
-      <Navbar />
-      
-      <div className="min-h-screen relative overflow-hidden">
-        <StarBackground />
-        <div className="container mx-auto px-3 sm:px-4 py-16 sm:py-20 md:py-24 relative z-10">
-          {/* Breadcrumb Navigation */}
-          <BreadcrumbNav currentPageLabel="FAQ" />
-          
-          {/* Page Header */}
-          <PageHeader 
-            title="Frequently Asked Questions"
-            description="Get answers to common questions about our services, products, and how we can help your business succeed"
-            icon={HelpCircle}
-          />
-
-          <div className="max-w-4xl mx-auto">
-            <FAQCategories activeTab={activeTab} setActiveTab={setActiveTab} />
-            <FAQTestimonials />
-            <FAQCTA />
-          </div>
-        </div>
+    <StandardPageLayout
+      seo={{
+        title: "Frequently Asked Questions | Ʒʙɪ",
+        description: "Find answers to commonly asked questions about Ʒʙɪ's services, products, and expertise in digital marketing and technology solutions.",
+        keywords: "FAQ, frequently asked questions, business technology, digital marketing, Ʒʙɪ, technology solutions",
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=630&fit=crop&crop=center"
+      }}
+      breadcrumb={{ label: "FAQ" }}
+      header={{
+        title: "Frequently Asked Questions",
+        description: "Get answers to common questions about our services, products, and how we can help your business succeed",
+        icon: HelpCircle
+      }}
+    >
+      <div className="max-w-4xl mx-auto">
+        <FAQCategories activeTab={activeTab} setActiveTab={setActiveTab} />
+        <FAQTestimonials />
+        <FAQCTA />
       </div>
-      
-      <LiveChat />
-      <Footer />
-    </>
+    </StandardPageLayout>
   );
 };
 
