@@ -43,7 +43,7 @@ const U2014 = lazy(() => import("./pages/U2014"));
 const Planets = lazy(() => import("./pages/Planets"));
 const ProjectManagement = lazy(() => import("./pages/ProjectManagement"));
 const RealityRenderer = lazy(() => import("./pages/RealityRenderer"));
-const Demo = lazy(() => import("./pages/Demo"));
+
 const RecruitmentMarketing = lazy(() => import("./pages/RecruitmentMarketing"));
 const DriversMatter = lazy(() => import("./pages/DriversMatter"));
 const Weather = lazy(() => import("./pages/Weather"));
@@ -119,7 +119,7 @@ function App() {
                     <Route path="/portfolio" element={<Portfolio />} />
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/news" element={<News />} />
-                    <Route path="/demo" element={<Demo />} />
+                    
                     
                     {/* Sales Tools - Unlinked */}
                     <Route path="/sales-presentation-generator" element={<SalesPresentationGenerator />} />
