@@ -1,13 +1,13 @@
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
-import { Link } from "react-router-dom";
 
 interface ResponsiveHeroContentProps {
   isMobile: boolean;
+  onRequestDemo: () => void;
 }
 
-const ResponsiveHeroContent = memo(({ isMobile }: ResponsiveHeroContentProps) => {
+const ResponsiveHeroContent = memo(({ isMobile, onRequestDemo }: ResponsiveHeroContentProps) => {
   const benefits = [
     "Reduce cost-per-hire by up to 40% with targeted campaigns",
     "Multi-channel advertising across social media, search, and job boards",
@@ -44,23 +44,13 @@ const ResponsiveHeroContent = memo(({ isMobile }: ResponsiveHeroContentProps) =>
       </ul>
       
       <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto">
-        <Link to="/demo" className="w-full sm:w-auto">
-          <Button 
-            className="bg-accent hover:bg-accent-hover text-accent-foreground font-semibold px-4 sm:px-6 py-3 sm:py-4 md:py-5 rounded-md w-full text-sm sm:text-base transition-all duration-300"
-            size={isMobile ? "default" : "lg"}
-          >
-            See Live Demo <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
-          </Button>
-        </Link>
-        <Link to="/quote" className="w-full sm:w-auto">
-          <Button 
-            variant="outline" 
-            className="border-border hover:bg-muted text-foreground px-4 sm:px-6 py-3 sm:py-4 md:py-5 w-full text-sm sm:text-base transition-all duration-300"
-            size={isMobile ? "default" : "lg"}
-          >
-            Get Free Consultation
-          </Button>
-        </Link>
+        <Button 
+          onClick={onRequestDemo}
+          className="bg-accent hover:bg-accent-hover text-accent-foreground font-semibold px-4 sm:px-6 py-3 sm:py-4 md:py-5 rounded-md w-full sm:w-auto text-sm sm:text-base transition-all duration-300"
+          size={isMobile ? "default" : "lg"}
+        >
+          Get Free Consultation <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
+        </Button>
       </div>
     </div>
   );

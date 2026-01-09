@@ -23,7 +23,7 @@ const HeroSection = () => {
       />
 
       <HeroContainer visible={visible}>
-        <HeroContent />
+        <HeroContent onRequestDemo={() => setDemoModalOpen(true)} />
         <HeroOfferCard onRequestDemo={() => setDemoModalOpen(true)} />
       </HeroContainer>
     </section>
