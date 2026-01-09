@@ -101,6 +101,7 @@ const galleryItems: GalleryItem[] = [
 ];
 
 import SEO from "@/components/SEO";
+import { generateImageGallerySchema } from "@/utils/seoUtils/advancedSchemas";
 
 const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -118,6 +119,35 @@ const Gallery = () => {
     ? galleryItems.filter(item => item.category === activeCategory)
     : galleryItems;
 
+  // Generate ImageGallery structured data for SEO
+  const imageGallerySchema = generateImageGallerySchema(
+    galleryItems.map(item => ({
+      url: item.image,
+      caption: item.title,
+      description: item.description
+    }))
+  );
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://zephyel.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Gallery",
+        "item": "https://zephyel.com/gallery"
+      }
+    ]
+  };
+
   return (
     <>
       <SEO 
@@ -126,6 +156,7 @@ const Gallery = () => {
         keywords="space gallery, universe images, cosmic photography, planets, galaxies, nebulae, astronomy, space exploration"
         image="/og-images/gallery.png"
         type="website"
+        structuredData={[imageGallerySchema, breadcrumbSchema]}
       />
       <Navbar />
       <StarBackground />
