@@ -1,56 +1,38 @@
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import StarBackground from "@/components/StarBackground";
-import PageHeader from "@/components/PageHeader";
-import SEO from "@/components/SEO";
-import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StandardPageLayout from "@/layouts/StandardPageLayout";
 import OnboardingForm from "@/components/onboarding/OnboardingForm";
 import OnboardingBenefits from "@/components/onboarding/OnboardingBenefits";
 import { UserPlus } from "lucide-react";
 
 const Onboarding = () => {
   return (
-    <>
-      <SEO 
-        title="Client Onboarding" 
-        description="Welcome to ƷBI! Complete our onboarding process to get started with our business and technology services tailored to your needs."
-        image="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=1200&h=630&fit=crop&crop=center"
-        type="website"
-      />
-      <Navbar />
-      <StarBackground />
-      <main className="min-h-screen pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 md:pb-24">
-        <section className="py-12 sm:py-16 md:py-20">
-          <div className="container mx-auto px-3 sm:px-4">
-            {/* Breadcrumb navigation */}
-            <BreadcrumbNav currentPageLabel="Client Onboarding" />
-            
-            {/* Page Header */}
-            <PageHeader 
-              title="Welcome to ƷBI"
-              description="Complete our onboarding process to get started with personalized business and technology solutions."
-              icon={UserPlus}
-            />
-            
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 sm:gap-8 md:gap-12 max-w-6xl mx-auto">
-              {/* Benefits - Full width on mobile, 4 columns on XL screens */}
-              <div className="xl:col-span-4 order-1 xl:order-1">
-                <OnboardingBenefits />
-              </div>
-              
-              {/* Onboarding Form - Full width on mobile, 8 columns on XL screens */}
-              <div className="xl:col-span-8 order-2 xl:order-2">
-                <OnboardingForm />
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+    <StandardPageLayout
+      seo={{
+        title: "Client Onboarding",
+        description: "Welcome to ƷBI! Complete our onboarding process to get started with our business and technology services tailored to your needs.",
+        image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=1200&h=630&fit=crop&crop=center",
+        type: "website"
+      }}
+      breadcrumb={{ label: "Client Onboarding" }}
+      header={{
+        title: "Welcome to ƷBI",
+        description: "Complete our onboarding process to get started with personalized business and technology solutions.",
+        icon: UserPlus
+      }}
+    >
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 sm:gap-8 md:gap-12 max-w-6xl mx-auto">
+        {/* Benefits - Full width on mobile, 4 columns on XL screens */}
+        <div className="xl:col-span-4 order-1 xl:order-1">
+          <OnboardingBenefits />
+        </div>
+        
+        {/* Onboarding Form - Full width on mobile, 8 columns on XL screens */}
+        <div className="xl:col-span-8 order-2 xl:order-2">
+          <OnboardingForm />
+        </div>
+      </div>
+    </StandardPageLayout>
   );
 };
 
