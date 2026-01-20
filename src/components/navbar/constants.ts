@@ -49,9 +49,9 @@ export const serviceCategories = [
 
 export const productCategories = [
   {
-    title: "Apply AI",
-    href: "https://aiapply.dev",
-    description: "AI-powered recruitment platform with voice interviews",
+    title: "ATS.ME",
+    href: "https://ats.me",
+    description: "Modern applicant tracking system for growing teams",
     external: true
   },
   {

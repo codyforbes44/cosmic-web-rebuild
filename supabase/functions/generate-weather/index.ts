@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { isIpRateLimited, extractClientIp, rateLimitResponse } from "../_shared/rateLimiter.ts";
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -38,6 +39,14 @@ serve(async (req) => {
 
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIp = extractClientIp(req);
+  if (isIpRateLimited(clientIp, { maxRequests: 15, windowMs: 60 * 1000 })) {
+    console.warn(`Rate limit exceeded for IP: ${clientIp}`);
+    await logMetric(functionName, Date.now() - startTime, 429, 'Rate limit exceeded');
+    return rateLimitResponse(corsHeaders);
   }
 
   try {

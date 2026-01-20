@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { isIpRateLimited, extractClientIp, rateLimitResponse } from "../_shared/rateLimiter.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -45,6 +46,14 @@ serve(async (req) => {
 
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIp = extractClientIp(req);
+  if (isIpRateLimited(clientIp, { maxRequests: 20, windowMs: 60 * 1000 })) {
+    console.warn(`Rate limit exceeded for IP: ${clientIp}`);
+    await logMetric(functionName, Date.now() - startTime, 429, 'Rate limit exceeded');
+    return rateLimitResponse(corsHeaders);
   }
 
   try {
