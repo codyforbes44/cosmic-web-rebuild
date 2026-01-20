@@ -29,6 +29,7 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const Accessibility = lazy(() => import("./pages/Accessibility"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const AdminProtectedRoute = lazy(() => import("./components/auth/AdminProtectedRoute"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Features = lazy(() => import("./pages/Features"));
@@ -154,9 +155,9 @@ function App() {
 
                     {/* Protected routes */}
                     <Route path="/admin" element={
-                      <ProtectedRoute>
+                      <AdminProtectedRoute>
                         <AdminDashboard />
-                      </ProtectedRoute>
+                      </AdminProtectedRoute>
                     } />
                     <Route path="/profile" element={
                       <ProtectedRoute>
@@ -164,9 +165,9 @@ function App() {
                       </ProtectedRoute>
                     } />
                     <Route path="/analytics" element={
-                      <ProtectedRoute>
+                      <AdminProtectedRoute>
                         <Analytics />
-                      </ProtectedRoute>
+                      </AdminProtectedRoute>
                     } />
                     <Route path="/projects" element={
                       <ProtectedRoute>
