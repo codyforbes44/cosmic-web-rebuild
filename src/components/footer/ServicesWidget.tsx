@@ -6,7 +6,7 @@ import ScrollToTopLink from '../ScrollToTopLink';
 interface ServiceItem {
   title: string;
   href: string;
-  color: string;
+  color?: string;
 }
 
 interface ServiceGroup {
@@ -47,7 +47,7 @@ const ServicesWidget: React.FC<ServicesWidgetProps> = ({
                       to={service.href} 
                       className="footer-link hover:text-[color:var(--color)] flex items-center" 
                       style={{
-                        "--color": service.color
+                        "--color": service.color || "hsl(var(--primary))"
                       } as React.CSSProperties}
                     >
                       <span className="w-1.5 h-1.5 bg-brand-gold/70 rounded-full mr-2"></span>
