@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { isIpRateLimited, extractClientIp, rateLimitResponse } from "../_shared/rateLimiter.ts";
 
 const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
@@ -52,6 +53,14 @@ serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIp = extractClientIp(req);
+  if (isIpRateLimited(clientIp, { maxRequests: 30, windowMs: 60 * 1000 })) {
+    console.warn(`Rate limit exceeded for IP: ${clientIp}`);
+    await logMetric(functionName, Date.now() - startTime, 429, 'Rate limit exceeded');
+    return rateLimitResponse(corsHeaders);
   }
 
   try {
