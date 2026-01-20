@@ -2,42 +2,42 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Mic, Brain, Zap, Users } from "lucide-react";
+import { ExternalLink, Kanban, Brain, BarChart3, Plug } from "lucide-react";
 
 const FeaturedProducts = () => {
   const featuredProduct = {
-    title: "Apply AI",
-    subtitle: "AI-Powered Recruitment Platform",
-    description: "Experience instant AI interviews with voice technology, real-time analysis, and bias-free evaluation. Skip traditional applications and connect directly with opportunities.",
+    title: "ATS.ME",
+    subtitle: "Modern Applicant Tracking System",
+    description: "Streamline your hiring workflow with an intuitive ATS built for growing teams. Manage candidates, track applications, and make data-driven hiring decisions—all in one powerful platform.",
     features: [
       {
-        icon: Mic,
-        title: "Voice AI Interviews",
-        description: "Natural conversation with advanced voice AI powered by ElevenLabs"
+        icon: Kanban,
+        title: "Smart Candidate Tracking",
+        description: "Centralized dashboard to track candidates through every stage of your hiring pipeline"
       },
       {
         icon: Brain,
-        title: "Intelligent Screening",
-        description: "GPT-4 powered resume analysis and candidate evaluation"
+        title: "Intelligent Matching",
+        description: "AI-powered resume parsing and candidate-job matching for faster shortlisting"
       },
       {
-        icon: Zap,
-        title: "Real-time Analytics",
-        description: "Instant performance insights and bias-free scoring"
+        icon: Plug,
+        title: "Seamless Integrations",
+        description: "Connect with job boards, HR systems, and communication tools effortlessly"
       },
       {
-        icon: Users,
-        title: "24/7 Availability",
-        description: "Interview candidates anytime with automated AI screening"
+        icon: BarChart3,
+        title: "Analytics & Reporting",
+        description: "Real-time hiring metrics, time-to-fill tracking, and cost-per-hire insights"
       }
     ],
     stats: [
-      { value: "95%", label: "Hiring Speed Improvement" },
-      { value: "87%", label: "Bias Reduction" },
-      { value: "24/7", label: "Interview Availability" },
-      { value: "48hrs", label: "Response Time" }
+      { value: "60%", label: "Faster Time-to-Hire" },
+      { value: "40%", label: "Cost Reduction" },
+      { value: "10K+", label: "Candidates Managed" },
+      { value: "99.9%", label: "Uptime Reliability" }
     ],
-    url: "https://aiapply.dev"
+    url: "https://ats.me"
   };
 
   return (
@@ -46,11 +46,11 @@ const FeaturedProducts = () => {
         <div className="text-center mb-12">
           <span className="text-brand-gold font-medium text-sm uppercase tracking-wider">FEATURED PRODUCT</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 text-white">
-            Revolutionary <span className="text-brand-gold">AI Recruitment</span>
+            Smart <span className="text-brand-gold">Applicant Tracking</span>
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-            Transform your hiring process with cutting-edge AI technology that conducts voice interviews, 
-            analyzes candidates in real-time, and eliminates bias from recruitment.
+            Transform your hiring process with a modern ATS that helps you find, track, 
+            and hire top talent faster—without the complexity of legacy systems.
           </p>
         </div>
 
@@ -127,7 +127,7 @@ const FeaturedProducts = () => {
                 >
                   <a href={featuredProduct.url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2" />
-                    Try Apply AI
+                    Try ATS.ME
                   </a>
                 </Button>
                 <Button 
@@ -147,7 +147,7 @@ const FeaturedProducts = () => {
           {/* Additional Info */}
           <div className="text-center">
             <p className="text-gray-400 text-sm">
-              Powered by advanced AI technology including GPT-5 and real-time analytics
+              Enterprise-grade ATS trusted by growing teams worldwide
             </p>
           </div>
         </div>
