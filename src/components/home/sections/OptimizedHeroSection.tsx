@@ -4,7 +4,7 @@ import DemoRequestModal from "../../products/DemoRequestModal";
 import ResponsiveHeroBackground from "../responsive/ResponsiveHeroBackground";
 import ResponsiveHeroContent from "../responsive/ResponsiveHeroContent";
 import ResponsiveHeroContainer from "../responsive/ResponsiveHeroContainer";
-import ResponsiveHeroOfferCard from "../responsive/ResponsiveHeroOfferCard";
+import HeroOfferCard from "@/components/hero/HeroOfferCard";
 import { useSparksAnimation } from "@/hooks/useSparksAnimation";
 
 const OptimizedHeroSection = memo(() => {
@@ -25,10 +25,7 @@ const OptimizedHeroSection = memo(() => {
 
       <ResponsiveHeroContainer visible={visible} isMobile={isMobile}>
         <ResponsiveHeroContent isMobile={isMobile} onRequestDemo={() => setDemoModalOpen(true)} />
-        <ResponsiveHeroOfferCard 
-          onRequestDemo={() => setDemoModalOpen(true)} 
-          isMobile={isMobile}
-        />
+        <HeroOfferCard onRequestDemo={() => setDemoModalOpen(true)} />
       </ResponsiveHeroContainer>
     </section>
   );
