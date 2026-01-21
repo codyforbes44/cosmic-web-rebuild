@@ -12,7 +12,7 @@ export interface BookingModalProps {
   bookingUrl?: string;
 }
 
-const DEFAULT_BOOKING_URL = "https://calendarpal.lovable.app/book/codyforbes";
+const DEFAULT_BOOKING_URL = "https://calendarpal.lovable.app/book/codyforbes?duration=30";
 
 const BookingModal: React.FC<BookingModalProps> = ({ 
   isOpen, 
