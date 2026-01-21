@@ -1,108 +1,139 @@
-
-import React from 'react';
+import React, { memo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Brain, Zap, Shield, Globe, Cpu, Sparkles } from "lucide-react";
+import { 
+  Brain, 
+  BarChart3, 
+  Shield, 
+  Workflow, 
+  Users, 
+  Calendar,
+  type LucideIcon
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
-const AdvancedFeatures = () => {
-  const features = [
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  badge: 'Core' | 'Pro' | 'Enterprise';
+  highlights: string[];
+}
+
+/**
+ * AdvancedFeatures - Recruitment-focused feature showcase
+ * Updated to align with recruitment marketing use case
+ */
+const AdvancedFeatures = memo(() => {
+  const features: Feature[] = [
     {
       icon: Brain,
-      title: "AI Assistant",
-      description: "Intelligent assistance powered by cutting-edge language models with contextual understanding.",
-      badge: "Premium",
-      highlights: ["GPT-4o Integration", "Custom Prompts", "Smart Suggestions"]
+      title: "AI-Powered Screening",
+      description: "Intelligent candidate screening that analyzes resumes, skills, and cultural fit using advanced AI models.",
+      badge: "Core",
+      highlights: ["Resume Parsing", "Skills Matching", "Cultural Fit Analysis"]
     },
     {
-      icon: Zap,
-      title: "Real-time Analytics",
-      description: "Advanced data visualization and insights with customizable dashboards and reporting.",
+      icon: BarChart3,
+      title: "Talent Pipeline Analytics",
+      description: "Real-time insights into your recruitment funnel with customizable dashboards and predictive metrics.",
       badge: "Pro",
-      highlights: ["Live Metrics", "Custom Reports", "Data Export"]
+      highlights: ["Funnel Metrics", "Time-to-Hire Tracking", "Source Attribution"]
+    },
+    {
+      icon: Workflow,
+      title: "ATS Integration Hub",
+      description: "Seamless connections to popular applicant tracking systems including ATS.ME, Greenhouse, and Lever.",
+      badge: "Core",
+      highlights: ["ATS.ME Native", "Two-Way Sync", "Custom Workflows"]
+    },
+    {
+      icon: Users,
+      title: "Candidate Relationship Management",
+      description: "Build and nurture talent pools with automated engagement campaigns and personalized outreach.",
+      badge: "Pro",
+      highlights: ["Talent Pools", "Drip Campaigns", "Engagement Scoring"]
     },
     {
       icon: Shield,
-      title: "Enterprise Security",
-      description: "Bank-grade security with two-factor authentication and compliance reporting.",
+      title: "Compliance & EEOC Tracking",
+      description: "Stay compliant with automated EEOC reporting, diversity analytics, and audit-ready documentation.",
       badge: "Enterprise",
-      highlights: ["2FA", "Audit Logs", "Compliance"]
+      highlights: ["EEOC Reports", "Diversity Metrics", "Audit Trails"]
     },
     {
-      icon: Globe,
-      title: "Global CDN",
-      description: "Lightning-fast performance worldwide with our distributed content delivery network.",
-      badge: "Pro",
-      highlights: ["99.9% Uptime", "Edge Locations", "Auto-scaling"]
-    },
-    {
-      icon: Cpu,
-      title: "Custom API Access",
-      description: "Seamless integrations with secure endpoints and comprehensive documentation.",
-      badge: "Premium",
-      highlights: ["REST APIs", "Webhooks", "Rate Limiting"]
-    },
-    {
-      icon: Sparkles,
-      title: "Smart Automation",
-      description: "Intelligent workflows that learn from your patterns and optimize processes.",
-      badge: "Enterprise",
-      highlights: ["Auto-workflows", "Pattern Learning", "Process Optimization"]
+      icon: Calendar,
+      title: "Smart Interview Scheduling",
+      description: "Automated interview coordination with calendar sync, time zone detection, and candidate self-scheduling.",
+      badge: "Core",
+      highlights: ["Calendar Sync", "Self-Scheduling", "Automated Reminders"]
     }
   ];
 
-  const getBadgeColor = (badge: string) => {
+  const getBadgeStyles = (badge: Feature['badge']) => {
     switch (badge) {
-      case 'Premium':
-        return 'bg-brand-gold text-black';
+      case 'Core':
+        return 'bg-accent/20 text-accent border-accent/30';
       case 'Pro':
-        return 'bg-blue-600 text-white';
+        return 'bg-primary/20 text-primary border-primary/30';
       case 'Enterprise':
-        return 'bg-purple-600 text-white';
+        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
       default:
-        return 'bg-gray-600 text-white';
+        return 'bg-muted text-muted-foreground border-border';
     }
   };
 
   return (
-    <section className="py-16 md:py-24 bg-space-deep-blue/50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="text-brand-gold font-medium text-sm uppercase tracking-wider">ADVANCED TECHNOLOGY</span>
-          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 text-white">
-            Advanced <span className="text-brand-gold">Features</span>
+    <section className="py-12 md:py-20 lg:py-24 bg-muted/30">
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="text-center mb-10 md:mb-14">
+          <span className="text-accent font-medium text-xs sm:text-sm uppercase tracking-wider">
+            RECRUITMENT TECHNOLOGY
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 mb-3 md:mb-4 text-foreground">
+            Powerful <span className="text-accent">Hiring Tools</span>
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-            Unlock powerful capabilities designed for modern businesses. From AI assistance to enterprise security, 
-            our advanced features help you work smarter and scale faster.
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
+            Transform your recruitment process with AI-driven tools designed to find, engage, 
+            and hire top talent faster than ever before.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-10 md:mb-14">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <Card key={index} className="bg-space-dark-blue border-gray-800 hover:bg-space-dark-blue/80 transition-all duration-300 group shadow-lg hover:border-brand-gold/50">
-                <CardHeader className="pb-4">
+              <Card 
+                key={index} 
+                className="bg-card/80 border-border hover:border-accent/50 transition-all duration-300 group shadow-lg hover:shadow-xl"
+              >
+                <CardHeader className="pb-3 sm:pb-4">
                   <div className="flex items-center justify-between mb-3">
-                    <div className="w-12 h-12 rounded-lg bg-brand-gold/20 flex items-center justify-center group-hover:bg-brand-gold/30 transition-colors">
-                      <IconComponent className="w-6 h-6 text-brand-gold" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                      <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                     </div>
-                    <Badge className={getBadgeColor(feature.badge)}>
+                    <Badge 
+                      variant="outline" 
+                      className={`text-xs font-medium ${getBadgeStyles(feature.badge)}`}
+                    >
                       {feature.badge}
                     </Badge>
                   </div>
-                  <CardTitle className="text-white text-xl">{feature.title}</CardTitle>
-                  <CardDescription className="text-gray-300">
+                  <CardTitle className="text-foreground text-lg sm:text-xl">
+                    {feature.title}
+                  </CardTitle>
+                  <CardDescription className="text-muted-foreground text-sm">
                     {feature.description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
                     {feature.highlights.map((highlight, idx) => (
-                      <div key={idx} className="flex items-center text-sm text-gray-400">
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-gold mr-2"></div>
+                      <div key={idx} className="flex items-center text-xs sm:text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent mr-2 flex-shrink-0" />
                         {highlight}
                       </div>
                     ))}
@@ -113,12 +144,13 @@ const AdvancedFeatures = () => {
           })}
         </div>
 
+        {/* CTA Buttons */}
         <div className="text-center">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Button 
               asChild 
               size="lg" 
-              className="bg-brand-gold hover:bg-brand-gold/90 text-black font-semibold px-8"
+              className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-6 sm:px-8 py-5 sm:py-6"
             >
               <Link to="/features">
                 Explore All Features
@@ -128,10 +160,10 @@ const AdvancedFeatures = () => {
               asChild 
               variant="outline" 
               size="lg" 
-              className="border-gray-600 text-white hover:bg-white/10 px-8"
+              className="w-full sm:w-auto border-border hover:bg-muted px-6 sm:px-8 py-5 sm:py-6"
             >
-              <Link to="/quote">
-                Get Started
+              <Link to="/get-quote">
+                Request Demo
               </Link>
             </Button>
           </div>
@@ -139,6 +171,8 @@ const AdvancedFeatures = () => {
       </div>
     </section>
   );
-};
+});
+
+AdvancedFeatures.displayName = 'AdvancedFeatures';
 
 export default AdvancedFeatures;
