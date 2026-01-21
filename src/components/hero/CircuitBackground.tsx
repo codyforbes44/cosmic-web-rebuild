@@ -1,17 +1,20 @@
 import React from "react";
-import StarBackground from "../StarBackground";
 
+/**
+ * CircuitBackground - Hero section background styling
+ * 
+ * NOTE: StarBackground is NOT rendered here to avoid duplication.
+ * StarBackground is already rendered at the layout level (OptimizedHomeLayout, 
+ * StandardPageLayout, etc.) and should not be duplicated in hero sections.
+ */
 const CircuitBackground = () => {
   return (
     <>
-      {/* Star background for hero section */}
+      {/* Background container for hero section */}
       <div 
         className="absolute inset-0 z-0 bg-space-deep-blue" 
         aria-hidden="true"
       >
-        {/* Animated star canvas background */}
-        <StarBackground />
-        
         {/* Gradient overlay to ensure text remains readable */}
         <div className="absolute inset-0 bg-gradient-to-b from-space-dark-blue/60 to-space-deep-blue/70" />
       </div>
