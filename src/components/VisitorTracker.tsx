@@ -1,18 +1,24 @@
-
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { trackVisitor, trackPageTime } from '@/utils/visitorTracking';
+import { FEATURES, devLog } from '@/config/environment';
 
 const VisitorTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Skip tracking if analytics is disabled
+    if (!FEATURES.enableAnalytics) {
+      devLog('VisitorTracker: Analytics disabled, skipping tracking');
+      return;
+    }
+    
     // Track visitor when component mounts or route changes
-    console.log('VisitorTracker: Route changed to', location.pathname);
+    devLog('VisitorTracker: Route changed to', location.pathname);
     
     // Add a small delay to ensure the page is fully loaded
     const timeoutId = setTimeout(() => {
-      console.log('VisitorTracker: Initializing visitor tracking for', location.pathname);
+      devLog('VisitorTracker: Initializing visitor tracking for', location.pathname);
       trackVisitor();
     }, 500);
     
@@ -22,14 +28,14 @@ const VisitorTracker = () => {
     // Handle page visibility changes
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
-        console.log('VisitorTracker: Page hidden, tracking time');
+        devLog('VisitorTracker: Page hidden, tracking time');
         cleanup();
       }
     };
     
     // Handle page unload
     const handleBeforeUnload = () => {
-      console.log('VisitorTracker: Page unloading, tracking time');
+      devLog('VisitorTracker: Page unloading, tracking time');
       cleanup();
     };
     
