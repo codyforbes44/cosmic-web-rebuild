@@ -128,7 +128,7 @@ async function sendQuoteEmailNotifications(data: {
               ${data.budget ? `<p><strong style="color: #94A3B8;">Budget:</strong> ${data.budget}</p>` : ''}
               ${data.timeline ? `<p><strong style="color: #94A3B8;">Timeline:</strong> ${data.timeline}</p>` : ''}
             </div>
-            <p>If you have any questions in the meantime, feel free to reach out to us at <a href="mailto:contact@3bi.io" style="color: #E85D2A;">contact@3bi.io</a></p>
+            <p>If you have any questions in the meantime, feel free to reach out to us at <a href="mailto:support@3bi.io" style="color: #E85D2A;">support@3bi.io</a></p>
             <p>Best regards,<br>The ƷBI Team</p>
           </div>
         `,
@@ -138,7 +138,7 @@ async function sendQuoteEmailNotifications(data: {
     // Send notification to admin
     await supabase.functions.invoke('email-service', {
       body: {
-        to: 'contact@3bi.io',
+        to: 'support@3bi.io',
         subject: `New Quote Request: ${data.service_type} - ${data.company_name}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0A1628; color: #E2E8F0;">
