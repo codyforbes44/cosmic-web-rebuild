@@ -87,6 +87,11 @@ export const useContactSubmission = () => {
         return;
       }
       
+      // Send email notifications (async, don't block success)
+      sendEmailNotifications(sanitizedData).catch(err => 
+        console.error('Failed to send email notifications:', err)
+      );
+      
       // Success
       toast.success("Thank you for your message! We'll get back to you soon.");
       resetForm();
@@ -107,3 +112,52 @@ export const useContactSubmission = () => {
 
   return { isSubmitting, submissionCount, submitContact };
 };
+
+// Helper function to send email notifications
+async function sendEmailNotifications(data: { name: string; email: string; subject: string; message: string }) {
+  try {
+    // Send confirmation email to the submitter
+    await supabase.functions.invoke('email-service', {
+      body: {
+        to: data.email,
+        subject: `We received your message: ${data.subject}`,
+        template: 'contact',
+        variables: {
+          name: data.name,
+          message: data.message,
+        },
+      },
+    });
+
+    // Send notification to admin
+    await supabase.functions.invoke('email-service', {
+      body: {
+        to: 'contact@3bi.io',
+        subject: `New Contact Form Submission: ${data.subject}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0A1628; color: #E2E8F0;">
+            <h2 style="color: #E85D2A; margin-bottom: 20px;">New Contact Form Submission</h2>
+            <div style="background: #1E293B; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <p><strong style="color: #94A3B8;">Name:</strong> ${data.name}</p>
+              <p><strong style="color: #94A3B8;">Email:</strong> <a href="mailto:${data.email}" style="color: #E85D2A;">${data.email}</a></p>
+              <p><strong style="color: #94A3B8;">Subject:</strong> ${data.subject}</p>
+              <div style="margin-top: 16px;">
+                <strong style="color: #94A3B8;">Message:</strong>
+                <div style="background: #0F172A; padding: 12px; border-radius: 4px; margin-top: 8px; white-space: pre-wrap;">${data.message}</div>
+              </div>
+            </div>
+            <p style="font-size: 12px; color: #64748B;">
+              Received at ${new Date().toLocaleString()} via 3bi.io contact form
+            </p>
+            <a href="https://3bi.io/admin?tab=overview" style="display: inline-block; background: #E85D2A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin-top: 16px;">
+              View in Admin Dashboard
+            </a>
+          </div>
+        `,
+      },
+    });
+  } catch (error) {
+    console.error('Error sending email notifications:', error);
+    // Don't throw - email failures shouldn't affect form submission success
+  }
+}
