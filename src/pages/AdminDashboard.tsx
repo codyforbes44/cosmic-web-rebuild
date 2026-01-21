@@ -11,6 +11,7 @@ import { AdminChatbotPanel } from '@/components/admin/panels/AdminChatbotPanel';
 import { AdminAPIPanel } from '@/components/admin/panels/AdminAPIPanel';
 import { AdminSystemPanel } from '@/components/admin/panels/AdminSystemPanel';
 import { AdminSecurityPanel } from '@/components/admin/panels/AdminSecurityPanel';
+import { AdminPerformancePanel } from '@/components/admin/panels/AdminPerformancePanel';
 import { AdminDesktopHeader } from '@/components/admin/components/AdminDesktopHeader';
 import SEO from '@/components/SEO';
 import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
@@ -70,6 +71,11 @@ const AdminDashboard = () => {
         title: 'Security Center', 
         subtitle: 'Security monitoring and controls',
         icon: 'Shield'
+      },
+      performance: { 
+        title: 'Web Performance', 
+        subtitle: 'Core Web Vitals and performance metrics',
+        icon: 'Gauge'
       }
     };
     return tabInfo[tab as keyof typeof tabInfo] || tabInfo.overview;
@@ -95,6 +101,8 @@ const AdminDashboard = () => {
         return <AdminSystemPanel />;
       case 'security':
         return <AdminSecurityPanel />;
+      case 'performance':
+        return <AdminPerformancePanel />;
       default:
         return <AdminDashboardOverview key={refreshKey} onRefresh={handleRefresh} />;
     }

@@ -9,7 +9,8 @@ import {
   Key,
   ChevronLeft,
   ChevronRight,
-  FileText
+  FileText,
+  Gauge
 } from 'lucide-react';
 import {
   Sidebar,
@@ -32,6 +33,7 @@ const navigationItems = [
   { id: 'api', title: 'API & Secrets', icon: Key, description: 'API management' },
   { id: 'system', title: 'System', icon: Settings, description: 'System settings' },
   { id: 'security', title: 'Security', icon: Shield, description: 'Security center' },
+  { id: 'performance', title: 'Performance', icon: Gauge, description: 'Web Vitals metrics' },
 ];
 
 export const AdminSidebar: React.FC = () => {
