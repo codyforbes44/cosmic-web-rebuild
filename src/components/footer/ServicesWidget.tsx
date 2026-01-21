@@ -26,8 +26,8 @@ const ServicesWidget: React.FC<ServicesWidgetProps> = ({
   className = "" 
 }) => {
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 h-full flex flex-col ${className}`}>
-      <h3 className="text-lg font-semibold mb-3 text-white">Our Services</h3>
+    <div className={`bg-card/40 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-accent/20 h-full flex flex-col ${className}`}>
+      <h3 className="text-base md:text-lg font-semibold mb-2 md:mb-3 text-foreground">Our Services</h3>
       <Accordion 
         type="single" 
         collapsible 
@@ -35,22 +35,19 @@ const ServicesWidget: React.FC<ServicesWidgetProps> = ({
         className="w-full flex-grow"
       >
         {serviceGroups.map((group) => (
-          <AccordionItem key={group.title} value={group.title} className="border-gray-700">
-            <AccordionTrigger className="py-2 text-white hover:no-underline font-medium">
+          <AccordionItem key={group.title} value={group.title} className="border-border/50">
+            <AccordionTrigger className="py-2 text-foreground hover:no-underline font-medium text-sm md:text-base">
               {group.title}
             </AccordionTrigger>
-            <AccordionContent className="pt-2">
-              <ul className="space-y-2.5 pl-2">
+            <AccordionContent className="pt-1 md:pt-2">
+              <ul className="space-y-2 md:space-y-2.5 pl-2">
                 {group.items.map((service) => (
                   <li key={service.href}>
                     <ScrollToTopLink 
                       to={service.href} 
-                      className="footer-link hover:text-[color:var(--color)] flex items-center" 
-                      style={{
-                        "--color": service.color || "hsl(var(--primary))"
-                      } as React.CSSProperties}
+                      className="text-muted-foreground hover:text-accent flex items-center text-xs md:text-sm transition-colors" 
                     >
-                      <span className="w-1.5 h-1.5 bg-brand-gold/70 rounded-full mr-2"></span>
+                      <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-accent/70 rounded-full mr-2"></span>
                       {service.title}
                     </ScrollToTopLink>
                   </li>

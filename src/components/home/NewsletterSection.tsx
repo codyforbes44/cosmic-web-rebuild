@@ -60,8 +60,8 @@ const NewsletterSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-r from-accent/10 to-purple-600/10 border-t border-gray-800">
-      <div className="container mx-auto px-4">
+    <section className="py-12 md:py-20 lg:py-24 bg-gradient-to-r from-accent/10 to-primary/5 border-t border-border">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,27 +69,27 @@ const NewsletterSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto"
         >
-          <Mail className="h-12 w-12 text-accent mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+          <Mail className="h-10 w-10 md:h-12 md:w-12 text-accent mx-auto mb-4 md:mb-6" />
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-foreground">
             Stay Updated
           </h2>
-          <p className="text-gray-300 mb-8 text-lg">
+          <p className="text-muted-foreground mb-6 md:mb-8 text-base md:text-lg">
             Get the latest insights on business technology and innovation delivered to your inbox
           </p>
           
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 md:gap-4 max-w-md mx-auto">
             <Input 
               type="email" 
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isSubmitting || isSuccess}
-              className="bg-space-dark-blue border-gray-700 text-white placeholder-gray-400"
+              className="bg-card border-border text-foreground placeholder-muted-foreground"
             />
             <Button 
               type="submit"
               disabled={isSubmitting || isSuccess}
-              className="bg-accent hover:bg-accent/90 text-white min-w-[140px]"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground min-w-[140px]"
             >
               {isSubmitting ? (
                 <>
@@ -110,7 +110,7 @@ const NewsletterSection: React.FC = () => {
             </Button>
           </form>
           
-          <p className="text-gray-400 text-sm mt-4">
+          <p className="text-muted-foreground text-xs md:text-sm mt-4">
             No spam. Unsubscribe at any time.
           </p>
         </motion.div>

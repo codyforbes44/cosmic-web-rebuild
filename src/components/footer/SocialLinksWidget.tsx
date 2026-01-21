@@ -56,28 +56,28 @@ const SocialLinksWidget: React.FC<SocialLinksWidgetProps> = ({
   };
 
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 h-full flex flex-col ${className}`}>
+    <div className={`bg-card/40 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-accent/20 h-full flex flex-col ${className}`}>
       <Link to="/" className="flex items-center mb-3">
         <img 
           src={logo} 
           alt="Company Logo" 
-          className="h-10 sm:h-12"
+          className="h-8 sm:h-10 md:h-12"
           onError={handleImageError}
         />
       </Link>
-      <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+      <p className="text-muted-foreground text-xs md:text-sm mb-4 line-clamp-3">
         {description}
       </p>
       
       {/* Quick Links */}
       {showQuickLinks && (
         <div className="mb-4">
-          <div className="flex flex-wrap gap-x-4 gap-y-1">
+          <div className="flex flex-wrap gap-x-3 md:gap-x-4 gap-y-1">
             {footerQuickLinks.map((link) => (
               <ScrollToTopLink 
                 key={link.href}
                 to={link.href} 
-                className="text-xs text-gray-400 hover:text-brand-gold transition-colors"
+                className="text-xs text-muted-foreground hover:text-accent transition-colors"
               >
                 {link.name}
               </ScrollToTopLink>
@@ -87,14 +87,14 @@ const SocialLinksWidget: React.FC<SocialLinksWidgetProps> = ({
       )}
       
       {/* Social Links */}
-      <div className="flex space-x-3 mt-auto">
+      <div className="flex space-x-2 md:space-x-3 mt-auto">
         {socialLinks.map((link, index) => (
           <a 
             key={index}
             href={link.href} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="footer-link hover:text-brand-gold bg-space-deep-blue/60 p-2.5 rounded-full transition-all hover:bg-space-deep-blue" 
+            className="text-muted-foreground hover:text-accent bg-muted/60 p-2 md:p-2.5 rounded-full transition-all hover:bg-muted" 
             aria-label={link.label}
           >
             {link.icon}

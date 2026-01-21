@@ -40,19 +40,19 @@ const RecruitmentMarketingSection = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-space-deep-blue/50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="text-brand-gold font-medium text-sm uppercase tracking-wider">RECRUITMENT MARKETING</span>
-          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 text-white">
-            Find Top Talent <span className="text-brand-gold">Faster</span>
+    <section className="py-12 md:py-20 lg:py-24 bg-muted/30">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 md:mb-12">
+          <span className="text-accent font-medium text-xs sm:text-sm uppercase tracking-wider">RECRUITMENT MARKETING</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 mb-4 text-foreground">
+            Find Top Talent <span className="text-accent">Faster</span>
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
             Revolutionary recruitment marketing that attracts quality candidates and reduces hiring costs through targeted digital campaigns
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-10 md:mb-12">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
@@ -63,15 +63,15 @@ const RecruitmentMarketingSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="bg-space-dark-blue border-gray-800 hover:bg-space-dark-blue/80 transition-all duration-300 group h-full shadow-lg hover:border-brand-gold/50">
+                <Card className="bg-card border-border hover:bg-card/80 transition-all duration-300 group h-full shadow-lg hover:border-accent/50">
                   <CardHeader className="text-center">
-                    <div className="w-16 h-16 rounded-full bg-brand-gold/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-gold/30 transition-colors group-hover:scale-110">
-                      <IconComponent className="w-8 h-8 text-brand-gold" />
+                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/30 transition-colors group-hover:scale-110">
+                      <IconComponent className="w-7 h-7 md:w-8 md:h-8 text-accent" />
                     </div>
-                    <CardTitle className="text-white text-xl mb-2">{feature.title}</CardTitle>
+                    <CardTitle className="text-foreground text-lg md:text-xl mb-2">{feature.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">
-                    <p className="text-gray-300">{feature.description}</p>
+                    <p className="text-muted-foreground text-sm md:text-base">{feature.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -79,40 +79,40 @@ const RecruitmentMarketingSection = () => {
           })}
         </div>
 
-        <div className="bg-space-dark-blue rounded-2xl p-8 mb-12 border border-gray-800 shadow-lg">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="bg-card rounded-xl md:rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border border-border shadow-lg">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
-              <h3 className="text-3xl font-bold text-white mb-6">Proven Results</h3>
-              <div className="space-y-4">
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">Proven Results</h3>
+              <div className="space-y-3 md:space-y-4">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-start">
-                    <CheckCircle className="h-6 w-6 text-brand-gold mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-300">{benefit}</span>
+                    <CheckCircle className="h-5 w-5 md:h-6 md:w-6 text-accent mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-muted-foreground text-sm md:text-base">{benefit}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="text-center">
-              <Building className="h-24 w-24 text-brand-gold mx-auto mb-6" />
-              <p className="text-gray-300 text-lg mb-6">
+              <Building className="h-20 w-20 md:h-24 md:w-24 text-accent mx-auto mb-4 md:mb-6" />
+              <p className="text-muted-foreground text-base md:text-lg mb-4 md:mb-6">
                 Join hundreds of companies who have transformed their recruitment process
               </p>
-              <div className="flex justify-center space-x-1 mb-6">
+              <div className="flex justify-center space-x-1 mb-4 md:mb-6">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-6 w-6 fill-brand-gold text-brand-gold" />
+                  <Star key={i} className="h-5 w-5 md:h-6 md:w-6 fill-accent text-accent" />
                 ))}
               </div>
-              <p className="text-sm text-gray-400">Rated 5/5 by our clients</p>
+              <p className="text-xs md:text-sm text-muted-foreground">Rated 5/5 by our clients</p>
             </div>
           </div>
         </div>
 
         <div className="text-center">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
             <Button 
               onClick={() => setDemoModalOpen(true)}
               size="lg" 
-              className="bg-brand-gold hover:bg-brand-gold/90 text-black font-semibold px-8"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-6 md:px-8 w-full sm:w-auto"
             >
               Request Demo <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -120,7 +120,7 @@ const RecruitmentMarketingSection = () => {
               asChild 
               variant="outline" 
               size="lg" 
-              className="border-gray-600 text-white hover:bg-white/10 px-8"
+              className="border-border text-foreground hover:bg-muted px-6 md:px-8 w-full sm:w-auto"
             >
               <Link to="/recruitment-marketing">
                 Learn More

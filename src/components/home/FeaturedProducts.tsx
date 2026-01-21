@@ -41,14 +41,14 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-space-deep-blue/30 to-space-dark-blue/50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="text-brand-gold font-medium text-sm uppercase tracking-wider">FEATURED PRODUCT</span>
-          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 text-white">
-            Smart <span className="text-brand-gold">Applicant Tracking</span>
+    <section className="py-12 md:py-20 lg:py-24 bg-gradient-to-b from-background via-muted/20 to-background">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 md:mb-12">
+          <span className="text-accent font-medium text-xs sm:text-sm uppercase tracking-wider">FEATURED PRODUCT</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 mb-4 text-foreground">
+            Smart <span className="text-accent">Applicant Tracking</span>
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
             Transform your hiring process with a modern ATS that helps you find, track, 
             and hire top talent faster—without the complexity of legacy systems.
           </p>
@@ -56,17 +56,17 @@ const FeaturedProducts = () => {
 
         <div className="max-w-6xl mx-auto">
           {/* Main Product Card */}
-          <Card className="bg-gradient-to-r from-space-dark-blue to-space-deep-blue border-gray-800 mb-8 overflow-hidden">
-            <CardHeader className="pb-6">
+          <Card className="bg-gradient-to-r from-card to-muted/50 border-border mb-6 md:mb-8 overflow-hidden">
+            <CardHeader className="pb-4 md:pb-6">
               <div className="flex items-center justify-between mb-4">
-                <Badge className="bg-brand-gold text-black font-semibold">
+                <Badge className="bg-accent text-accent-foreground font-semibold">
                   NEW LAUNCH
                 </Badge>
                 <Button
                   asChild
                   variant="outline"
                   size="sm"
-                  className="border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10"
+                  className="border-accent/50 text-accent hover:bg-accent/10"
                 >
                   <a href={featuredProduct.url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2" />
@@ -74,26 +74,26 @@ const FeaturedProducts = () => {
                   </a>
                 </Button>
               </div>
-              <CardTitle className="text-2xl md:text-3xl font-bold text-white mb-2">
+              <CardTitle className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
                 {featuredProduct.title}
               </CardTitle>
-              <CardDescription className="text-brand-gold text-lg font-medium mb-4">
+              <CardDescription className="text-accent text-base md:text-lg font-medium mb-4">
                 {featuredProduct.subtitle}
               </CardDescription>
-              <p className="text-gray-300 text-lg leading-relaxed">
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
                 {featuredProduct.description}
               </p>
             </CardHeader>
             
-            <CardContent className="space-y-8">
+            <CardContent className="space-y-6 md:space-y-8">
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 {featuredProduct.stats.map((stat, index) => (
                   <div key={index} className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-brand-gold mb-1">
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-gray-400">
+                    <div className="text-xs md:text-sm text-muted-foreground">
                       {stat.label}
                     </div>
                   </div>
@@ -101,17 +101,17 @@ const FeaturedProducts = () => {
               </div>
 
               {/* Features Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 {featuredProduct.features.map((feature, index) => {
                   const IconComponent = feature.icon;
                   return (
-                    <div key={index} className="flex items-start space-x-4 p-4 rounded-lg bg-space-deep-blue/50 border border-gray-800">
-                      <div className="w-10 h-10 rounded-lg bg-brand-gold/20 flex items-center justify-center flex-shrink-0">
-                        <IconComponent className="w-5 h-5 text-brand-gold" />
+                    <div key={index} className="flex items-start space-x-3 md:space-x-4 p-3 md:p-4 rounded-lg bg-muted/50 border border-border">
+                      <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+                        <IconComponent className="w-4 h-4 md:w-5 md:h-5 text-accent" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white mb-1">{feature.title}</h4>
-                        <p className="text-gray-400 text-sm">{feature.description}</p>
+                        <h4 className="font-semibold text-foreground text-sm md:text-base mb-1">{feature.title}</h4>
+                        <p className="text-muted-foreground text-xs md:text-sm">{feature.description}</p>
                       </div>
                     </div>
                   );
@@ -119,11 +119,11 @@ const FeaturedProducts = () => {
               </div>
 
               {/* CTA Section */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 border-t border-gray-800">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center pt-4 md:pt-6 border-t border-border">
                 <Button 
                   asChild 
                   size="lg" 
-                  className="bg-brand-gold hover:bg-brand-gold/90 text-black font-semibold px-8"
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-6 md:px-8 w-full sm:w-auto"
                 >
                   <a href={featuredProduct.url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2" />
@@ -134,7 +134,7 @@ const FeaturedProducts = () => {
                   asChild 
                   variant="outline" 
                   size="lg" 
-                  className="border-gray-600 text-white hover:bg-white/10 px-8"
+                  className="border-border text-foreground hover:bg-muted px-6 md:px-8 w-full sm:w-auto"
                 >
                   <a href="/contact">
                     Learn More
@@ -146,7 +146,7 @@ const FeaturedProducts = () => {
 
           {/* Additional Info */}
           <div className="text-center">
-            <p className="text-gray-400 text-sm">
+            <p className="text-muted-foreground text-xs md:text-sm">
               Enterprise-grade ATS trusted by growing teams worldwide
             </p>
           </div>
