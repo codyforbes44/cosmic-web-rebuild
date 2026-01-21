@@ -12,6 +12,7 @@ import VisitorTracker from "@/components/VisitorTracker";
 import CookieConsent from "@/components/CookieConsent";
 import LiveChat from "@/components/LiveChat/LiveChat";
 import FloatingButtonStack from "@/components/common/FloatingButtonStack";
+import BackToTop from "@/components/BackToTop";
 import PWAInstallPrompt from "@/components/pwa/PWAInstallPrompt";
 import { FloatingButtonProvider } from "@/context/FloatingButtonContext";
 import { PageLoading } from "@/components/ui/UnifiedLoading";
@@ -204,6 +205,9 @@ function App() {
                 </Suspense>
                 <CookieConsent />
                 {FEATURES.enablePWAInstallPrompt && <PWAInstallPrompt />}
+                
+                {/* Back to top button - always available */}
+                <BackToTop />
                 
                 {/* Global floating components - appear on all pages */}
                 {FEATURES.enableFloatingButtons && (
