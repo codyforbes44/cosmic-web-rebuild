@@ -46,8 +46,8 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Set default from address
-    const from = emailRequest.from || "ZBI <noreply@yourdomain.com>";
+    // Set default from address using verified domain
+    const from = emailRequest.from || "ƷBI <noreply@notifications.3bi.io>";
 
     let html = emailRequest.html;
     let text = emailRequest.text;
