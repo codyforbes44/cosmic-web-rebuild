@@ -12,31 +12,37 @@ import {
   fetchPollenData, 
   fetchFireWeatherData 
 } from './services/AdditionalDataService';
+import { supabase } from '@/integrations/supabase/client';
 
-export const fetchWeatherByLocation = async (location: string, units: 'imperial' | 'metric'): Promise<WeatherResponse> => {
-  // Fetch current weather
-  const currentWeatherResponse = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${units}&appid=9de243494c0b295cca9337e1e96b00e2`
-  );
+// Helper to fetch weather data through our secure edge function
+const fetchFromWeatherProxy = async (location: string, units: string, endpoint: string) => {
+  const { data, error } = await supabase.functions.invoke('weather-proxy', {
+    body: { location, units, endpoint }
+  });
   
-  if (!currentWeatherResponse.ok) {
-    throw new Error(`Weather API error: ${currentWeatherResponse.status}`);
+  if (error) {
+    throw new Error(error.message || 'Failed to fetch weather data');
   }
   
-  const currentWeatherResult = await currentWeatherResponse.json();
+  if (data?.error) {
+    throw new Error(data.error);
+  }
   
-  // Fetch 7-day forecast
-  const forecastResponse = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=${units}&appid=9de243494c0b295cca9337e1e96b00e2`
-  );
+  return data;
+};
+
+export const fetchWeatherByLocation = async (location: string, units: 'imperial' | 'metric'): Promise<WeatherResponse> => {
+  // Fetch current weather through edge function
+  const currentWeatherResult = await fetchFromWeatherProxy(location, units, 'weather');
   
+  // Fetch 7-day forecast through edge function
   let forecast: ForecastDay[] = [];
   
-  if (forecastResponse.ok) {
-    const forecastResult = await forecastResponse.json();
+  try {
+    const forecastResult = await fetchFromWeatherProxy(location, units, 'forecast');
     forecast = processForecastData(forecastResult.list);
-  } else {
-    console.warn('Forecast API failed, using basic forecast');
+  } catch (err) {
+    console.warn('Forecast API failed, using basic forecast:', err);
     forecast = generateBasicForecast(currentWeatherResult, units);
   }
   
