@@ -67,6 +67,7 @@ const MultiAI = lazy(() => import("./pages/MultiAI"));
 const AudioReview = lazy(() => import("./pages/AudioReview"));
 const ComponentCatalog = lazy(() => import("./pages/ComponentCatalog"));
 const Install = lazy(() => import("./pages/Install"));
+const StagingChecklist = lazy(() => import("./pages/StagingChecklist"));
 
 // Lazy loaded service pages
 const DigitalMarketing = lazy(() => import("./pages/DigitalMarketing"));
@@ -192,6 +193,10 @@ function App() {
                         <RealityRenderer />
                       </ProtectedRoute>
                     } />
+                    {/* Dev-only routes */}
+                    {FEATURES.showDevTools && (
+                      <Route path="/staging-checklist" element={<StagingChecklist />} />
+                    )}
 
                     {/* 404 route */}
                     <Route path="*" element={<NotFound />} />
