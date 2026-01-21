@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { cn } from "@/lib/utils";
-import { RefreshCw, MapPin, Cloud } from 'lucide-react';
+import { RefreshCw, Cloud } from 'lucide-react';
 import { fetchWeatherData, WeatherResponse } from './weather/WeatherService';
 import { fetchLocation } from './weather/LocationService';
 import CurrentWeather from './weather/CurrentWeather';
@@ -17,14 +17,12 @@ interface WeatherState {
   data: WeatherResponse | null;
   loading: boolean;
   error: string | null;
-  loadingPhase: 'location' | 'weather' | 'done';
 }
 
 const INITIAL_STATE: WeatherState = {
   data: null,
   loading: true,
-  error: null,
-  loadingPhase: 'location'
+  error: null
 };
 
 const WeatherWidget = ({ 
@@ -40,34 +38,17 @@ const WeatherWidget = ({
 
   const loadWeatherData = useCallback(async () => {
     try {
-      updateState({ 
-        loading: true, 
-        error: null, 
-        loadingPhase: 'location' 
-      });
+      updateState({ loading: true, error: null });
       
-      // Step 1: Detect location
       const location = await fetchLocation();
-      
-      // Step 2: Fetch weather
-      updateState({ loadingPhase: 'weather' });
       const data = await fetchWeatherData(units, location);
       
       if (data) {
-        updateState({ 
-          data, 
-          error: null,
-          loadingPhase: 'done',
-          loading: false 
-        });
+        updateState({ data, error: null, loading: false });
       }
     } catch (err) {
       console.error('Weather widget error:', err);
-      updateState({ 
-        error: 'Failed to load weather data',
-        loadingPhase: 'done',
-        loading: false 
-      });
+      updateState({ error: 'Failed to load weather data', loading: false });
     }
   }, [units, updateState]);
 
@@ -79,33 +60,17 @@ const WeatherWidget = ({
     loadWeatherData();
   }, [loadWeatherData, retryCount]);
 
-  const renderLoading = () => {
-    const isLocation = state.loadingPhase === 'location';
-    const Icon = isLocation ? MapPin : Cloud;
-    const message = isLocation ? 'Detecting location...' : 'Fetching weather...';
-    
-    return (
-      <div className="text-muted-foreground flex-grow flex items-center justify-center">
-        <div className="text-center space-y-3">
-          <div className="relative mx-auto w-10 h-10">
-            <div className="absolute inset-0 animate-spin w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full"></div>
-            <Icon className="absolute inset-0 m-auto w-5 h-5 text-primary animate-pulse" />
-          </div>
-          <div className="text-sm font-medium">{message}</div>
-          <div className="flex justify-center gap-1.5">
-            <div className={cn(
-              "w-2 h-2 rounded-full transition-colors duration-300",
-              isLocation ? "bg-primary" : "bg-primary/30"
-            )} />
-            <div className={cn(
-              "w-2 h-2 rounded-full transition-colors duration-300",
-              !isLocation ? "bg-primary" : "bg-primary/30"
-            )} />
-          </div>
+  const renderLoading = () => (
+    <div className="text-muted-foreground flex-grow flex items-center justify-center">
+      <div className="text-center space-y-3">
+        <div className="relative mx-auto w-10 h-10">
+          <div className="absolute inset-0 animate-spin w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full"></div>
+          <Cloud className="absolute inset-0 m-auto w-5 h-5 text-primary animate-pulse" />
         </div>
+        <div className="text-sm font-medium">Loading weather...</div>
       </div>
-    );
-  };
+    </div>
+  );
 
   const renderError = () => state.error && (
     <div className="flex justify-between items-center mb-2">
