@@ -1,19 +1,22 @@
-
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Mic, MicOff, Volume2, Phone, PhoneOff, Maximize2 } from 'lucide-react';
+import { Mic, Volume2, Phone, PhoneOff, Maximize2, Sparkles, Shield, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useConversation } from '@11labs/react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
-export const MinimizedVoiceChat: React.FC = () => {
+/**
+ * MinimizedVoiceChat - Primary voice AI interface for CTA section
+ * Redesigned for better visual hierarchy and mobile experience
+ */
+export const MinimizedVoiceChat: React.FC = memo(() => {
   const { toast } = useToast();
   const [isConnecting, setIsConnecting] = useState(false);
   const [agentId] = useState<string>('agent_01jwede7nve1nsm3ngqn7ks8d9');
-  const [hasPermissions, setHasPermissions] = useState<boolean | null>(null); // null = not checked yet
+  const [hasPermissions, setHasPermissions] = useState<boolean | null>(null);
 
   const conversation = useConversation({
     onConnect: () => {
@@ -72,7 +75,6 @@ export const MinimizedVoiceChat: React.FC = () => {
   };
 
   const startVoiceChat = async () => {
-    // Check permissions only when user tries to start conversation
     if (hasPermissions === null || hasPermissions === false) {
       const granted = await checkMicrophonePermissions();
       if (!granted) {
@@ -111,100 +113,144 @@ export const MinimizedVoiceChat: React.FC = () => {
   const getStatusColor = () => {
     switch (status) {
       case 'connected':
-        return 'border-green-500 text-green-400';
+        return 'border-green-500 bg-green-500/10 text-green-400';
       case 'connecting':
-        return 'border-yellow-500 text-yellow-400';
+        return 'border-yellow-500 bg-yellow-500/10 text-yellow-400';
       default:
-        return 'border-gray-500 text-gray-400';
+        return 'border-accent bg-accent/10 text-accent';
     }
   };
 
   const getStatusText = () => {
-    if (isConnecting) return 'CONNECTING';
+    if (isConnecting) return 'CONNECTING...';
     switch (status) {
       case 'connected':
-        return isSpeaking ? 'ƷBI SPEAKING' : 'LISTENING';
+        return isSpeaking ? 'ƷBI SPEAKING' : 'LISTENING...';
       case 'connecting':
         return 'ESTABLISHING';
       default:
-        return 'READY';
+        return 'READY TO CHAT';
     }
   };
 
+  const isActive = status === 'connected';
+
   return (
-    <Card className="bg-space-deep-blue/90 backdrop-blur-md border-gray-700 shadow-xl">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Mic className={`w-6 h-6 ${isSpeaking ? 'text-green-400 animate-pulse' : 'text-accent'}`} />
-              {status === 'connected' && (
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+    <Card className="bg-card/90 backdrop-blur-md border-border shadow-2xl relative overflow-hidden h-full">
+      {/* Subtle gradient accent */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent" />
+      
+      <CardContent className="p-5 sm:p-6 lg:p-8">
+        {/* Header with Status */}
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Animated Mic Icon */}
+            <div className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
+              isActive 
+                ? 'bg-green-500/20 border-2 border-green-500' 
+                : 'bg-accent/10 border-2 border-accent/50'
+            }`}>
+              <Mic className={`w-6 h-6 sm:w-7 sm:h-7 ${
+                isSpeaking ? 'text-green-400 animate-pulse' : isActive ? 'text-green-400' : 'text-accent'
+              }`} />
+              {isActive && (
+                <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full animate-pulse" />
               )}
             </div>
+            
             <div>
-              <h3 className="text-white font-semibold text-lg">ƷBI Voice Assistant</h3>
-              <Badge variant="outline" className={`text-xs ${getStatusColor()}`}>
+              <h3 className="text-foreground font-bold text-lg sm:text-xl">
+                ƷBI Voice Assistant
+              </h3>
+              <Badge variant="outline" className={`mt-1 text-xs font-medium ${getStatusColor()}`}>
                 {getStatusText()}
               </Badge>
             </div>
           </div>
-          <Link to="/voice" className="text-gray-400 hover:text-white transition-colors">
+          
+          <Link 
+            to="/voice" 
+            className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-muted/50 rounded-lg"
+            aria-label="Open full voice interface"
+          >
             <Maximize2 className="w-5 h-5" />
           </Link>
         </div>
 
-        <p className="text-gray-300 text-sm mb-4">
+        {/* Description */}
+        <p className="text-muted-foreground text-sm sm:text-base mb-6 leading-relaxed">
           Experience our advanced AI voice assistant. Speak naturally and get intelligent responses in real-time.
         </p>
 
         {/* Speaking Indicator */}
         {isSpeaking && (
-          <div className="flex justify-center mb-4">
-            <div className="flex space-x-1">
-              <div className="w-2 h-4 bg-green-400 animate-pulse rounded"></div>
-              <div className="w-2 h-6 bg-green-400 animate-pulse rounded" style={{animationDelay: '0.1s'}}></div>
-              <div className="w-2 h-5 bg-green-400 animate-pulse rounded" style={{animationDelay: '0.2s'}}></div>
-              <div className="w-2 h-7 bg-green-400 animate-pulse rounded" style={{animationDelay: '0.3s'}}></div>
+          <div className="flex justify-center mb-6">
+            <div className="flex items-end space-x-1 h-8">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div 
+                  key={i}
+                  className="w-2 bg-green-400 rounded-full animate-pulse"
+                  style={{
+                    height: `${12 + Math.random() * 20}px`,
+                    animationDelay: `${i * 0.1}s`
+                  }}
+                />
+              ))}
             </div>
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
-          {status === 'connected' ? (
+        {/* Action Buttons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          {isActive ? (
             <Button
               onClick={endVoiceChat}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground py-5 sm:py-6 font-medium"
               disabled={isConnecting}
             >
               <PhoneOff className="w-4 h-4 mr-2" />
-              End Chat
+              End Conversation
             </Button>
           ) : (
             <Button
               onClick={startVoiceChat}
-              className="bg-accent hover:bg-accent/80 text-black"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground py-5 sm:py-6 font-medium transition-all duration-300"
               disabled={isConnecting}
             >
               <Phone className="w-4 h-4 mr-2" />
-              {isConnecting ? 'Connecting...' : 'Start Voice'}
+              {isConnecting ? 'Connecting...' : 'Start Voice Chat'}
             </Button>
           )}
           
-          <Link to="/voice">
-            <Button variant="outline" className="w-full border-accent/50 text-accent hover:bg-accent/20">
+          <Link to="/voice" className="block">
+            <Button 
+              variant="outline" 
+              className="w-full border-border hover:bg-muted/50 py-5 sm:py-6 font-medium"
+            >
               <Volume2 className="w-4 h-4 mr-2" />
-              Full Interface
+              Full Experience
             </Button>
           </Link>
         </div>
 
-        <div className="mt-4 text-xs text-gray-400 space-y-1">
-          <div>• Real-time voice conversation</div>
-          <div>• Professional business consulting</div>
-          <div>• Secure encrypted communication</div>
+        {/* Feature List */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-border">
+          <div className="flex items-center gap-2 text-muted-foreground text-xs sm:text-sm">
+            <Zap className="w-4 h-4 text-accent flex-shrink-0" />
+            <span>Real-time responses</span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground text-xs sm:text-sm">
+            <Sparkles className="w-4 h-4 text-accent flex-shrink-0" />
+            <span>AI-powered insights</span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground text-xs sm:text-sm">
+            <Shield className="w-4 h-4 text-accent flex-shrink-0" />
+            <span>Secure & encrypted</span>
+          </div>
         </div>
       </CardContent>
     </Card>
   );
-};
+});
+
+MinimizedVoiceChat.displayName = 'MinimizedVoiceChat';
