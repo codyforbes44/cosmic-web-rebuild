@@ -12,6 +12,7 @@ import VisitorTracker from "@/components/VisitorTracker";
 import CookieConsent from "@/components/CookieConsent";
 import LiveChat from "@/components/LiveChat/LiveChat";
 import FloatingButtonStack from "@/components/common/FloatingButtonStack";
+import PWAInstallPrompt from "@/components/pwa/PWAInstallPrompt";
 import { FloatingButtonProvider } from "@/context/FloatingButtonContext";
 import { PageLoading } from "@/components/ui/UnifiedLoading";
 import { preloadCriticalRoutes } from "@/utils/routePreloader";
@@ -61,6 +62,7 @@ const Onboarding = lazy(() => import("./pages/Onboarding"));
 const MultiAI = lazy(() => import("./pages/MultiAI"));
 const AudioReview = lazy(() => import("./pages/AudioReview"));
 const ComponentCatalog = lazy(() => import("./pages/ComponentCatalog"));
+const Install = lazy(() => import("./pages/Install"));
 
 // Lazy loaded service pages
 const DigitalMarketing = lazy(() => import("./pages/DigitalMarketing"));
@@ -152,6 +154,9 @@ function App() {
                     
                     {/* Developer Tools (unlisted) */}
                     <Route path="/component-catalog" element={<ComponentCatalog />} />
+                    
+                    {/* PWA Install Page */}
+                    <Route path="/install" element={<Install />} />
 
                     {/* Protected routes */}
                     <Route path="/admin" element={
@@ -185,6 +190,7 @@ function App() {
                   </Routes>
                 </Suspense>
                 <CookieConsent />
+                <PWAInstallPrompt />
                 
                 {/* Global floating components - appear on all pages */}
                 <FloatingButtonProvider>
