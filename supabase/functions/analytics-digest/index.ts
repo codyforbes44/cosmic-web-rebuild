@@ -197,7 +197,7 @@ const handler = async (req: Request): Promise<Response> => {
     const subject = `ƷBI Weekly Analytics Digest - ${formatDate(periodStart)} to ${formatDate(periodEnd)}`;
 
     const emailResponse = await resend.emails.send({
-      from: "ƷBI Analytics <noreply@3bi.io>",
+      from: "ƷBI Analytics <analytics@notifications.3bi.io>",
       to: recipients,
       subject,
       html: emailHtml,
