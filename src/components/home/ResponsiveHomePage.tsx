@@ -3,6 +3,10 @@ import OptimizedHeroSection from "./sections/OptimizedHeroSection";
 import { createLazyComponent } from "@/hooks/use-lazy-loading";
 
 // Use createLazyComponent with retry logic for resilient loading
+const SocialProofSection = createLazyComponent(
+  () => import("./SocialProofSection"),
+  { retryCount: 3 }
+);
 const RecruitmentMarketingSection = createLazyComponent(
   () => import("./RecruitmentMarketingSection"),
   { retryCount: 3 }
@@ -31,6 +35,7 @@ const ResponsiveHomePage: React.FC = () => {
       
       {/* Components handle their own Suspense internally */}
       <div className="space-y-0">
+        <SocialProofSection />
         <RecruitmentMarketingSection />
         <FeaturedProducts />
         <AdvancedFeatures />
