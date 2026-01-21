@@ -132,7 +132,7 @@ async function sendEmailNotifications(data: { name: string; email: string; subje
     // Send notification to admin
     await supabase.functions.invoke('email-service', {
       body: {
-        to: 'contact@3bi.io',
+        to: 'support@3bi.io',
         subject: `New Contact Form Submission: ${data.subject}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0A1628; color: #E2E8F0;">

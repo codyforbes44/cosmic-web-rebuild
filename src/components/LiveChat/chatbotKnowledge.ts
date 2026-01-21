@@ -59,8 +59,8 @@ const knowledgeBase: Record<string, KnowledgeCategory> = {
       /email address/i
     ],
     responses: [
-      "You can contact our team through the Contact page on our website, or send an email to contact@3bi.io. For immediate inquiries, call us at (800) 555-1234.",
-      "To get in touch with our team, please visit our Contact page, email us at contact@3bi.io, or call our support line at (800) 555-1234."
+      "You can contact our team through the Contact page on our website, or send an email to support@3bi.io. For immediate inquiries, call us at (800) 555-1234.",
+      "To get in touch with our team, please visit our Contact page, email us at support@3bi.io, or call our support line at (800) 555-1234."
     ]
   },
   
