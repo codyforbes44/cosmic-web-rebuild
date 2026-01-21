@@ -1,37 +1,19 @@
 
 import React from 'react';
-import { serviceCategories } from '../navbar/constants';
+import { getServiceGroups } from '@/config/navigation';
 import WeatherWidget from './WeatherWidget';
 import ContactWidget from './ContactWidget';
 import SocialLinksWidget from './SocialLinksWidget';
 import ServicesWidget from './ServicesWidget';
 
 const FooterContent: React.FC = () => {
-  // Group service categories by type for better organization
-  const serviceGroups = [
-    {
-      title: "Marketing Services",
-      items: serviceCategories.filter(service => 
-        service.title.includes("Marketing") || service.title.includes("Social"))
-    },
-    {
-      title: "Technology Services",
-      items: serviceCategories.filter(service => 
-        service.title.includes("Development") || 
-        service.title.includes("Web") || 
-        service.title.includes("AI"))
-    },
-    {
-      title: "Strategic Services",
-      items: serviceCategories.filter(service => 
-        service.title.includes("Strategy") || service.title.includes("Consulting"))
-    }
-  ];
+  // Use centralized navigation helper - single source of truth
+  const serviceGroups = getServiceGroups();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-      {/* Column 1: Logo and Social Links */}
-      <div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      {/* Column 1: Logo, Quick Links, and Social Links */}
+      <div className="sm:col-span-2 lg:col-span-1">
         <SocialLinksWidget />
       </div>
       
@@ -46,7 +28,7 @@ const FooterContent: React.FC = () => {
       </div>
       
       {/* Column 4: Weather Widget */}
-      <div>
+      <div className="sm:col-span-2 lg:col-span-1">
         <WeatherWidget />
       </div>
     </div>
