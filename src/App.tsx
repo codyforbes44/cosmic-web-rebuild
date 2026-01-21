@@ -16,6 +16,9 @@ import PWAInstallPrompt from "@/components/pwa/PWAInstallPrompt";
 import { FloatingButtonProvider } from "@/context/FloatingButtonContext";
 import { PageLoading } from "@/components/ui/UnifiedLoading";
 import { preloadCriticalRoutes } from "@/utils/routePreloader";
+import { FEATURES } from "@/config/environment";
+import EnvironmentBadge from "@/components/dev/EnvironmentBadge";
+import FeatureGate from "@/components/dev/FeatureGate";
 
 // Eager loaded - critical path
 import Index from "./pages/Index";
@@ -91,12 +94,13 @@ function App() {
 
   return (
     <ErrorBoundary 
-      enableReporting 
-      showDetails={import.meta.env.DEV}
+      enableReporting={FEATURES.enableErrorReporting}
+      showDetails={FEATURES.showDetailedErrors}
     >
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
           <TooltipProvider>
+            <EnvironmentBadge />
             <Toaster />
             <Sonner />
             <BrowserRouter>
@@ -152,8 +156,10 @@ function App() {
                     <Route path="/multi-ai" element={<MultiAI />} />
                     <Route path="/audio-review" element={<AudioReview />} />
                     
-                    {/* Developer Tools (unlisted) */}
-                    <Route path="/component-catalog" element={<ComponentCatalog />} />
+                    {/* Developer Tools - Feature Gated */}
+                    {FEATURES.showComponentCatalog && (
+                      <Route path="/component-catalog" element={<ComponentCatalog />} />
+                    )}
                     
                     {/* PWA Install Page */}
                     <Route path="/install" element={<Install />} />
@@ -190,13 +196,15 @@ function App() {
                   </Routes>
                 </Suspense>
                 <CookieConsent />
-                <PWAInstallPrompt />
+                {FEATURES.enablePWAInstallPrompt && <PWAInstallPrompt />}
                 
                 {/* Global floating components - appear on all pages */}
-                <FloatingButtonProvider>
-                  <FloatingButtonStack />
-                  <LiveChat />
-                </FloatingButtonProvider>
+                {FEATURES.enableFloatingButtons && (
+                  <FloatingButtonProvider>
+                    <FloatingButtonStack />
+                    {FEATURES.enableLiveChat && <LiveChat />}
+                  </FloatingButtonProvider>
+                )}
               </AuthProvider>
             </BrowserRouter>
           </TooltipProvider>
