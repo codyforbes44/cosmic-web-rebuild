@@ -26,11 +26,11 @@ const ServicesWidget: React.FC<ServicesWidgetProps> = ({
   className = "" 
 }) => {
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 min-h-[320px] flex flex-col ${className}`}>
-      <h3 className="text-xl font-semibold mb-4 text-white">Our Services</h3>
+    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 h-full flex flex-col ${className}`}>
+      <h3 className="text-lg font-semibold mb-3 text-white">Our Services</h3>
       <Accordion 
         type="single" 
-        collapsible={false} 
+        collapsible 
         defaultValue={defaultOpenGroup} 
         className="w-full flex-grow"
       >
