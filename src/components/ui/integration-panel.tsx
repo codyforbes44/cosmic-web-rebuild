@@ -188,10 +188,23 @@ export const IntegrationPanel: React.FC<IntegrationPanelProps> = ({ className })
               value={emailData.template}
               onChange={(e) => setEmailData(prev => ({ ...prev, template: e.target.value as any }))}
             >
-              <option value="contact">Contact Form</option>
-              <option value="newsletter">Newsletter</option>
-              <option value="notification">Notification</option>
-              <option value="welcome">Welcome Email</option>
+              <optgroup label="Contact Form">
+                <option value="contact-confirmation">Contact Confirmation</option>
+                <option value="contact-admin">Contact Admin Notification</option>
+              </optgroup>
+              <optgroup label="Quote Request">
+                <option value="quote-confirmation">Quote Confirmation</option>
+                <option value="quote-admin">Quote Admin Notification</option>
+              </optgroup>
+              <optgroup label="Onboarding">
+                <option value="onboarding-confirmation">Onboarding Confirmation</option>
+                <option value="onboarding-admin">Onboarding Admin Notification</option>
+              </optgroup>
+              <optgroup label="General">
+                <option value="newsletter">Newsletter</option>
+                <option value="notification">Notification</option>
+                <option value="welcome">Welcome Email</option>
+              </optgroup>
             </select>
           </div>
 
