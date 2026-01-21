@@ -15,6 +15,8 @@ import FloatingButtonStack from "@/components/common/FloatingButtonStack";
 import BackToTop from "@/components/BackToTop";
 import PWAInstallPrompt from "@/components/pwa/PWAInstallPrompt";
 import { FloatingButtonProvider } from "@/context/FloatingButtonContext";
+import { GeoBlockProvider } from "@/context/GeoBlockContext";
+import GeoBlockWrapper from "@/components/geo/GeoBlockWrapper";
 import { PageLoading } from "@/components/ui/UnifiedLoading";
 import { preloadCriticalRoutes } from "@/utils/routePreloader";
 import { FEATURES } from "@/config/environment";
@@ -96,19 +98,21 @@ function App() {
   }, []);
 
   return (
-    <ErrorBoundary 
-      enableReporting={FEATURES.enableErrorReporting}
-      showDetails={FEATURES.showDetailedErrors}
-    >
-      <QueryClientProvider client={queryClient}>
-        <HelmetProvider>
-          <TooltipProvider>
-            <EnvironmentBadge />
-            {FEATURES.enablePerformanceMonitoring && <WebVitalsMonitor />}
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AuthProvider>
+    <GeoBlockProvider>
+      <GeoBlockWrapper>
+        <ErrorBoundary 
+          enableReporting={FEATURES.enableErrorReporting}
+          showDetails={FEATURES.showDetailedErrors}
+        >
+          <QueryClientProvider client={queryClient}>
+            <HelmetProvider>
+              <TooltipProvider>
+                <EnvironmentBadge />
+                {FEATURES.enablePerformanceMonitoring && <WebVitalsMonitor />}
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <AuthProvider>
                 <VisitorTracker />
                 <Suspense fallback={<PageLoading message="Loading page..." />}>
                   <Routes>
@@ -216,12 +220,14 @@ function App() {
                     {FEATURES.enableLiveChat && <LiveChat />}
                   </FloatingButtonProvider>
                 )}
-              </AuthProvider>
-            </BrowserRouter>
-          </TooltipProvider>
-        </HelmetProvider>
-      </QueryClientProvider>
-    </ErrorBoundary>
+                  </AuthProvider>
+                </BrowserRouter>
+              </TooltipProvider>
+            </HelmetProvider>
+          </QueryClientProvider>
+        </ErrorBoundary>
+      </GeoBlockWrapper>
+    </GeoBlockProvider>
   );
 }
 
