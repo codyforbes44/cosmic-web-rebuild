@@ -12,6 +12,7 @@ import { AdminAPIPanel } from '@/components/admin/panels/AdminAPIPanel';
 import { AdminSystemPanel } from '@/components/admin/panels/AdminSystemPanel';
 import { AdminSecurityPanel } from '@/components/admin/panels/AdminSecurityPanel';
 import { AdminPerformancePanel } from '@/components/admin/panels/AdminPerformancePanel';
+import { AdminDigestPanel } from '@/components/admin/panels/AdminDigestPanel';
 import { AdminDesktopHeader } from '@/components/admin/components/AdminDesktopHeader';
 import SEO from '@/components/SEO';
 import { QueryErrorBoundary } from '@/components/ui/QueryErrorBoundary';
@@ -76,6 +77,11 @@ const AdminDashboard = () => {
         title: 'Web Performance', 
         subtitle: 'Core Web Vitals and performance metrics',
         icon: 'Gauge'
+      },
+      digest: { 
+        title: 'Analytics Digest', 
+        subtitle: 'Weekly email reports and notifications',
+        icon: 'Mail'
       }
     };
     return tabInfo[tab as keyof typeof tabInfo] || tabInfo.overview;
@@ -103,6 +109,8 @@ const AdminDashboard = () => {
         return <AdminSecurityPanel />;
       case 'performance':
         return <AdminPerformancePanel />;
+      case 'digest':
+        return <AdminDigestPanel />;
       default:
         return <AdminDashboardOverview key={refreshKey} onRefresh={handleRefresh} />;
     }

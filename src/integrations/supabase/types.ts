@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      analytics_digest_config: {
+        Row: {
+          created_at: string
+          day_of_week: number | null
+          frequency: string
+          id: string
+          is_enabled: boolean
+          last_sent_at: string | null
+          preferred_time: string | null
+          recipient_emails: string[]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day_of_week?: number | null
+          frequency?: string
+          id?: string
+          is_enabled?: boolean
+          last_sent_at?: string | null
+          preferred_time?: string | null
+          recipient_emails?: string[]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day_of_week?: number | null
+          frequency?: string
+          id?: string
+          is_enabled?: boolean
+          last_sent_at?: string | null
+          preferred_time?: string | null
+          recipient_emails?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      analytics_digest_history: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          metrics: Json
+          period_end: string
+          period_start: string
+          recipient_emails: string[]
+          sent_at: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metrics: Json
+          period_end: string
+          period_start: string
+          recipient_emails: string[]
+          sent_at?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metrics?: Json
+          period_end?: string
+          period_start?: string
+          recipient_emails?: string[]
+          sent_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
       audio_files: {
         Row: {
           created_at: string
