@@ -29,5 +29,5 @@ export const fetchLocation = async (): Promise<string> => {
     // Silent fail - use default
   }
   
-  return 'Irving, TX';
+  return 'Irving,US';
 };

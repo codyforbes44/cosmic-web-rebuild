@@ -4,6 +4,22 @@ import { isIpRateLimited, extractClientIp, rateLimitResponse } from "../_shared/
 
 const openWeatherMapApiKey = Deno.env.get('OPENWEATHERMAP_API_KEY');
 
+// US state abbreviations for location normalization
+const US_STATES = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC'];
+
+// Normalize location format for OpenWeatherMap API
+function normalizeLocation(location: string): string {
+  // Check for "City, STATE" pattern (e.g., "Irving, TX" -> "Irving,US")
+  const match = location.match(/^(.+),\s*([A-Z]{2})$/i);
+  if (match) {
+    const [, city, state] = match;
+    if (US_STATES.includes(state.toUpperCase())) {
+      return `${city.trim()},US`;
+    }
+  }
+  return location;
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -78,9 +94,10 @@ serve(async (req) => {
       });
     }
 
-    console.log(`Fetching ${endpoint} for location: ${location}, units: ${units}`);
+    const normalizedLocation = normalizeLocation(location);
+    console.log(`Fetching ${endpoint} for location: ${location} -> ${normalizedLocation}, units: ${units}`);
 
-    const url = `https://api.openweathermap.org/data/2.5/${endpoint}?q=${encodeURIComponent(location)}&units=${units}&appid=${openWeatherMapApiKey}`;
+    const url = `https://api.openweathermap.org/data/2.5/${endpoint}?q=${encodeURIComponent(normalizedLocation)}&units=${units}&appid=${openWeatherMapApiKey}`;
     
     const response = await fetch(url);
     const data = await response.json();
