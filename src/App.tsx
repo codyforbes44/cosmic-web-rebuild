@@ -19,6 +19,7 @@ import { preloadCriticalRoutes } from "@/utils/routePreloader";
 import { FEATURES } from "@/config/environment";
 import EnvironmentBadge from "@/components/dev/EnvironmentBadge";
 import FeatureGate from "@/components/dev/FeatureGate";
+import { WebVitalsMonitor } from "@/components/performance/WebVitalsMonitor";
 
 // Eager loaded - critical path
 import Index from "./pages/Index";
@@ -101,6 +102,7 @@ function App() {
         <HelmetProvider>
           <TooltipProvider>
             <EnvironmentBadge />
+            {FEATURES.enablePerformanceMonitoring && <WebVitalsMonitor />}
             <Toaster />
             <Sonner />
             <BrowserRouter>
