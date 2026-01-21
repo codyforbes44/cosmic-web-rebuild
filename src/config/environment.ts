@@ -15,25 +15,30 @@ export const getEnvironment = (): Environment => {
     return 'development';
   }
 
-  // Check URL for staging detection
+  // Check URL for environment detection
   const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
   
-  // Lovable preview URLs are staging
-  if (hostname.includes('lovable.app') && hostname.includes('preview')) {
-    return 'staging';
-  }
-  
-  // Lovable project URLs (not published) are staging
-  if (hostname.includes('lovableproject.com')) {
-    return 'staging';
+  // Explicit production domain check
+  if (hostname === '3bi.io' || hostname === 'www.3bi.io') {
+    return 'production';
   }
   
   // Localhost is development
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return 'development';
   }
+  
+  // Lovable preview URLs are staging
+  if (hostname.includes('lovable.app') && hostname.includes('preview')) {
+    return 'staging';
+  }
+  
+  // Lovable project URLs (published or not) are staging
+  if (hostname.includes('lovableproject.com') || hostname.includes('lovable.app')) {
+    return 'staging';
+  }
 
-  // Everything else is production
+  // Everything else defaults to production
   return 'production';
 };
 

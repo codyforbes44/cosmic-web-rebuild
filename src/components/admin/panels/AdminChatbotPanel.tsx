@@ -45,7 +45,7 @@ export const AdminChatbotPanel: React.FC = () => {
     {
       id: '2',
       trigger: 'support',
-      response: 'Our support team is available Monday-Friday, 8 AM to 6 PM ET. You can reach us at support@zbi-consulting.com.',
+      response: 'Our support team is available Monday-Friday, 8 AM to 6 PM ET. You can reach us at support@3bi.io.',
       category: 'Support',
       enabled: true
     },
