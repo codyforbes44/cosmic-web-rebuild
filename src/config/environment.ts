@@ -67,6 +67,7 @@ export interface FeatureFlags {
   // Security
   showDetailedErrors: boolean;
   enableRateLimitBypass: boolean;
+  enableGeoBlocking: boolean;
 }
 
 /**
@@ -92,6 +93,7 @@ const featureFlagsByEnv: Record<Environment, FeatureFlags> = {
     // Security - show details in dev
     showDetailedErrors: true,
     enableRateLimitBypass: true,
+    enableGeoBlocking: false, // Disabled in dev for testing
   },
   
   staging: {
@@ -113,6 +115,7 @@ const featureFlagsByEnv: Record<Environment, FeatureFlags> = {
     // Security - show some details for debugging
     showDetailedErrors: true,
     enableRateLimitBypass: false,
+    enableGeoBlocking: true, // Enabled in staging
   },
   
   production: {
@@ -134,6 +137,7 @@ const featureFlagsByEnv: Record<Environment, FeatureFlags> = {
     // Security - hide details
     showDetailedErrors: false,
     enableRateLimitBypass: false,
+    enableGeoBlocking: true, // Enabled in production
   },
 };
 
