@@ -47,29 +47,29 @@ const ContactWidget: React.FC<ContactWidgetProps> = ({
   ];
 
   return (
-    <div className={`bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 h-full flex flex-col ${className}`}>
-      <h3 className="text-lg font-semibold mb-4 text-white">Contact Us</h3>
-      <ul className="space-y-4 flex-grow">
+    <div className={`bg-card/40 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-accent/20 h-full flex flex-col ${className}`}>
+      <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-foreground">Contact Us</h3>
+      <ul className="space-y-3 md:space-y-4 flex-grow">
         {contactItems.map((item, index) => {
           const IconComponent = item.icon;
           return (
             <li key={index}>
               <div className="flex items-start group">
                 <IconComponent 
-                  size={20} 
-                  className="text-accent mr-3 mt-1 group-hover:text-brand-gold transition-colors" 
+                  size={18} 
+                  className="text-accent mr-2 md:mr-3 mt-1 group-hover:text-accent/80 transition-colors flex-shrink-0" 
                 />
-                <div>
-                  <p className="text-white font-medium mb-1">{item.label}</p>
+                <div className="min-w-0">
+                  <p className="text-foreground text-sm md:text-base font-medium mb-0.5 md:mb-1">{item.label}</p>
                   {item.isLink ? (
                     <a 
                       href={item.href} 
-                      className="text-gray-400 hover:text-brand-gold transition-colors"
+                      className="text-muted-foreground hover:text-accent transition-colors text-xs md:text-sm break-all"
                     >
                       {item.value}
                     </a>
                   ) : (
-                    <p className="text-gray-400">{item.value}</p>
+                    <p className="text-muted-foreground text-xs md:text-sm">{item.value}</p>
                   )}
                 </div>
               </div>

@@ -99,14 +99,14 @@ const WeatherWidget = ({
   );
 
   const renderSearchBar = () => (
-    <div className="flex gap-2 mb-3">
+    <div className="flex gap-2 mb-2 md:mb-3">
       <input
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Search city..."
-        className="flex-1 px-3 py-1.5 text-sm bg-background/50 border border-border/50 rounded-md 
+        className="flex-1 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-sm bg-background/50 border border-border/50 rounded-md 
                    placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary/50
                    text-foreground"
         maxLength={100}
@@ -114,11 +114,11 @@ const WeatherWidget = ({
       <button
         onClick={handleSearch}
         disabled={searchQuery.trim().length < 2}
-        className="px-2.5 py-1.5 bg-primary/20 hover:bg-primary/30 disabled:opacity-50 
+        className="px-2 md:px-2.5 py-1 md:py-1.5 bg-primary/20 hover:bg-primary/30 disabled:opacity-50 
                    disabled:cursor-not-allowed rounded-md transition-colors"
         title="Search city"
       >
-        <Search size={14} className="text-primary" />
+        <Search size={12} className="md:w-3.5 md:h-3.5 text-primary" />
       </button>
     </div>
   );
@@ -128,10 +128,10 @@ const WeatherWidget = ({
       <WeatherError error={state.error} />
       <button
         onClick={loadDefaultWeather}
-        className="text-brand-gold hover:text-yellow-300 transition-colors p-1"
+        className="text-accent hover:text-accent/80 transition-colors p-1"
         title="Retry weather"
       >
-        <RefreshCw size={14} />
+        <RefreshCw size={12} className="md:w-3.5 md:h-3.5" />
       </button>
     </div>
   );
@@ -152,7 +152,7 @@ const WeatherWidget = ({
 
   return (
     <div className={cn(
-      "bg-space-deep-blue/40 backdrop-blur-sm p-6 rounded-lg border border-brand-gold/20 h-full flex flex-col", 
+      "bg-card/40 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-accent/20 h-full flex flex-col", 
       className
     )}>
       {renderSearchBar()}
