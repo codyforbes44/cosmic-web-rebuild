@@ -1,5 +1,7 @@
+import { IS_PROD, FEATURES } from '@/config/environment';
 
-const DEBUG_MODE = true; // Enable debug logs for better tracking
+// Only enable debug logs in non-production or when debug mode is explicitly enabled
+const DEBUG_MODE = !IS_PROD || FEATURES.enableDebugMode;
 
 // Helper to log messages only in debug mode
 export function debugLog(...args: any[]): void {
