@@ -59,8 +59,8 @@ const knowledgeBase: Record<string, KnowledgeCategory> = {
       /email address/i
     ],
     responses: [
-      "You can contact our team through the Contact page on our website, or send an email to contact@zbi-consulting.com. For immediate inquiries, call us at (800) 555-1234.",
-      "To get in touch with our team, please visit our Contact page, email us at contact@zbi-consulting.com, or call our support line at (800) 555-1234."
+      "You can contact our team through the Contact page on our website, or send an email to contact@3bi.io. For immediate inquiries, call us at (800) 555-1234.",
+      "To get in touch with our team, please visit our Contact page, email us at contact@3bi.io, or call our support line at (800) 555-1234."
     ]
   },
   
@@ -112,8 +112,8 @@ const knowledgeBase: Record<string, KnowledgeCategory> = {
       /troubleshoot/i
     ],
     responses: [
-      "Our customer support team is available Monday through Friday, 8 AM to 6 PM ET. You can reach them via email at support@zbi-consulting.com or by phone at (800) 555-5678.",
-      "ƷBI provides dedicated technical support through our help portal, email support at support@zbi-consulting.com, and phone assistance at (800) 555-5678 during business hours."
+      "Our customer support team is available Monday through Friday, 8 AM to 6 PM ET. You can reach them via email at support@3bi.io or by phone at (800) 555-5678.",
+      "ƷBI provides dedicated technical support through our help portal, email support at support@3bi.io, and phone assistance at (800) 555-5678 during business hours."
     ]
   },
   
@@ -126,8 +126,8 @@ const knowledgeBase: Record<string, KnowledgeCategory> = {
       /hiring/i
     ],
     responses: [
-      "We're always looking for talented individuals to join our team! Check our website's Careers section for current openings or send your resume to careers@zbi-consulting.com.",
-      "ƷBI values innovation and expertise. Visit our Careers page to see our current openings, or submit your resume to careers@zbi-consulting.com if you're interested in joining our team."
+      "We're always looking for talented individuals to join our team! Check our website's Careers section for current openings or send your resume to careers@3bi.io.",
+      "ƷBI values innovation and expertise. Visit our Careers page to see our current openings, or submit your resume to careers@3bi.io if you're interested in joining our team."
     ]
   },
   

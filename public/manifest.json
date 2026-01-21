@@ -1,14 +1,14 @@
-
 {
-  "name": "ZBI - Recruitment Marketing Platform",
-  "short_name": "ZBI",
-  "description": "Professional recruitment marketing services that help you find qualified candidates faster and more cost-effectively.",
+  "id": "https://3bi.io/",
+  "name": "ƷBI - Business Technology Solutions",
+  "short_name": "ƷBI",
+  "description": "AI-powered business technology solutions, recruitment marketing, digital transformation, and strategic consulting.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0F172A",
   "theme_color": "#E85D2A",
   "orientation": "portrait-primary",
-  "categories": ["business", "productivity", "recruitment"],
+  "categories": ["business", "productivity", "technology"],
   "lang": "en",
   "dir": "ltr",
   "scope": "/",
@@ -20,7 +20,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "https://img.icons8.com/color/512/000000/circuit.png", 
+      "src": "https://img.icons8.com/color/512/000000/circuit.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -55,13 +55,13 @@
       ]
     },
     {
-      "name": "Portfolio",
-      "short_name": "Portfolio", 
-      "description": "View our work portfolio",
-      "url": "/portfolio",
+      "name": "Services",
+      "short_name": "Services",
+      "description": "View our business technology services",
+      "url": "/services",
       "icons": [
         {
-          "src": "https://img.icons8.com/color/96/000000/portfolio.png",
+          "src": "https://img.icons8.com/color/96/000000/services.png",
           "sizes": "96x96"
         }
       ]
